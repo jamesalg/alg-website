@@ -1,25 +1,20 @@
 ---
 /**
- * Homepage — v2.1.0 full implementation.
+ * Homepage — v2.1.0 (revision 2 — fixes per rejection notes 2026-04-25)
  *
- * Sections (per Playbook v2.0 §5 and v3.14.x reference):
- *   1. Hero carousel (4 slides, auto-advance 7s, pause on hover)
- *   2. Trust bar (5 trust signals)
- *   3. Category tease (Indoor / Outdoor / Controls & EM)
- *   4. Locator map (Leaflet, 6 warehouse pins)
- *   5. Featured Families (4 product family cards)
- *   6. Layout CTA (48-hour turnaround)
- *   7. Installed At (8 vertical tiles — 3 placeholders for missing assets)
- *   8. Split teasers (Rebate + Specifier)
- *   [Footer CTA strip and Footer are in Footer.astro]
+ * Sections:
+ *   1. Hero carousel (4 slides, slot-cycling right panel, 7s auto-advance)
+ *   2. Differentiation strip (6 trust signals — matches reference diff-strip)
+ *   3. Persona segmenter (NEW — "I am a…" pill strip)
+ *   4. Category tease / "What we make" (3 cards, BrandMark stems)
+ *   5. Locator map (Leaflet, 5 warehouse pins)
+ *   6. Featured Families (4 cards, BrandMark stems, locked SKU counts from reference)
+ *   7. Layout CTA (4-item checklist, stat overlay)
+ *   8. Installed At (8 vertical tiles — 3 CSS-only placeholders for missing assets)
+ *   9. Split teasers (Rebate + Specifier)
  *
- * Asset notes:
- *   - vertical-coldstorage, vertical-datacenter, vertical-hospitality: MISSING
- *     rendered as placeholder tiles per Playbook §5.3
- *   - mega-tubularch.jpg: MISSING — placeholder in MegaMenu.astro
- *
- * Verify rules: B.1 (no naked Ⓐ), C.1 (no accreditation), C.2 (no CLEARANCE),
- *               D.1 (no [object Object]), D.2 (<title> set), D.3 (meta description set)
+ * SKU counts (locked from reference v3.14.x): Illuminator 11 · Titan-II 20 · Astra 18 · Connected Systems 9
+ * Brand-mark rule: every Ⓐ in body content MUST be inside .aa span (via BrandMark or manual span).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
@@ -27,152 +22,82 @@ import BrandMark from '../components/BrandMark.astro';
 const heroSlides = [
   {
     id: 0,
-    img: '/images/heroes/hero-illuminator-stadium.jpg',
-    imgAlt: 'Illuminator sports lighter installed in a stadium',
-    eyebrow: 'Commercial & Industrial · DLC Premium',
-    headline: 'Illuminator',
-    subhead: 'Premier sports lighter. Up to 115,000 lumens. 160 lm/W. DLC Premium. Ready for broadcast-grade venues.',
-    stat1: { value: '115,000', label: 'Max lumens' },
-    stat2: { value: '160 lm/W', label: 'Efficacy' },
-    stat3: { value: '10 yr', label: 'Warranty' },
-    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
-    ctaSecondary: { label: 'Learn more', href: '/collections/indoor-industrial' }
+    bgClass: 'img-illuminator',
+    eyebrow: 'Featured · Sports Lighting · LSPL',
+    name: 'Illuminator',
+    gradClass: 'grad-slide0',
+    desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
+    stats: [
+      { num: '116,000', lbl: 'Max Lumens' },
+      { num: '150 lm/W', lbl: 'Efficacy' },
+      { num: '10 yr', lbl: 'Warranty' },
+    ],
+    brandMark: null,
   },
   {
     id: 1,
-    img: '/images/heroes/hero-warehouse-highbay.jpg',
-    imgAlt: 'Titan-II linear high-bay in a warehouse',
-    eyebrow: 'Warehouse & Logistics · DLC Premium',
-    headline: 'Titan-II',
-    subhead: 'Linear high-bay for warehouses and industrial interiors. 3–55W. DLC Premium, built-in 6kVA surge protection.',
-    stat1: { value: '20', label: 'Active SKUs' },
-    stat2: { value: '155 lm/W', label: 'Efficacy' },
-    stat3: { value: '10 yr', label: 'Warranty' },
-    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
-    ctaSecondary: { label: 'Learn more', href: '/collections/indoor-industrial' }
+    bgClass: 'img-titan',
+    eyebrow: 'Featured · High-Bay · LLHB',
+    name: 'Titan-II',
+    gradClass: 'grad-slide1',
+    desc: 'Linear high-bay for warehouses and industrial interiors. 3-WATTselect 85/130/155W. DLC Premium, built-in 6kVA surge.',
+    stats: [
+      { num: '155 W', lbl: 'Max Wattage' },
+      { num: '150+ lm/W', lbl: 'Efficacy' },
+      { num: '90x90', lbl: 'Distribution' },
+    ],
+    brandMark: null,
   },
   {
     id: 2,
-    img: '/images/heroes/hero-outdoor-area.jpg',
-    imgAlt: 'luxoARCH area luminaire on a parking lot',
-    eyebrow: 'Outdoor C&I · DLC Premium',
-    headline: 'luxoARCH',
-    subhead: 'Full-cutoff area luminaire for parking lots, roadways, and site lighting. Utility rebate qualified.',
-    stat1: { value: '18', label: 'Active SKUs' },
-    stat2: { value: '145 lm/W', label: 'Efficacy' },
-    stat3: { value: '5 yr', label: 'Warranty' },
-    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
-    ctaSecondary: { label: 'Learn more', href: '/collections/outdoor-ci' }
+    bgClass: 'img-outdoor',
+    eyebrow: 'Featured · Area Lighting · LSBX',
+    name: 'Liberty',
+    gradClass: 'grad-slide2',
+    desc: null,
+    stats: [
+      { num: 'Type III/IV/V', lbl: 'Optics' },
+      { num: '150 lm/W', lbl: 'Efficacy' },
+      { num: '10 kVA', lbl: 'SPD' },
+    ],
+    brandMark: null,
   },
   {
     id: 3,
-    img: '/images/heroes/hero-controls-panel.jpg',
-    imgAlt: 'ACS connected systems control panel',
-    eyebrow: 'Controls & EM · NLC-Ready',
-    headline: 'ACS',
-    subhead: 'NLC-ready sensors and controls for every ARCH fixture. Occupancy, daylight harvesting, emergency backup.',
-    stat1: { value: '9', label: 'Active SKUs' },
-    stat2: { value: 'NLC', label: 'Certified' },
-    stat3: { value: '5 yr', label: 'Warranty' },
-    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
-    ctaSecondary: { label: 'Learn more', href: '/collections/controls-em' }
-  }
+    bgClass: 'img-proarch',
+    eyebrow: 'Featured · Back-Lit Panel · LBLP',
+    name: null,
+    gradClass: 'grad-slide3',
+    desc: 'Back-lit panel for offices, classrooms, and commercial interiors. 5-WATTselect x 5-CCTselect across 1x4 / 2x2 / 2x4 form factors. TAA Compliant.',
+    stats: [
+      { num: '20 – 50 W', lbl: 'WATTselect' },
+      { num: '2700 – 5000K', lbl: 'CCTselect' },
+      { num: 'TAA', lbl: 'Compliant' },
+    ],
+    brandMark: 'proarch',
+  },
 ];
 
-const categories = [
-  {
-    title: 'Indoor Luminaires',
-    href: '/collections/indoor-industrial',
-    desc: 'High-bay, low-bay, troffer, and strip fixtures. This catalog delivers high-lm/W for the specifier\'s bid sheet, the distributor\'s floor, and the contractor\'s truck.',
-    img: '/images/heroes/hero-warehouse-highbay.jpg',
-    imgAlt: 'Indoor luminaires in a warehouse',
-    families: ['Titan-II', 'Astra', 'Illuminator']
-  },
-  {
-    title: 'Outdoor Luminaires',
-    href: '/collections/outdoor-ci',
-    desc: 'Parking lots to area lights, canopy to flood. Designed for specifiers, stocked for distributors, and ready for every US climate.',
-    img: '/images/heroes/hero-outdoor-area.jpg',
-    imgAlt: 'Outdoor area luminaires in a parking lot',
-    families: ['luxoARCH', 'cityARCH', 'Canopy']
-  },
-  {
-    title: 'Controls & EM',
-    href: '/collections/controls-em',
-    desc: 'NLC-ready sensors, networked controls, and emergency battery backup. One ecosystem — every ARCH fixture.',
-    img: '/images/heroes/hero-controls-panel.jpg',
-    imgAlt: 'Controls and emergency lighting panel',
-    families: ['ACS', 'constANT', 'contrALS']
-  }
-];
-
-const families = [
-  {
-    slug: 'illuminator',
-    name: 'Illuminator',
-    eyebrow: 'luxoARCH · PRO',
-    badge: 'DLC PREMIUM',
-    badgeVariant: 'premium',
-    desc: 'Sports lighter · stadiums + athletic fields',
-    skus: 11,
-    img: '/images/families/family-illuminator.png',
-    imgAlt: 'Illuminator sports lighter',
-    bg: 'light',
-    href: '/collections/indoor-industrial'
-  },
-  {
-    slug: 'titan',
-    name: 'Titan-II',
-    eyebrow: 'lamparARCH · PRO',
-    badge: 'DLC PREMIUM',
-    badgeVariant: 'premium',
-    desc: 'Linear high-bay · warehouse + industrial',
-    skus: 20,
-    img: '/images/families/family-titan.png',
-    imgAlt: 'Titan-II linear high-bay',
-    bg: 'dark',
-    href: '/collections/indoor-industrial'
-  },
-  {
-    slug: 'astra',
-    name: 'Astra',
-    eyebrow: 'planoARCH · PRO+',
-    badge: 'DLC PREMIUM',
-    badgeVariant: 'premium',
-    desc: 'Commercial downlight · retail + hospitality',
-    skus: 18,
-    img: '/images/families/family-astra.png',
-    imgAlt: 'Astra commercial downlight',
-    bg: 'brand',
-    href: '/collections/indoor-industrial'
-  },
-  {
-    slug: 'contrals',
-    name: 'Connected Systems',
-    eyebrow: 'contrALS · BY ACS',
-    badge: 'NLC-READY',
-    badgeVariant: 'nlc',
-    desc: 'NLC-ready sensors + controls · every ARCH fixture',
-    skus: 9,
-    img: '/images/families/family-contrals.png',
-    imgAlt: 'Connected systems sensor',
-    bg: 'dark',
-    href: '/collections/controls-em'
-  }
+const diffSignals = [
+  { num: '5',      lbl: 'US Warehouses',    svg: '<path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/>' },
+  { num: 'DLC',   lbl: 'Premium Listed',    svg: '<circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/>' },
+  { num: 'USA',   lbl: 'TAA Compliant',     svg: '<path d="M3 12h18M12 3v18M3 6h18M3 18h18"/>' },
+  { num: 'UL',    lbl: 'Listed & Tested',   svg: '<path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/>' },
+  { num: '3–10 yr', lbl: 'Tiered Warranty', svg: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>' },
+  { num: '3-Day', lbl: 'US Shipping',       svg: '<path d="M3 9l4-6h10l4 6M3 9v9a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 14h6"/>' },
 ];
 
 const verticals = [
-  { title: 'Warehouse & Logistics',      sub: '3PL facility · OH',      img: '/images/verticals/vertical-warehouse.jpg',     href: '/solutions/warehouse-logistics' },
-  { title: 'Industrial & Manufacturing', sub: 'Auto plant · TX',         img: '/images/verticals/vertical-manufacturing.jpg', href: '/solutions/industrial-manufacturing' },
-  { title: 'Cold Storage & Grocery',     sub: 'Freezer DC · CA',         img: null,                                           href: '/solutions/cold-storage-grocery' },
-  { title: 'Data Center',               sub: 'Hyperscale · VA',          img: null,                                           href: '/solutions/data-center' },
-  { title: 'Healthcare',                sub: 'Outpatient · IL',          img: '/images/verticals/vertical-healthcare.jpg',    href: '/solutions/healthcare' },
-  { title: 'Education',                 sub: 'K-12 retrofit · NJ',       img: '/images/verticals/vertical-education.jpg',     href: '/solutions/education' },
-  { title: 'Hospitality',               sub: 'Hotel reno · MA',          img: null,                                           href: '/solutions/hospitality' },
-  { title: 'Government & Military',     sub: 'Federal logistics · GA',   img: '/images/verticals/vertical-government.jpg',    href: '/solutions/government-military' }
+  { cls: 't1', vert: 'Warehouse & Logistics',      place: '3PL facility · OH',      hasImg: true },
+  { cls: 't2', vert: 'Industrial & Manufacturing', place: 'Auto plant · TX',         hasImg: true },
+  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: false },
+  { cls: 't4', vert: 'Data Center',                place: 'Hyperscale · VA',          hasImg: false },
+  { cls: 't5', vert: 'Healthcare',                 place: 'Outpatient · IL',          hasImg: true },
+  { cls: 't6', vert: 'Education',                  place: 'K-12 retrofit · NJ',       hasImg: true },
+  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: false },
+  { cls: 't8', vert: 'Government & Military',      place: 'Federal logistics · GA',    hasImg: true },
 ];
 ---
-
 <BaseLayout
   title="Archipelago Lighting Group — Specified. Stocked. Shipped."
   description="Commercial and industrial LED lighting. 2,000+ active SKUs. Five US warehouses. Layouts in under 48 hours."
@@ -182,376 +107,391 @@ const verticals = [
   <!-- ==============================================================
        1. HERO CAROUSEL
        ============================================================== -->
-  <section class="hero-section" aria-label="Featured products">
-    <div class="hero-carousel" id="heroCarousel">
+  <section class="hero-carousel" id="heroCarousel" aria-label="Featured products">
+    <div class="hero-carousel-inner">
 
-      {heroSlides.map((slide, i) => (
-        <img
-          class={`hero-image${i === 0 ? ' active' : ''}`}
-          src={slide.img}
-          alt={slide.imgAlt}
-          data-slide={i}
-          width="1280"
-          height="720"
-          loading={i === 0 ? 'eager' : 'lazy'}
-        />
-      ))}
+      <!-- LEFT: Application image layer (cycles) -->
+      <div class="hero-image-stage">
+        {heroSlides.map((slide, i) => (
+          <div class={`hero-image ${slide.bgClass}${i === 0 ? ' active' : ''}`} data-slide={i}></div>
+        ))}
+        <!-- Persistent overlay — stays fixed across all slides -->
+        <div class="hero-persistent">
+          <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
+          <h1>
+            Specified.<br />
+            Stocked.<span class="stop">.</span><br />
+            <span class="accent">Shipped.</span>
+          </h1>
+          <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
+        </div>
+      </div>
 
+      <!-- RIGHT: Content panel (slot-cycling) -->
       <div class="hero-panel">
         <div class="hero-panel-inner">
-
-          <div class="slot" id="slotEyebrow">
-            {heroSlides.map((slide, i) => (
-              <p class={`slot-content hero-eyebrow${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                {slide.eyebrow}
-              </p>
-            ))}
+          <div class="slide-label">
+            <span class="slide-num" id="slideNum">01</span> / 04 · Now shipping
           </div>
 
-          <div class="slot" id="slotHeadline">
-            {heroSlides.map((slide, i) => (
-              <h2 class={`slot-content hero-headline${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                {slide.headline}
-              </h2>
-            ))}
-          </div>
-
-          <div class="slot" id="slotSubhead">
-            {heroSlides.map((slide, i) => (
-              <p class={`slot-content hero-subhead${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                {slide.subhead}
-              </p>
-            ))}
-          </div>
-
-          <div class="slot" id="slotStats">
-            {heroSlides.map((slide, i) => (
-              <div class={`slot-content hero-stats${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                <div class="hero-stat">
-                  <span class="hero-stat-value">{slide.stat1.value}</span>
-                  <span class="hero-stat-label">{slide.stat1.label}</span>
+          <div class="slot-stack">
+            <!-- EYEBROW SLOT -->
+            <div class="slot slot-eyebrow">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <span class="eyebrow">{slide.eyebrow}</span>
                 </div>
-                <div class="hero-stat">
-                  <span class="hero-stat-value">{slide.stat2.value}</span>
-                  <span class="hero-stat-label">{slide.stat2.label}</span>
-                </div>
-                <div class="hero-stat">
-                  <span class="hero-stat-value">{slide.stat3.value}</span>
-                  <span class="hero-stat-label">{slide.stat3.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div class="slot" id="slotCtas">
-            {heroSlides.map((slide, i) => (
-              <div class={`slot-content hero-ctas${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                <a href={slide.ctaPrimary.href} class="btn btn--primary hero-cta-primary">{slide.ctaPrimary.label}</a>
-                <a href={slide.ctaSecondary.href} class="hero-cta-secondary">{slide.ctaSecondary.label} &rsaquo;</a>
-              </div>
-            ))}
-          </div>
-
-          <div class="hero-controls">
-            <button class="hero-prev" id="prevBtn" aria-label="Previous slide">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <div class="hero-dots" role="tablist" aria-label="Slide navigation">
-              {heroSlides.map((_, i) => (
-                <button
-                  class={`carousel-dot${i === 0 ? ' active' : ''}`}
-                  role="tab"
-                  aria-selected={i === 0 ? 'true' : 'false'}
-                  aria-label={`Slide ${i + 1}`}
-                  data-dot={i}
-                ></button>
               ))}
             </div>
-            <button class="hero-next" id="nextBtn" aria-label="Next slide">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-            <span class="hero-counter" id="carouselCounter" aria-live="polite" aria-atomic="true">01 / 04</span>
-          </div>
 
-        </div>
-      </div>
-
-      <div class="hero-overlay-text">
-        <p class="hero-overlay-eyebrow">Commercial &amp; Industrial · DLC Premium</p>
-        <h1 class="hero-overlay-headline">
-          Specified.<br>
-          Stocked.<br>
-          <span class="hero-overlay-accent">Shipped.</span>
-        </h1>
-        <p class="hero-overlay-sub">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       2. TRUST BAR
-       ============================================================== -->
-  <section class="trust-bar" aria-label="Trust signals">
-    <div class="trust-bar-inner">
-      <div class="trust-item">
-        <img src="/brand/alg-brandmark-red.png" alt="ALG" width="24" height="24" loading="lazy" />
-        <span class="trust-label">ALG</span>
-      </div>
-      <div class="trust-divider" aria-hidden="true"></div>
-      <div class="trust-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <span class="trust-label">USA</span>
-      </div>
-      <div class="trust-divider" aria-hidden="true"></div>
-      <div class="trust-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span class="trust-label">UL Listed</span>
-      </div>
-      <div class="trust-divider" aria-hidden="true"></div>
-      <div class="trust-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span class="trust-label">3–10 yr Warranty</span>
-      </div>
-      <div class="trust-divider" aria-hidden="true"></div>
-      <div class="trust-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span class="trust-label">3-Day Ship</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       3. CATEGORY TEASE
-       ============================================================== -->
-  <section class="section section--soft category-section" aria-labelledby="cat-heading">
-    <div class="container">
-      <h2 id="cat-heading" class="section-headline">
-        Lighting that <em>specifies</em>, stocks, and ships.
-      </h2>
-      <p class="section-subhead">
-        From warehouse high-bays to parking-lot area lights. From emergency backup to
-        commercial controls — built for the specifier's bid sheet, the distributor's floor,
-        and the contractor's truck.
-      </p>
-      <div class="category-grid">
-        {categories.map(cat => (
-          <a href={cat.href} class="category-card">
-            <div class="category-card-img">
-              <img src={cat.img} alt={cat.imgAlt} width="400" height="260" loading="lazy" />
-            </div>
-            <div class="category-card-body">
-              <h3 class="category-card-title">{cat.title}</h3>
-              <p class="category-card-desc">{cat.desc}</p>
-              <div class="category-card-families">
-                {cat.families.map(f => (
-                  <span class="family-chip">{f}</span>
-                ))}
-              </div>
-              <span class="category-card-cta">Browse collection &rarr;</span>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       4. LOCATOR MAP
-       ============================================================== -->
-  <section class="section locator-section" aria-labelledby="locator-heading">
-    <div class="container">
-      <div class="locator-header">
-        <div class="locator-header-text">
-          <p class="section-eyebrow">FIND ALG NEAR YOU</p>
-          <h2 id="locator-heading">
-            One map. <span class="text-accent">Three ways to find us.</span>
-          </h2>
-          <p class="section-subhead">
-            Your local team has stocking distributors, and ALG warehouses — all on one
-            map. Search by ZIP, city, or state. Coverage in every US region.
-          </p>
-        </div>
-        <div class="locator-legend">
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--wh"></span>
-            <span>ALG Warehouse</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--rep"></span>
-            <span>Sales Rep</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--dist"></span>
-            <span>Stocking Distributor</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="locator-map-wrap">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse and distributor locator map" role="application"></div>
-      </div>
-
-      <div class="locator-actions">
-        <a href="/find-a-rep" class="btn btn--ghost locator-btn-ghost">Find a Rep</a>
-        <a href="/distributor" class="btn btn--ghost locator-btn-ghost">Become a Distributor</a>
-        <a href="/find-a-rep" class="btn btn--primary">Apply as Sales Rep</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       5. FEATURED FAMILIES
-       ============================================================== -->
-  <section class="section section--soft families-section" aria-labelledby="families-heading">
-    <div class="container">
-      <p class="section-eyebrow">FEATURED FAMILIES</p>
-      <h2 id="families-heading">
-        The families distributors stock<br>and specifiers spec.
-      </h2>
-      <p class="section-subhead">
-        <BrandMark prefix="plano" suffix="RCH" /> families are the connected-systems platform that ties them together
-        — the core of our 2,000+ active SKU catalog.
-      </p>
-      <div class="families-grid">
-        {families.map(fam => (
-          <a href={fam.href} class={`family-card family-card--${fam.bg}`} aria-label={`${fam.name} — ${fam.desc}`}>
-            <div class="family-card-badge-wrap">
-              <span class={`family-badge family-badge--${fam.badgeVariant}`}>{fam.badge}</span>
-            </div>
-            <div class="family-card-img">
-              <img src={fam.img} alt={fam.imgAlt} width="320" height="240" loading="lazy" />
-            </div>
-            <div class="family-card-body">
-              <p class="family-card-eyebrow">{fam.eyebrow}</p>
-              <h3 class="family-card-name">{fam.name}</h3>
-              <p class="family-card-desc">{fam.desc}</p>
-              <div class="family-card-footer">
-                <span class="family-card-skus">{fam.skus} SKUs</span>
-                <span class="family-card-link">VIEW &rarr;</span>
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       6. LAYOUT CTA
-       ============================================================== -->
-  <section class="layout-cta-section" aria-labelledby="layout-heading">
-    <div class="layout-cta-inner">
-      <div class="layout-cta-text">
-        <p class="section-eyebrow layout-eyebrow">PHOTOMETRIC LAYOUT</p>
-        <h2 id="layout-heading">
-          Get a lighting layout in<br>
-          <span class="text-accent">under 48hrs.</span>
-        </h2>
-        <p class="layout-cta-body">
-          Every layout comes from a photometric expert with platform-grade precision.
-          Provide the space with product selection or let us recommend — fixture count,
-          layout, and lux levels included.
-        </p>
-        <ul class="layout-checklist" role="list">
-          <li>Photometric calculations per IES standard</li>
-          <li>Product selection with short-list options</li>
-          <li>Fixture count + BOM</li>
-        </ul>
-        <div class="layout-cta-actions">
-          <a href="/support/layout-request" class="btn btn--primary">Request a Layout</a>
-          <a href="/resources/sell-sheets" class="layout-sample-link">See sample layouts (PDF+) &rsaquo;</a>
-        </div>
-      </div>
-      <div class="layout-cta-visual" aria-hidden="true">
-        <div class="layout-grid-mock">
-          {Array.from({ length: 16 }, (_, i) => (
-            <div class={`layout-grid-cell${i % 2 === 0 ? ' layout-grid-cell--lit' : ''}`}></div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==============================================================
-       7. INSTALLED AT
-       ============================================================== -->
-  <section class="section installed-section" aria-labelledby="installed-heading">
-    <div class="container">
-      <p class="section-eyebrow">INSTALLED AT</p>
-      <h2 id="installed-heading">
-        Where ALG lighting goes to <span class="text-accent">work.</span>
-      </h2>
-      <p class="section-subhead">
-        From cold storage in Cincinnati to a stadium retrofit in Sacramento — real
-        installations, real results.
-      </p>
-      <div class="verticals-grid">
-        {verticals.map(v => (
-          <a href={v.href} class="vertical-tile" aria-label={`${v.title} — ${v.sub}`}>
-            {v.img
-              ? <img src={v.img} alt={v.title} width="320" height="240" loading="lazy" />
-              : <div class="vertical-placeholder">
-                  <span class="placeholder-label">Photography pending</span>
+            <!-- PRODUCT NAME SLOT -->
+            <div class="slot slot-name">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  {slide.brandMark === 'proarch'
+                    ? <h2 class={`display-product ${slide.gradClass}`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
+                    : <h2 class={`display-product ${slide.gradClass}`}>{slide.name}</h2>
+                  }
                 </div>
-            }
-            <div class="vertical-overlay">
-              <h3 class="vertical-title">{v.title}</h3>
-              <p class="vertical-sub">{v.sub}</p>
+              ))}
             </div>
-          </a>
+
+            <!-- DESCRIPTION SLOT -->
+            <div class="slot slot-desc">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  {slide.id === 2
+                    ? <p>Commercial area lighting for parking, campuses, and outdoor grounds. Type III/IV/V optics. surge<span class="aa">Ⓐ</span>RMOR built in.</p>
+                    : <p>{slide.desc}</p>
+                  }
+                </div>
+              ))}
+            </div>
+
+            <!-- STATS SLOT -->
+            <div class="slot slot-stats">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <div class="stat-row">
+                    {slide.stats.map(s => (
+                      <div class="stat">
+                        <div class="stat-num">{s.num}</div>
+                        <div class="stat-lbl">{s.lbl}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- CTA SLOT -->
+            <div class="slot slot-cta">
+              {heroSlides.map((_, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <div class="cta-pair">
+                    <a href="/resources/spec-sheets" class="cta-primary">Download Spec</a>
+                    <a href="/collections" class="cta-link">Learn more ›</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carousel controls -->
+    <div class="carousel-controls">
+      <div class="carousel-dots">
+        {heroSlides.map((slide, i) => (
+          <button
+            class={`carousel-dot${i === 0 ? ' active' : ''}`}
+            data-slide-to={i}
+            aria-label={slide.name ?? 'Slide'}
+          ></button>
+        ))}
+      </div>
+      <div class="carousel-arrows">
+        <span class="carousel-counter" id="carouselCounter">01 / 04</span>
+        <button class="carousel-arrow" id="prevBtn" aria-label="Previous slide">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 1L3 7l6 6"/></svg>
+        </button>
+        <button class="carousel-arrow" id="nextBtn" aria-label="Next slide">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 1l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       2. DIFFERENTIATION STRIP (6 trust signals)
+       ============================================================== -->
+  <div class="diff-strip" aria-label="Trust signals">
+    <div class="diff-inner">
+      {diffSignals.map(sig => (
+        <div class="diff-item">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" set:html={sig.svg} aria-hidden="true"></svg>
+          </div>
+          <div class="diff-text">
+            <div class="diff-num">{sig.num}</div>
+            <div class="diff-lbl">{sig.lbl}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       3. PERSONA SEGMENTER
+       ============================================================== -->
+  <div class="persona-strip" aria-label="Persona selector">
+    <div class="persona-inner">
+      <span class="persona-label">I am a…</span>
+      <div class="persona-chips">
+        <a href="/distributor" class="persona-chip active" data-persona="distributor">Distributor</a>
+        <button class="persona-chip" data-persona="specifier" title="Coming soon">Specifier / Engineer</button>
+        <button class="persona-chip" data-persona="contractor" title="Coming soon">Contractor</button>
+        <button class="persona-chip" data-persona="esco" title="Coming soon">ESCO</button>
+        <button class="persona-chip" data-persona="facility-manager" title="Coming soon">Facility Manager</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       4. WHAT WE MAKE — Category tease (3 cards)
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="wm-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">What we make</div>
+      <h2 id="wm-heading" class="sec-title">Lighting that <span class="accent">specifies</span>, stocks, and ships.</h2>
+      <p class="sec-sub">From warehouse high-bays to parking-lot area lights, from emergency backup to networked controls — built for the specifier's bid sheet, the distributor's floor, and the contractor's truck.</p>
+      <div class="what-we-make">
+        <a href="/collections/indoor" class="wm-card indoor">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Indoor Luminaires</h3>
+            <p>Troffers, panels, high-bays, downlights. The catalog distributors stock and specifiers spec.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="lampar" suffix="RCH" /> · <BrandMark prefix="plano" suffix="RCH" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/outdoor" class="wm-card outdoor">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Outdoor Luminaires</h3>
+            <p>Wall packs, parking-lot area lights, canopy, floods, and bollards. Built for the elements.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="city" suffix="RCH" /> · <BrandMark prefix="luxo" suffix="RCH" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/controls-em" class="wm-card controls">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Controls &amp; EM</h3>
+            <p><BrandMark prefix="contr" suffix="LS" /> three-tier (ECO · PRO · PRO+) and <BrandMark prefix="const" suffix="NT" /> emergency drivers and egress / exit signs.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="contr" suffix="LS" /> · <BrandMark prefix="const" suffix="NT" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       5. LOCATOR MAP
+       ============================================================== -->
+  <section class="locator-section" aria-labelledby="loc-heading">
+    <div class="locator-inner">
+      <div class="sec-eyebrow">Find your local support</div>
+      <h2 id="loc-heading" class="sec-title">One map. <span class="accent">Three ways to find us.</span></h2>
+      <p class="sec-sub">Your local sales rep, nearest stocking distributor, and ALG warehouse — all on one map. Search by ZIP, city, or state.</p>
+      <div class="locator-toolbar">
+        <div class="loc-filter-group">
+          <span class="loc-filter-label">Show:</span>
+          <span class="loc-pill active" data-filter="all">All</span>
+          <span class="loc-pill" data-filter="warehouse">
+            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(5)</span>
+          </span>
+          <span class="loc-pill" data-filter="rep">
+            <span class="kind-dot rep"></span>Sales Reps
+          </span>
+          <span class="loc-pill" data-filter="dist">
+            <span class="kind-dot dist"></span>Distributors
+          </span>
+        </div>
+        <div class="loc-search-group">
+          <input type="text" class="loc-search-input" placeholder="ZIP, city, or state" aria-label="Search by ZIP, city, or state" />
+          <button class="loc-search-btn">Find Nearest</button>
+        </div>
+      </div>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+      <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse and distributor locator map" role="application"></div>
+      <div class="locator-actions">
+        <a href="/find-a-rep" class="loc-action-link">Find a Rep or Distributor</a>
+        <a href="/distributor" class="loc-action-link">Become a Distributor</a>
+        <a href="/careers/sales-rep" class="loc-action-link">Apply as Sales Rep</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       6. FEATURED FAMILIES (4 cards — locked SKU counts from reference)
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="fam-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">Featured families</div>
+      <h2 id="fam-heading" class="sec-title">The families distributors stock and specifiers spec.</h2>
+      <p class="sec-sub">Three fixture families plus the connected systems platform that ties them together — the core of our 2,000+ active SKU catalog.</p>
+      <div class="families-rail">
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img cream">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-illuminator.png" alt="Illuminator sports lighter" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="luxo" suffix="RCH" /> · PRO</div>
+            <div class="fam-name">Illuminator</div>
+            <div class="fam-desc">Sports lighter · stadiums + athletic fields</div>
+            <div class="fam-meta"><span class="fam-skucount">11 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img dk">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-titan.png" alt="Titan-II linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="lampar" suffix="RCH" /> · PRO</div>
+            <div class="fam-name">Titan-II</div>
+            <div class="fam-desc">Linear high-bay · warehouse + industrial</div>
+            <div class="fam-meta"><span class="fam-skucount">20 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img brand">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-astra.png" alt="Astra commercial downlight with white trim and chrome reflector" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="plano" suffix="RCH" /> · PRO+</div>
+            <div class="fam-name">Astra</div>
+            <div class="fam-desc">Commercial downlight · retail + hospitality</div>
+            <div class="fam-meta"><span class="fam-skucount">18 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/controls-em" class="fam-card">
+          <div class="fam-img dark2">
+            <span class="fam-tag">NLC-Ready</span>
+            <img class="fam-product" src="/images/families/family-contrals.png" alt="contrALS outdoor PIR occupancy sensor and controller pair" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="contr" suffix="LS" /> · by <BrandMark prefix="" suffix="CS" /></div>
+            <div class="fam-name">Connected Systems</div>
+            <div class="fam-desc">NLC-ready sensors + controls · every <span class="aa">Ⓐ</span>RCH fixture</div>
+            <div class="fam-meta"><span class="fam-skucount">9 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       7. LAYOUT CTA
+       ============================================================== -->
+  <section class="layout-cta" aria-labelledby="lc-heading">
+    <div class="layout-cta-inner">
+      <div>
+        <div class="sec-eyebrow">Free professional service</div>
+        <h2 id="lc-heading">Get a lighting layout in <span class="accent">under 48hrs.</span></h2>
+        <p>Send us your floor plan. Our layout team returns a photometric layout with product callouts, IES files, fixture counts, and footcandle calculations — at no cost.</p>
+        <div class="layout-features">
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Photometric calculations per IES standards</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Product callouts with exact SKUs</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> IES files included</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Fixture count + BOM</div>
+        </div>
+        <div class="layout-cta-actions">
+          <a href="/support/layout-request" class="cta-primary">Request a Layout</a>
+          <a href="/resources/sample-layouts" class="cta-secondary on-dark">See Sample Layouts (100+)</a>
+        </div>
+      </div>
+      <div class="layout-visual" aria-hidden="true">
+        <div class="lv-grid">
+          <div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell bright"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell med"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell"></div><div class="lv-cell dim"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        </div>
+        <div class="lv-overlay">90 fc avg · 0.65 uniformity</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       8. INSTALLED AT — 8 vertical tiles
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="inst-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">Installed at</div>
+      <h2 id="inst-heading" class="sec-title">Where ALG lighting goes to <span class="accent">work.</span></h2>
+      <p class="sec-sub">From cold storage in Cincinnati to a stadium retrofit in Sacramento — real installations, real results.</p>
+      <div class="installed-grid">
+        {verticals.map(v => (
+          <div class={`installed-tile ${v.cls}${!v.hasImg ? ' placeholder' : ''}`}>
+            <div class="installed-label">
+              <div class="il-vert">{v.vert}</div>
+              <div class="il-place">{v.place}</div>
+              {!v.hasImg && <div class="placeholder-tag">Photography pending</div>}
+            </div>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
   <!-- ==============================================================
-       8. SPLIT TEASERS
+       9. SPLIT TEASERS — Rebate + Specifier
        ============================================================== -->
-  <section class="section section--soft split-section" aria-label="Rebate and specifier resources">
-    <div class="container">
-      <div class="split-grid">
-
-        <div class="split-card">
-          <p class="section-eyebrow">UTILITY REBATES</p>
-          <h2 class="split-card-headline">
-            Most projects qualify for utility rebates.
-          </h2>
-          <p class="split-card-body">
-            Search by ZIP-mapped rebate library. ALG-stocked family SKUs often return
-            40–90% of project cost in qualifying utility incentives.
-          </p>
-          <div class="split-stat-row">
-            <div class="split-stat">
-              <span class="split-stat-value">2,400+</span>
-              <span class="split-stat-label">Qualifying SKUs</span>
+  <section class="content-section" aria-label="Rebate and specifier resources">
+    <div class="section-inner">
+      <div class="split-teasers">
+        <div class="teaser teaser-rebate">
+          <div class="sec-eyebrow">Find your rebate</div>
+          <h3>Most projects qualify for utility rebates.</h3>
+          <p>Search by ZIP and product family. Rebates can offset 15–40% of project cost in qualifying utilities.</p>
+          <div class="rebate-stat">
+            <div>
+              <div class="rebate-stat-num">2,400+</div>
+              <div class="rebate-stat-lbl">Active utility programs</div>
             </div>
-            <div class="split-stat">
-              <span class="split-stat-value">$0.10–0.30</span>
-              <span class="split-stat-label">Per kWh saved</span>
+            <div>
+              <div class="rebate-stat-num">$0.10-0.30</div>
+              <div class="rebate-stat-lbl">Per sqft typical</div>
             </div>
           </div>
-          <a href="/resources/rebate-center" class="btn btn--primary">Find Rebates &rarr;</a>
+          <a href="/resources/rebate-center" class="cta-primary">Open Rebate Center</a>
         </div>
-
-        <div class="split-card">
-          <p class="section-eyebrow">SPECIFIER RESOURCES</p>
-          <h2 class="split-card-headline">
-            Spec sheets, IES files, training.
-          </h2>
-          <p class="split-card-body">
-            Everything you need for the bid sheet — and the lunch-and-learn for your team.
-          </p>
+        <div class="teaser teaser-spec">
+          <div class="sec-eyebrow">For specifiers</div>
+          <h3>Spec sheets, IES files, training.</h3>
+          <p>Everything you need for the bid sheet — and the lunch-and-learn for your team.</p>
           <div class="spec-resource-grid">
-            <a href="/resources/ies-files" class="spec-res-item">IES Photometric Library <span class="arr">&rarr;</span></a>
-            <a href="/resources/spec-sheets" class="spec-res-item">Resource Library <span class="arr">&rarr;</span></a>
-            <a href="/resources/sell-sheets" class="spec-res-item">TAA Documentation <span class="arr">&rarr;</span></a>
-            <a href="/resources/catalog" class="spec-res-item">Training Center <span class="arr">&rarr;</span></a>
+            <a href="/resources/ies-files" class="spec-res-item">IES Photometric Library <span class="arr">&#8594;</span></a>
+            <a href="/resources/spec-sheets" class="spec-res-item">Resource Library <span class="arr">&#8594;</span></a>
+            <a href="/resources/taa" class="spec-res-item">TAA Documentation <span class="arr">&#8594;</span></a>
+            <a href="/training" class="spec-res-item">Training Center <span class="arr">&#8594;</span></a>
           </div>
-          <a href="/resources/spec-sheets" class="btn btn--primary">Browse Spec Resources</a>
+          <a href="/resources/spec-sheets" class="cta-primary">Browse Spec Resources</a>
         </div>
-
       </div>
     </div>
   </section>
@@ -560,1024 +500,984 @@ const verticals = [
 
 <style>
   /* ============================================================
-     HERO
+     LOCAL TOKENS
      ============================================================ */
-  .hero-section {
-    position: relative;
-    width: 100%;
-    height: clamp(480px, 60vw, 720px);
-    background: var(--color-ink, #111111);
-    overflow: hidden;
+  :root {
+    --transition: 0.2s ease;
+    --cascade: 0.35s ease;
+    --radius: 8px;
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.18);
+    --dark: #0c0d12;
+    --dark2: #14161e;
+    --brand: var(--color-alg-red, #F32740);
+    --brand-dk: var(--color-alg-red-dark, #C41E32);
+    --ink: #111418;
+    --ink2: #3a3f4a;
+    --ink3: #6b7280;
+    --ink4: #9ca3af;
+    --bg: #ffffff;
   }
 
+  /* ============================================================
+     HERO CAROUSEL
+     ============================================================ */
   .hero-carousel {
     position: relative;
     width: 100%;
-    height: 100%;
+    overflow: hidden;
+    background: var(--dark);
   }
-
+  .hero-carousel-inner {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    min-height: 640px;
+  }
+  .hero-image-stage {
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+  }
   .hero-image {
     position: absolute;
     inset: 0;
-    width: 60%;
-    height: 100%;
-    object-fit: cover;
+    background: linear-gradient(135deg, #0c0d12 0%, #14161e 100%);
     opacity: 0;
-    transition: opacity 600ms ease;
+    transition: opacity 800ms ease;
   }
   .hero-image.active { opacity: 1; }
+  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
+  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
+  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
+  .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
 
-  .hero-carousel::before {
-    content: '';
+  .hero-persistent {
     position: absolute;
-    inset: 0;
-    width: 65%;
-    background: linear-gradient(to right, rgba(17,17,17,0.5) 0%, rgba(17,17,17,0.1) 80%, transparent 100%);
-    z-index: 1;
+    left: 56px;
+    bottom: 56px;
+    z-index: 5;
     pointer-events: none;
+    color: #fff;
+    max-width: 640px;
+  }
+  .p-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+  .p-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--brand);
+  }
+  .hero-persistent h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(56px, 7.5vw, 108px);
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: #fff;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+  }
+  .hero-persistent h1 .stop { color: var(--brand); }
+  .hero-persistent h1 .accent { color: var(--brand); }
+  .hero-persistent .tag {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    margin-top: 22px;
+    max-width: 420px;
+    line-height: 1.5;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
   }
 
   .hero-panel {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 42%;
-    height: 100%;
-    background: rgba(17,17,17,0.92);
-    z-index: 2;
-    display: flex;
-    align-items: center;
-  }
-
-  .hero-panel-inner {
-    padding: 40px 48px;
-    width: 100%;
+    background: var(--dark2);
+    color: #fff;
+    padding: 64px 56px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
   }
-
-  .slot { position: relative; }
-
-  .slot-content {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 400ms ease, transform 400ms ease;
+  .hero-panel::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(243,39,64,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(201,168,118,0.06) 0%, transparent 50%);
+  }
+  .hero-panel-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .slide-num { color: var(--brand); font-weight: 700; }
+
+  .slot-stack { display: flex; flex-direction: column; flex: 1; }
+  .slot { position: relative; }
+  .slot-eyebrow { min-height: 32px; margin-bottom: 10px; }
+  .slot-name { min-height: 72px; margin-bottom: 18px; }
+  .slot-desc { min-height: 72px; margin-bottom: 26px; }
+  .slot-stats { min-height: 80px; margin-bottom: 26px; }
+  .slot-cta { min-height: 48px; }
+  .slot-content {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--cascade), transform var(--cascade);
+    pointer-events: none;
   }
   .slot-content.active {
     opacity: 1;
     transform: translateY(0);
-    position: relative;
+    pointer-events: auto;
   }
+  .slot-eyebrow .slot-content { transition-delay: 0ms; }
+  .slot-name .slot-content { transition-delay: 80ms; }
+  .slot-desc .slot-content { transition-delay: 160ms; }
+  .slot-stats .slot-content { transition-delay: 240ms; }
+  .slot-cta .slot-content { transition-delay: 320ms; }
 
-  .hero-eyebrow {
-    font-size: 11px;
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
     font-weight: 600;
+  }
+  .display-product {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .grad-slide0 { background-image: linear-gradient(135deg, #f0a932 0%, #F32740 100%); }
+  .grad-slide1 { background-image: linear-gradient(135deg, #e8ecf0 0%, #f0a932 100%); }
+  .grad-slide2 { background-image: linear-gradient(135deg, #fff8eb 0%, #c9a876 100%); }
+  .grad-slide3 { background-image: linear-gradient(135deg, #ffffff 0%, #a8c4d8 100%); }
+
+  .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .stat { padding: 14px 16px; background: var(--dark2); }
+  .stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 2px;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-alg-red, #C8102E);
-    margin: 0;
+    color: var(--ink3);
   }
 
-  .hero-headline {
-    font-size: clamp(1.75rem, 3vw, 2.75rem);
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.1;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-subhead {
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.55;
-    margin: 0;
-    max-width: 340px;
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
-
-  .hero-stat-value {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-
-  .hero-stat-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-  }
-
-  .hero-ctas {
-    display: flex;
+  .cta-pair { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .cta-primary {
+    display: inline-flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .hero-cta-primary {
+    padding: 12px 24px;
+    background: var(--brand);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 10px 20px;
-    border-radius: 3px;
-  }
-
-  .hero-cta-secondary {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.8);
     text-decoration: none;
-    transition: color 150ms ease;
-  }
-  .hero-cta-secondary:hover { color: #fff; }
-
-  .hero-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .hero-prev, .hero-next {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 3px;
+    border-radius: 4px;
+    transition: background var(--transition);
+    border: none;
     cursor: pointer;
+  }
+  .cta-primary:hover { background: var(--brand-dk); }
+  .cta-link {
     color: #fff;
-    transition: background 150ms ease;
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 2px;
+    transition: border-color var(--transition);
   }
-  .hero-prev:hover, .hero-next:hover { background: rgba(255,255,255,0.2); }
+  .cta-link:hover { border-color: #fff; }
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(17,20,24,0.25);
+    border-radius: 4px;
+    transition: all var(--transition);
+  }
+  .cta-secondary:hover { background: rgba(17,20,24,0.06); }
+  .cta-secondary.on-dark { color: #fff; border-color: rgba(255,255,255,0.4); }
+  .cta-secondary.on-dark:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
 
-  .hero-dots {
+  .carousel-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    z-index: 10;
     display: flex;
-    gap: 6px;
-    flex: 1;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
   }
-
+  .carousel-dots { display: flex; gap: 10px; align-items: center; }
   .carousel-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+    width: 28px;
+    height: 3px;
     background: rgba(255,255,255,0.3);
     border: none;
     cursor: pointer;
+    transition: background var(--transition), width var(--transition);
     padding: 0;
-    transition: background 200ms ease, transform 200ms ease;
+    border-radius: 2px;
   }
-  .carousel-dot.active {
-    background: var(--color-alg-red, #C8102E);
-    transform: scale(1.3);
-  }
-
-  .hero-counter {
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-  }
-
-  .hero-overlay-text {
-    position: absolute;
-    bottom: 48px;
-    left: 0;
-    width: 55%;
-    padding-inline: var(--container-pad, 24px);
-    z-index: 3;
-  }
-
-  .hero-overlay-eyebrow {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-    margin: 0 0 8px;
-  }
-
-  .hero-overlay-headline {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 800;
+  .carousel-dot:hover { background: rgba(255,255,255,0.55); }
+  .carousel-dot.active { background: var(--brand); width: 48px; }
+  .carousel-arrows { display: flex; gap: 8px; align-items: center; }
+  .carousel-arrow {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.08);
     color: #fff;
-    line-height: 1.0;
-    margin: 0 0 12px;
-    letter-spacing: -0.03em;
-  }
-
-  .hero-overlay-accent { color: var(--color-alg-red, #C8102E); }
-
-  .hero-overlay-sub {
-    font-size: 14px;
-    color: rgba(255,255,255,0.7);
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  /* ============================================================
-     TRUST BAR
-     ============================================================ */
-  .trust-bar {
-    background: var(--color-bg-soft, #F7F7F7);
-    border-bottom: 1px solid var(--color-border, #E5E5E5);
-  }
-
-  .trust-bar-inner {
-    max-width: var(--container-max, 1280px);
-    margin-inline: auto;
-    padding: 14px var(--container-pad, 24px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    cursor: pointer;
+    transition: all var(--transition);
+    backdrop-filter: blur(8px);
+  }
+  .carousel-arrow:hover { background: var(--brand); border-color: var(--brand); }
+  .carousel-arrow svg { width: 14px; height: 14px; }
+  .carousel-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    padding: 0 12px;
+    min-width: 64px;
   }
 
-  .trust-item {
+  /* ============================================================
+     DIFFERENTIATION STRIP
+     ============================================================ */
+  .diff-strip {
+    background: var(--bg);
+    padding: 36px 28px;
+    border-bottom: 1px solid rgba(17,20,24,0.06);
+  }
+  .diff-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+  }
+  .diff-item { display: flex; align-items: center; gap: 14px; }
+  .diff-icon { width: 38px; height: 38px; color: var(--brand); flex-shrink: 0; }
+  .diff-icon svg { width: 100%; height: 100%; }
+  .diff-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .diff-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-top: 2px;
+  }
+
+  /* ============================================================
+     PERSONA STRIP
+     ============================================================ */
+  .persona-strip {
+    background: var(--dark);
+    padding: 20px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .persona-inner {
+    max-width: 1440px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 20px;
-    color: var(--color-ink-soft, #444444);
+    gap: 24px;
+    flex-wrap: wrap;
   }
-
-  .trust-label {
-    font-size: 12px;
+  .persona-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
     font-weight: 600;
-    letter-spacing: 0.04em;
     white-space: nowrap;
   }
-
-  .trust-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--color-border, #E5E5E5);
-    flex-shrink: 0;
+  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+  .persona-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 8px 18px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
   }
+  .persona-chip:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .persona-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .persona-chip.active:hover { background: var(--brand-dk); }
 
   /* ============================================================
-     SECTION COMMON
+     SHARED SECTION STYLES
      ============================================================ */
-  .section-eyebrow {
+  .content-section { padding: 100px 28px; }
+  .section-inner { max-width: 1440px; margin: 0 auto; }
+  .sec-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-alg-red, #C8102E);
-    margin: 0 0 12px;
-  }
-
-  .section-headline {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--brand);
     font-weight: 700;
-    color: var(--color-ink, #111111);
-    line-height: 1.15;
-    margin: 0 0 16px;
+    margin-bottom: 16px;
+  }
+  .sec-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
     letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 16px;
   }
-
-  .section-headline em {
-    font-style: normal;
-    color: var(--color-alg-red, #C8102E);
-  }
-
-  .section-subhead {
-    font-size: 15px;
-    color: var(--color-ink-soft, #444444);
+  .sec-title .accent { color: var(--brand); }
+  .sec-sub {
+    font-size: 17px;
     line-height: 1.6;
-    margin: 0 0 40px;
-    max-width: 640px;
+    color: var(--ink2);
+    max-width: 680px;
+    margin-bottom: 48px;
   }
-
-  .text-accent { color: var(--color-alg-red, #C8102E); }
 
   /* ============================================================
-     CATEGORY TEASE
+     WHAT WE MAKE
      ============================================================ */
-  .category-grid {
+  .what-we-make {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
-
-  .category-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
+  .wm-card {
+    background: var(--bg);
+    border: 1px solid rgba(17,20,24,0.08);
+    border-radius: var(--radius);
     overflow: hidden;
-    border: 1px solid var(--color-border, #E5E5E5);
-    background: #fff;
     text-decoration: none;
-    transition: box-shadow 200ms ease, transform 200ms ease;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition);
   }
-  .category-card:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
-    transform: translateY(-3px);
-  }
-
-  .category-card-img {
-    width: 100%;
-    aspect-ratio: 16/10;
+  .wm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .wm-img {
+    height: 200px;
+    background: var(--dark2);
     overflow: hidden;
-    background: var(--color-bg-strong, #F0F0F0);
   }
-  .category-card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 400ms ease;
-  }
-  .category-card:hover .category-card-img img { transform: scale(1.04); }
-
-  .category-card-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-  }
-
-  .category-card-title {
-    font-size: 16px;
+  .wm-card.indoor .wm-img { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
+  .wm-card.outdoor .wm-img { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
+  .wm-card.controls .wm-img { background: url('/images/heroes/hero-controls-panel.jpg') center/cover no-repeat; }
+  .wm-body { padding: 28px 28px 32px; }
+  .wm-body h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--color-ink, #111111);
-    margin: 0;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
   }
-
-  .category-card-desc {
-    font-size: 13px;
-    color: var(--color-ink-soft, #444444);
-    line-height: 1.5;
-    margin: 0;
-    flex: 1;
-  }
-
-  .category-card-families {
+  .wm-body p { font-size: 15px; line-height: 1.55; color: var(--ink2); margin-bottom: 22px; }
+  .wm-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17,20,24,0.08);
   }
-
-  .family-chip {
+  .wm-sub-brands {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--ink2);
     font-weight: 600;
-    color: var(--color-ink-mute, #6B6B6B);
-    background: var(--color-bg-strong, #F0F0F0);
-    padding: 3px 8px;
-    border-radius: 2px;
-    letter-spacing: 0.04em;
   }
-
-  .category-card-cta {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--color-alg-red, #C8102E);
-    letter-spacing: 0.04em;
-    margin-top: 4px;
-  }
+  .wm-arrow { font-size: 13px; color: var(--brand); font-weight: 700; }
 
   /* ============================================================
      LOCATOR MAP
      ============================================================ */
   .locator-section {
-    background: var(--color-ink, #111111);
+    background: var(--dark);
     color: #fff;
+    padding: 100px 28px;
   }
-
-  .locator-section .section-subhead { color: rgba(255,255,255,0.65); }
-  .locator-section h2 { color: #fff; }
-
-  .locator-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
-
-  .locator-header-text { flex: 1; min-width: 280px; }
-
-  .locator-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-shrink: 0;
-    padding-top: 8px;
-  }
-
-  .legend-item {
+  .locator-inner { max-width: 1440px; margin: 0 auto; }
+  .locator-section .sec-title { color: #fff; }
+  .locator-section .sec-sub { color: var(--ink4); }
+  .locator-toolbar {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .loc-filter-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .loc-filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+  }
+  .loc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.06);
     color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
   }
-
-  .legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .loc-pill.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .loc-pill:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
+  .loc-count { color: var(--ink3); }
+  .kind-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .kind-dot.wh { background: var(--brand); }
+  .kind-dot.rep { background: #4ade80; }
+  .kind-dot.dist { background: #60a5fa; }
+  .loc-search-group { display: flex; gap: 8px; }
+  .loc-search-input {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    width: 220px;
   }
-  .legend-dot--wh   { background: var(--color-alg-red, #C8102E); box-shadow: 0 0 0 3px rgba(200,16,46,0.3); }
-  .legend-dot--rep  { background: #4A9EFF; box-shadow: 0 0 0 3px rgba(74,158,255,0.3); }
-  .legend-dot--dist { background: #F9A825; box-shadow: 0 0 0 3px rgba(249,168,37,0.3); }
-
-  .locator-map-wrap {
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 24px;
+  .loc-search-input::placeholder { color: var(--ink3); }
+  .loc-search-btn {
+    padding: 8px 18px;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background var(--transition);
   }
-
+  .loc-search-btn:hover { background: var(--brand-dk); }
   .locator-map {
-    width: 100%;
-    height: 400px;
-    background: #1a1a2e;
+    height: 420px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 12px;
   }
-
   .locator-actions {
     display: flex;
-    gap: 12px;
+    gap: 24px;
+    margin-top: 32px;
     flex-wrap: wrap;
   }
-
-  .locator-btn-ghost {
-    color: rgba(255,255,255,0.85) !important;
-    border-color: rgba(255,255,255,0.35) !important;
+  .loc-action-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: color var(--transition), border-color var(--transition);
   }
-  .locator-btn-ghost:hover {
-    background: rgba(255,255,255,0.1) !important;
-    color: #fff !important;
-    border-color: #fff !important;
-  }
+  .loc-action-link:hover { color: #fff; border-color: #fff; }
 
   /* ============================================================
      FEATURED FAMILIES
      ============================================================ */
-  .families-grid {
+  .families-rail {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
   }
-
-  .family-card {
+  .fam-card {
+    background: var(--bg);
+    border: 1px solid rgba(17,20,24,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition);
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--color-border, #E5E5E5);
-    text-decoration: none;
+  }
+  .fam-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .fam-img {
     position: relative;
-    transition: box-shadow 200ms ease, transform 200ms ease;
-  }
-  .family-card:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.14);
-    transform: translateY(-3px);
-  }
-
-  .family-card--light { background: #F5F0EB; }
-  .family-card--dark  { background: #1A1A1A; }
-  .family-card--brand { background: var(--color-alg-red, #C8102E); }
-
-  .family-card-badge-wrap {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 2;
-  }
-
-  .family-badge {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    background: rgba(17,17,17,0.75);
-    color: #fff;
-  }
-
-  .family-card-img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    overflow: hidden;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    overflow: hidden;
   }
-  .family-card-img img {
-    width: 100%;
-    height: 100%;
+  .fam-img.cream { background: #f5f0e8; }
+  .fam-img.dk { background: var(--dark2); }
+  .fam-img.brand { background: var(--brand); }
+  .fam-img.dark2 { background: #1a1d28; }
+  .fam-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+  .fam-product {
+    max-height: 180px;
+    width: auto;
     object-fit: contain;
     display: block;
-    transition: transform 400ms ease;
   }
-  .family-card:hover .family-card-img img { transform: scale(1.05); }
-
-  .family-card-body {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-  }
-
-  .family-card-eyebrow {
+  .fam-body { padding: 20px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+  .fam-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin: 0;
+    color: var(--ink3);
+    font-weight: 600;
+    margin-bottom: 8px;
   }
-  .family-card--light .family-card-eyebrow { color: var(--color-ink-mute, #6B6B6B); }
-  .family-card--dark  .family-card-eyebrow { color: rgba(255,255,255,0.5); }
-  .family-card--brand .family-card-eyebrow { color: rgba(255,255,255,0.75); }
-
-  .family-card-name {
-    font-size: 20px;
+  .fam-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
     font-weight: 700;
-    margin: 0;
-    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
   }
-  .family-card--light .family-card-name { color: var(--color-ink, #111111); }
-  .family-card--dark  .family-card-name { color: #fff; }
-  .family-card--brand .family-card-name { color: #fff; }
-
-  .family-card-desc {
-    font-size: 12px;
-    line-height: 1.45;
-    margin: 0;
-    flex: 1;
-  }
-  .family-card--light .family-card-desc { color: var(--color-ink-soft, #444444); }
-  .family-card--dark  .family-card-desc { color: rgba(255,255,255,0.6); }
-  .family-card--brand .family-card-desc { color: rgba(255,255,255,0.8); }
-
-  .family-card-footer {
+  .fam-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; flex: 1; margin-bottom: 16px; }
+  .fam-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 14px;
+    border-top: 1px solid rgba(17,20,24,0.08);
   }
-  .family-card--dark  .family-card-footer,
-  .family-card--brand .family-card-footer { border-top-color: rgba(255,255,255,0.12); }
-
-  .family-card-skus {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .family-card--light .family-card-skus { color: var(--color-ink-mute, #6B6B6B); }
-  .family-card--dark  .family-card-skus { color: rgba(255,255,255,0.4); }
-  .family-card--brand .family-card-skus { color: rgba(255,255,255,0.6); }
-
-  .family-card-link {
-    font-size: 11px;
-    font-weight: 700;
+  .fam-skucount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.08em;
-    color: var(--color-alg-red, #C8102E);
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
   }
-  .family-card--brand .family-card-link { color: rgba(255,255,255,0.9); }
+  .fam-arrow { font-size: 13px; color: var(--brand); font-weight: 700; }
 
   /* ============================================================
      LAYOUT CTA
      ============================================================ */
-  .layout-cta-section {
-    background: var(--color-ink, #111111);
+  .layout-cta {
+    background: var(--dark);
     color: #fff;
+    padding: 120px 28px;
   }
-
   .layout-cta-inner {
-    max-width: var(--container-max, 1280px);
-    margin-inline: auto;
-    padding: clamp(48px, 8vw, 96px) var(--container-pad, 24px);
+    max-width: 1440px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    gap: 80px;
     align-items: center;
   }
-
-  .layout-eyebrow { color: var(--color-alg-red, #C8102E); }
-
-  .layout-cta-text h2 {
-    font-size: clamp(1.75rem, 3vw, 2.75rem);
+  .layout-cta .sec-eyebrow { color: var(--brand); }
+  .layout-cta h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
     font-weight: 700;
+    letter-spacing: -0.02em;
     color: #fff;
     line-height: 1.1;
-    margin: 0 0 16px;
-    letter-spacing: -0.02em;
+    margin-bottom: 20px;
   }
-
-  .layout-cta-body {
-    font-size: 15px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.6;
-    margin: 0 0 20px;
-    max-width: 480px;
+  .layout-cta h2 .accent { color: var(--brand); }
+  .layout-cta > .layout-cta-inner > div > p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink4);
+    max-width: 520px;
+    margin-bottom: 28px;
   }
-
-  .layout-checklist {
-    list-style: none;
-    margin: 0 0 28px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .layout-checklist li {
-    font-size: 13px;
-    color: rgba(255,255,255,0.65);
-    padding-left: 20px;
-    position: relative;
-  }
-  .layout-checklist li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--color-alg-red, #C8102E);
-    font-weight: 700;
-  }
-
-  .layout-cta-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .layout-sample-link {
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    transition: color 150ms ease;
-  }
-  .layout-sample-link:hover { color: #fff; }
-
-  .layout-cta-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .layout-grid-mock {
+  .layout-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .lf-item { font-size: 14px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .lf-check { color: var(--brand); font-weight: 700; font-size: 16px; }
+  .layout-cta-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .layout-visual { position: relative; }
+  .lv-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 1;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
   }
-
-  .layout-grid-cell {
-    background: rgba(255,255,255,0.05);
-    border-radius: 3px;
-    aspect-ratio: 1;
-  }
-
-  .layout-grid-cell--lit {
-    background: rgba(200,16,46,0.25);
-    box-shadow: inset 0 0 0 1px rgba(200,16,46,0.4), 0 0 20px rgba(200,16,46,0.15);
+  .lv-cell { aspect-ratio: 1; background: rgba(255,255,255,0.03); }
+  .lv-cell.bright { background: rgba(243,39,64,0.35); }
+  .lv-cell.med { background: rgba(243,39,64,0.18); }
+  .lv-cell.dim { background: rgba(243,39,64,0.07); }
+  .lv-cell.fix { background: rgba(255,255,255,0.85); border-radius: 50%; }
+  .lv-overlay {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.9);
+    background: rgba(0,0,0,0.6);
+    padding: 6px 12px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
   }
 
   /* ============================================================
      INSTALLED AT
      ============================================================ */
-  .verticals-grid {
+  .installed-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    gap: 2px;
+    background: rgba(17,20,24,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
   }
-
-  .vertical-tile {
+  .installed-tile {
     position: relative;
     aspect-ratio: 4/3;
+    background: var(--dark2);
     overflow: hidden;
-    border-radius: 3px;
-    display: block;
-    text-decoration: none;
-    background: var(--color-bg-strong, #F0F0F0);
+    cursor: pointer;
+    transition: transform 0.3s ease;
   }
-
-  .vertical-tile img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 400ms ease;
-  }
-  .vertical-tile:hover img { transform: scale(1.05); }
-
-  .vertical-placeholder {
-    width: 100%;
-    height: 100%;
-    background: var(--color-bg-strong, #F0F0F0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .placeholder-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-ink-mute, #6B6B6B);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .vertical-overlay {
+  .installed-tile::before {
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 60%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 16px;
-    transition: background 200ms ease;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.95) 100%);
   }
-  .vertical-tile:hover .vertical-overlay {
-    background: linear-gradient(to top, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.2) 60%, transparent 100%);
+  .installed-tile:hover { transform: scale(1.02); z-index: 2; }
+  .installed-tile.t1 { background: url('/images/verticals/vertical-warehouse.jpg') center/cover no-repeat; }
+  .installed-tile.t2 { background: url('/images/verticals/vertical-manufacturing.jpg') center/cover no-repeat; }
+  .installed-tile.t5 { background: url('/images/verticals/vertical-healthcare.jpg') center/cover no-repeat; }
+  .installed-tile.t6 { background: url('/images/verticals/vertical-education.jpg') center/cover no-repeat; }
+  .installed-tile.t8 { background: url('/images/verticals/vertical-government.jpg') center/cover no-repeat; }
+  .installed-tile.placeholder { background: linear-gradient(135deg, #1a1d28 0%, #0c0d12 100%); }
+  .installed-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 16px 18px;
   }
-
-  .vertical-title {
+  .il-vert {
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     font-weight: 700;
     color: #fff;
-    margin: 0 0 2px;
-    line-height: 1.2;
+    margin-bottom: 2px;
   }
-
-  .vertical-sub {
-    font-size: 11px;
-    color: rgba(255,255,255,0.65);
-    margin: 0;
-    letter-spacing: 0.04em;
+  .il-place {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+  }
+  .placeholder-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
   }
 
   /* ============================================================
      SPLIT TEASERS
      ============================================================ */
-  .split-grid {
+  .split-teasers {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .split-card {
-    padding: 40px;
-    border-radius: 4px;
-    border: 1px solid var(--color-border, #E5E5E5);
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .split-card-headline {
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 700;
-    color: var(--color-ink, #111111);
-    line-height: 1.2;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
-
-  .split-card-body {
-    font-size: 14px;
-    color: var(--color-ink-soft, #444444);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .split-stat-row {
-    display: flex;
     gap: 32px;
   }
-
-  .split-stat { display: flex; flex-direction: column; gap: 2px; }
-
-  .split-stat-value {
-    font-size: 28px;
+  .teaser { padding: 48px; border-radius: var(--radius); }
+  .teaser-rebate { background: linear-gradient(135deg, #eceae4 0%, #d8d5cc 100%); color: var(--ink); }
+  .teaser-spec { background: var(--dark2); color: #fff; }
+  .teaser .sec-eyebrow { margin-bottom: 12px; }
+  .teaser h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--color-ink, #111111);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .teaser-rebate h3 { color: var(--ink); }
+  .teaser-spec h3 { color: #fff; }
+  .teaser p { font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+  .teaser-rebate p { color: var(--ink2); }
+  .teaser-spec p { color: var(--ink4); }
+  .rebate-stat {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(17,20,24,0.15);
+  }
+  .rebate-stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
     line-height: 1;
-    letter-spacing: -0.02em;
+    color: var(--ink);
   }
-
-  .split-stat-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-ink-mute, #6B6B6B);
-    letter-spacing: 0.06em;
+  .rebate-stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: var(--ink3);
+    margin-top: 4px;
+    font-weight: 600;
   }
-
   .spec-resource-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+    margin-bottom: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
-
   .spec-res-item {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 14px;
-    background: var(--color-bg-soft, #F7F7F7);
-    border-radius: 3px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-ink, #111111);
-    text-decoration: none;
-    transition: background 150ms ease, color 150ms ease;
+    transition: all var(--transition);
   }
-  .spec-res-item:hover {
-    background: var(--color-bg-strong, #F0F0F0);
-    color: var(--color-alg-red, #C8102E);
-  }
-
-  .arr {
-    color: var(--color-alg-red, #C8102E);
-    font-weight: 700;
-  }
+  .spec-res-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .arr { color: var(--brand); }
 
   /* ============================================================
      RESPONSIVE
      ============================================================ */
-  @media (max-width: 1024px) {
-    .families-grid { grid-template-columns: repeat(2, 1fr); }
-    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 1200px) {
+    .diff-inner { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .families-rail { grid-template-columns: repeat(2, 1fr); }
+    .hero-carousel-inner { grid-template-columns: 1fr; }
+    .hero-image-stage { min-height: 480px; }
+    .hero-panel { padding: 48px 32px; }
+    .carousel-controls { padding: 0 32px; }
+  }
+  @media (max-width: 900px) {
+    .what-we-make { grid-template-columns: 1fr; gap: 20px; }
     .layout-cta-inner { grid-template-columns: 1fr; gap: 40px; }
-    .layout-cta-visual { display: none; }
+    .split-teasers { grid-template-columns: 1fr; gap: 40px; }
+    .installed-grid { grid-template-columns: repeat(2, 1fr); }
   }
-
-  @media (max-width: 768px) {
-    .hero-image { width: 100%; }
-    .hero-carousel::before {
-      width: 100%;
-      background: linear-gradient(to top, rgba(17,17,17,0.8) 0%, rgba(17,17,17,0.3) 60%, transparent 100%);
-    }
-    .hero-panel { display: none; }
-    .hero-overlay-text { width: 100%; bottom: 80px; }
-    .category-grid { grid-template-columns: 1fr; }
-    .split-grid { grid-template-columns: 1fr; }
-    .locator-header { flex-direction: column; }
-  }
-
-  @media (max-width: 640px) {
-    .families-grid { grid-template-columns: 1fr; }
-    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
-    .trust-bar-inner { justify-content: flex-start; overflow-x: auto; }
+  @media (max-width: 600px) {
+    .diff-inner { grid-template-columns: repeat(2, 1fr); }
+    .installed-grid { grid-template-columns: 1fr; }
+    .families-rail { grid-template-columns: 1fr; }
+    .hero-persistent { left: 20px; bottom: 20px; right: 20px; }
+    .carousel-controls { padding: 0 20px; }
+    .content-section { padding: 60px 20px; }
+    .locator-section { padding: 60px 20px; }
+    .layout-cta { padding: 60px 20px; }
   }
 </style>
 
 <script>
-  /* ============================================================
-     HERO CAROUSEL
-     ============================================================ */
-  (function () {
-    const carousel = document.getElementById('heroCarousel');
-    if (!carousel) return;
+(function () {
+  const carousel = document.getElementById('heroCarousel');
+  if (!carousel) return;
 
-    const images = carousel.querySelectorAll('.hero-image') as NodeListOf<HTMLElement>;
-    const dots = carousel.querySelectorAll('.carousel-dot') as NodeListOf<HTMLButtonElement>;
-    const slotStacks = carousel.querySelectorAll('.slot') as NodeListOf<HTMLElement>;
-    const prevBtn = document.getElementById('prevBtn') as HTMLButtonElement | null;
-    const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement | null;
-    const counter = document.getElementById('carouselCounter');
+  const images = Array.from(carousel.querySelectorAll('.hero-image'));
+  const dots = Array.from(carousel.querySelectorAll('.carousel-dot'));
+  const counter = document.getElementById('carouselCounter');
+  const slideNumEl = document.getElementById('slideNum');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const TOTAL = images.length;
+  let current = 0;
+  let timer;
 
-    const TOTAL = 4;
-    const AUTO_MS = 7000;
-    let current = 0;
-    let timer: number | null = null;
+  function pad(n) { return String(n + 1).padStart(2, '0'); }
 
-    function setActive(n: number) {
-      if (n === current) return;
-      current = ((n % TOTAL) + TOTAL) % TOTAL;
+  function goTo(idx) {
+    carousel.querySelectorAll(`.slot-content[data-slot-slide="${current}"]`).forEach(el => el.classList.remove('active'));
+    images[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + TOTAL) % TOTAL;
+    images[current].classList.add('active');
+    dots[current].classList.add('active');
+    carousel.querySelectorAll(`.slot-content[data-slot-slide="${current}"]`).forEach(el => el.classList.add('active'));
+    if (counter) counter.textContent = `${pad(current)} / ${pad(TOTAL - 1)}`;
+    if (slideNumEl) slideNumEl.textContent = pad(current);
+  }
 
-      images.forEach((img, i) => img.classList.toggle('active', i === current));
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 7000);
+  }
 
-      slotStacks.forEach(stack => {
-        const contents = stack.querySelectorAll('.slot-content') as NodeListOf<HTMLElement>;
-        contents.forEach(c => c.classList.remove('active'));
-        const incoming = stack.querySelector(`.slot-content[data-slot-slide="${current}"]`) as HTMLElement | null;
-        if (incoming) requestAnimationFrame(() => incoming.classList.add('active'));
-      });
+  prevBtn?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+  nextBtn?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); startTimer(); }));
+  carousel.addEventListener('mouseenter', () => clearInterval(timer));
+  carousel.addEventListener('mouseleave', startTimer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { goTo(current - 1); startTimer(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); startTimer(); }
+  });
+  startTimer();
 
-      dots.forEach((d, i) => {
-        d.classList.toggle('active', i === current);
-        d.setAttribute('aria-selected', String(i === current));
-      });
-
-      if (counter) {
-        const pad = String(current + 1).padStart(2, '0');
-        counter.textContent = `${pad} / 04`;
-      }
-    }
-
-    function next() { setActive(current + 1); }
-    function prev() { setActive(current - 1); }
-    function start() { stop(); timer = window.setInterval(next, AUTO_MS); }
-    function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
-
-    prevBtn?.addEventListener('click', () => { prev(); start(); });
-    nextBtn?.addEventListener('click', () => { next(); start(); });
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { setActive(i); start(); }));
-
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') { prev(); start(); }
-      if (e.key === 'ArrowRight') { next(); start(); }
-    });
-
-    carousel.addEventListener('mouseenter', stop);
-    carousel.addEventListener('mouseleave', start);
-
-    start();
-  })();
-
-  /* ============================================================
-     LEAFLET MAP
-     ============================================================ */
-  (function () {
-    const el = document.getElementById('algLocatorMap');
-    if (!el) return;
-
+  // Leaflet map
+  const mapEl = document.getElementById('algLocatorMap');
+  if (mapEl) {
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLI=';
     script.crossOrigin = '';
     script.onload = function () {
-      const L = (window as any).L;
-      if (!L) return;
-
-      const map = L.map('algLocatorMap', {
-        center: [39.5, -96.5],
-        zoom: 4,
-        scrollWheelZoom: false,
-        zoomControl: true,
-        attributionControl: true
-      });
-
+      const L = window.L;
+      const map = L.map('algLocatorMap', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
-        maxZoom: 19
+        maxZoom: 19,
       }).addTo(map);
-
-      const whIcon = L.divIcon({
-        className: 'alg-pin-wh',
-        html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#C8102E;border:2px solid rgba(12,13,18,0.85);box-shadow:0 0 0 4px rgba(200,16,46,0.25),0 0 14px rgba(200,16,46,0.5);"></span>',
-        iconSize: [18, 18],
-        iconAnchor: [9, 9]
-      });
-
       const warehouses = [
-        { name: 'Montclair, CA',   lat: 34.0776, lng: -117.6897, address: '4615 State Street, Montclair CA' },
-        { name: 'Riverside, CA',   lat: 33.9213, lng: -117.3517, address: '9345 Sycamore Canyon Blvd, Riverside CA 92508' },
-        { name: 'Crestwood, IL',   lat: 41.6647, lng:  -87.7372, address: 'Crestwood, IL' },
-        { name: 'Rahway, NJ',      lat: 40.6082, lng:  -74.2776, address: 'Rahway, NJ' },
-        { name: 'Brockton, MA',    lat: 42.0834, lng:  -71.0184, address: 'Brockton, MA' },
-        { name: 'Cincinnati, OH',  lat: 39.1031, lng:  -84.5120, address: 'Cincinnati, OH' }
+        { lat: 34.0736, lng: -117.6895, name: 'Montclair, CA — West Coast HQ' },
+        { lat: 33.9806, lng: -118.0530, name: 'Pico Rivera, CA — SoCal DC' },
+        { lat: 33.6609, lng: -112.0099, name: 'Phoenix, AZ — Southwest DC' },
+        { lat: 32.7767, lng: -96.7970, name: 'Dallas, TX — South Central DC' },
+        { lat: 41.8781, lng: -87.6298, name: 'Chicago, IL — Midwest DC' },
       ];
-
-      warehouses.forEach(wh => {
-        L.marker([wh.lat, wh.lng], { icon: whIcon, title: wh.name })
-          .bindPopup(`<strong>${wh.name}</strong><br>${wh.address}`)
-          .addTo(map);
+      const icon = L.divIcon({
+        className: '',
+        html: '<div style="width:12px;height:12px;background:#F32740;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px rgba(243,39,64,0.6);"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
       });
+      warehouses.forEach(w => L.marker([w.lat, w.lng], { icon }).addTo(map).bindPopup(`<strong>${w.name}</strong><br>ALG Warehouse`));
     };
     document.head.appendChild(script);
-  })();
+  }
+})();
 </script>
