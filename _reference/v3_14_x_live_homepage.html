@@ -1,0 +1,2593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archipelago Lighting | Specified. Stocked. Shipped.</title>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   ALG HOMEPAGE MOCKUP v3.1 · Rebuild · April 23, 2026
+   Apple carousel hero · ALG_Mockup1 content structure preserved
+   Architecture v3 §4.1 tokens · v3.1 homepage spec
+   ================================================================ */
+
+:root{
+  --ink:#111418;--ink2:#3a3f47;--ink3:#8a8f99;--ink4:#c8ccd3;
+  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae4;
+  --dark:#0c0d12;--dark2:#14161e;
+  --brand:#F32740;--brand-dk:#C41F32;
+  --kraft:#c9a876;--amber:#f0a932;--grn:#0FAE7C;
+  --shadow-sm:0 2px 8px rgba(17,20,24,0.06);
+  --shadow-md:0 8px 24px rgba(17,20,24,0.10);
+  --shadow-lg:0 16px 48px rgba(17,20,24,0.16);
+  --radius:3px;
+  --transition:200ms cubic-bezier(0.2,0.6,0.2,1);
+  --cascade:500ms cubic-bezier(0.22,0.61,0.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+/* ========= Typography (v3 §4.3) ========= */
+.display-hero{font-family:'Sora',sans-serif;font-size:clamp(64px,9vw,128px);line-height:0.95;font-weight:800;letter-spacing:-0.04em;}
+.display-product{font-family:'Sora',sans-serif;font-size:clamp(40px,5vw,64px);line-height:1;font-weight:700;letter-spacing:-0.025em;}
+.h1{font-family:'Sora',sans-serif;font-size:clamp(40px,5vw,56px);line-height:1.05;font-weight:800;letter-spacing:-0.02em;}
+.h2{font-family:'Sora',sans-serif;font-size:clamp(32px,4vw,48px);line-height:1.08;font-weight:800;letter-spacing:-0.015em;}
+.h3{font-family:'Sora',sans-serif;font-size:22px;line-height:1.25;font-weight:700;}
+.body-lg{font-size:19px;line-height:1.55;}
+.body{font-size:16px;line-height:1.6;}
+.body-sm{font-size:14px;line-height:1.5;}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;line-height:16px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.18em;color:var(--brand);
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:'';display:inline-block;width:32px;height:1px;background:currentColor;}
+.accent{color:var(--brand);}
+
+/* ========= CTAs ========= */
+.cta-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 26px;background:var(--brand);color:#fff;
+  font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  border-radius:var(--radius);transition:background var(--transition),transform var(--transition);
+}
+.cta-primary:hover{background:var(--brand-dk);transform:translateY(-1px);}
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 25px;background:transparent;color:var(--ink);
+  border:1px solid var(--ink);font-size:14px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  border-radius:var(--radius);transition:all var(--transition);
+}
+.cta-secondary:hover{background:var(--ink);color:#fff;}
+.cta-secondary.on-dark{color:#fff;border-color:rgba(255,255,255,0.5);}
+.cta-secondary.on-dark:hover{background:#fff;color:var(--ink);}
+.cta-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:14px;font-weight:600;color:inherit;padding:14px 0;
+  transition:gap var(--transition);
+  border-bottom:1px solid currentColor;
+}
+.cta-link:hover{gap:10px;}
+
+/* ================================================================
+   UTILITY BAR (top · fixed-style sticky · with Sign In dropdown)
+   Adopted from 1776927268994_ALG_Mockup1_Homepage.html
+   ================================================================ */
+.utility-bar{
+  background:var(--dark);color:#fff;
+  height:34px;display:flex;align-items:center;justify-content:flex-end;
+  padding:0 28px;font-size:11px;letter-spacing:0.5px;
+  position:sticky;top:0;z-index:101;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.utility-bar a{color:#fff;text-decoration:none;opacity:0.8;margin-left:20px;transition:opacity 0.15s;}
+.utility-bar a:hover{opacity:1;}
+.utility-bar .signin{
+  position:relative;
+  background:var(--brand);padding:5px 14px;border-radius:3px;
+  margin-left:24px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+}
+.utility-bar .signin::after{content:'▾';font-size:9px;}
+.signin-dropdown{
+  position:absolute;top:100%;right:0;margin-top:6px;
+  background:#fff;color:var(--ink);
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  min-width:320px;
+  opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:all 0.15s;
+  border-radius:4px;
+  overflow:hidden;
+}
+.utility-bar .signin:hover .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.signin-dropdown a{
+  display:block;padding:14px 16px;text-align:left;text-transform:none;
+  letter-spacing:0;margin:0;font-size:13px;color:var(--ink);font-weight:400;
+  border-bottom:1px solid rgba(0,0,0,0.06);opacity:1;
+}
+.signin-dropdown a:hover{background:var(--bg2);color:var(--brand);}
+.signin-dropdown a:last-child{border-bottom:0;}
+.signin-dropdown .label{
+  font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--brand);
+  letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+  display:block;margin-bottom:3px;white-space:nowrap;
+}
+
+/* ================================================================
+   PERSISTENT SITE NAV (56px · sticky · blurred white)
+   Adopted from 1776927268994_ALG_Mockup1_Homepage.html
+   ================================================================ */
+.site-nav{
+  position:sticky;top:34px;z-index:100;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;
+}
+.site-nav .logo-wrap{display:flex;align-items:center;gap:12px;}
+.site-nav .logo-wrap img{height:26px;width:auto;display:block;}
+.site-nav ul.main-nav{display:flex;list-style:none;gap:32px;margin:0;padding:0;}
+.site-nav ul.main-nav > li{position:relative;padding:18px 0;}
+.site-nav ul.main-nav > li > a{
+  text-decoration:none;color:var(--ink2);
+  font-size:12px;font-weight:600;letter-spacing:0.8px;
+  text-transform:uppercase;
+  transition:color 0.15s;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.site-nav ul.main-nav > li > a::after{
+  content:'▾';font-size:8px;opacity:0.5;
+}
+.site-nav ul.main-nav > li:not(.has-dropdown) > a::after{display:none;}
+.site-nav ul.main-nav > li > a:hover{color:var(--brand);}
+.site-nav ul.main-nav > li.active > a{color:var(--brand);}
+.site-nav ul.main-nav > li.has-dropdown:hover .megamenu{opacity:1;visibility:visible;transform:translateY(0);}
+
+/* ================================================================
+   MEGA MENU — v3.10 · 3-tier parallel cascade
+   Full-screen to 95% of viewport (fluid edge margins) for wide + solutions
+   Legacy narrow (Tools / Support) retains 2-col absolute-positioned dropdown
+   ================================================================ */
+/* Base (legacy narrow — used by Tools / Support) */
+.megamenu{
+  position:absolute;top:100%;left:-20px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 12px 40px rgba(0,0,0,0.12);
+  padding:24px 28px;
+  min-width:520px;
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+  z-index:60;
+  border-radius:4px;
+}
+.site-nav ul.main-nav > li.has-dropdown:hover .megamenu{opacity:1;visibility:visible;transform:translateY(0);}
+
+/* ---- WIDE variant · 3-tier Products mega menu · v3.10 ---- */
+.megamenu.wide{
+  position:fixed;
+  top:90px;
+  left:2.5vw;
+  right:2.5vw;
+  max-width:none;min-width:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:220px 260px 300px 1fr;
+  gap:0;
+  max-height:calc(100vh - 110px);
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,0.18);
+}
+.megamenu.wide .mm-col{
+  padding:20px 18px;
+  overflow-y:auto;
+  max-height:calc(100vh - 110px);
+  scrollbar-width:thin;
+  scrollbar-color:rgba(0,0,0,0.2) transparent;
+}
+.megamenu.wide .mm-col::-webkit-scrollbar{width:6px;}
+.megamenu.wide .mm-col::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
+.megamenu.wide .mm-col.mm-col-main{background:var(--dark);}
+.megamenu.wide .mm-col.mm-col-cat{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
+.megamenu.wide .mm-col.mm-col-app{background:#fff;border-right:1px solid rgba(0,0,0,0.06);}
+.megamenu.wide .mm-col.mm-col-preview{background:#fff;padding:20px 24px;}
+
+/* Column headers (small caps label above each column) */
+.megamenu.wide .mm-col-head{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--ink3);letter-spacing:0.2em;
+  text-transform:uppercase;font-weight:600;
+  margin-bottom:14px;padding-bottom:10px;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+}
+.megamenu.wide .mm-col-main .mm-col-head{
+  color:rgba(255,255,255,0.5);
+  border-bottom-color:rgba(255,255,255,0.1);
+}
+
+/* ---- COLUMN 1: Main Menu (dark panel) ---- */
+.mm-main-item{
+  display:block;padding:11px 14px;
+  font-family:'Sora',sans-serif;font-size:14px;font-weight:600;
+  color:rgba(255,255,255,0.85);
+  letter-spacing:0.01em;
+  border-radius:3px;
+  cursor:pointer;
+  transition:background 0.12s, color 0.12s;
+  margin-bottom:2px;
+}
+.mm-main-item:hover,
+.mm-main-item.active{
+  background:var(--brand);color:#fff;
+}
+.mm-main-item .mm-main-sub{
+  display:block;font-size:10px;font-weight:400;
+  color:rgba(255,255,255,0.5);margin-top:2px;
+  letter-spacing:0.02em;
+}
+.mm-main-item.active .mm-main-sub,
+.mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
+/* Divider lines between grouped sections in col 1 */
+.mm-main-divider{
+  height:1px;background:rgba(255,255,255,0.08);
+  margin:8px 14px;
+}
+.mm-main-group-label{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  color:rgba(255,255,255,0.35);letter-spacing:0.2em;
+  text-transform:uppercase;font-weight:600;
+  padding:0 14px 4px;margin-top:6px;
+}
+
+/* ---- COLUMN 2: Category ---- */
+.mm-cat-group{display:none;}
+.mm-cat-group.active{display:block;}
+.mm-cat-item{
+  display:block;padding:10px 12px;
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:600;
+  color:var(--ink);
+  letter-spacing:-0.005em;
+  border-radius:3px;
+  cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background 0.12s, border-color 0.12s, color 0.12s;
+  margin-bottom:2px;
+}
+.mm-cat-item:hover,
+.mm-cat-item.active{
+  background:#fff;
+  border-left-color:var(--brand);
+  color:var(--brand);
+}
+.mm-cat-item .mm-cat-sub{
+  display:block;font-size:10px;font-weight:400;
+  color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
+}
+.mm-cat-item:hover .mm-cat-sub,
+.mm-cat-item.active .mm-cat-sub{color:var(--ink2);}
+
+/* ---- COLUMN 3: Application ---- */
+.mm-app-group{display:none;}
+.mm-app-group.active{display:block;}
+.mm-app-item{
+  display:block;padding:7px 10px;
+  font-size:13px;color:var(--ink2);
+  font-weight:400;line-height:1.35;
+  border-radius:3px;
+  cursor:pointer;
+  transition:background 0.12s, color 0.12s;
+  margin-bottom:1px;
+}
+.mm-app-item:hover{background:var(--bg2);color:var(--brand);}
+/* Inline group header (used inside Consumer — sub-dividers within the app column) */
+.mm-app-group-head{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--brand);letter-spacing:0.16em;
+  text-transform:uppercase;font-weight:600;
+  padding:10px 10px 4px;margin-top:6px;
+  border-top:1px solid rgba(0,0,0,0.06);
+}
+.mm-app-group-head:first-child{border-top:0;margin-top:0;padding-top:2px;}
+
+/* ---- COLUMN 4: Preview Pane ---- */
+.mm-preview{
+  display:flex;flex-direction:column;
+}
+.mm-preview .preview-img-wrap{
+  width:100%;height:240px;background:var(--bg2);border-radius:4px;
+  overflow:hidden;margin-bottom:14px;position:relative;
+}
+.mm-preview .preview-img-wrap img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  transition:opacity 0.25s ease;
+}
+.mm-preview .preview-label{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--brand);letter-spacing:0.18em;text-transform:uppercase;
+  font-weight:600;margin-bottom:6px;
+}
+.mm-preview .preview-name{
+  font-family:'Sora',sans-serif;font-size:20px;font-weight:700;
+  color:var(--ink);letter-spacing:-0.015em;margin-bottom:8px;line-height:1.15;
+}
+.mm-preview .preview-desc{
+  font-size:13px;color:var(--ink2);line-height:1.5;margin-bottom:14px;
+}
+.mm-preview .preview-cta{
+  font-size:11px;font-weight:700;color:var(--brand);
+  letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;
+  align-self:flex-start;
+  padding:10px 14px;border:1px solid var(--brand);border-radius:3px;
+  transition:all 0.15s;
+}
+.mm-preview .preview-cta:hover{background:var(--brand);color:#fff;}
+
+/* planoⒶRCH tier-preview sandbox (Option B, v3.10 · only for planoⒶRCH application rows) */
+.mm-preview .tier-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  margin-top:4px;
+}
+.mm-preview .tier-strip.hidden{display:none;}
+.mm-preview .tier-card{
+  background:var(--bg2);border-radius:3px;padding:10px 8px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  border-top:3px solid var(--ink4);
+}
+.mm-preview .tier-card.t-eco{border-top-color:#8A8F97;}
+.mm-preview .tier-card.t-pro{border-top-color:var(--amber);}
+.mm-preview .tier-card.t-proplus{border-top-color:var(--brand);}
+.mm-preview .tier-card img{
+  width:100%;aspect-ratio:1/1;object-fit:contain;
+  background:#fff;border-radius:2px;margin-bottom:6px;
+}
+.mm-preview .tier-card .tier-label{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  letter-spacing:0.15em;text-transform:uppercase;font-weight:700;
+  color:var(--ink3);margin-bottom:2px;
+}
+.mm-preview .tier-card .tier-sku{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  font-weight:600;color:var(--ink);line-height:1.2;
+}
+
+/* ---- Legacy mm-head (used by Tools / Support narrow mega menus) ---- */
+.megamenu .mm-head{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--brand);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+}
+.megamenu:not(.wide):not(.solutions) a{
+  display:block;padding:6px 0;font-size:13px;
+  color:var(--ink);text-transform:none;letter-spacing:0;
+  font-weight:400;text-decoration:none;
+}
+.megamenu:not(.wide):not(.solutions) a:hover{color:var(--brand);}
+.megamenu:not(.wide):not(.solutions) a.featured{
+  background:var(--bg2);padding:10px 12px;margin:6px 0;
+  border-left:3px solid var(--brand);font-weight:600;font-size:12px;
+}
+
+/* ---- Solutions mega menu (3-col: Main · Vertical list · Preview) ---- */
+.megamenu.solutions{
+  position:fixed;top:90px;left:2.5vw;right:2.5vw;
+  max-width:none;min-width:0;padding:0;
+  display:grid;
+  grid-template-columns:220px 320px 1fr;
+  gap:0;
+  max-height:calc(100vh - 110px);
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,0.18);
+}
+.megamenu.solutions .mm-col{
+  padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);
+}
+.megamenu.solutions .mm-col-main{background:var(--dark);}
+.megamenu.solutions .mm-col-vert{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
+.megamenu.solutions .mm-col-preview{background:#fff;padding:20px 24px;}
+.megamenu.solutions .mm-col-head{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--ink3);letter-spacing:0.2em;text-transform:uppercase;
+  font-weight:600;margin-bottom:14px;padding-bottom:10px;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+}
+.megamenu.solutions .mm-col-main .mm-col-head{
+  color:rgba(255,255,255,0.5);border-bottom-color:rgba(255,255,255,0.1);
+}
+.mm-vert-item{
+  display:block;padding:11px 14px;
+  font-family:'Sora',sans-serif;font-size:13px;font-weight:600;
+  color:var(--ink);letter-spacing:-0.005em;
+  border-radius:3px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background 0.12s, border-color 0.12s, color 0.12s;
+  margin-bottom:2px;
+}
+.mm-vert-item:hover,
+.mm-vert-item.active{
+  background:#fff;border-left-color:var(--brand);color:var(--brand);
+}
+.mm-vert-item .mm-vert-sub{
+  display:block;font-size:10px;font-weight:400;
+  color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
+}
+
+/* CTA pair — scoped to nav so it uses the attached compact sizing */
+.site-nav .cta-pair{display:flex;align-items:center;gap:10px;}
+.site-nav .cta-primary{
+  background:var(--brand);color:#fff;
+  padding:10px 18px;border-radius:3px;
+  font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;text-decoration:none;
+  border:0;cursor:pointer;
+  transition:background 0.15s;
+}
+.site-nav .cta-primary:hover{background:var(--brand-dk);}
+.site-nav .cta-secondary{
+  background:transparent;color:var(--ink);
+  padding:10px 16px;border:1px solid var(--ink4);
+  border-radius:3px;
+  font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;text-decoration:none;
+  cursor:pointer;
+  transition:all 0.15s;
+}
+.site-nav .cta-secondary:hover{border-color:var(--brand);color:var(--brand);}
+
+/* ================================================================
+   HERO CAROUSEL — single container · 5 slides cycling
+   Persistent "Specified. Stocked. Shipped." overlay on left image
+   Slot-level cascade transitions on right panel
+   ================================================================ */
+.hero-carousel{
+  position:relative;height:calc(100vh - 90px);min-height:660px;max-height:860px;
+  overflow:hidden;background:var(--dark);
+}
+.hero-carousel-inner{
+  display:grid;grid-template-columns:1.3fr 1fr;height:100%;position:relative;
+}
+
+/* ---- Left: application image layer ---- */
+.hero-image-stage{position:relative;overflow:hidden;}
+.hero-image{
+  position:absolute;inset:0;
+  opacity:0;transition:opacity 800ms ease;
+  display:flex;align-items:flex-end;padding:56px;
+}
+.hero-image.active{opacity:1;}
+.hero-image::after{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.2) 38%,rgba(0,0,0,0) 62%,rgba(12,13,18,0.25) 100%),
+    linear-gradient(180deg,rgba(0,0,0,0) 28%,rgba(0,0,0,0.35) 58%,rgba(0,0,0,0.82) 100%);
+}
+
+/* Hero background fallbacks — NEUTRAL DARK ONLY per v3.6. Chromatic hue moved to text side. */
+.img-illuminator,.img-titan,.img-outdoor,.img-astra,.img-proarch{
+  background:linear-gradient(135deg,#0c0d12 0%,#14161e 100%);
+}
+.img-illuminator{background:url('assets/nanobanana/hero-slide1-illuminator-stadium.jpg') center/cover no-repeat,linear-gradient(135deg,#0c0d12 0%,#14161e 100%);}
+.img-titan{background:url('assets/nanobanana/hero-slide2-titan-warehouse-highbay.jpg') center/cover no-repeat,linear-gradient(135deg,#0c0d12 0%,#14161e 100%);}
+.img-outdoor{background:url('assets/nanobanana/hero-slide3-liberty-outdoor-area.jpg') center/cover no-repeat,linear-gradient(135deg,#0c0d12 0%,#14161e 100%);}
+.img-proarch{background:url('assets/nanobanana/hero-slide4-proarch-commercial-office.jpg') center/cover no-repeat,linear-gradient(135deg,#0c0d12 0%,#14161e 100%);}
+.placeholder-tag{display:none!important;}
+.img-controls{background:linear-gradient(135deg,#0c0d12 0%,#14161e 100%);} /* dead rule; retained for backward compat */
+
+/* ---- PERSISTENT "Specified. Stocked. Shipped." overlay ---- */
+/* Lives on top of image stage, does NOT cycle */
+.hero-persistent{
+  position:absolute;left:56px;bottom:56px;z-index:5;
+  pointer-events:none;color:#fff;max-width:640px;
+}
+.hero-persistent .p-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;color:#fff;
+  display:inline-flex;align-items:center;gap:12px;margin-bottom:24px;
+  text-shadow:0 1px 8px rgba(0,0,0,0.4);
+}
+.hero-persistent .p-eyebrow::before{content:'';width:32px;height:1px;background:var(--brand);}
+.hero-persistent h1{
+  font-family:'Sora',sans-serif;font-size:clamp(56px,7.5vw,108px);
+  line-height:0.95;font-weight:800;letter-spacing:-0.035em;color:#fff;
+  text-shadow:0 2px 16px rgba(0,0,0,0.35);
+}
+.hero-persistent h1 .stop{color:var(--brand);}
+.hero-persistent h1 .accent{color:var(--brand);}
+.hero-persistent .tag{
+  font-size:15px;font-weight:500;color:rgba(255,255,255,0.85);
+  margin-top:22px;max-width:420px;line-height:1.5;
+  text-shadow:0 1px 8px rgba(0,0,0,0.4);
+}
+
+/* ---- Right: product content panel (slot-cycling) ---- */
+.hero-panel{
+  background:var(--dark2);color:#fff;
+  padding:64px 56px;display:flex;flex-direction:column;
+  justify-content:space-between;position:relative;overflow:hidden;
+}
+.hero-panel::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:radial-gradient(circle at 100% 0%,rgba(243,39,64,0.08) 0%,transparent 50%),radial-gradient(circle at 0% 100%,rgba(201,168,118,0.06) 0%,transparent 50%);
+}
+.hero-panel-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;}
+
+/* Slide label (top) */
+.slide-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:22px;
+}
+.slide-label .num{color:var(--brand);font-weight:700;}
+
+/* Slot stack */
+.slot-stack{display:flex;flex-direction:column;flex:1;}
+
+/* Each slot is a positioned container; slide content layers inside with opacity+translate transitions */
+.slot{position:relative;min-height:0;}
+.slot-eyebrow{min-height:32px;margin-bottom:10px;}
+.slot-name{min-height:72px;margin-bottom:18px;}
+.slot-desc{min-height:72px;margin-bottom:26px;}
+.slot-stats{min-height:80px;margin-bottom:26px;}
+.slot-cta{min-height:48px;}
+
+.slot-content{
+  position:absolute;inset:0;
+  opacity:0;transform:translateY(16px);
+  transition:opacity var(--cascade),transform var(--cascade);
+  pointer-events:none;
+}
+.slot-content.active{
+  opacity:1;transform:translateY(0);
+  pointer-events:auto;
+}
+.slot-eyebrow .slot-content{transition-delay:0ms;}
+.slot-name .slot-content{transition-delay:80ms;}
+.slot-desc .slot-content{transition-delay:160ms;}
+.slot-stats .slot-content{transition-delay:240ms;}
+.slot-cta .slot-content{transition-delay:320ms;}
+
+/* Eyebrow styling inside panel */
+.slot-eyebrow .eyebrow{color:var(--brand);}
+
+/* Product name styling */
+.slot-name .display-product{
+  font-family:'Sora',sans-serif;font-size:clamp(40px,4.5vw,64px);
+  line-height:1;font-weight:700;letter-spacing:-0.025em;
+  /* Fallback solid white in case background-clip: text is unsupported */
+  color:#fff;
+}
+/* Per-slide chromatic text gradients — the hue that used to live on the hero image moves here */
+.slot-content[data-slot-slide="0"] .display-product,
+.slot-content[data-slot-slide="1"] .display-product,
+.slot-content[data-slot-slide="2"] .display-product,
+.slot-content[data-slot-slide="3"] .display-product{
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.slot-content[data-slot-slide="0"] .display-product{background-image:linear-gradient(135deg,#f0a932 0%,#F32740 100%);}
+.slot-content[data-slot-slide="1"] .display-product{background-image:linear-gradient(135deg,#e8ecf0 0%,#f0a932 100%);}
+.slot-content[data-slot-slide="2"] .display-product{background-image:linear-gradient(135deg,#fff8eb 0%,#c9a876 100%);}
+.slot-content[data-slot-slide="3"] .display-product{background-image:linear-gradient(135deg,#ffffff 0%,#a8c4d8 100%);}
+/* Let the Ⓐ inherit the gradient rather than override with solid brand */
+.slot-name .display-product .aa{color:inherit;}
+
+/* Description */
+.slot-desc p{font-size:17px;line-height:1.5;color:rgba(255,255,255,0.85);}
+
+/* Stats row (3-up) */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border-radius:var(--radius);overflow:hidden;}
+.stat-row .stat{padding:14px 16px;background:var(--dark2);}
+.stat-row .stat .num{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;line-height:1.1;margin-bottom:2px;color:#fff;letter-spacing:-0.01em;}
+.stat-row .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);}
+
+/* CTA pair */
+.slot-cta .cta-pair{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.slot-cta .cta-primary{background:var(--brand);}
+.slot-cta .cta-link{color:#fff;border-color:rgba(255,255,255,0.4);}
+.slot-cta .cta-link:hover{border-color:#fff;}
+
+/* ---- Carousel controls ---- */
+.carousel-controls{
+  position:absolute;left:0;right:0;bottom:24px;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 56px;
+}
+.carousel-dots{display:flex;gap:10px;align-items:center;}
+.carousel-dot{
+  width:28px;height:3px;background:rgba(255,255,255,0.3);border:none;cursor:pointer;
+  transition:background var(--transition),width var(--transition);
+  padding:0;border-radius:2px;
+}
+.carousel-dot:hover{background:rgba(255,255,255,0.55);}
+.carousel-dot.active{background:var(--brand);width:48px;}
+.carousel-arrows{display:flex;gap:8px;align-items:center;}
+.carousel-arrow{
+  width:44px;height:44px;background:rgba(255,255,255,0.08);color:#fff;
+  border:1px solid rgba(255,255,255,0.2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all var(--transition);
+  backdrop-filter:blur(8px);
+}
+.carousel-arrow:hover{background:var(--brand);border-color:var(--brand);}
+.carousel-arrow svg{width:14px;height:14px;}
+.carousel-counter{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;
+  color:rgba(255,255,255,0.7);font-weight:600;padding:0 12px;min-width:64px;
+}
+
+/* ================================================================
+   DIFFERENTIATION STRIP (6 icons — from ALG_Mockup1 §2)
+   ================================================================ */
+.diff-strip{background:var(--bg);padding:36px 28px;border-bottom:1px solid rgba(17,20,24,0.06);}
+.diff-inner{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);gap:24px;}
+.diff-item{display:flex;align-items:center;gap:14px;}
+.diff-icon{width:38px;height:38px;color:var(--brand);flex-shrink:0;}
+.diff-icon svg{width:100%;height:100%;}
+.diff-text{display:flex;flex-direction:column;}
+.diff-num{font-family:'Sora',sans-serif;font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;line-height:1.1;}
+.diff-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:2px;}
+
+/* ================================================================
+   PERSONA SELECTOR BAND (per screen cap #2)
+   ================================================================ */
+.persona-strip{
+  background:var(--bg3);padding:28px 28px;
+  border-top:1px solid rgba(17,20,24,0.06);border-bottom:1px solid rgba(17,20,24,0.06);
+}
+.persona-inner{
+  max-width:1440px;margin:0 auto;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.persona-label{
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--ink2);font-weight:500;
+  white-space:nowrap;padding-right:16px;
+}
+.persona-chips{display:flex;gap:12px;flex-wrap:wrap;}
+.persona-chip{
+  padding:14px 26px;background:var(--ink);color:#fff;
+  border:none;border-radius:4px;cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:15px;font-weight:600;letter-spacing:-0.005em;
+  transition:background var(--transition),transform var(--transition);
+  line-height:1;
+}
+.persona-chip:hover{background:var(--ink2);}
+.persona-chip.active{background:var(--brand);}
+.persona-chip.active:hover{background:var(--brand-dk);}
+
+/* ================================================================
+   CONTENT SECTION — shared wrapper
+   ================================================================ */
+.content-section{padding:120px 28px;}
+.content-section.bg-cream{background:var(--bg2);}
+.content-section.bg-dark{background:var(--dark);color:#fff;}
+.section-inner{max-width:1440px;margin:0 auto;}
+
+.sec-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--brand);font-weight:600;
+  display:inline-flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.sec-eyebrow::before{content:'';width:32px;height:1px;background:currentColor;}
+.sec-title{
+  font-family:'Sora',sans-serif;font-size:clamp(32px,4vw,52px);
+  line-height:1.08;font-weight:800;letter-spacing:-0.02em;
+  max-width:900px;margin-bottom:20px;
+}
+.sec-title .accent{color:var(--brand);}
+.content-section.bg-dark .sec-title{color:#fff;}
+.sec-sub{font-size:18px;line-height:1.5;color:var(--ink2);max-width:720px;margin-bottom:56px;}
+.content-section.bg-dark .sec-sub{color:var(--ink4);}
+
+/* ================================================================
+   WHAT WE MAKE — 3 cards (Indoor / Outdoor / Controls & EM)
+   ================================================================ */
+.what-we-make{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+.wm-card{
+  background:#fff;border:1px solid rgba(17,20,24,0.08);border-radius:var(--radius);
+  overflow:hidden;transition:transform var(--transition),box-shadow var(--transition);
+  display:flex;flex-direction:column;cursor:pointer;
+}
+.wm-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.wm-img{
+  aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;color:#fff;
+}
+.wm-card.indoor .wm-img{background:url('assets/taxonomy-indoor-diy-store.jpg') center/cover no-repeat;}
+.wm-card.outdoor .wm-img{background:url('assets/taxonomy-outdoor-parking-lot.jpg') center/cover no-repeat;}
+.wm-card.controls .wm-img{background:url('assets/taxonomy-controls-em.jpg') center/cover no-repeat;}
+.wm-img::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.35);border-radius:inherit;}
+.wm-img svg{width:120px;height:100px;opacity:0.65;}
+.wm-body{padding:28px 28px 32px;}
+.wm-body h3{font-family:'Sora',sans-serif;font-size:24px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;}
+.wm-body p{font-size:15px;line-height:1.55;color:var(--ink2);margin-bottom:22px;}
+.wm-meta{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(17,20,24,0.08);}
+.wm-sub-brands{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.05em;color:var(--ink2);font-weight:600;}
+.wm-arrow{font-size:13px;font-weight:700;color:var(--brand);letter-spacing:0.04em;text-transform:uppercase;}
+
+/* ================================================================
+   FIND YOUR LOCAL SUPPORT — stockist map section
+   ================================================================ */
+.locator-section{background:var(--dark);color:#fff;padding:120px 28px;position:relative;}
+.locator-inner{max-width:1440px;margin:0 auto;}
+.locator-section .sec-eyebrow{color:var(--brand);}
+.locator-section .sec-title{color:#fff;}
+.locator-section .sec-sub{color:var(--ink4);}
+
+.locator-toolbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 24px;background:var(--dark2);border-radius:var(--radius);
+  margin-bottom:24px;gap:20px;flex-wrap:wrap;
+}
+.loc-filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.loc-filter-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-right:6px;}
+.loc-pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;
+  background:rgba(255,255,255,0.06);color:var(--ink4);border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--radius);font-size:12px;font-weight:500;cursor:pointer;
+  transition:all var(--transition);
+}
+.loc-pill.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.loc-pill:hover:not(.active){background:rgba(255,255,255,0.1);color:#fff;}
+.kind-dot{width:8px;height:8px;border-radius:50%;}
+.kind-dot.wh{background:var(--brand);}
+.kind-dot.rep{background:var(--amber);}
+.kind-dot.dist{background:var(--grn);}
+.loc-search{display:flex;gap:8px;flex:0 0 auto;}
+.loc-search input{
+  padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--radius);color:#fff;font-family:inherit;font-size:13px;min-width:220px;
+}
+.loc-search input::placeholder{color:var(--ink3);}
+.loc-search button{
+  padding:10px 18px;background:var(--brand);color:#fff;font-weight:700;font-size:12px;
+  letter-spacing:0.06em;text-transform:uppercase;border-radius:var(--radius);
+  transition:background var(--transition);
+}
+.loc-search button:hover{background:var(--brand-dk);}
+
+.locator-map-wrap{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;min-height:440px;}
+.loc-map{
+  background:var(--dark2);border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius);position:relative;overflow:hidden;
+  min-height:420px;
+}
+.loc-map-svg{position:absolute;inset:0;width:100%;height:100%;}
+.loc-map-svg .state{fill:rgba(255,255,255,0.03);stroke:rgba(255,255,255,0.18);stroke-width:0.7;}
+.loc-pin{position:absolute;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid rgba(12,13,18,0.8);cursor:pointer;}
+.loc-pin.wh{background:var(--brand);box-shadow:0 0 0 4px rgba(243,39,64,0.25),0 0 14px rgba(243,39,64,0.5);animation:pulse-wh 2.4s ease-in-out infinite;}
+.loc-pin.rep{width:10px;height:10px;background:var(--amber);box-shadow:0 0 0 3px rgba(240,169,50,0.2);}
+.loc-pin.dist{width:9px;height:9px;background:var(--grn);box-shadow:0 0 0 3px rgba(15,174,124,0.2);}
+@keyframes pulse-wh{0%,100%{box-shadow:0 0 0 4px rgba(243,39,64,0.25),0 0 14px rgba(243,39,64,0.5);}50%{box-shadow:0 0 0 8px rgba(243,39,64,0.1),0 0 18px rgba(243,39,64,0.7);}}
+
+.loc-sidebar{display:flex;flex-direction:column;gap:16px;}
+.loc-legend,.loc-results{
+  background:var(--dark2);border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius);padding:20px 22px;
+}
+.loc-legend h4,.loc-results h4{
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--ink3);font-weight:700;margin-bottom:14px;
+}
+.legend-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.legend-row:last-child{border-bottom:none;}
+.legend-dot{display:inline-flex;align-items:center;gap:10px;color:#fff;}
+.legend-dot .dot-vis{width:10px;height:10px;border-radius:50%;}
+.legend-count{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:0.05em;}
+.result-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.result-row:last-child{border-bottom:none;}
+.result-kind{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.result-info{flex:1;display:flex;flex-direction:column;}
+.result-name{font-size:13px;font-weight:600;color:#fff;}
+.result-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);letter-spacing:0.05em;}
+.result-dist{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--brand);}
+
+.locator-ctas{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
+
+/* ================================================================
+   FEATURED FAMILIES rail
+   ================================================================ */
+.families-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.fam-card{
+  background:#fff;border:1px solid rgba(17,20,24,0.08);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;transition:all var(--transition);
+  display:flex;flex-direction:column;
+}
+.fam-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.fam-img{
+  aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  position:relative;color:#fff;overflow:hidden;
+}
+.fam-img.dk{background:linear-gradient(135deg,#14161e 0%,#0c0d12 100%);}
+.fam-img.cream{background:linear-gradient(135deg,#eceae4 0%,#d8d5cc 100%);color:var(--ink);}
+.fam-img.kraft{background:linear-gradient(135deg,#c9a876 0%,#a68a5c 100%);color:var(--ink);}
+.fam-img.brand{background:linear-gradient(135deg,#F32740 0%,#C41F32 100%);}
+.fam-img.dark2{background:linear-gradient(135deg,#2a1f18 0%,#14161e 100%);}
+/* Real product photo — object-fit:contain keeps the full product visible, centered, with tinted panel framing */
+.fam-img img.fam-product{
+  width:100%;height:100%;object-fit:contain;
+  padding:8% 10%;
+  display:block;
+  position:relative;z-index:1;
+}
+.fam-tag{
+  position:absolute;top:12px;left:12px;z-index:2;
+  background:rgba(12,13,18,0.75);color:#fff;backdrop-filter:blur(6px);
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 9px;border-radius:var(--radius);font-weight:600;
+}
+.fam-img.cream .fam-tag,.fam-img.kraft .fam-tag{background:rgba(255,255,255,0.85);color:var(--ink);}
+.fam-img svg{display:none;} /* Replaced by real product photos in v3.7 */
+.fam-body{padding:20px;display:flex;flex-direction:column;flex:1;}
+.fam-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:6px;}
+.fam-name{font-family:'Sora',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;}
+.fam-desc{font-size:13px;line-height:1.45;color:var(--ink2);margin-bottom:16px;flex:1;}
+.fam-meta{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(17,20,24,0.08);}
+.fam-skucount{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);font-weight:600;}
+.fam-arrow{font-size:11px;font-weight:700;color:var(--brand);letter-spacing:0.06em;text-transform:uppercase;}
+
+/* ================================================================
+   FREE PROFESSIONAL SERVICE — layout CTA
+   ================================================================ */
+.layout-cta{background:var(--dark);color:#fff;padding:120px 28px;}
+.layout-cta-inner{
+  max-width:1440px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+}
+.layout-cta h2{
+  font-family:'Sora',sans-serif;font-size:clamp(36px,4.5vw,56px);line-height:1.05;
+  font-weight:800;letter-spacing:-0.02em;margin:20px 0 20px;color:#fff;
+}
+.layout-cta h2 .accent{color:var(--brand);}
+.layout-cta p{font-size:17px;line-height:1.55;color:var(--ink4);max-width:520px;margin-bottom:28px;}
+.layout-features{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+.lf-item{font-size:14px;color:#fff;display:flex;align-items:center;gap:10px;}
+.lf-check{color:var(--brand);font-weight:700;font-size:16px;}
+.layout-cta-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.layout-visual{position:relative;aspect-ratio:4/3;background:var(--dark2);border-radius:var(--radius);padding:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+.lv-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;height:100%;}
+.lv-cell{background:rgba(255,255,255,0.02);border-radius:1px;}
+.lv-cell.dim{background:rgba(240,169,50,0.12);}
+.lv-cell.med{background:rgba(240,169,50,0.3);}
+.lv-cell.bright{background:rgba(240,169,50,0.6);box-shadow:inset 0 0 8px rgba(240,169,50,0.3);}
+.lv-cell.fix{background:var(--brand);position:relative;box-shadow:0 0 12px rgba(243,39,64,0.5);}
+.lv-overlay{
+  position:absolute;top:20px;right:20px;
+  background:rgba(12,13,18,0.85);backdrop-filter:blur(10px);
+  padding:10px 14px;border-radius:var(--radius);
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#fff;letter-spacing:0.05em;
+}
+
+/* ================================================================
+   ACC CALLOUT (v3.1 add) — Aria / PLE / Training
+   ================================================================ */
+.acc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.acc-card{
+  background:#fff;border:1px solid rgba(17,20,24,0.08);border-radius:var(--radius);
+  overflow:hidden;transition:all var(--transition);cursor:pointer;
+}
+.acc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.acc-card-art{
+  aspect-ratio:3/2;background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);
+  position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.acc-card-art::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 25% 30%,rgba(201,168,118,0.3) 0%,transparent 55%),
+             radial-gradient(circle at 75% 70%,rgba(243,39,64,0.15) 0%,transparent 50%);
+}
+.acc-card-art .tool-mark{
+  font-family:'Sora',sans-serif;font-size:56px;font-weight:800;color:var(--kraft);
+  letter-spacing:-0.025em;position:relative;z-index:1;
+}
+.acc-card-body{padding:24px 26px 28px;}
+.acc-card-body h3{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;}
+.acc-card-body p{font-size:15px;line-height:1.5;color:var(--ink2);margin-bottom:18px;}
+.acc-link{font-size:13px;font-weight:700;color:var(--brand);letter-spacing:0.04em;text-transform:uppercase;}
+.acc-link::after{content:' ›';}
+
+/* ================================================================
+   INSTALLED AT — 8 vertical tiles
+   ================================================================ */
+.installed-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(17,20,24,0.08);}
+.installed-tile{
+  aspect-ratio:4/3;padding:24px;position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;cursor:pointer;
+  transition:all var(--transition);
+}
+.installed-tile::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.3) 35%,rgba(0,0,0,0.7) 70%,rgba(0,0,0,0.95) 100%);}
+.installed-tile.t1{background:url('assets/nanobanana/installed-warehouse.jpg') center/cover no-repeat;}
+.installed-tile.t2{background:url('assets/nanobanana/installed-manufacturing.jpg') center/cover no-repeat;}
+.installed-tile.t3{background:url('assets/nanobanana/installed-coldstorage.jpg') center/cover no-repeat;}
+.installed-tile.t4{background:url('assets/nanobanana/installed-datacenter.jpg') center/cover no-repeat;}
+.installed-tile.t5{background:url('assets/nanobanana/installed-hospital.jpg') center/cover no-repeat;}
+.installed-tile.t6{background:url('assets/nanobanana/installed-school.jpg') center/cover no-repeat;}
+.installed-tile.t7{background:url('assets/nanobanana/installed-hospitality.jpg') center/cover no-repeat;}
+.installed-tile.t8{background:url('assets/nanobanana/installed-municipality.jpg') center/cover no-repeat;}
+.installed-tile:hover{transform:scale(1.02);z-index:2;}
+.installed-label{position:relative;z-index:2;}
+.il-vert{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.005em;margin-bottom:4px;}
+.il-place{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--kraft);font-weight:600;}
+
+/* ================================================================
+   WHAT'S NEW — 3 news cards
+   ================================================================ */
+.whats-new{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.wn-card{
+  background:#fff;border:1px solid rgba(17,20,24,0.08);border-radius:var(--radius);
+  overflow:hidden;transition:all var(--transition);
+}
+.wn-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.wn-img{aspect-ratio:16/9;background:linear-gradient(135deg,#3a3f47 0%,#14161e 100%);color:#fff;display:flex;align-items:center;justify-content:center;position:relative;}
+.wn-tag{
+  position:absolute;top:14px;left:14px;background:var(--brand);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  padding:5px 10px;border-radius:var(--radius);
+}
+.wn-body{padding:22px 24px 26px;}
+.wn-meta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:10px;}
+.wn-title{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;line-height:1.3;margin-bottom:10px;letter-spacing:-0.005em;}
+.wn-excerpt{font-size:14px;line-height:1.5;color:var(--ink2);}
+
+/* ================================================================
+   SPLIT TEASERS — Find your rebate + For specifiers
+   ================================================================ */
+.split-teasers{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.teaser{
+  padding:48px 44px;border-radius:var(--radius);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;min-height:360px;
+}
+.teaser-rebate{background:linear-gradient(135deg,#eceae4 0%,#d8d5cc 100%);color:var(--ink);}
+.teaser-spec{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:#fff;}
+.teaser-spec .sec-eyebrow{color:var(--brand);}
+.teaser h3{font-family:'Sora',sans-serif;font-size:28px;line-height:1.15;font-weight:800;letter-spacing:-0.015em;margin-bottom:14px;}
+.teaser p{font-size:15px;line-height:1.55;margin-bottom:24px;}
+.teaser-rebate p{color:var(--ink2);}
+.teaser-spec p{color:var(--ink4);}
+.rebate-stat{display:flex;gap:32px;margin-bottom:28px;padding-top:20px;border-top:1px solid rgba(17,20,24,0.15);}
+.rebate-stat-num{font-family:'Sora',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.01em;line-height:1;}
+.rebate-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-top:4px;font-weight:600;}
+.spec-resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px;flex:1;align-content:start;}
+.spec-res-item{
+  padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius);font-size:13px;font-weight:500;color:#fff;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all var(--transition);
+}
+.spec-res-item:hover{background:rgba(255,255,255,0.1);border-color:var(--brand);}
+.spec-res-item .arr{color:var(--brand);}
+.teaser > a.cta-primary{align-self:flex-start;}
+
+/* ================================================================
+   FOOTER CTA STRIP
+   ================================================================ */
+/* ================================================================
+   FOOTER CTA STRIP — red band · white accent · outlined + filled CTAs
+   ================================================================ */
+.footer-cta{background:var(--brand);padding:44px 28px;}
+.footer-cta-inner{
+  max-width:1440px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.footer-cta .msg{
+  font-family:'Inter',sans-serif;font-size:22px;font-weight:400;
+  color:rgba(255,255,255,0.92);letter-spacing:-0.005em;line-height:1.35;
+}
+.footer-cta .msg strong{color:#fff;font-weight:700;}
+.footer-cta .actions{display:flex;gap:14px;align-items:center;}
+.footer-cta .cta-outline{
+  display:inline-flex;align-items:center;padding:14px 26px;
+  background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.85);
+  font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  border-radius:var(--radius);transition:all var(--transition);
+}
+.footer-cta .cta-outline:hover{background:#fff;color:var(--brand);}
+.footer-cta .cta-filled{
+  display:inline-flex;align-items:center;padding:14px 26px;
+  background:#fff;color:var(--brand);
+  font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  border-radius:var(--radius);transition:all var(--transition);
+}
+.footer-cta .cta-filled:hover{background:var(--ink);color:#fff;}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.footer{background:var(--dark);color:#fff;padding:80px 28px 40px;}
+.footer-inner{max-width:1440px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.5fr repeat(5,1fr);gap:32px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-brand img{height:36px;margin-bottom:20px;}
+.footer-brand .tagline{font-size:14px;line-height:1.6;color:var(--ink4);max-width:340px;}
+.footer-col h4{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#fff;margin-bottom:18px;font-weight:700;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:14px;color:var(--ink4);transition:color var(--transition);}
+.footer-col a:hover{color:#fff;}
+.footer-bottom{padding-top:28px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:0.05em;}
+
+/* ================================================================
+   DEV STRIP (remove before ship)
+   ================================================================ */
+.dev-strip{
+  background:var(--amber);color:var(--ink);font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.08em;padding:6px 20px;text-align:center;font-weight:700;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+/* ================================================================
+   MOBILE NAV (v3.10 · accordion drawer · <900px)
+   Hamburger → drawer slides in from right
+   3-level accordion: L1 top nav → L2 category → L3 sub-category
+   ================================================================ */
+.nav-toggle{
+  display:none;
+  width:44px;height:44px;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  background:transparent;border:1px solid rgba(0,0,0,0.1);border-radius:3px;
+  cursor:pointer;
+}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);transition:transform 0.2s, opacity 0.2s;}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-drawer{
+  position:fixed;top:90px;left:0;right:0;bottom:0;
+  background:#fff;z-index:150;
+  transform:translateX(100%);transition:transform 0.25s ease;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  visibility:hidden;
+}
+.mobile-drawer.open{transform:translateX(0);visibility:visible;}
+.mobile-drawer-inner{padding:8px 0 40px;}
+
+.mob-l1{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 24px;
+  font-family:'Sora',sans-serif;font-size:16px;font-weight:700;
+  color:var(--ink);text-transform:none;letter-spacing:-0.01em;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  text-decoration:none;
+}
+.mob-l2{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 24px 14px 40px;
+  font-size:14px;font-weight:600;color:var(--ink2);
+  border-bottom:1px solid rgba(0,0,0,0.04);
+  background:var(--bg2);
+  text-decoration:none;
+}
+.mob-l2.mob-utility{font-weight:400;color:var(--ink3);font-style:italic;}
+.mob-l3{
+  display:block;padding:12px 24px 12px 56px;
+  font-size:13px;color:var(--ink2);
+  border-bottom:1px solid rgba(0,0,0,0.03);
+  background:var(--bg3);
+  text-decoration:none;
+}
+.mob-chev{
+  font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;
+  color:var(--ink3);transition:transform 0.2s;width:16px;text-align:center;
+}
+.mob-l1[aria-expanded="true"] .mob-chev,
+.mob-l2[aria-expanded="true"] .mob-chev{transform:rotate(45deg);color:var(--brand);}
+
+.mob-panel{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.25s ease;
+}
+.mob-panel.open{max-height:1600px;}
+
+.mob-cta-row{
+  display:flex;gap:10px;padding:24px;
+  border-top:1px solid rgba(0,0,0,0.08);
+  margin-top:12px;
+}
+.mob-cta-row .cta-secondary,
+.mob-cta-row .cta-primary{flex:1;justify-content:center;padding:14px 16px;font-size:12px;}
+
+/* Toggle hamburger only visible <900 (set in 900 breakpoint below) */
+
+@media (max-width:1200px){
+  .diff-inner{grid-template-columns:repeat(3,1fr);gap:18px;}
+  .families-rail{grid-template-columns:repeat(2,1fr);}
+  .hero-carousel-inner{grid-template-columns:1fr;}
+  .hero-image-stage{min-height:480px;}
+  .hero-panel{padding:48px 32px;}
+  .hero-persistent{left:32px;bottom:32px;right:32px;}
+  .carousel-controls{padding:0 32px;}
+}
+@media (max-width:900px){
+  .what-we-make,.acc-grid,.whats-new{grid-template-columns:1fr;gap:20px;}
+  .locator-map-wrap{grid-template-columns:1fr;}
+  .layout-cta-inner,.split-teasers{grid-template-columns:1fr;gap:40px;}
+  .installed-grid,.families-rail{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .site-nav ul.main-nav{display:none;}
+  .site-nav .cta-pair{display:none;}
+  .nav-toggle{display:flex;}
+  .megamenu{display:none !important;} /* Kill desktop mega menus on mobile — mobile drawer replaces */
+  .utility-bar{padding:0 16px;gap:16px;font-size:12px;}
+  .utility-bar a:not(.signin){display:none;}
+  .content-section,.locator-section,.layout-cta{padding:80px 20px;}
+}
+@media (max-width:600px){
+  .diff-inner{grid-template-columns:repeat(2,1fr);}
+  .footer-top{grid-template-columns:1fr;}
+  .installed-grid{grid-template-columns:1fr;}
+  .families-rail{grid-template-columns:1fr;}
+  .stat-row{grid-template-columns:1fr;}
+  .spec-resource-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOCKED BASELINE — canonical v3.3 design · Hero carousel realigned to Featured Families narrative · Featured Families v2 intact · Manus must match pixel-fidelity -->
+<div class="dev-strip">MOCKUP v3.12 · April 23, 2026 · Tier-preview strip extended to all ⒶRCH families (plano · lampar · luxo · city) · Real series names from Zoho (Lara-I · Titan-II · Liberty-I · Sentry-I etc.) replace proⒶRCH-II/III/IV placeholders · tubulⒶRCH deferred (UL-A/A+B/B taxonomy, not ECO/PRO/PRO+)</div>
+
+<!-- Top utility bar -->
+<div class="utility-bar">
+  <a href="#">Find a Distributor</a>
+  <a href="#">Find a Rep</a>
+  <a href="#">Sample Request</a>
+  <a href="#">Contact</a>
+  <span class="signin">
+    Sign In
+    <div class="signin-dropdown">
+      <a href="https://aura.archipelagolighting.com">
+        <span class="label">Sales Reps</span>
+        <span>AURA Portal →</span>
+      </a>
+      <a href="https://algportal.archipelagolighting.com">
+        <span class="label">Distributors · ESCOs · Specifiers</span>
+        <span>ALG Shop →</span>
+      </a>
+    </div>
+  </span>
+</div>
+
+<!-- Persistent site nav -->
+<nav class="site-nav">
+  <div class="logo-wrap">
+    <img src="assets/ALG_Logo-Color.svg" alt="Archipelago Lighting">
+  </div>
+  <ul class="main-nav">
+
+    <!-- ============================================================
+         SOLUTIONS (main nav item 1) · 3-col solutions mega menu
+         Col 1 (Main): nav items · Col 2 (Vertical list): 8 verticals
+         Col 3 (Preview): vertical hero image + description
+         ============================================================ -->
+    <li class="has-dropdown active" data-mm="solutions">
+      <a href="#">Solutions</a>
+      <div class="megamenu solutions">
+        <div class="mm-col mm-col-main">
+          <div class="mm-col-head">Browse by</div>
+          <div class="mm-main-group-label">Start here</div>
+          <a href="#" class="mm-main-item active">Solutions<span class="mm-main-sub">By vertical · 8 industries</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">Purchase tools</div>
+          <a href="#" class="mm-main-item">Where to Buy</a>
+          <a href="#" class="mm-main-item">TAA Compliant Lighting</a>
+          <a href="#" class="mm-main-item">Find a Rep</a>
+          <a href="#" class="mm-main-item">Find a Distributor</a>
+        </div>
+        <div class="mm-col mm-col-vert">
+          <div class="mm-col-head">Industry Vertical</div>
+          <a href="#" class="mm-vert-item active"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Warehouse &amp; Logistics"
+             data-preview-label="Vertical · Warehouse"
+             data-preview-desc="High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC Premium listed with integrated sensors and emergency egress.">
+             Warehouse &amp; Logistics<span class="mm-vert-sub">High bays · EM · sensors</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Industrial &amp; Manufacturing"
+             data-preview-label="Vertical · Industrial"
+             data-preview-desc="Production-floor and process-facility lighting engineered for uptime. Washdown-rated, vibration-resistant, and hazardous-location configurations.">
+             Industrial &amp; Manufacturing<span class="mm-vert-sub">Washdown · hazloc · strip</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Cold Storage &amp; Grocery"
+             data-preview-label="Vertical · Cold Chain"
+             data-preview-desc="Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.">
+             Cold Storage &amp; Grocery<span class="mm-vert-sub">Cooler luminaires · refer</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Data Center"
+             data-preview-label="Vertical · Data Center"
+             data-preview-desc="Hyperscale and colocation facility lighting with controls integration. Low-profile troffers and linear with BMS-ready DALI and 0–10V dimming.">
+             Data Center<span class="mm-vert-sub">Troffers · linear · DALI</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Healthcare"
+             data-preview-label="Vertical · Healthcare"
+             data-preview-desc="Patient-care, surgical, and administrative lighting with compliance coverage. UL1598 listed with anti-microbial finish options and tunable-white.">
+             Healthcare<span class="mm-vert-sub">Tunable-white · surgical</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Education"
+             data-preview-label="Vertical · Education"
+             data-preview-desc="K-12 and higher-ed lighting with CEC JA8 and DLC Premium. Panel, troffer, and classroom controls packages with occupancy + daylight harvesting.">
+             Education<span class="mm-vert-sub">Panels · JA8 · controls</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Hospitality"
+             data-preview-label="Vertical · Hospitality"
+             data-preview-desc="Hotels, restaurants, and hospitality venues with warm-dimming and controls. Décor-grade finishes with 2700K–3000K warm CCT and phase-cut compatibility.">
+             Hospitality<span class="mm-vert-sub">Warm-dim · décor · phase</span>
+          </a>
+          <a href="#" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/OUTDOOR-CITY-HOME_2_1400x.png"
+             data-preview-name="Government &amp; Military"
+             data-preview-label="Vertical · Gov &amp; Mil"
+             data-preview-desc="TAA-compliant fixtures for federal, state, and DoD facilities. Buy American Act eligible with documentation for GSA schedules and set-aside procurements.">
+             Government &amp; Military<span class="mm-vert-sub">TAA · BAA · GSA</span>
+          </a>
+        </div>
+        <div class="mm-col mm-col-preview">
+          <div class="mm-preview">
+            <div class="preview-img-wrap">
+              <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="Warehouse &amp; Logistics vertical preview" id="solPreviewImg">
+            </div>
+            <div class="preview-label" id="solPreviewLabel">Vertical · Warehouse</div>
+            <div class="preview-name" id="solPreviewName">Warehouse &amp; Logistics</div>
+            <div class="preview-desc" id="solPreviewDesc">High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC Premium listed with integrated sensors and emergency egress.</div>
+            <a href="#" class="preview-cta">View solutions →</a>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- ============================================================
+         PRODUCTS (main nav item 2) · 4-col wide mega menu
+         Col 1 (Main): Indoor / Outdoor / Residential / Life Safety &amp; Controls / Warehouse Deals
+         Col 2 (Category): sub-brand categories for the hovered main item
+         Col 3 (Application): specific applications for the hovered category
+         Col 4 (Preview): hovered-deepest image + description + CTA
+                          For planoⒶRCH applications only → ECO/PRO/PRO+ tier strip below
+         ============================================================ -->
+    <li class="has-dropdown" data-mm="products">
+      <a href="#">Products</a>
+      <div class="megamenu wide">
+
+        <!-- ===== COLUMN 1: MAIN MENU (dark panel) ===== -->
+        <div class="mm-col mm-col-main">
+          <div class="mm-col-head">Browse by</div>
+          <div class="mm-main-group-label">Category</div>
+          <a href="#" class="mm-main-item active" data-main="indoor">Indoor<span class="mm-main-sub">plano · lampar</span></a>
+          <a href="#" class="mm-main-item" data-main="outdoor">Outdoor<span class="mm-main-sub">luxo · city</span></a>
+          <a href="#" class="mm-main-item" data-main="residential">Residential<span class="mm-main-sub">Consumer · Multi-f<span class="aa">Ⓐ</span>MILY</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">By tech capability</div>
+          <a href="#" class="mm-main-item" data-main="controls">Life Safety &amp; Controls<span class="mm-main-sub">const<span class="aa">Ⓐ</span>NT · contr<span class="aa">Ⓐ</span>LS</span></a>
+          <div class="mm-main-divider"></div>
+          <a href="#" class="mm-main-item" data-main="openbox">Warehouse Deals<span class="mm-main-sub">Last-run inventory</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">Purchase tools</div>
+          <a href="#" class="mm-main-item">Where to Buy</a>
+          <a href="#" class="mm-main-item">TAA Compliant Lighting</a>
+        </div>
+
+        <!-- ===== COLUMN 2: CATEGORY ===== -->
+        <div class="mm-col mm-col-cat">
+          <div class="mm-col-head">Category</div>
+
+          <!-- INDOOR · 2 categories -->
+          <div class="mm-cat-group active" data-cat-group="indoor">
+            <a href="#" class="mm-cat-item active" data-cat="indoor-plano"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Commercial | plano&#9424;RCH"
+               data-preview-label="Indoor · Commercial"
+               data-preview-desc="Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.">
+               Commercial | plano<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Architectural linear · panels · troffers</span>
+            </a>
+            <a href="#" class="mm-cat-item" data-cat="indoor-lampar"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/Body_1400x.gif"
+               data-preview-name="Industrial | lampar&#9424;RCH"
+               data-preview-label="Indoor · Industrial"
+               data-preview-desc="Industrial LED lighting for warehouses and manufacturing facilities. Linear and round high bays, low bay strips, and washdown fixtures.">
+               Industrial | lampar<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">High bays · strips · washdown</span>
+            </a>
+          </div>
+
+          <!-- OUTDOOR · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="outdoor">
+            <a href="#" class="mm-cat-item active" data-cat="outdoor-luxo"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/Body_4136_x_4136_px_1400x.png"
+               data-preview-name="Commercial | luxo&#9424;RCH"
+               data-preview-label="Outdoor · Commercial"
+               data-preview-desc="Outdoor commercial LED lighting for parking lots, building exteriors, and sports venues. Area, canopy, flood, sports, and wall packs.">
+               Commercial | luxo<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Area · canopy · flood · wall</span>
+            </a>
+            <a href="#" class="mm-cat-item" data-cat="outdoor-city"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/OUTDOOR-CITY-HOME_2_1400x.png"
+               data-preview-name="Municipal | city&#9424;RCH"
+               data-preview-label="Outdoor · Municipal"
+               data-preview-desc="Municipal outdoor LED lighting for cities, parks, and public infrastructure. Bollards, high-mast, post-top, roadway, street-sign, and traffic control.">
+               Municipal | city<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Bollard · post-top · roadway</span>
+            </a>
+          </div>
+
+          <!-- RESIDENTIAL · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="residential">
+            <a href="#" class="mm-cat-item active" data-cat="res-consumer"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Consumer"
+               data-preview-label="Residential · Consumer"
+               data-preview-desc="Consumer-facing residential lighting. Shop by room, type, or style. Modern, rustic, coastal, industrial, mid-century, and farmhouse collections for every room of the home.">
+               Consumer<span class="mm-cat-sub">Shop by room · type · style</span>
+            </a>
+            <a href="#" class="mm-cat-item" data-cat="res-multi"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Multi-f&#9424;MILY"
+               data-preview-label="Residential · Multi-family"
+               data-preview-desc="Multi-family and light-commercial fixtures for apartment buildings, condos, and MDU properties. Recessed, surface mount, vanity, landscape, and utility.">
+               Multi-f<span class="aa">Ⓐ</span>MILY<span class="mm-cat-sub">Recessed · vanity · landscape</span>
+            </a>
+          </div>
+
+          <!-- CONTROLS · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="controls">
+            <a href="#" class="mm-cat-item active" data-cat="ctrl-constant"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/Body_1400x.gif"
+               data-preview-name="const&#9424;NT"
+               data-preview-label="Controls · Emergency"
+               data-preview-desc="Emergency battery backup. Drivers, egress lights, exit signs, and combo signs with built-in 90-minute battery backup for code compliance.">
+               const<span class="aa">Ⓐ</span>NT<span class="mm-cat-sub">Emergency battery backup</span>
+            </a>
+            <a href="#" class="mm-cat-item" data-cat="ctrl-controls"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/OUTDOOR-CITY-HOME_2_1400x.png"
+               data-preview-name="contr&#9424;LS · by &#9424;CS"
+               data-preview-label="Controls · Occupancy"
+               data-preview-desc="Occupancy sensing and networked controls by ⒶCS. Sensors, photocells, wireless controllers, and the ⒶCS by ALG App for NLC-ready deployments.">
+               contr<span class="aa">Ⓐ</span>LS · by <span class="aa">Ⓐ</span>CS<span class="mm-cat-sub">Occupancy · networked</span>
+            </a>
+          </div>
+
+          <!-- WAREHOUSE DEALS · single category -->
+          <div class="mm-cat-group" data-cat-group="openbox">
+            <a href="#" class="mm-cat-item active" data-cat="openbox-all"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Warehouse Deals"
+               data-preview-label="Last-run · Limited stock"
+               data-preview-desc="Last-run inventory from discontinued SKUs and retired generations. Fully functional, factory-warranted, priced to move. While supplies last — not restocked.">
+               All Warehouse Deals<span class="mm-cat-sub">Last-run · limited stock</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ===== COLUMN 3: APPLICATION ===== -->
+        <div class="mm-col mm-col-app">
+          <div class="mm-col-head">Application</div>
+
+          <!-- planoⒶRCH applications (with Option B ECO/PRO/PRO+ tier-preview sandbox) -->
+          <div class="mm-app-group active" data-app-group="indoor-plano">
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Lara-I" data-tier-proplus="Luna-I" data-preview-name="plano&#9424;RCH · Architectural Linear" data-preview-label="Indoor · Linear" data-preview-desc="Architectural linear luminaires for suspended, surface-mount, and recessed indoor applications. ECO / PRO / PRO+ tier lineup.">Architectural Linear</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Solstice-I" data-tier-pro="" data-tier-proplus="Astra-I" data-preview-name="plano&#9424;RCH · Commercial Downlight" data-preview-label="Indoor · Downlight" data-preview-desc="Commercial downlights with integral and modular housings. 4- to 8-inch apertures, Field-Selectable wattage and CCT.">Commercial Downlight</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Solstice-I" data-tier-pro="" data-tier-proplus="Astra-I" data-preview-name="plano&#9424;RCH · Recessed Downlight Housing" data-preview-label="Indoor · Downlight Housing" data-preview-desc="IC-rated and non-IC recessed downlight housings. New construction and remodel options with driver compartment access.">Recessed Downlight Housing</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="select&#9424;RCH-I" data-tier-pro="pro&#9424;RCH-II" data-tier-proplus="" data-preview-name="plano&#9424;RCH · Panels" data-preview-label="Indoor · Panels" data-preview-desc="Back-lit LED flat panels for drop-ceiling grid and surface mount. 2×2, 2×4, and 1×4 footprints. Field-Selectable wattage and CCT.">Panels</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="pro&#9424;RCH-T1" data-tier-proplus="Luxmark-I" data-preview-name="plano&#9424;RCH · Troffer" data-preview-label="Indoor · Troffer" data-preview-desc="LED troffers with center-basket and volumetric optics. 2×2 and 2×4 grid retrofits and new construction.">Troffer</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="retro&#9424;RCH-P1" data-tier-proplus="" data-preview-name="plano&#9424;RCH · Retrofit Kits" data-preview-label="Indoor · Retrofit" data-preview-desc="Fluorescent-to-LED retrofit kits for existing troffer, strip, and wrap housings.">Retrofit Kits</a>
+            <a href="#" class="mm-app-item" data-preview-name="plano&#9424;RCH · Stairwell &amp; Passageway" data-preview-label="Indoor · Stairwell" data-preview-desc="Bi-level stairwell and passageway fixtures with occupancy-sensing step dim. Code-compliant for 24/7 operation.">Stairwell &amp; Passageway</a>
+            <a href="#" class="mm-app-item" data-preview-name="plano&#9424;RCH · General Purpose Strips" data-preview-label="Indoor · Strip" data-preview-desc="General-purpose LED strip fixtures for surface and suspended mounting in utility spaces.">General Purpose Strips</a>
+          </div>
+
+          <!-- lamparⒶRCH applications -->
+          <div class="mm-app-group" data-app-group="indoor-lampar">
+            <a href="#" class="mm-app-item"
+               data-preview-name="lampar&#9424;RCH · Linear High Bay"
+               data-preview-label="Industrial · Linear HB"
+               data-preview-desc="Linear high-bay fixtures for warehouses, manufacturing, and retail back-of-house. Up to 30,000 lumens per fixture." data-preview-tiers="1" data-tier-eco="" data-tier-pro="Titan-II" data-tier-proplus="Valkyrie-II">Linear High Bay</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="lampar&#9424;RCH · Round High Bay"
+               data-preview-label="Industrial · Round HB"
+               data-preview-desc="UFO-form round high bays for open-ceiling industrial spaces. Up to 60,000 lumens per fixture with DLC Premium." data-preview-tiers="1" data-tier-eco="Icarus-III" data-tier-pro="Jupiter-II" data-tier-proplus="Millennium-I">Round High Bay</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="lampar&#9424;RCH · Washdown"
+               data-preview-label="Industrial · Washdown"
+               data-preview-desc="IP69K-rated washdown fixtures for food-processing, commercial kitchen, and pharmaceutical environments." data-preview-tiers="1" data-tier-eco="Eureka-II" data-tier-pro="Eureka-I" data-tier-proplus="Poseidon-I">Washdown</a>
+          </div>
+
+          <!-- luxoⒶRCH applications -->
+          <div class="mm-app-group" data-app-group="outdoor-luxo">
+            <a href="#" class="mm-app-item"
+               data-preview-name="luxo&#9424;RCH · Area Luminaire"
+               data-preview-label="Outdoor · Area"
+               data-preview-desc="Area luminaires for parking lots, dealerships, and commercial exteriors. Multiple optics (Type II, III, IV, V) and mounting options." data-preview-tiers="1" data-tier-eco="Heritage-I" data-tier-pro="Liberty-I" data-tier-proplus="Rosetta-III">Area Luminaire</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="luxo&#9424;RCH · Canopy Luminaire"
+               data-preview-label="Outdoor · Canopy"
+               data-preview-desc="Recessed and surface-mount canopy fixtures for service station, drive-thru, and covered-entry applications." data-preview-tiers="1" data-tier-eco="Pathfinder-I" data-tier-pro="Navigator-I" data-tier-proplus="">Canopy Luminaire</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="luxo&#9424;RCH · Flood"
+               data-preview-label="Outdoor · Flood"
+               data-preview-desc="Flood luminaires for façade, signage, and sports practice fields. Multiple beam angles and trunnion or yoke mount." data-preview-tiers="1" data-tier-eco="Everest-I" data-tier-pro="" data-tier-proplus="Zion-II">Flood</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="luxo&#9424;RCH · Sports Lighters"
+               data-preview-label="Outdoor · Sports"
+               data-preview-desc="Sports lighters for outdoor athletic venues. Broadcast-grade visual comfort with precision optics." data-preview-tiers="1" data-tier-eco="Radiator-III" data-tier-pro="Illuminator-I" data-tier-proplus="">Sports Lighters</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="luxo&#9424;RCH · Wall Pack"
+               data-preview-label="Outdoor · Wall"
+               data-preview-desc="Full-cutoff and semi-cutoff wall packs for building exteriors. IP65 rated with 10kV surge protection." data-preview-tiers="1" data-tier-eco="Watchtower-I" data-tier-pro="Nightwatch-I" data-tier-proplus="Palisade-I">Wall Pack</a>
+          </div>
+
+          <!-- cityⒶRCH applications -->
+          <div class="mm-app-group" data-app-group="outdoor-city">
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · Bollard"
+               data-preview-label="Municipal · Bollard"
+               data-preview-desc="Bollard luminaires for pathways, landscape, and pedestrian areas. Vandal-resistant options for public installations." data-preview-tiers="1" data-tier-eco="" data-tier-pro="Sentry-I" data-tier-proplus="Morphos-I">Bollard</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · High-Mast"
+               data-preview-label="Municipal · High-Mast"
+               data-preview-desc="High-mast fixtures for roadway interchanges, seaports, and large open-area applications." data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="OmniMax-I">High-Mast</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · Post Top"
+               data-preview-label="Municipal · Post Top"
+               data-preview-desc="Decorative and traditional post-top luminaires for streetscape and municipal applications." data-preview-tiers="1" data-tier-eco="Unity-I" data-tier-pro="Symmetry-I" data-tier-proplus="">Post Top</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · Roadway"
+               data-preview-label="Municipal · Roadway"
+               data-preview-desc="Cobra-head and shoebox roadway luminaires. NEMA 7-pin ready for utility-grade controls." data-preview-tiers="1" data-tier-eco="" data-tier-pro="Abbey-I" data-tier-proplus="">Roadway</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · Street Sign"
+               data-preview-label="Municipal · Street Sign"
+               data-preview-desc="Street sign lamps for illuminated signage and wayfinding applications.">Street Sign</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="city&#9424;RCH · Traffic Control Lamps"
+               data-preview-label="Municipal · Traffic"
+               data-preview-desc="LED traffic signal and pedestrian crossing lamps for DOT and municipal specifications." data-preview-tiers="1" data-tier-eco="" data-tier-pro="Traffic Control" data-tier-proplus="">Traffic Control Lamps</a>
+          </div>
+
+          <!-- Consumer applications (flat list with inline group headers) -->
+          <div class="mm-app-group" data-app-group="res-consumer">
+            <div class="mm-app-group-head">New &amp; Featured</div>
+            <a href="#" class="mm-app-item"
+               data-preview-name="Consumer · New Arrivals"
+               data-preview-label="Consumer · New"
+               data-preview-desc="New consumer residential arrivals this season. Limited-edition finishes and curated releases.">New Arrivals</a>
+            <a href="#" class="mm-app-item"
+               data-preview-name="Consumer · Signature Series"
+               data-preview-label="Consumer · Signature"
+               data-preview-desc="Signature Series: ALG's flagship residential collection. Designer-grade finishes and premium materials.">Signature Series</a>
+
+            <div class="mm-app-group-head">Shop by Room</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Living Room" data-preview-label="Consumer · Living Room" data-preview-desc="Living room fixtures: chandeliers, pendants, floor lamps, and ambient lighting.">Living Room</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Kitchen" data-preview-label="Consumer · Kitchen" data-preview-desc="Kitchen fixtures: island pendants, under-cabinet, and task lighting.">Kitchen</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Dining Room" data-preview-label="Consumer · Dining" data-preview-desc="Dining room fixtures: chandeliers and statement pendants.">Dining Room</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Bedroom" data-preview-label="Consumer · Bedroom" data-preview-desc="Bedroom fixtures: ceiling lights, sconces, and bedside lamps.">Bedroom</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Bathroom" data-preview-label="Consumer · Bathroom" data-preview-desc="Bathroom fixtures: vanity lights, mirror fixtures, and damp-location ceiling lights.">Bathroom</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Outdoor" data-preview-label="Consumer · Outdoor" data-preview-desc="Outdoor residential fixtures: porch lights, path lights, and décor outdoor string lights.">Outdoor</a>
+
+            <div class="mm-app-group-head">Shop by Type</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Ceiling Lights" data-preview-label="Consumer · Type" data-preview-desc="Flush-mount and semi-flush ceiling lights across all styles.">Ceiling Lights</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Wall Sconces" data-preview-label="Consumer · Type" data-preview-desc="Wall sconces for bathrooms, hallways, and accent lighting.">Wall Sconces</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Lamps" data-preview-label="Consumer · Type" data-preview-desc="Table and floor lamps across all décor styles.">Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Outdoor Lighting" data-preview-label="Consumer · Type" data-preview-desc="Outdoor residential lighting: wall mounts, post mounts, and landscape.">Outdoor Lighting</a>
+
+            <div class="mm-app-group-head">Shop by Style</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Modern" data-preview-label="Consumer · Style" data-preview-desc="Modern residential fixtures: clean lines, minimal finishes.">Modern</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Rustic" data-preview-label="Consumer · Style" data-preview-desc="Rustic residential fixtures: distressed metals and reclaimed-wood aesthetics.">Rustic</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Coastal" data-preview-label="Consumer · Style" data-preview-desc="Coastal residential fixtures: driftwood, rope, and marine-inspired details.">Coastal</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Industrial" data-preview-label="Consumer · Style" data-preview-desc="Industrial residential fixtures: exposed hardware and factory-style cages.">Industrial</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Mid-Century" data-preview-label="Consumer · Style" data-preview-desc="Mid-century modern residential fixtures: atomic-age silhouettes.">Mid-Century</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Farmhouse" data-preview-label="Consumer · Style" data-preview-desc="Farmhouse residential fixtures: barn-inspired silhouettes and matte-black hardware.">Farmhouse</a>
+
+            <div class="mm-app-group-head">Curated</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Curated Collections" data-preview-label="Consumer · Curated" data-preview-desc="Curated designer collections across rooms and styles.">Curated Collections</a>
+          </div>
+
+          <!-- Multi-fⒶMILY applications (per wireframe) -->
+          <div class="mm-app-group" data-app-group="res-multi">
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Recessed Downlights" data-preview-label="Multi-family · Recessed" data-preview-desc="Recessed downlights for multi-family construction.">Recessed Downlights</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Surface Mount Downlights" data-preview-label="Multi-family · Surface" data-preview-desc="Surface-mount downlights for multi-family construction — ideal for retrofit.">Surface Mount Downlights</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Vanity Lights" data-preview-label="Multi-family · Vanity" data-preview-desc="Bathroom vanity lights for apartments, condos, and MDU properties.">Vanity Lights</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Landscape" data-preview-label="Multi-family · Landscape" data-preview-desc="Landscape and pathway lighting for multi-family property common areas.">Landscape</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Utility Lamps" data-preview-label="Multi-family · Utility" data-preview-desc="Utility and maintenance lamps for multi-family back-of-house areas.">Utility Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Bi-Level" data-preview-label="Multi-family · Bi-Level" data-preview-desc="Bi-level occupancy fixtures for corridor and stairwell 24/7 operation.">Bi-Level</a>
+            <a href="#" class="mm-app-item" data-preview-name="Multi-f&#9424;MILY · Retrofit Downlights" data-preview-label="Multi-family · Retrofit" data-preview-desc="Recessed retrofit kits for existing multi-family downlight housings.">Retrofit Downlights</a>
+          </div>
+
+          <!-- constⒶNT applications -->
+          <div class="mm-app-group" data-app-group="ctrl-constant">
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Emergency Battery Backup" data-preview-label="EM · Battery Backup" data-preview-desc="Integral emergency battery backup drivers for new-construction luminaires. 90-minute runtime.">Emergency Battery Backup</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · const&#9424;NTLink EM Batteries" data-preview-label="EM · Remote Battery" data-preview-desc="Remote emergency battery packs (constⒶNTLink) for retrofit of non-EM fixtures. NiMH chemistry, 90-minute runtime, self-diagnostic.">const<span class="aa">Ⓐ</span>NTLink EM Batteries</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Exit Signs" data-preview-label="EM · Exit Sign" data-preview-desc="LED exit signs: single and double face, edge-lit and stencil. Self-testing and self-diagnostic options.">Exit Signs</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Combo Signs" data-preview-label="EM · Combo" data-preview-desc="Combination exit sign + egress light. One fixture, two code-compliance functions.">Combo Signs</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Emergency Light" data-preview-label="EM · Egress" data-preview-desc="Emergency egress light fixtures with integral battery backup for path-of-egress illumination.">Emergency Light</a>
+          </div>
+
+          <!-- contrⒶLS applications -->
+          <div class="mm-app-group" data-app-group="ctrl-controls">
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · Bi-Level" data-preview-label="Controls · Bi-Level" data-preview-desc="Bi-level occupancy sensing for corridor and stairwell. Integrated step-dim mode for 24/7 code compliance.">Bi-Level</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · &#9424;RCH Connected Systems" data-preview-label="Controls · Connected" data-preview-desc="ⒶRCH Connected Systems: NLC-ready networked lighting controls across the full ALG product portfolio.">ⒶRCH Connected Systems</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · blue&#9424;RCH" data-preview-label="Controls · Sensors" data-preview-desc="blueⒶRCH occupancy and daylight sensors for code-compliant commercial installations.">blue<span class="aa">Ⓐ</span>RCH</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS by Silvair" data-preview-label="Controls · NLC" data-preview-desc="contrⒶLS by Silvair: Bluetooth-mesh networked lighting controls with ⒶCS by ALG App integration.">contr<span class="aa">Ⓐ</span>LS by Silvair</a>
+          </div>
+
+          <!-- Warehouse Deals applications -->
+          <div class="mm-app-group" data-app-group="openbox-all">
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Indoor" data-preview-label="Warehouse Deals · Indoor" data-preview-desc="Last-run indoor fixtures. Panels, downlights, linear, and retrofit.">Indoor</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Outdoor" data-preview-label="Warehouse Deals · Outdoor" data-preview-desc="Last-run outdoor fixtures. Area, flood, wall, and canopy.">Outdoor</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Lamps" data-preview-label="Warehouse Deals · Lamps" data-preview-desc="Last-run LED lamps. T8, décor, and utility.">Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Accessories" data-preview-label="Warehouse Deals · Accessories" data-preview-desc="Last-run mounting brackets, lenses, and retrofit trim kits.">Accessories</a>
+          </div>
+        </div>
+
+        <!-- ===== COLUMN 4: PREVIEW ===== -->
+        <div class="mm-col mm-col-preview">
+          <div class="mm-preview">
+            <div class="preview-img-wrap">
+              <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="Products preview" id="mmPreviewImg">
+            </div>
+            <div class="preview-label" id="mmPreviewLabel">Indoor · Commercial</div>
+            <div class="preview-name" id="mmPreviewName">Commercial | plano<span class="aa" style="color:var(--brand);">Ⓐ</span>RCH</div>
+            <div class="preview-desc" id="mmPreviewDesc">Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.</div>
+            <a href="#" class="preview-cta" id="mmPreviewCta">View collection →</a>
+
+            <!-- Tier-preview sandbox (ECO / PRO / PRO+) — extended v3.12 to all ⒶRCH families -->
+            <div class="tier-strip hidden" id="mmTierStrip">
+              <div class="tier-card t-eco">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="ECO tier" id="tierImgEco">
+                <div class="tier-label">ECO</div>
+                <div class="tier-sku" id="tierSkuEco">—</div>
+              </div>
+              <div class="tier-card t-pro">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="PRO tier" id="tierImgPro">
+                <div class="tier-label">PRO</div>
+                <div class="tier-sku" id="tierSkuPro">—</div>
+              </div>
+              <div class="tier-card t-proplus">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="PRO+ tier" id="tierImgProplus">
+                <div class="tier-label">PRO+</div>
+                <div class="tier-sku" id="tierSkuProplus">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.megamenu.wide -->
+    </li>
+
+    <li class="has-dropdown">
+      <a href="#">Tools</a>
+      <div class="megamenu">
+        <div>
+          <div class="mm-head">For Buyers</div>
+          <a href="#">Find a Distributor</a>
+          <a href="#">Find a Rep</a>
+        </div>
+        <div>
+          <div class="mm-head">For Specifiers</div>
+          <a href="#">Layout &amp; Design Request</a>
+          <a href="#">LM-79 Photometric Library</a>
+        </div>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="#">Support</a>
+      <div class="megamenu">
+        <div>
+          <div class="mm-head">Service</div>
+          <a href="#">About Us</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Returns &amp; Exchanges</a>
+          <a href="#">Sample Request</a>
+          <a href="#">Library</a>
+          <a href="#">Rebate Center</a>
+        </div>
+        <div>
+          <div class="mm-head">Legal &amp; Compliance</div>
+          <a href="#">Warranty Statement</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Patents</a>
+          <a href="#">CEC JA8 Compliance</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="cta-pair">
+    <a href="#" class="cta-secondary">Request Sample</a>
+    <a href="#" class="cta-primary">Request Layout</a>
+  </div>
+  <!-- Mobile hamburger (visible <900px) -->
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ================================================================
+     MOBILE DRAWER (v3.10 · accordion placeholder)
+     Note: Q8 answer was slide-over (option b). This ships as a 3-level
+     accordion for v3.10 — a functional placeholder. Slide-over drill-in
+     is flagged as a follow-up iteration. See playbook v2.1 §13.
+     ================================================================ -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer-inner">
+
+    <!-- Solutions -->
+    <a href="#" class="mob-l1" data-expand="m-solutions">Solutions<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-solutions">
+      <a href="#" class="mob-l2">Warehouse &amp; Logistics</a>
+      <a href="#" class="mob-l2">Industrial &amp; Manufacturing</a>
+      <a href="#" class="mob-l2">Cold Storage &amp; Grocery</a>
+      <a href="#" class="mob-l2">Data Center</a>
+      <a href="#" class="mob-l2">Healthcare</a>
+      <a href="#" class="mob-l2">Education</a>
+      <a href="#" class="mob-l2">Hospitality</a>
+      <a href="#" class="mob-l2">Government &amp; Military</a>
+    </div>
+
+    <!-- Products -->
+    <a href="#" class="mob-l1" data-expand="m-products">Products<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-products">
+
+      <a href="#" class="mob-l2" data-expand="m-indoor">Indoor<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-indoor">
+        <a href="#" class="mob-l3">Commercial | plano<span class="aa">Ⓐ</span>RCH</a>
+        <a href="#" class="mob-l3">Industrial | lampar<span class="aa">Ⓐ</span>RCH</a>
+      </div>
+
+      <a href="#" class="mob-l2" data-expand="m-outdoor">Outdoor<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-outdoor">
+        <a href="#" class="mob-l3">Commercial | luxo<span class="aa">Ⓐ</span>RCH</a>
+        <a href="#" class="mob-l3">Municipal | city<span class="aa">Ⓐ</span>RCH</a>
+      </div>
+
+      <a href="#" class="mob-l2" data-expand="m-residential">Residential<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-residential">
+        <a href="#" class="mob-l3">Consumer</a>
+        <a href="#" class="mob-l3">Multi-f<span class="aa">Ⓐ</span>MILY</a>
+      </div>
+
+      <a href="#" class="mob-l2" data-expand="m-controls">Life Safety &amp; Controls<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-controls">
+        <a href="#" class="mob-l3">const<span class="aa">Ⓐ</span>NT — Emergency Backup</a>
+        <a href="#" class="mob-l3">contr<span class="aa">Ⓐ</span>LS by <span class="aa">Ⓐ</span>CS — Occupancy</a>
+      </div>
+
+      <a href="#" class="mob-l2">Warehouse Deals</a>
+      <a href="#" class="mob-l2 mob-utility">Where to Buy</a>
+      <a href="#" class="mob-l2 mob-utility">TAA Compliant Lighting</a>
+    </div>
+
+    <!-- Tools -->
+    <a href="#" class="mob-l1" data-expand="m-tools">Tools<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-tools">
+      <a href="#" class="mob-l2">Find a Distributor</a>
+      <a href="#" class="mob-l2">Find a Rep</a>
+      <a href="#" class="mob-l2">Layout &amp; Design Request</a>
+      <a href="#" class="mob-l2">LM-79 Photometric Library</a>
+    </div>
+
+    <!-- Support -->
+    <a href="#" class="mob-l1" data-expand="m-support">Support<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-support">
+      <a href="#" class="mob-l2">About Us</a>
+      <a href="#" class="mob-l2">Contact Us</a>
+      <a href="#" class="mob-l2">Returns &amp; Exchanges</a>
+      <a href="#" class="mob-l2">Sample Request</a>
+      <a href="#" class="mob-l2">Library</a>
+      <a href="#" class="mob-l2">Rebate Center</a>
+      <a href="#" class="mob-l2">Warranty Statement</a>
+      <a href="#" class="mob-l2">Terms &amp; Conditions</a>
+      <a href="#" class="mob-l2">Patents</a>
+      <a href="#" class="mob-l2">CEC JA8 Compliance</a>
+      <a href="#" class="mob-l2">Privacy Policy</a>
+    </div>
+
+    <a href="#" class="mob-l1">About</a>
+
+    <div class="mob-cta-row">
+      <a href="#" class="cta-secondary">Request Sample</a>
+      <a href="#" class="cta-primary">Request Layout</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     HERO CAROUSEL — single container · 5 slides
+     Persistent "Specified. Stocked. Shipped." overlay on image side
+     Slot-level cascade transitions on panel side
+     ================================================================ -->
+<section class="hero-carousel" id="heroCarousel">
+  <div class="hero-carousel-inner">
+
+    <!-- LEFT: Application image layer (cycles) -->
+    <div class="hero-image-stage">
+      <div class="hero-image img-illuminator active" data-slide="0"></div>
+      <div class="hero-image img-titan" data-slide="1"></div>
+      <div class="hero-image img-outdoor" data-slide="2"></div>
+      <div class="hero-image img-proarch" data-slide="3"></div>
+
+      <!-- PERSISTENT overlay — stays fixed across all 5 slides -->
+      <div class="hero-persistent">
+        <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
+        <h1>
+          Specified.<br>
+          Stocked.<span class="stop">.</span><br>
+          <span class="accent">Shipped.</span>
+        </h1>
+        <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Content panel (slot-cycling) -->
+    <div class="hero-panel">
+      <div class="hero-panel-inner">
+        <div class="slide-label">
+          <span class="num" id="slideNum">01</span> / 04 · Now shipping
+        </div>
+
+        <div class="slot-stack">
+          <!-- EYEBROW SLOT -->
+          <div class="slot slot-eyebrow">
+            <div class="slot-content active" data-slot-slide="0"><span class="eyebrow">Featured · Sports Lighting · LSPL</span></div>
+            <div class="slot-content" data-slot-slide="1"><span class="eyebrow">Featured · High-Bay · LLHB</span></div>
+            <div class="slot-content" data-slot-slide="2"><span class="eyebrow">Featured · Area Lighting · LSBX</span></div>
+            <div class="slot-content" data-slot-slide="3"><span class="eyebrow">Featured · Back-Lit Panel · LBLP</span></div>
+          </div>
+
+          <!-- PRODUCT NAME SLOT -->
+          <div class="slot slot-name">
+            <div class="slot-content active" data-slot-slide="0"><h2 class="display-product">Illuminator</h2></div>
+            <div class="slot-content" data-slot-slide="1"><h2 class="display-product">Titan-II</h2></div>
+            <div class="slot-content" data-slot-slide="2"><h2 class="display-product">Liberty</h2></div>
+            <div class="slot-content" data-slot-slide="3"><h2 class="display-product">pro<span class="aa">Ⓐ</span>RCH-III</h2></div>
+          </div>
+
+          <!-- DESCRIPTION SLOT -->
+          <div class="slot slot-desc">
+            <div class="slot-content active" data-slot-slide="0"><p>Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.</p></div>
+            <div class="slot-content" data-slot-slide="1"><p>Linear high-bay for warehouses and industrial interiors. 3-WATTselect 85 / 130 / 155W. DLC Premium, built-in 6kVA surge.</p></div>
+            <div class="slot-content" data-slot-slide="2"><p>Commercial area lighting for parking, campuses, and outdoor grounds. Type III/IV/V optics. surgeⒶRMOR built in.</p></div>
+            <div class="slot-content" data-slot-slide="3"><p>Back-lit panel for offices, classrooms, and commercial interiors. 5-WATTselect × 5-CCTselect across 1x4 / 2x2 / 2x4 form factors. TAA Compliant.</p></div>
+          </div>
+
+          <!-- STATS SLOT -->
+          <div class="slot slot-stats">
+            <div class="slot-content active" data-slot-slide="0">
+              <div class="stat-row">
+                <div class="stat"><div class="num">116,000</div><div class="lbl">Max Lumens</div></div>
+                <div class="stat"><div class="num">150 lm/W</div><div class="lbl">Efficacy</div></div>
+                <div class="stat"><div class="num">10 yr</div><div class="lbl">Warranty</div></div>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="1">
+              <div class="stat-row">
+                <div class="stat"><div class="num">155 W</div><div class="lbl">Max Wattage</div></div>
+                <div class="stat"><div class="num">150+ lm/W</div><div class="lbl">Efficacy</div></div>
+                <div class="stat"><div class="num">90x90</div><div class="lbl">Distribution</div></div>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="2">
+              <div class="stat-row">
+                <div class="stat"><div class="num">Type III/IV/V</div><div class="lbl">Optics</div></div>
+                <div class="stat"><div class="num">150 lm/W</div><div class="lbl">Efficacy</div></div>
+                <div class="stat"><div class="num">10 kVA</div><div class="lbl">SPD</div></div>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="3">
+              <div class="stat-row">
+                <div class="stat"><div class="num">20 – 50 W</div><div class="lbl">WATTselect</div></div>
+                <div class="stat"><div class="num">2700 – 5000K</div><div class="lbl">CCTselect</div></div>
+                <div class="stat"><div class="num">TAA</div><div class="lbl">Compliant</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA SLOT -->
+          <div class="slot slot-cta">
+            <div class="slot-content active" data-slot-slide="0">
+              <div class="cta-pair">
+                <a href="#" class="cta-primary">Download Spec</a>
+                <a href="#" class="cta-link">Learn more ›</a>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="1">
+              <div class="cta-pair">
+                <a href="#" class="cta-primary">Download Spec</a>
+                <a href="#" class="cta-link">Learn more ›</a>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="2">
+              <div class="cta-pair">
+                <a href="#" class="cta-primary">Download Spec</a>
+                <a href="#" class="cta-link">Learn more ›</a>
+              </div>
+            </div>
+            <div class="slot-content" data-slot-slide="3">
+              <div class="cta-pair">
+                <a href="#" class="cta-primary">Download Spec</a>
+                <a href="#" class="cta-link">Learn more ›</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Carousel controls -->
+  <div class="carousel-controls">
+    <div class="carousel-dots">
+      <button class="carousel-dot active" data-slide-to="0" aria-label="Illuminator"></button>
+      <button class="carousel-dot" data-slide-to="1" aria-label="Titan-II"></button>
+      <button class="carousel-dot" data-slide-to="2" aria-label="Liberty"></button>
+      <button class="carousel-dot" data-slide-to="3" aria-label="proARCH-III"></button>
+    </div>
+    <div class="carousel-arrows">
+      <span class="carousel-counter" id="carouselCounter">01 / 04</span>
+      <button class="carousel-arrow" id="prevBtn" aria-label="Previous"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 1L3 7l6 6"/></svg></button>
+      <button class="carousel-arrow" id="nextBtn" aria-label="Next"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 1l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     DIFFERENTIATION STRIP (6 icons)
+     ================================================================ -->
+<div class="diff-strip">
+  <div class="diff-inner">
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div>
+      <div class="diff-text"><div class="diff-num">5</div><div class="diff-lbl">US Warehouses</div></div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div class="diff-text"><div class="diff-num">DLC</div><div class="diff-lbl">Premium Listed</div></div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M12 3v18M3 6h18M3 18h18"/></svg></div>
+      <div class="diff-text"><div class="diff-num">USA</div><div class="diff-lbl">TAA Compliant</div></div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg></div>
+      <div class="diff-text"><div class="diff-num">UL</div><div class="diff-lbl">Listed &amp; Tested</div></div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+      <div class="diff-text"><div class="diff-num">3–10 yr</div><div class="diff-lbl">Tiered Warranty</div></div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l4-6h10l4 6M3 9v9a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 14h6"/></svg></div>
+      <div class="diff-text"><div class="diff-num">3-Day</div><div class="diff-lbl">US Shipping</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     PERSONA SELECTOR (per screen cap #2)
+     ================================================================ -->
+<div class="persona-strip">
+  <div class="persona-inner">
+    <span class="persona-label">I am a…</span>
+    <div class="persona-chips">
+      <button class="persona-chip active" data-persona="distributor">Distributor</button>
+      <button class="persona-chip" data-persona="specifier">Specifier / Engineer</button>
+      <button class="persona-chip" data-persona="contractor">Contractor</button>
+      <button class="persona-chip" data-persona="esco">ESCO</button>
+      <button class="persona-chip" data-persona="facility-manager">Facility Manager</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     WHAT WE MAKE — 3 cards (Indoor / Outdoor / Controls & EM)
+     H2 from original: "Lighting that specifies, stocks, and ships."
+     ================================================================ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">What we make</div>
+    <h2 class="sec-title">Lighting that <span class="accent">specifies</span>, stocks, and ships.</h2>
+    <p class="sec-sub">From warehouse high-bays to parking-lot area lights, from emergency backup to networked controls — built for the specifier's bid sheet, the distributor's floor, and the contractor's truck.</p>
+    <div class="what-we-make">
+      <a href="#" class="wm-card indoor">
+        <div class="wm-img"><svg viewBox="0 0 120 100" fill="currentColor"><rect x="20" y="40" width="80" height="20" rx="2"/><rect x="22" y="42" width="76" height="16" rx="1" fill="#fff" opacity="0.6"/><rect x="35" y="20" width="50" height="20" fill="#fff" opacity="0.2"/></svg></div>
+        <div class="wm-body">
+          <h3>Indoor Luminaires</h3>
+          <p>Troffers, panels, high-bays, downlights. The catalog distributors stock and specifiers spec.</p>
+          <div class="wm-meta"><span class="wm-sub-brands">lamparⒶRCH · planoⒶRCH</span><span class="wm-arrow">Browse →</span></div>
+        </div>
+      </a>
+      <a href="#" class="wm-card outdoor">
+        <div class="wm-img"><svg viewBox="0 0 120 100" fill="currentColor"><circle cx="60" cy="50" r="22"/><rect x="58" y="20" width="4" height="30"/><rect x="55" y="15" width="10" height="6"/><path d="M40 80 Q60 70 80 80 L 80 88 L 40 88 Z" fill="#fff" opacity="0.25"/></svg></div>
+        <div class="wm-body">
+          <h3>Outdoor Luminaires</h3>
+          <p>Wall packs, parking-lot area lights, floods, bollards. Built for the elements.</p>
+          <div class="wm-meta"><span class="wm-sub-brands">cityⒶRCH · luxoⒶRCH</span><span class="wm-arrow">Browse →</span></div>
+        </div>
+      </a>
+      <a href="#" class="wm-card controls">
+        <div class="wm-img"><svg viewBox="0 0 120 100" fill="currentColor"><rect x="30" y="25" width="60" height="50" rx="3"/><circle cx="50" cy="50" r="6" fill="#fff"/><circle cx="70" cy="50" r="6" fill="#fff"/><rect x="40" y="35" width="40" height="3" fill="#fff" opacity="0.5"/><rect x="40" y="63" width="40" height="3" fill="#fff" opacity="0.5"/></svg></div>
+        <div class="wm-body">
+          <h3>Controls &amp; EM</h3>
+          <p>contrⒶLS three-tier (ECO · PRO · PRO+) and constⒶNT emergency drivers and egress / exit signs.</p>
+          <div class="wm-meta"><span class="wm-sub-brands">contrⒶLS · constⒶNT</span><span class="wm-arrow">Browse →</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FIND YOUR LOCAL SUPPORT — stockist map section
+     H2 from original: "One map. Three ways to find us."
+     ================================================================ -->
+<section class="locator-section">
+  <div class="locator-inner">
+    <div class="sec-eyebrow">Find your local support</div>
+    <h2 class="sec-title">One map. <span class="accent">Three ways to find us.</span></h2>
+    <p class="sec-sub">Your local sales rep, nearest stocking distributor, and ALG warehouse — all on one map. Search by ZIP, city, or state. Coverage in every US region.</p>
+
+    <div class="locator-toolbar">
+      <div class="loc-filter-group">
+        <span class="loc-filter-label">Show:</span>
+        <span class="loc-pill active">All</span>
+        <span class="loc-pill"><span class="kind-dot wh"></span>Warehouses <span style="color:var(--ink3);">(5)</span></span>
+        <span class="loc-pill"><span class="kind-dot rep"></span>Sales Reps</span>
+        <span class="loc-pill"><span class="kind-dot dist"></span>Distributors</span>
+      </div>
+      <div class="loc-search">
+        <input type="text" placeholder="ZIP, city, or state">
+        <button>Find Nearest</button>
+      </div>
+    </div>
+
+    <div class="locator-map-wrap">
+      <div class="loc-map" id="algLocatorMap" aria-label="ALG warehouse, sales rep, and distributor locations across the United States">
+        <!-- Leaflet initializes here. Map data (warehouses, reps, distributors) lives in window.ALG_LOCATOR_DATA and is plotted by the init script at the bottom of the document. -->
+      </div>
+      <div class="loc-sidebar">
+        <div class="loc-legend">
+          <h4>Map key</h4>
+          <div class="legend-row">
+            <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
+            <span class="legend-count">5 locations</span>
+          </div>
+          <div class="legend-row">
+            <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
+            <span class="legend-count">All 50 states</span>
+          </div>
+          <div class="legend-row">
+            <span class="legend-dot"><span class="dot-vis" style="background:#0FAE7C;"></span>Stocking Distributor</span>
+            <span class="legend-count">Nationwide</span>
+          </div>
+        </div>
+        <div class="loc-results">
+          <h4>Nearest to 91761</h4>
+          <div class="result-row">
+            <span class="result-kind" style="background:#F32740;"></span>
+            <div class="result-info"><span class="result-name">Montclair, CA</span><span class="result-meta">West Coast HQ · Warehouse</span></div>
+            <span class="result-dist">On-site</span>
+          </div>
+          <div class="result-row">
+            <span class="result-kind" style="background:#f0a932;"></span>
+            <div class="result-info"><span class="result-name">Pacific Lighting Rep</span><span class="result-meta">Southern California territory</span></div>
+            <span class="result-dist">8 mi</span>
+          </div>
+          <div class="result-row">
+            <span class="result-kind" style="background:#0FAE7C;"></span>
+            <div class="result-info"><span class="result-name">Ontario Electric Supply</span><span class="result-meta">Stocking distributor</span></div>
+            <span class="result-dist">3 mi</span>
+          </div>
+          <div class="result-row">
+            <span class="result-kind" style="background:#0FAE7C;"></span>
+            <div class="result-info"><span class="result-name">Inland Lighting Dist.</span><span class="result-meta">Stocking distributor</span></div>
+            <span class="result-dist">12 mi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="locator-ctas">
+      <a href="#" class="cta-primary">Find a Rep or Distributor</a>
+      <a href="#" class="cta-secondary on-dark">Become a Distributor</a>
+      <a href="#" class="cta-secondary on-dark">Apply as Sales Rep</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FEATURED FAMILIES rail
+     H2 from original: "The families distributors stock and specifiers spec."
+     ================================================================ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">Featured families</div>
+    <h2 class="sec-title">The families distributors stock and specifiers spec.</h2>
+    <p class="sec-sub">Three fixture families plus the connected systems platform that ties them together — the core of our 2,000+ active SKU catalog.</p>
+    <div class="families-rail">
+      <div class="fam-card">
+        <div class="fam-img cream">
+          <span class="fam-tag">DLC Premium</span>
+          <img class="fam-product" src="assets/product-photos/ff-illuminator.png" alt="Illuminator sports lighter with WATTselect adjustment dial">
+        </div>
+        <div class="fam-body">
+          <div class="fam-eyebrow">luxoⒶRCH · PRO</div>
+          <div class="fam-name">Illuminator</div>
+          <div class="fam-desc">Sports lighter · stadiums + athletic fields</div>
+          <div class="fam-meta"><span class="fam-skucount">11 SKUs</span><span class="fam-arrow">View →</span></div>
+        </div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-img dk">
+          <span class="fam-tag">DLC Premium</span>
+          <img class="fam-product" src="assets/product-photos/ff-titan-ii.png" alt="Titan-II linear high-bay LED luminaire">
+        </div>
+        <div class="fam-body">
+          <div class="fam-eyebrow">lamparⒶRCH · PRO</div>
+          <div class="fam-name">Titan-II</div>
+          <div class="fam-desc">Linear high-bay · warehouse + industrial</div>
+          <div class="fam-meta"><span class="fam-skucount">20 SKUs</span><span class="fam-arrow">View →</span></div>
+        </div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-img brand">
+          <span class="fam-tag">DLC Premium</span>
+          <img class="fam-product" src="assets/product-photos/ff-astra.png" alt="Astra commercial downlight with white trim and chrome reflector">
+        </div>
+        <div class="fam-body">
+          <div class="fam-eyebrow">planoⒶRCH · PRO+</div>
+          <div class="fam-name">Astra</div>
+          <div class="fam-desc">Commercial downlight · retail + hospitality</div>
+          <div class="fam-meta"><span class="fam-skucount">18 SKUs</span><span class="fam-arrow">View →</span></div>
+        </div>
+      </div>
+      <div class="fam-card">
+        <div class="fam-img dark2">
+          <span class="fam-tag">NLC-Ready</span>
+          <img class="fam-product" src="assets/product-photos/ff-contrals.png" alt="contrALS outdoor PIR occupancy sensor and controller pair">
+        </div>
+        <div class="fam-body">
+          <div class="fam-eyebrow">contrⒶLS · by ⒶCS</div>
+          <div class="fam-name">Connected Systems</div>
+          <div class="fam-desc">NLC-ready sensors + controls · every ⒶRCH fixture</div>
+          <div class="fam-meta"><span class="fam-skucount">9 SKUs</span><span class="fam-arrow">View →</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FREE PROFESSIONAL SERVICE — layout CTA
+     ================================================================ -->
+<section class="layout-cta">
+  <div class="layout-cta-inner">
+    <div>
+      <div class="sec-eyebrow">Free professional service</div>
+      <h2>Get a lighting layout in <span class="accent">under 48hrs.</span></h2>
+      <p>Send us your floor plan. Our layout team returns a photometric layout with product callouts, IES files, fixture counts, and footcandle calculations — at no cost.</p>
+      <div class="layout-features">
+        <div class="lf-item"><span class="lf-check">✓</span> Photometric calculations per IES standards</div>
+        <div class="lf-item"><span class="lf-check">✓</span> Product callouts with exact SKUs</div>
+        <div class="lf-item"><span class="lf-check">✓</span> IES files included</div>
+        <div class="lf-item"><span class="lf-check">✓</span> Fixture count + BOM</div>
+      </div>
+      <div class="layout-cta-actions">
+        <a href="#" class="cta-primary">Request a Layout</a>
+        <a href="#" class="cta-secondary on-dark">See Sample Layouts (100+)</a>
+      </div>
+    </div>
+    <div class="layout-visual">
+      <div class="lv-grid">
+        <div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        <div class="lv-cell bright"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        <div class="lv-cell med"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        <div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        <div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        <div class="lv-cell"></div><div class="lv-cell dim"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+      </div>
+      <div class="lv-overlay">90 fc avg · 0.65 uniformity</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     INSTALLED AT — 8 vertical tiles
+     H2 from original: "Where ALG lighting goes to work."
+     ================================================================ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="sec-eyebrow">Installed at</div>
+    <h2 class="sec-title">Where ALG lighting goes to <span class="accent">work.</span></h2>
+    <p class="sec-sub">From cold storage in Cincinnati to a stadium retrofit in Sacramento — real installations, real results.</p>
+    <div class="installed-grid">
+      <div class="installed-tile t1"><div class="installed-label"><div class="il-vert">Warehouse &amp; Logistics</div><div class="il-place">3PL facility · OH</div></div></div>
+      <div class="installed-tile t2"><div class="installed-label"><div class="il-vert">Industrial &amp; Manufacturing</div><div class="il-place">Auto plant · TX</div></div></div>
+      <div class="installed-tile t3"><div class="installed-label"><div class="il-vert">Cold Storage &amp; Grocery</div><div class="il-place">Freezer DC · CA</div></div></div>
+      <div class="installed-tile t4"><div class="installed-label"><div class="il-vert">Data Center</div><div class="il-place">Hyperscale · VA</div></div></div>
+      <div class="installed-tile t5"><div class="installed-label"><div class="il-vert">Healthcare</div><div class="il-place">Outpatient · IL</div></div></div>
+      <div class="installed-tile t6"><div class="installed-label"><div class="il-vert">Education</div><div class="il-place">K-12 retrofit · NJ</div></div></div>
+      <div class="installed-tile t7"><div class="installed-label"><div class="il-vert">Hospitality</div><div class="il-place">Hotel reno · MA</div></div></div>
+      <div class="installed-tile t8"><div class="installed-label"><div class="il-vert">Government &amp; Military</div><div class="il-place">Federal logistics · GA</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SPLIT TEASERS — Find your rebate + For specifiers
+     ================================================================ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="split-teasers">
+      <div class="teaser teaser-rebate">
+        <div class="sec-eyebrow">Find your rebate</div>
+        <h3>Most projects qualify for utility rebates.</h3>
+        <p>Search by ZIP and product family. Rebates can offset 15–40% of project cost in qualifying utilities.</p>
+        <div class="rebate-stat">
+          <div><div class="rebate-stat-num">2,400+</div><div class="rebate-stat-lbl">Active utility programs</div></div>
+          <div><div class="rebate-stat-num">$0.10-0.30</div><div class="rebate-stat-lbl">Per sqft typical</div></div>
+        </div>
+        <a href="#" class="cta-primary">Open Rebate Center</a>
+      </div>
+      <div class="teaser teaser-spec">
+        <div class="sec-eyebrow">For specifiers</div>
+        <h3>Spec sheets, IES files, training.</h3>
+        <p>Everything you need for the bid sheet — and the lunch-and-learn for AIA/IDCEC credit.</p>
+        <div class="spec-resource-grid">
+          <a href="#" class="spec-res-item">IES Photometric Library <span class="arr">→</span></a>
+          <a href="#" class="spec-res-item">Resource Library <span class="arr">→</span></a>
+          <a href="#" class="spec-res-item">TAA Documentation <span class="arr">→</span></a>
+          <a href="#" class="spec-res-item">Training Center <span class="arr">→</span></a>
+        </div>
+        <a href="#" class="cta-primary">Browse Spec Resources</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER CTA STRIP
+     ================================================================ -->
+<div class="footer-cta">
+  <div class="footer-cta-inner">
+    <div class="msg">Need a quote, layout, sample, or rebate match? <strong>We respond same business day.</strong></div>
+    <div class="actions">
+      <a href="#" class="cta-outline">Contact Sales</a>
+      <a href="#" class="cta-filled">Request Layout</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/ALG_Logo-White.svg" alt="Archipelago Lighting">
+        <p class="tagline">Lighting | Reinvented, since 1997.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">Indoor</a></li>
+          <li><a href="#">Outdoor</a></li>
+          <li><a href="#">Lamps</a></li>
+          <li><a href="#">Specialty Lighting</a></li>
+          <li><a href="#">Accessories</a></li>
+          <li><a href="#">Controls &amp; EM</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#">Warehouse &amp; Logistics</a></li>
+          <li><a href="#">Industrial &amp; Manufacturing</a></li>
+          <li><a href="#">Cold Storage &amp; Grocery</a></li>
+          <li><a href="#">Data Center</a></li>
+          <li><a href="#">Healthcare</a></li>
+          <li><a href="#">Education</a></li>
+          <li><a href="#">Hospitality</a></li>
+          <li><a href="#">Government &amp; Military</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Spec Sheets</a></li>
+          <li><a href="#">Where to Buy</a></li>
+          <li><a href="#">Sales Rep Portal</a></li>
+          <li><a href="#">Customer Portal</a></li>
+          <li><a href="#">Consumers</a></li>
+          <li><a href="#">Rebate Center</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Returns &amp; Exchanges</a></li>
+          <li><a href="#">Sample Request</a></li>
+          <li><a href="#">Layout &amp; Design Request</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Warranty Statement</a></li>
+          <li><a href="#">Patents</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Career</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Archipelago Lighting Group · 4615 State Street, Montclair, CA 91763</span>
+      <span>+1 (866) 912-3220 · www.archipelagolighting.com</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     CAROUSEL JAVASCRIPT
+     ================================================================ -->
+<script>
+(function(){
+  const carousel = document.getElementById('heroCarousel');
+  if(!carousel) return;
+  const images = carousel.querySelectorAll('.hero-image');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+  const slotStacks = carousel.querySelectorAll('.slot');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const counter = document.getElementById('carouselCounter');
+  const slideNum = document.getElementById('slideNum');
+  const totalSlides = 4;
+  let currentSlide = 0;
+  let autoAdvance = null;
+  const AUTO_MS = 7000;
+
+  function setActive(n){
+    if(n === currentSlide) return;
+    currentSlide = (n + totalSlides) % totalSlides;
+
+    // Cross-fade application image
+    images.forEach((img, i) => img.classList.toggle('active', i === currentSlide));
+
+    // Cascade slot content (Apple-style stagger)
+    slotStacks.forEach(stack => {
+      const contents = stack.querySelectorAll('.slot-content');
+      contents.forEach(c => c.classList.remove('active'));
+      const incoming = stack.querySelector(`.slot-content[data-slot-slide="${currentSlide}"]`);
+      if(incoming) requestAnimationFrame(() => incoming.classList.add('active'));
+    });
+
+    // Update dots + counter + slide number
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+    const pad = String(currentSlide + 1).padStart(2, '0');
+    counter.textContent = `${pad} / 04`;
+    slideNum.textContent = pad;
+  }
+
+  function next(){ setActive(currentSlide + 1); }
+  function prev(){ setActive(currentSlide - 1); }
+  function start(){ stop(); autoAdvance = setInterval(next, AUTO_MS); }
+  function stop(){ if(autoAdvance){ clearInterval(autoAdvance); autoAdvance = null; } }
+
+  prevBtn.addEventListener('click', () => { prev(); start(); });
+  nextBtn.addEventListener('click', () => { next(); start(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { setActive(i); start(); }));
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowLeft'){ prev(); start(); }
+    if(e.key === 'ArrowRight'){ next(); start(); }
+  });
+
+  // Pause on hover
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+
+  start();
+})();
+</script>
+
+<!-- =================================================================
+     LEAFLET MAP — ALG locator (Item 4, v3.6)
+     OpenStreetMap tiles · 5 ALG warehouse pins · rep/distributor data stubbed.
+     Rep + distributor sample points are stand-ins pending a real
+     data feed (Zoho CRM dealers module or a static JSON drop).
+     ================================================================= -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  // Source-of-truth: ALG warehouse coordinates (5 active US DCs)
+  window.ALG_LOCATOR_DATA = {
+    warehouses: [
+      { name: 'Montclair, CA',   lat: 34.0776, lng: -117.6897, address: '4615 State Street, Montclair CA' },
+      { name: 'Riverside, CA',   lat: 33.9213, lng: -117.3517, address: '9345 Sycamore Canyon Blvd, Riverside CA 92508 (USA Production)' },
+      { name: 'Crestwood, IL',   lat: 41.6647, lng:  -87.7372, address: 'Crestwood, IL' },
+      { name: 'Rahway, NJ',      lat: 40.6082, lng:  -74.2776, address: 'Rahway, NJ' },
+      { name: 'Brockton, MA',    lat: 42.0834, lng:  -71.0184, address: 'Brockton, MA' },
+      { name: 'Cincinnati, OH',  lat: 39.1031, lng:  -84.5120, address: 'Cincinnati, OH' }
+    ],
+    // Rep + distributor placeholder data — replace with live feed in v1.1
+    reps: [],
+    distributors: []
+  };
+
+  (function initAlgLocator(){
+    if (typeof L === 'undefined') return; // Leaflet not loaded
+    var el = document.getElementById('algLocatorMap');
+    if (!el) return;
+
+    // Center roughly on continental US; zoom 4 shows all 6 warehouses
+    var map = L.map('algLocatorMap', {
+      center: [39.5, -96.5],
+      zoom: 4,
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true
+    });
+
+    // Dark-mode OSM tiles (Carto Voyager Dark) — matches site palette better than default OSM
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Warehouse pin icon (brand red)
+    var whIcon = L.divIcon({
+      className: 'alg-pin-wh',
+      html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#F32740;border:2px solid rgba(12,13,18,0.85);box-shadow:0 0 0 4px rgba(243,39,64,0.25),0 0 14px rgba(243,39,64,0.5);"></span>',
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    window.ALG_LOCATOR_DATA.warehouses.forEach(function(wh){
+      L.marker([wh.lat, wh.lng], { icon: whIcon, title: wh.name })
+        .bindPopup('<strong>' + wh.name + '</strong><br>' + wh.address)
+        .addTo(map);
+    });
+
+    // Rep + distributor layers are stubbed; activate when data feed lands.
+  })();
+</script>
+
+<!-- =================================================================
+     MEGA MENU v3.10 · 3-tier parallel cascade + hover-intent
+     - Column 1 (Main): hover switches active category group in col 2
+     - Column 2 (Category): hover switches active application group in col 3
+                            AND swaps preview pane (col 4)
+     - Column 3 (Application): hover swaps preview pane
+                               For planoⒶRCH → show ECO/PRO/PRO+ tier strip
+     - 600ms hover-intent debounce preserved from v3.9
+     - Solutions mega menu: hovering vertical items swaps solutions preview
+     ================================================================= -->
+<script>
+(function(){
+  const HOVER_DELAY_MS = 600;
+
+  /* ---- Helper: cross-fade preview image ---- */
+  function crossfade(imgEl, newSrc){
+    if (!newSrc || imgEl.getAttribute('src') === newSrc){ return; }
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.setAttribute('src', newSrc);
+      imgEl.style.opacity = '1';
+    }, 120);
+  }
+
+  /* ---- Helper: render Ⓐ numeric-char-ref as styled span ---- */
+  function renderAa(str){
+    return (str || '').replace(/&#9424;|Ⓐ/g, '<span class="aa" style="color:var(--brand);">Ⓐ</span>');
+  }
+
+  /* =============================================================
+     PRODUCTS MEGA MENU · 3-tier cascade
+     ============================================================= */
+  const productsLi = document.querySelector('li[data-mm="products"]');
+  if (productsLi){
+    const menu       = productsLi.querySelector('.megamenu.wide');
+    const mainItems  = menu.querySelectorAll('.mm-col-main .mm-main-item[data-main]');
+    const catGroups  = menu.querySelectorAll('.mm-cat-group');
+    const catItems   = menu.querySelectorAll('.mm-cat-item[data-cat]');
+    const appGroups  = menu.querySelectorAll('.mm-app-group');
+    const appItems   = menu.querySelectorAll('.mm-app-item');
+    const previewImg   = menu.querySelector('#mmPreviewImg');
+    const previewLbl   = menu.querySelector('#mmPreviewLabel');
+    const previewName  = menu.querySelector('#mmPreviewName');
+    const previewDesc  = menu.querySelector('#mmPreviewDesc');
+    const tierStrip    = menu.querySelector('#mmTierStrip');
+
+    let hoverTimer = null;
+
+    /* Map: main item key → matching category group key. The category group
+       with data-cat-group matching this key gets .active; others get hidden. */
+    function switchMain(mainKey){
+      mainItems.forEach(el => el.classList.toggle('active', el.dataset.main === mainKey));
+      catGroups.forEach(g => g.classList.toggle('active', g.dataset.catGroup === mainKey));
+      /* When switching, auto-select first cat item in the newly-active group */
+      const firstCat = menu.querySelector(`.mm-cat-group[data-cat-group="${mainKey}"] .mm-cat-item`);
+      if (firstCat){ activateCat(firstCat, /*auto=*/true); }
+    }
+
+    /* Activate a specific category item: highlight it, switch col 3 app group,
+       and swap preview pane to this category's imagery.
+       Skips tier-strip (that's app-level only). */
+    function activateCat(catEl, auto){
+      catItems.forEach(el => el.classList.remove('active'));
+      catEl.classList.add('active');
+      const catKey = catEl.dataset.cat;
+      appGroups.forEach(g => g.classList.toggle('active', g.dataset.appGroup === catKey));
+
+      /* Preview swap based on category data-preview-* */
+      crossfade(previewImg, catEl.dataset.preview);
+      if (catEl.dataset.previewLabel) previewLbl.textContent  = catEl.dataset.previewLabel;
+      if (catEl.dataset.previewName)  previewName.innerHTML   = renderAa(catEl.dataset.previewName);
+      if (catEl.dataset.previewDesc)  previewDesc.textContent = catEl.dataset.previewDesc;
+
+      /* Hide tier strip at category level (only appears on app-level planoⒶRCH hover) */
+      tierStrip.classList.add('hidden');
+
+      /* Auto-activate first app item in the now-visible group to keep col 3
+         populated at all times (parallel three-panel rule, Q1 of your answer). */
+      if (auto){
+        const firstApp = menu.querySelector(`.mm-app-group[data-app-group="${catKey}"] .mm-app-item`);
+        /* No-op — we just want col 3 to be visible and populated; the preview stays at category level. */
+      }
+    }
+
+    /* Swap preview to an app-level item's data. For planoⒶRCH apps, also
+       show the ECO/PRO/PRO+ tier strip (Option B sandbox, v3.10). */
+    function swapAppPreview(appEl){
+      crossfade(previewImg, appEl.dataset.preview);
+      if (appEl.dataset.previewLabel) previewLbl.textContent  = appEl.dataset.previewLabel;
+      if (appEl.dataset.previewName)  previewName.innerHTML   = renderAa(appEl.dataset.previewName);
+      if (appEl.dataset.previewDesc)  previewDesc.textContent = appEl.dataset.previewDesc;
+
+      if (appEl.dataset.previewTiers === '1'){
+        tierStrip.classList.remove('hidden');
+        /* Populate tier cards from data-tier-* attrs. Empty string → show "—" */
+        const eco  = appEl.dataset.tierEco     || '';
+        const pro  = appEl.dataset.tierPro     || '';
+        const plus = appEl.dataset.tierProplus || '';
+        document.getElementById('tierSkuEco').innerHTML     = eco  ? renderAa(eco)  : '<span style="color:var(--ink4)">—</span>';
+        document.getElementById('tierSkuPro').innerHTML     = pro  ? renderAa(pro)  : '<span style="color:var(--ink4)">—</span>';
+        document.getElementById('tierSkuProplus').innerHTML = plus ? renderAa(plus) : '<span style="color:var(--ink4)">—</span>';
+      } else {
+        tierStrip.classList.add('hidden');
+      }
+    }
+
+    /* Event wiring */
+    mainItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        const key = el.dataset.main;
+        if (!key) return;
+        hoverTimer = setTimeout(() => switchMain(key), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+
+    catItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => activateCat(el, /*auto=*/false), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+
+    appItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => swapAppPreview(el), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+
+    /* Menu close: clear pending swaps */
+    productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+  }
+
+  /* =============================================================
+     SOLUTIONS MEGA MENU · hover on vertical list swaps preview
+     ============================================================= */
+  const solLi = document.querySelector('li[data-mm="solutions"]');
+  if (solLi){
+    const solMenu    = solLi.querySelector('.megamenu.solutions');
+    const vertItems  = solMenu.querySelectorAll('.mm-vert-item');
+    const solPrevImg = solMenu.querySelector('#solPreviewImg');
+    const solPrevLbl = solMenu.querySelector('#solPreviewLabel');
+    const solPrevNm  = solMenu.querySelector('#solPreviewName');
+    const solPrevDsc = solMenu.querySelector('#solPreviewDesc');
+
+    let solTimer = null;
+
+    vertItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(solTimer);
+        solTimer = setTimeout(() => {
+          vertItems.forEach(v => v.classList.remove('active'));
+          el.classList.add('active');
+          crossfade(solPrevImg, el.dataset.preview);
+          if (el.dataset.previewLabel) solPrevLbl.textContent = el.dataset.previewLabel;
+          if (el.dataset.previewName)  solPrevNm.innerHTML    = renderAa(el.dataset.previewName);
+          if (el.dataset.previewDesc)  solPrevDsc.textContent = el.dataset.previewDesc;
+        }, HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(solTimer));
+    });
+
+    solLi.addEventListener('mouseleave', () => clearTimeout(solTimer));
+  }
+})();
+</script>
+
+<!-- =================================================================
+     MOBILE DRAWER v3.10 · open/close + 3-level accordion
+     Tap hamburger → drawer slides in
+     Tap L1/L2 with data-expand → adjacent .mob-panel toggles open
+     ================================================================= -->
+<script>
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('mobileDrawer');
+  if (!toggle || !drawer) return;
+
+  /* Hamburger → open/close drawer */
+  toggle.addEventListener('click', () => {
+    const isOpen = drawer.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    /* Lock body scroll while drawer open */
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  /* Accordion drill: click a [data-expand] item → toggle its paired [data-expand-id] panel */
+  drawer.querySelectorAll('[data-expand]').forEach(trigger => {
+    trigger.addEventListener('click', e => {
+      e.preventDefault();
+      const id    = trigger.dataset.expand;
+      const panel = drawer.querySelector(`[data-expand-id="${id}"]`);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

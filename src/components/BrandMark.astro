@@ -1,0 +1,46 @@
+---
+/**
+ * BrandMark.astro
+ *
+ * Renders ALG brand-stem terminology with the Ⓐ U+24B6 character wrapped in
+ * `<span class="aa">` for brand-red styling.
+ *
+ * Per Playbook v2.0 §3: Ⓐ in body text MUST be wrapped. Naked Ⓐ is a regression.
+ *
+ * The 10 sanctioned brand stems (Playbook v2.0 §3.1):
+ *   RCH, LS, NT, CS, BLE, RMOR, DAPT, MILY, IM, PTICS
+ *
+ * Casing rule (§3.2): the letters surrounding Ⓐ may be lowercase OR uppercase
+ * depending on family. Specifically:
+ *   - proⒶRCH-III, planoⒶRCH, luxoⒶRCH, lamparⒶRCH, cityⒶRCH, tubulⒶRCH (lowercase prefix, uppercase suffix)
+ *   - sensorⒶBLE, surgeⒶRMOR, quickⒶDAPT, contrⒶLS, constⒶNT (lowercase prefix, uppercase suffix)
+ *   - multi-fⒶMILY (lowercase m AND lowercase f, only Ⓐ uppercase — capital M is a regression)
+ *   - powerⒶIM, proⒶPTICS (lowercase prefix, uppercase suffix)
+ *   - ⒶCS (uppercase, used as brand acronym in "ⒶCS by ALG")
+ *
+ * Usage:
+ *   <BrandMark prefix="plano" suffix="RCH" />              → planoⒶRCH
+ *   <BrandMark prefix="multi-f" suffix="MILY" />           → multi-fⒶMILY
+ *   <BrandMark prefix="" suffix="CS" />                    → ⒶCS
+ *   <BrandMark prefix="pro" suffix="RCH" trailing="-III" />→ proⒶRCH-III
+ *
+ * The Ⓐ character is hardcoded as U+24B6. NEVER use ⓐ U+24D0 (lowercase),
+ * never use HTML entity &#9424; (which is the lowercase). If entities needed: &#9398;
+ */
+
+interface Props {
+  prefix: string;
+  suffix: string;
+  trailing?: string;
+}
+
+const { prefix, suffix, trailing = '' } = Astro.props;
+---
+<span class="brand-mark">{prefix}<span class="aa">Ⓐ</span>{suffix}{trailing}</span>
+
+<style>
+  .brand-mark {
+    white-space: nowrap;
+  }
+  /* The .aa class is defined globally in styles/brand.css with brand red */
+</style>

@@ -1,0 +1,34 @@
+---
+/**
+ * Homepage — placeholder
+ *
+ * This file exists ONLY so the initial deploy has SOMETHING to render.
+ * Iteration 1 (Manus) replaces this with the full homepage rebuilt against
+ * the v3.14.6 visual reference.
+ *
+ * If you are seeing this page on staging.archipelagolighting.com after
+ * Iteration 1 has been merged, something went wrong.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandMark from '../components/BrandMark.astro';
+---
+<BaseLayout title="Archipelago Lighting Group" description="Specified. Stocked. Shipped.">
+  <section class="section">
+    <div class="container">
+      <h1>Archipelago Lighting Group</h1>
+      <p>
+        Foundation deploy. Iteration 1 (homepage rebuild) lands here next.
+      </p>
+      <p>
+        Brand-mark test:
+        <BrandMark prefix="plano" suffix="RCH" />,
+        <BrandMark prefix="multi-f" suffix="MILY" />,
+        <BrandMark prefix="" suffix="CS" /> by ALG.
+      </p>
+      <p>
+        If the three brand marks above render with red-Ⓐ characters and the
+        rest of this text in black, the brand-mark utility is working.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

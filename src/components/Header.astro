@@ -1,0 +1,36 @@
+---
+/**
+ * Header.astro
+ *
+ * Canonical site header. Per Playbook v2.0 §4, this component is imported by
+ * every page on the site. Astro renders it byte-identically across all pages
+ * by construction — no copy-paste, no md5 verification needed.
+ *
+ * This is a SCAFFOLD — full implementation lands in Iteration 1 (homepage rebuild).
+ * Manus will populate this file in that iteration, using v3.14.6 as the visual
+ * reference.
+ *
+ * Required structure (locked in §4.1):
+ *   - Top utility row (Distributor Login, Find a Rep, Cart icon → ALG Shop external link)
+ *   - Main nav row (logo left, primary nav center, Search/Quote CTAs right)
+ *   - Mega-menu drawer (Products, Solutions, Resources, Support — see MegaMenu.astro)
+ *
+ * Brand assets to use:
+ *   - Logo: /brand/alg-logo-color.png (light bg) or /brand/alg-logo-white.png (dark bg)
+ *   - Brand-red Ⓐ wrapping handled by BrandMark.astro component
+ *
+ * NO accreditation claims (§3.5) — never reference CEU/AIA/IDCEC/LU/HSW.
+ */
+---
+<header class="site-header">
+  <!-- IMPLEMENTATION PENDING: Iteration 1 (homepage) -->
+  <!-- Per Playbook v2.0 §4.1, full markup lands when Manus rebuilds homepage -->
+  <p>Header placeholder — pending Iteration 1</p>
+</header>
+
+<style>
+  .site-header {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+  }
+</style>

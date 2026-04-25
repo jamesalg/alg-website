@@ -1,0 +1,85 @@
+/* ALG Brand Stylesheet
+ *
+ * Per Playbook v2.0 §3, this file is the single source of truth for:
+ *   - Brand colors (CSS custom properties)
+ *   - The .aa class that gives the Ⓐ character its brand-red color
+ *   - Typography defaults
+ *
+ * Manus must NOT redefine these tokens elsewhere. Page-specific styles may
+ * REFERENCE these tokens but must not REDEFINE them.
+ */
+
+:root {
+  /* Brand palette */
+  --color-alg-red: #C8102E;          /* Primary brand red — used for Ⓐ, accents, CTAs */
+  --color-alg-red-dark: #9B0C24;     /* Hover/pressed state */
+  --color-alg-red-light: #FBE4E8;    /* Tinted backgrounds */
+
+  --color-ink: #111111;              /* Primary text */
+  --color-ink-soft: #444444;         /* Secondary text */
+  --color-ink-mute: #6B6B6B;         /* Tertiary text, captions */
+
+  --color-bg: #FFFFFF;               /* Page background */
+  --color-bg-soft: #F7F7F7;          /* Section backgrounds */
+  --color-bg-strong: #F0F0F0;        /* Card backgrounds */
+
+  --color-border: #E5E5E5;           /* Default borders, dividers */
+  --color-border-strong: #C5C5C5;    /* Stronger dividers */
+
+  /* Lifecycle state colors (§3.7) — used on product cards, packaging */
+  --color-state-active: #2E7D32;     /* ACTIVE — green */
+  --color-state-gen2: #F9A825;       /* GEN-2 — yellow */
+  --color-state-legacy: #757575;     /* LEGACY — grey */
+  /* NEVER use a "CLEARANCE" badge — banned per §3.7 */
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+
+  /* Sizing scale */
+  --container-max: 1280px;
+  --container-pad: clamp(16px, 4vw, 32px);
+}
+
+/* The .aa class — wraps Ⓐ in brand red, slightly larger optical size.
+   This is THE single rule that makes the brand mark stand out. */
+.aa {
+  color: var(--color-alg-red);
+  font-weight: 700;
+  display: inline-block;
+  /* Optical size — Ⓐ glyph reads slightly small at body weight */
+  transform: translateY(-0.02em);
+}
+
+/* Reset & base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-alg-red);
+}

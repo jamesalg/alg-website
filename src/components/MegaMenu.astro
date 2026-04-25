@@ -1,0 +1,40 @@
+---
+/**
+ * MegaMenu.astro
+ *
+ * Canonical mega-menu drawer. The THIRD canonical component (alongside
+ * Header.astro and Footer.astro). Per Playbook v2.0 §4, imported by Header.astro,
+ * byte-identical across every page.
+ *
+ * SCAFFOLD — implementation in Iteration 1.
+ *
+ * Required structure (§4.3):
+ *
+ * Four primary nav buckets, each with a hover-to-open mega drawer:
+ *   1. PRODUCTS — 4 categories: Indoor Industrial, Outdoor C&I, Linear & Specialty,
+ *      Controls & EM. Each category has a preview pane on the right.
+ *   2. SOLUTIONS — 8 verticals (locked in §3.4):
+ *      Warehouse & Logistics, Industrial & Manufacturing, Cold Storage & Grocery,
+ *      Data Center, Healthcare, Education, Hospitality, Government & Military.
+ *   3. RESOURCES — Spec Sheets, IES Files, Family Sell Sheets, Full Catalog
+ *      (the 4-card persona-page pattern — §3.6).
+ *   4. SUPPORT — Distributor Login, Find a Rep, Photometric Layout Request,
+ *      Warranty/RMA, Contact.
+ *
+ * CTA per preview pane (§4.4):
+ *   - Each pane carries a "View Collection →" link
+ *   - The href must match the data-cat slug for that pane
+ *   - This was the failure mode of v3.14.7-v3.14.19 — Astro components solve it
+ *     by binding the href to the same data prop the pane uses for its label
+ */
+---
+<nav class="mega-menu">
+  <!-- IMPLEMENTATION PENDING: Iteration 1 (homepage) -->
+  <p>Mega menu placeholder — pending Iteration 1</p>
+</nav>
+
+<style>
+  .mega-menu {
+    width: 100%;
+  }
+</style>
