@@ -61,18 +61,14 @@ async function main() {
 
     // === GROUP B: BRAND MARK RULES (Playbook §3) ===
 
-    // B.1: Naked Ⓐ in body content (must be wrapped in <span class="aa">)
-    // Allow Ⓐ inside an existing .aa span. Flag any other occurrence.
-    const aaWrapped = html.replace(
-      /<span\s+class=["']aa["']\s*>\s*Ⓐ\s*<\/span>/g,
-      ''
-    );
-    if (/Ⓐ/.test(aaWrapped)) {
-      // Filter out occurrences inside HTML comments (those are documentation)
-      const stripped = aaWrapped.replace(/<!--[\s\S]*?-->/g, '');
-      if (/Ⓐ/.test(stripped)) {
-        fail('B.1', `${rel}: naked Ⓐ found outside .aa span`);
-      }
+// B.1: Naked Ⓐ in body content (must be wrapped somewhere inside an .aa span).
+    // Conservative check: strip ALL <span class="aa">...</span> blocks (including their content),
+    // then strip HTML comments, then look for any remaining Ⓐ.
+    const stripped = html
+      .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      .replace(/<!--[\s\S]*?-->/g, '');
+    if (/Ⓐ/.test(stripped)) {
+      fail('B.1', `${rel}: naked Ⓐ found outside .aa span`);
     }
 
     // B.2: lowercase ⓐ (U+24D0) is forbidden anywhere — wrong character entirely
