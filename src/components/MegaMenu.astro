@@ -1,47 +1,19 @@
 ---
 /**
- * MegaMenu.astro
+ * MegaMenu.astro — v2.1.0 canonical mega menu
  *
- * Canonical mega-menu drawer — v2.1.0 full implementation.
- * Per Playbook v2.0 §4.3, four primary nav buckets.
+ * Four panes (data-mega attribute):
+ *   solutions — browse-by structure, purchase tools, 8-vertical grid, vertical preview pane
+ *   products  — top-level categories with brand stems, application taxonomy, tier tiles
+ *   tools     — For Buyers + For Specifiers
+ *   support   — Service block + Legal & Compliance block
  *
- * CTA href binding (§4.4): every "View Collection →" href is derived from
- * the same cat.slug data prop as the pane label — no hardcoded hrefs.
- *
- * NO naked Ⓐ — all brand marks rendered via BrandMark.astro (§3.3).
- * NO accreditation claims (§3.5).
+ * Controlled by Header.astro script via id="megaMenuPanel" and data-mega on .mega-pane.
+ * All panes start hidden; Header script shows the active one.
  */
+import BrandMark from './BrandMark.astro';
 
-// §4.4 — Products: data-driven, href bound to same slug as label
-const productCategories = [
-  {
-    slug: 'indoor-industrial',
-    title: 'Indoor Industrial',
-    preview: '/images/heroes/hero-warehouse-highbay.jpg',
-    desc: 'High-bay, low-bay, and strip fixtures for warehouses, manufacturing, and industrial facilities.'
-  },
-  {
-    slug: 'outdoor-ci',
-    title: 'Outdoor C&I',
-    preview: '/images/heroes/hero-outdoor-area.jpg',
-    desc: 'Area, wall pack, flood, and canopy luminaires for commercial and industrial exteriors.'
-  },
-  {
-    slug: 'linear-specialty',
-    title: 'Linear & Specialty',
-    preview: null,
-    desc: 'Linear architectural and specialty luminaires for commercial interiors.'
-  },
-  {
-    slug: 'controls-em',
-    title: 'Controls & EM',
-    preview: '/images/megamenu/mega-controls.jpg',
-    desc: 'Occupancy sensors, networked controls, and emergency battery backup systems.'
-  }
-];
-
-// §3.4 — Solutions: 8 locked verticals
-const solutions = [
+const verticals = [
   { title: 'Warehouse & Logistics',      href: '/solutions/warehouse-logistics' },
   { title: 'Industrial & Manufacturing', href: '/solutions/industrial-manufacturing' },
   { title: 'Cold Storage & Grocery',     href: '/solutions/cold-storage-grocery' },
@@ -51,397 +23,357 @@ const solutions = [
   { title: 'Hospitality',               href: '/solutions/hospitality' },
   { title: 'Government & Military',     href: '/solutions/government-military' }
 ];
-
-// §3.6 — Resources: exactly 4 cards
-const resources = [
-  { title: 'Spec Sheets',        href: '/resources/spec-sheets',  desc: 'Full product specifications and dimensional drawings.' },
-  { title: 'IES Files',          href: '/resources/ies-files',    desc: 'Photometric data files for lighting design software.' },
-  { title: 'Family Sell Sheets', href: '/resources/sell-sheets',  desc: 'One-page overviews for distributor and specifier use.' },
-  { title: 'Full Catalog',       href: '/resources/catalog',      desc: 'Complete product catalog — 2,000+ active SKUs.' }
-];
-
-// Support: 5 items
-const support = [
-  { title: 'Distributor Login',          href: '/distributor' },
-  { title: 'Find a Rep',                 href: '/find-a-rep' },
-  { title: 'Photometric Layout Request', href: '/support/layout-request' },
-  { title: 'Warranty / RMA',             href: '/support/warranty-rma' },
-  { title: 'Contact',                    href: '/contact' }
-];
 ---
 
-<div class="megamenu-wrapper" id="megaMenuWrapper" aria-hidden="true">
+<div class="mega-menu-panel" id="megaMenuPanel" hidden>
 
-  <!-- ============================================================
-       PRODUCTS PANEL
-       ============================================================ -->
-  <div class="mm-panel" data-panel="products" role="region" aria-label="Products menu">
-    <div class="mm-panel-inner">
-      <div class="mm-panes-grid">
-        {productCategories.map(cat => (
-          <div class="mm-pane" data-cat={cat.slug}>
-            <div class="mm-pane-img-wrap">
-              {cat.preview
-                ? <img src={cat.preview} alt={cat.title} width="280" height="158" loading="lazy" />
-                : <div class="placeholder-tile" aria-label="Photography pending">
-                    <span class="placeholder-label">Photography pending</span>
-                  </div>
-              }
-            </div>
-            <div class="mm-pane-body">
-              <h3 class="mm-pane-title">{cat.title}</h3>
-              <p class="mm-pane-desc">{cat.desc}</p>
-              <a href={`/collections/${cat.slug}`} class="mm-pane-cta">
-                View Collection &rarr;
-              </a>
+  <!-- SOLUTIONS PANE -->
+  <div class="mega-pane" data-mega="solutions" hidden>
+    <div class="mega-inner">
+      <div class="mega-solutions-layout">
+        <div class="mega-solutions-left">
+          <div class="mega-start-here">
+            <p class="mega-section-label">START HERE</p>
+            <p class="mega-start-desc">Find the right ALG solution for your project type, budget, and timeline.</p>
+            <a href="/solutions" class="mega-start-cta">Browse all solutions &rarr;</a>
+          </div>
+          <div class="mega-purchase-tools">
+            <p class="mega-section-label">PURCHASE TOOLS</p>
+            <div class="mega-tool-grid">
+              <a href="/find-a-distributor" class="mega-tool-item"><span class="mega-tool-name">Where to Buy</span></a>
+              <a href="/resources/taa" class="mega-tool-item"><span class="mega-tool-name">TAA Compliant</span></a>
+              <a href="/find-a-rep" class="mega-tool-item"><span class="mega-tool-name">Find a Rep</span></a>
+              <a href="/find-a-distributor" class="mega-tool-item"><span class="mega-tool-name">Find a Distributor</span></a>
             </div>
           </div>
-        ))}
+        </div>
+        <div class="mega-solutions-center">
+          <p class="mega-section-label">INSTALLED AT</p>
+          <div class="mega-vertical-grid">
+            {verticals.map(v => (
+              <a href={v.href} class="mega-vertical-item">{v.title}</a>
+            ))}
+          </div>
+        </div>
+        <div class="mega-solutions-right">
+          <div class="mega-vertical-preview">
+            <div class="mega-preview-img-wrap">
+              <img src="/images/verticals/vertical-warehouse.jpg" alt="Warehouse & Logistics" width="280" height="180" loading="lazy" />
+            </div>
+            <div class="mega-preview-body">
+              <p class="mega-preview-eyebrow">WAREHOUSE &amp; LOGISTICS</p>
+              <p class="mega-preview-desc">High-bay and linear solutions for 3PL, distribution, and cold storage. DLC Premium. 10-year warranty.</p>
+              <a href="/solutions/warehouse-logistics" class="mega-preview-link">View collection &rarr;</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================
-       SOLUTIONS PANEL
-       ============================================================ -->
-  <div class="mm-panel" data-panel="solutions" role="region" aria-label="Solutions menu">
-    <div class="mm-panel-inner">
-      <div class="mm-solutions-grid">
-        {solutions.map(sol => (
-          <a href={sol.href} class="mm-solution-item">
-            {sol.title}
-          </a>
-        ))}
-      </div>
-      <div class="mm-solutions-cta">
-        <a href="/solutions" class="mm-panel-view-all">View All Solutions &rarr;</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       RESOURCES PANEL (§3.6 — exactly 4 cards)
-       ============================================================ -->
-  <div class="mm-panel" data-panel="resources" role="region" aria-label="Resources menu">
-    <div class="mm-panel-inner">
-      <div class="mm-resources-grid">
-        {resources.map(res => (
-          <a href={res.href} class="mm-resource-card">
-            <span class="mm-resource-title">{res.title}</span>
-            <span class="mm-resource-desc">{res.desc}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================================
-       SUPPORT PANEL
-       ============================================================ -->
-  <div class="mm-panel" data-panel="support" role="region" aria-label="Support menu">
-    <div class="mm-panel-inner">
-      <ul class="mm-support-list" role="list">
-        {support.map(item => (
-          <li>
-            <a href={item.href} class="mm-support-item">
-              {item.title}
+  <!-- PRODUCTS PANE -->
+  <div class="mega-pane" data-mega="products" hidden>
+    <div class="mega-inner">
+      <div class="mega-products-layout">
+        <div class="mega-products-col mega-products-col--cats">
+          <p class="mega-section-label">CATEGORIES</p>
+          <div class="mega-cat-group">
+            <a href="/collections/indoor-industrial" class="mega-cat-heading">Indoor</a>
+            <div class="mega-cat-stems">
+              <a href="/collections/indoor-industrial?family=planoarch" class="mega-cat-stem"><BrandMark prefix="plano" suffix="RCH" /></a>
+              <a href="/collections/indoor-industrial?family=lampararch" class="mega-cat-stem"><BrandMark prefix="lampar" suffix="RCH" /></a>
+            </div>
+          </div>
+          <div class="mega-cat-group">
+            <a href="/collections/outdoor-ci" class="mega-cat-heading">Outdoor</a>
+            <div class="mega-cat-stems">
+              <a href="/collections/outdoor-ci?family=luxoarch" class="mega-cat-stem"><BrandMark prefix="luxo" suffix="RCH" /></a>
+              <a href="/collections/outdoor-ci?family=cityarch" class="mega-cat-stem"><BrandMark prefix="city" suffix="RCH" /></a>
+            </div>
+          </div>
+          <div class="mega-cat-group">
+            <a href="/collections/lamps" class="mega-cat-heading">Lamps</a>
+            <div class="mega-cat-stems">
+              <a href="/collections/lamps?family=tubularch" class="mega-cat-stem"><BrandMark prefix="tubul" suffix="RCH" /></a>
+              <a href="/collections/lamps?type=t8" class="mega-cat-stem">T8</a>
+              <a href="/collections/lamps?type=pl" class="mega-cat-stem">PL</a>
+              <a href="/collections/lamps?type=hid" class="mega-cat-stem">HID</a>
+            </div>
+          </div>
+          <div class="mega-cat-group">
+            <a href="/collections/controls-em" class="mega-cat-heading">Safety &amp; Controls</a>
+            <div class="mega-cat-stems">
+              <a href="/collections/controls-em?family=constant" class="mega-cat-stem"><BrandMark prefix="const" suffix="NT" /></a>
+              <a href="/collections/controls-em?family=contrals" class="mega-cat-stem"><BrandMark prefix="contr" suffix="LS" /></a>
+            </div>
+          </div>
+          <div class="mega-cat-group">
+            <a href="/collections/warehouse-deals" class="mega-cat-heading mega-cat-heading--deals">Warehouse Deals</a>
+          </div>
+        </div>
+        <div class="mega-products-col mega-products-col--apps">
+          <p class="mega-section-label">BY APPLICATION</p>
+          <div class="mega-app-group">
+            <p class="mega-app-group-label">Indoor Commercial</p>
+            <a href="/collections/indoor-industrial?app=arch-linear" class="mega-app-item">Architectural Linear</a>
+            <a href="/collections/indoor-industrial?app=commercial-downlight" class="mega-app-item">Commercial Downlight</a>
+            <a href="/collections/indoor-industrial?app=panels" class="mega-app-item">Panels</a>
+            <a href="/collections/indoor-industrial?app=troffer" class="mega-app-item">Troffer</a>
+            <a href="/collections/indoor-industrial?app=retrofit-kits" class="mega-app-item">Retrofit Kits</a>
+            <a href="/collections/indoor-industrial?app=strips" class="mega-app-item">General Purpose Strips</a>
+          </div>
+          <div class="mega-app-group">
+            <p class="mega-app-group-label">Industrial</p>
+            <a href="/collections/indoor-industrial?app=linear-highbay" class="mega-app-item">Linear High Bay</a>
+            <a href="/collections/indoor-industrial?app=round-highbay" class="mega-app-item">Round High Bay</a>
+            <a href="/collections/indoor-industrial?app=washdown" class="mega-app-item">Washdown</a>
+          </div>
+          <div class="mega-app-group">
+            <p class="mega-app-group-label">Outdoor</p>
+            <a href="/collections/outdoor-ci?app=area" class="mega-app-item">Area Luminaire</a>
+            <a href="/collections/outdoor-ci?app=sports" class="mega-app-item">Sports Lighters</a>
+            <a href="/collections/outdoor-ci?app=wallpack" class="mega-app-item">Wall Pack</a>
+            <a href="/collections/outdoor-ci?app=flood" class="mega-app-item">Flood</a>
+            <a href="/collections/outdoor-ci?app=canopy" class="mega-app-item">Canopy Luminaire</a>
+            <a href="/collections/outdoor-ci?app=bollard" class="mega-app-item">Bollard</a>
+            <a href="/collections/outdoor-ci?app=roadway" class="mega-app-item">Roadway</a>
+          </div>
+        </div>
+        <div class="mega-products-col mega-products-col--sub">
+          <div class="mega-app-group">
+            <p class="mega-app-group-label">Safety &amp; Controls</p>
+            <a href="/collections/controls-em?sub=em-backup" class="mega-app-item">Emergency Battery Backup</a>
+            <a href="/collections/controls-em?sub=exit" class="mega-app-item">Exit Signs</a>
+            <a href="/collections/controls-em?sub=combo" class="mega-app-item">Combo Signs</a>
+            <a href="/collections/controls-em?sub=em-light" class="mega-app-item">Emergency Light</a>
+            <a href="/collections/controls-em?sub=acs" class="mega-app-item"><BrandMark prefix="" suffix="RCH" /> Connected Systems</a>
+            <a href="/collections/controls-em?sub=contrals" class="mega-app-item"><BrandMark prefix="contr" suffix="LS" /> by <BrandMark prefix="" suffix="CS" /></a>
+          </div>
+          <div class="mega-tier-tiles">
+            <a href="/collections/indoor-industrial?tier=eco" class="mega-tier-tile">
+              <span class="mega-tier-badge mega-tier-badge--eco">ECO</span>
+              <span class="mega-tier-name">Entry tier</span>
             </a>
-          </li>
-        ))}
-      </ul>
+            <a href="/collections/indoor-industrial?tier=pro" class="mega-tier-tile">
+              <span class="mega-tier-badge mega-tier-badge--pro">PRO</span>
+              <span class="mega-tier-name">Standard tier</span>
+            </a>
+            <a href="/collections/indoor-industrial?tier=proplus" class="mega-tier-tile">
+              <span class="mega-tier-badge mega-tier-badge--proplus">PRO+</span>
+              <span class="mega-tier-name">Premium tier</span>
+            </a>
+          </div>
+        </div>
+        <div class="mega-products-col mega-products-col--preview">
+          <div class="mega-product-preview">
+            <p class="mega-preview-eyebrow">INDOOR · COMMERCIAL</p>
+            <p class="mega-preview-family">Commercial | <BrandMark prefix="plano" suffix="RCH" /></p>
+            <div class="mega-preview-img-wrap">
+              <img src="/images/megamenu/mega-constant.jpg" alt="Indoor Commercial" width="280" height="180" loading="lazy" />
+            </div>
+            <p class="mega-preview-desc">Commercial downlights, panels, and troffers. DLC Premium. 5-WATTselect × 5-CCTselect.</p>
+            <a href="/collections/indoor-industrial" class="mega-preview-link">View collection &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS PANE -->
+  <div class="mega-pane" data-mega="tools" hidden>
+    <div class="mega-inner">
+      <div class="mega-tools-layout">
+        <div class="mega-tools-col">
+          <p class="mega-section-label">FOR BUYERS</p>
+          <a href="/find-a-distributor" class="mega-tools-item">
+            <span class="mega-tools-name">Find a Distributor</span>
+            <span class="mega-tools-desc">Locate stocking distributors near you</span>
+          </a>
+          <a href="/find-a-rep" class="mega-tools-item">
+            <span class="mega-tools-name">Find a Rep</span>
+            <span class="mega-tools-desc">Connect with your local ALG sales rep</span>
+          </a>
+          <a href="/resources/rebate-center" class="mega-tools-item">
+            <span class="mega-tools-name">Rebate Center</span>
+            <span class="mega-tools-desc">Search utility rebates by ZIP and product family</span>
+          </a>
+        </div>
+        <div class="mega-tools-col">
+          <p class="mega-section-label">FOR SPECIFIERS</p>
+          <a href="/support/layout-request" class="mega-tools-item">
+            <span class="mega-tools-name">Layout &amp; Design Request</span>
+            <span class="mega-tools-desc">Free photometric layout in under 48 hours</span>
+          </a>
+          <a href="/resources/ies-files" class="mega-tools-item">
+            <span class="mega-tools-name">LM-79 Photometric Library</span>
+            <span class="mega-tools-desc">IES files for every active SKU</span>
+          </a>
+          <a href="/resources" class="mega-tools-item">
+            <span class="mega-tools-name">Resource Library</span>
+            <span class="mega-tools-desc">Spec sheets, TAA docs, training materials</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORT PANE -->
+  <div class="mega-pane" data-mega="support" hidden>
+    <div class="mega-inner">
+      <div class="mega-support-layout">
+        <div class="mega-support-col">
+          <p class="mega-section-label">SERVICE</p>
+          <a href="/about" class="mega-support-item">About Us</a>
+          <a href="/contact" class="mega-support-item">Contact Us</a>
+          <a href="/support/returns" class="mega-support-item">Returns &amp; Exchanges</a>
+          <a href="/support/sample-request" class="mega-support-item">Sample Request</a>
+          <a href="/resources" class="mega-support-item">Resource Library</a>
+          <a href="/resources/rebate-center" class="mega-support-item">Rebate Center</a>
+          <a href="/about/careers" class="mega-support-item">Career</a>
+          <a href="/about/blog" class="mega-support-item">Blog</a>
+        </div>
+        <div class="mega-support-col">
+          <p class="mega-section-label">LEGAL &amp; COMPLIANCE</p>
+          <a href="/legal/warranty" class="mega-support-item">Warranty Statement</a>
+          <a href="/legal/terms" class="mega-support-item">Terms &amp; Conditions</a>
+          <a href="/legal/patents" class="mega-support-item">Patents</a>
+          <a href="/resources/taa" class="mega-support-item">TAA Documentation</a>
+          <a href="/legal/privacy" class="mega-support-item">Privacy Policy</a>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
 
 <style>
-  /* ============================================================
-     MEGA-MENU WRAPPER
-     ============================================================ */
-  .megamenu-wrapper {
+  .mega-menu-panel {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background: #fff;
     border-top: 2px solid var(--color-alg-red, #F32740);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+    border-bottom: 1px solid var(--color-border, #E5E5E5);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
     z-index: 198;
-    display: none;
   }
-  .megamenu-wrapper.open {
-    display: block;
-  }
+  .mega-menu-panel[hidden] { display: none; }
 
-  /* ============================================================
-     PANELS
-     ============================================================ */
-  .mm-panel {
-    display: none;
-  }
-  .mm-panel.active {
-    display: block;
-  }
-
-  .mm-panel-inner {
+  .mega-inner {
     max-width: var(--container-max, 1280px);
     margin-inline: auto;
     padding: 32px var(--container-pad, 24px);
   }
 
-  /* ============================================================
-     PRODUCTS — 4-pane grid (§4.4 data-driven)
-     ============================================================ */
-  .mm-panes-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .mm-pane {
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--color-border, #E5E5E5);
-    transition: box-shadow 150ms ease, transform 150ms ease;
-  }
-  .mm-pane:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-    transform: translateY(-2px);
-  }
-
-  .mm-pane-img-wrap {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    background: var(--color-bg-strong, #F0F0F0);
-  }
-  .mm-pane-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .placeholder-tile {
-    width: 100%;
-    height: 100%;
-    background: var(--color-bg-strong, #F0F0F0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .placeholder-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-ink-mute, #6B6B6B);
-    letter-spacing: 0.06em;
+  .mega-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-  }
-
-  .mm-pane-body {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-  }
-
-  .mm-pane-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-ink, #111111);
-    margin: 0;
-  }
-
-  .mm-pane-desc {
-    font-size: 12px;
-    color: var(--color-ink-soft, #444444);
-    line-height: 1.45;
-    margin: 0;
-    flex: 1;
-  }
-
-  .mm-pane-cta {
-    font-size: 12px;
-    font-weight: 700;
     color: var(--color-alg-red, #F32740);
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    margin-top: 4px;
-    align-self: flex-start;
-  }
-  .mm-pane-cta:hover {
-    text-decoration: underline;
+    margin: 0 0 12px;
   }
 
-  /* ============================================================
-     SOLUTIONS — 8-item grid
-     ============================================================ */
-  .mm-solutions-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 20px;
+  /* Solutions */
+  .mega-solutions-layout { display: grid; grid-template-columns: 220px 1fr 280px; gap: 40px; }
+  .mega-solutions-left { display: flex; flex-direction: column; gap: 24px; }
+  .mega-start-here { display: flex; flex-direction: column; gap: 8px; }
+  .mega-start-desc { font-size: 13px; color: var(--color-ink-soft, #444444); line-height: 1.5; margin: 0; }
+  .mega-start-cta { font-size: 12px; font-weight: 700; color: var(--color-alg-red, #F32740); text-decoration: none; }
+  .mega-start-cta:hover { text-decoration: underline; }
+  .mega-purchase-tools { display: flex; flex-direction: column; gap: 8px; }
+  .mega-tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .mega-tool-item {
+    display: flex; align-items: center; padding: 8px 10px;
+    background: var(--color-bg-soft, #F7F7F7); border-radius: 3px; text-decoration: none;
+    transition: background 150ms ease;
   }
-
-  .mm-solution-item {
-    display: block;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-ink, #111111);
-    background: var(--color-bg-soft, #F7F7F7);
-    border-radius: 3px;
-    border-left: 3px solid transparent;
-    text-decoration: none;
-    transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
-  }
-  .mm-solution-item:hover {
-    background: #fff;
-    border-left-color: var(--color-alg-red, #F32740);
-    color: var(--color-alg-red, #F32740);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  }
-
-  .mm-solutions-cta {
-    padding-top: 4px;
-  }
-
-  .mm-panel-view-all {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-alg-red, #F32740);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-  }
-  .mm-panel-view-all:hover {
-    text-decoration: underline;
-  }
-
-  /* ============================================================
-     RESOURCES — 4 cards (§3.6)
-     ============================================================ */
-  .mm-resources-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .mm-resource-card {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 20px;
-    background: var(--color-bg-soft, #F7F7F7);
-    border-radius: 4px;
-    border: 1px solid var(--color-border, #E5E5E5);
-    text-decoration: none;
-    transition: box-shadow 150ms ease, border-color 150ms ease;
-  }
-  .mm-resource-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    border-color: var(--color-alg-red, #F32740);
-  }
-
-  .mm-resource-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-ink, #111111);
-  }
-
-  .mm-resource-desc {
-    font-size: 12px;
-    color: var(--color-ink-soft, #444444);
-    line-height: 1.45;
-  }
-
-  /* ============================================================
-     SUPPORT — list
-     ============================================================ */
-  .mm-support-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    max-width: 400px;
-  }
-
-  .mm-support-item {
-    display: block;
-    padding: 12px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-ink, #111111);
-    border-radius: 3px;
-    text-decoration: none;
+  .mega-tool-item:hover { background: var(--color-bg-strong, #F0F0F0); }
+  .mega-tool-name { font-size: 12px; font-weight: 600; color: var(--color-ink, #111111); }
+  .mega-vertical-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .mega-vertical-item {
+    font-size: 13px; font-weight: 500; color: var(--color-ink-soft, #444444);
+    text-decoration: none; padding: 6px 8px; border-radius: 3px;
     transition: background 150ms ease, color 150ms ease;
   }
-  .mm-support-item:hover {
-    background: var(--color-bg-soft, #F7F7F7);
-    color: var(--color-alg-red, #F32740);
-  }
+  .mega-vertical-item:hover { background: var(--color-bg-soft, #F7F7F7); color: var(--color-alg-red, #F32740); }
+  .mega-vertical-preview { display: flex; flex-direction: column; gap: 12px; }
+  .mega-preview-img-wrap { border-radius: 4px; overflow: hidden; background: var(--color-bg-strong, #F0F0F0); }
+  .mega-preview-img-wrap img { width: 100%; height: auto; display: block; object-fit: cover; }
+  .mega-preview-body { display: flex; flex-direction: column; gap: 6px; }
+  .mega-preview-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-mute, #6B6B6B); margin: 0; }
+  .mega-preview-desc { font-size: 12px; color: var(--color-ink-soft, #444444); line-height: 1.5; margin: 0; }
+  .mega-preview-link { font-size: 12px; font-weight: 700; color: var(--color-alg-red, #F32740); text-decoration: none; }
+  .mega-preview-link:hover { text-decoration: underline; }
 
-  /* ============================================================
-     RESPONSIVE
-     ============================================================ */
-  @media (max-width: 900px) {
-    .megamenu-wrapper {
-      display: none !important;
-    }
+  /* Products */
+  .mega-products-layout { display: grid; grid-template-columns: 180px 200px 200px 1fr; gap: 32px; }
+  .mega-cat-group { margin-bottom: 16px; }
+  .mega-cat-heading {
+    font-size: 13px; font-weight: 700; color: var(--color-ink, #111111);
+    text-decoration: none; display: block; margin-bottom: 6px; transition: color 150ms ease;
+  }
+  .mega-cat-heading:hover { color: var(--color-alg-red, #F32740); }
+  .mega-cat-heading--deals { color: var(--color-alg-red, #F32740); }
+  .mega-cat-stems { display: flex; flex-wrap: wrap; gap: 4px; }
+  .mega-cat-stem {
+    font-size: 11px; font-weight: 600; color: var(--color-ink-soft, #444444);
+    text-decoration: none; padding: 3px 8px; background: var(--color-bg-soft, #F7F7F7);
+    border-radius: 2px; transition: background 150ms ease, color 150ms ease;
+  }
+  .mega-cat-stem:hover { background: var(--color-bg-strong, #F0F0F0); color: var(--color-alg-red, #F32740); }
+  .mega-app-group { margin-bottom: 16px; }
+  .mega-app-group-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-mute, #6B6B6B); margin: 0 0 6px; }
+  .mega-app-item {
+    display: block; font-size: 12px; color: var(--color-ink-soft, #444444);
+    text-decoration: none; padding: 3px 0; transition: color 150ms ease;
+  }
+  .mega-app-item:hover { color: var(--color-alg-red, #F32740); }
+  .mega-tier-tiles { display: flex; gap: 8px; margin-top: 8px; }
+  .mega-tier-tile {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 10px 8px; background: var(--color-bg-soft, #F7F7F7); border-radius: 4px;
+    text-decoration: none; transition: background 150ms ease;
+  }
+  .mega-tier-tile:hover { background: var(--color-bg-strong, #F0F0F0); }
+  .mega-tier-badge { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 2px; }
+  .mega-tier-badge--eco { background: #E8F5E9; color: #2E7D32; }
+  .mega-tier-badge--pro { background: #E3F2FD; color: #1565C0; }
+  .mega-tier-badge--proplus { background: #FFF3E0; color: #E65100; }
+  .mega-tier-name { font-size: 10px; color: var(--color-ink-mute, #6B6B6B); font-weight: 600; }
+  .mega-product-preview { display: flex; flex-direction: column; gap: 10px; }
+  .mega-preview-family { font-size: 14px; font-weight: 700; color: var(--color-ink, #111111); margin: 0; }
+
+  /* Tools */
+  .mega-tools-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 640px; }
+  .mega-tools-col { display: flex; flex-direction: column; gap: 12px; }
+  .mega-tools-item {
+    display: flex; flex-direction: column; gap: 2px; padding: 12px 14px;
+    background: var(--color-bg-soft, #F7F7F7); border-radius: 4px; text-decoration: none;
+    transition: background 150ms ease;
+  }
+  .mega-tools-item:hover { background: var(--color-bg-strong, #F0F0F0); }
+  .mega-tools-name { font-size: 13px; font-weight: 700; color: var(--color-ink, #111111); }
+  .mega-tools-desc { font-size: 12px; color: var(--color-ink-mute, #6B6B6B); }
+
+  /* Support */
+  .mega-support-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 640px; }
+  .mega-support-col { display: flex; flex-direction: column; gap: 4px; }
+  .mega-support-item {
+    font-size: 13px; color: var(--color-ink-soft, #444444); text-decoration: none;
+    padding: 6px 0; border-bottom: 1px solid var(--color-bg-soft, #F7F7F7);
+    transition: color 150ms ease;
+  }
+  .mega-support-item:hover { color: var(--color-alg-red, #F32740); }
+
+  @media (max-width: 1024px) {
+    .mega-solutions-layout { grid-template-columns: 1fr 1fr; }
+    .mega-solutions-right { display: none; }
+    .mega-products-layout { grid-template-columns: 1fr 1fr; }
+    .mega-products-col--preview { display: none; }
+  }
+  @media (max-width: 768px) {
+    .mega-menu-panel { display: none; }
   }
 </style>
-
-<script>
-  (function () {
-    const wrapper = document.getElementById('megaMenuWrapper') as HTMLElement | null;
-    const panels = document.querySelectorAll<HTMLElement>('.mm-panel');
-
-    function showPanel(key: string) {
-      if (!wrapper) return;
-      panels.forEach(p => {
-        p.classList.toggle('active', p.dataset.panel === key);
-      });
-      wrapper.classList.add('open');
-      wrapper.setAttribute('aria-hidden', 'false');
-    }
-
-    function hideMenu() {
-      wrapper?.classList.remove('open');
-      wrapper?.setAttribute('aria-hidden', 'true');
-      panels.forEach(p => p.classList.remove('active'));
-    }
-
-    const navBtns = document.querySelectorAll<HTMLButtonElement>('.nav-item-btn');
-    navBtns.forEach(btn => {
-      const li = btn.closest<HTMLElement>('li[data-mm]');
-      if (!li) return;
-      const key = li.dataset.mm ?? '';
-
-      btn.addEventListener('click', () => {
-        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-        if (isExpanded) {
-          showPanel(key);
-        } else {
-          hideMenu();
-        }
-      });
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!(e.target as Element).closest('.site-nav')) {
-        hideMenu();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        hideMenu();
-        navBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
-      }
-    });
-  })();
-</script>

@@ -11,9 +11,9 @@
 
 :root {
   /* Brand palette */
-  --color-alg-red: #C8102E;          /* Primary brand red — used for Ⓐ, accents, CTAs */
-  --color-alg-red-dark: #9B0C24;     /* Hover/pressed state */
-  --color-alg-red-light: #FBE4E8;    /* Tinted backgrounds */
+  --color-alg-red: #F32740;          /* Primary brand red — #F32740 per alg-logo-color.svg (reconciled 2026-04-25) */
+  --color-alg-red-dark: #C41E32;     /* Hover/pressed state — darkened from #F32740 */
+  --color-alg-red-light: #FDE8EB;    /* Tinted backgrounds */
 
   --color-ink: #111111;              /* Primary text */
   --color-ink-soft: #444444;         /* Secondary text */
