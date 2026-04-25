@@ -1,34 +1,1583 @@
 ---
 /**
- * Homepage — placeholder
+ * Homepage — v2.1.0 full implementation.
  *
- * This file exists ONLY so the initial deploy has SOMETHING to render.
- * Iteration 1 (Manus) replaces this with the full homepage rebuilt against
- * the v3.14.6 visual reference.
+ * Sections (per Playbook v2.0 §5 and v3.14.x reference):
+ *   1. Hero carousel (4 slides, auto-advance 7s, pause on hover)
+ *   2. Trust bar (5 trust signals)
+ *   3. Category tease (Indoor / Outdoor / Controls & EM)
+ *   4. Locator map (Leaflet, 6 warehouse pins)
+ *   5. Featured Families (4 product family cards)
+ *   6. Layout CTA (48-hour turnaround)
+ *   7. Installed At (8 vertical tiles — 3 placeholders for missing assets)
+ *   8. Split teasers (Rebate + Specifier)
+ *   [Footer CTA strip and Footer are in Footer.astro]
  *
- * If you are seeing this page on staging.archipelagolighting.com after
- * Iteration 1 has been merged, something went wrong.
+ * Asset notes:
+ *   - vertical-coldstorage, vertical-datacenter, vertical-hospitality: MISSING
+ *     rendered as placeholder tiles per Playbook §5.3
+ *   - mega-tubularch.jpg: MISSING — placeholder in MegaMenu.astro
+ *
+ * Verify rules: B.1 (no naked Ⓐ), C.1 (no accreditation), C.2 (no CLEARANCE),
+ *               D.1 (no [object Object]), D.2 (<title> set), D.3 (meta description set)
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
+
+const heroSlides = [
+  {
+    id: 0,
+    img: '/images/heroes/hero-illuminator-stadium.jpg',
+    imgAlt: 'Illuminator sports lighter installed in a stadium',
+    eyebrow: 'Commercial & Industrial · DLC Premium',
+    headline: 'Illuminator',
+    subhead: 'Premier sports lighter. Up to 115,000 lumens. 160 lm/W. DLC Premium. Ready for broadcast-grade venues.',
+    stat1: { value: '115,000', label: 'Max lumens' },
+    stat2: { value: '160 lm/W', label: 'Efficacy' },
+    stat3: { value: '10 yr', label: 'Warranty' },
+    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
+    ctaSecondary: { label: 'Learn more', href: '/collections/indoor-industrial' }
+  },
+  {
+    id: 1,
+    img: '/images/heroes/hero-warehouse-highbay.jpg',
+    imgAlt: 'Titan-II linear high-bay in a warehouse',
+    eyebrow: 'Warehouse & Logistics · DLC Premium',
+    headline: 'Titan-II',
+    subhead: 'Linear high-bay for warehouses and industrial interiors. 3–55W. DLC Premium, built-in 6kVA surge protection.',
+    stat1: { value: '20', label: 'Active SKUs' },
+    stat2: { value: '155 lm/W', label: 'Efficacy' },
+    stat3: { value: '10 yr', label: 'Warranty' },
+    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
+    ctaSecondary: { label: 'Learn more', href: '/collections/indoor-industrial' }
+  },
+  {
+    id: 2,
+    img: '/images/heroes/hero-outdoor-area.jpg',
+    imgAlt: 'luxoARCH area luminaire on a parking lot',
+    eyebrow: 'Outdoor C&I · DLC Premium',
+    headline: 'luxoARCH',
+    subhead: 'Full-cutoff area luminaire for parking lots, roadways, and site lighting. Utility rebate qualified.',
+    stat1: { value: '18', label: 'Active SKUs' },
+    stat2: { value: '145 lm/W', label: 'Efficacy' },
+    stat3: { value: '5 yr', label: 'Warranty' },
+    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
+    ctaSecondary: { label: 'Learn more', href: '/collections/outdoor-ci' }
+  },
+  {
+    id: 3,
+    img: '/images/heroes/hero-controls-panel.jpg',
+    imgAlt: 'ACS connected systems control panel',
+    eyebrow: 'Controls & EM · NLC-Ready',
+    headline: 'ACS',
+    subhead: 'NLC-ready sensors and controls for every ARCH fixture. Occupancy, daylight harvesting, emergency backup.',
+    stat1: { value: '9', label: 'Active SKUs' },
+    stat2: { value: 'NLC', label: 'Certified' },
+    stat3: { value: '5 yr', label: 'Warranty' },
+    ctaPrimary: { label: 'Request Spec', href: '/resources/spec-sheets' },
+    ctaSecondary: { label: 'Learn more', href: '/collections/controls-em' }
+  }
+];
+
+const categories = [
+  {
+    title: 'Indoor Luminaires',
+    href: '/collections/indoor-industrial',
+    desc: 'High-bay, low-bay, troffer, and strip fixtures. This catalog delivers high-lm/W for the specifier\'s bid sheet, the distributor\'s floor, and the contractor\'s truck.',
+    img: '/images/heroes/hero-warehouse-highbay.jpg',
+    imgAlt: 'Indoor luminaires in a warehouse',
+    families: ['Titan-II', 'Astra', 'Illuminator']
+  },
+  {
+    title: 'Outdoor Luminaires',
+    href: '/collections/outdoor-ci',
+    desc: 'Parking lots to area lights, canopy to flood. Designed for specifiers, stocked for distributors, and ready for every US climate.',
+    img: '/images/heroes/hero-outdoor-area.jpg',
+    imgAlt: 'Outdoor area luminaires in a parking lot',
+    families: ['luxoARCH', 'cityARCH', 'Canopy']
+  },
+  {
+    title: 'Controls & EM',
+    href: '/collections/controls-em',
+    desc: 'NLC-ready sensors, networked controls, and emergency battery backup. One ecosystem — every ARCH fixture.',
+    img: '/images/heroes/hero-controls-panel.jpg',
+    imgAlt: 'Controls and emergency lighting panel',
+    families: ['ACS', 'constANT', 'contrALS']
+  }
+];
+
+const families = [
+  {
+    slug: 'illuminator',
+    name: 'Illuminator',
+    eyebrow: 'luxoARCH · PRO',
+    badge: 'DLC PREMIUM',
+    badgeVariant: 'premium',
+    desc: 'Sports lighter · stadiums + athletic fields',
+    skus: 11,
+    img: '/images/families/family-illuminator.png',
+    imgAlt: 'Illuminator sports lighter',
+    bg: 'light',
+    href: '/collections/indoor-industrial'
+  },
+  {
+    slug: 'titan',
+    name: 'Titan-II',
+    eyebrow: 'lamparARCH · PRO',
+    badge: 'DLC PREMIUM',
+    badgeVariant: 'premium',
+    desc: 'Linear high-bay · warehouse + industrial',
+    skus: 20,
+    img: '/images/families/family-titan.png',
+    imgAlt: 'Titan-II linear high-bay',
+    bg: 'dark',
+    href: '/collections/indoor-industrial'
+  },
+  {
+    slug: 'astra',
+    name: 'Astra',
+    eyebrow: 'planoARCH · PRO+',
+    badge: 'DLC PREMIUM',
+    badgeVariant: 'premium',
+    desc: 'Commercial downlight · retail + hospitality',
+    skus: 18,
+    img: '/images/families/family-astra.png',
+    imgAlt: 'Astra commercial downlight',
+    bg: 'brand',
+    href: '/collections/indoor-industrial'
+  },
+  {
+    slug: 'contrals',
+    name: 'Connected Systems',
+    eyebrow: 'contrALS · BY ACS',
+    badge: 'NLC-READY',
+    badgeVariant: 'nlc',
+    desc: 'NLC-ready sensors + controls · every ARCH fixture',
+    skus: 9,
+    img: '/images/families/family-contrals.png',
+    imgAlt: 'Connected systems sensor',
+    bg: 'dark',
+    href: '/collections/controls-em'
+  }
+];
+
+const verticals = [
+  { title: 'Warehouse & Logistics',      sub: '3PL facility · OH',      img: '/images/verticals/vertical-warehouse.jpg',     href: '/solutions/warehouse-logistics' },
+  { title: 'Industrial & Manufacturing', sub: 'Auto plant · TX',         img: '/images/verticals/vertical-manufacturing.jpg', href: '/solutions/industrial-manufacturing' },
+  { title: 'Cold Storage & Grocery',     sub: 'Freezer DC · CA',         img: null,                                           href: '/solutions/cold-storage-grocery' },
+  { title: 'Data Center',               sub: 'Hyperscale · VA',          img: null,                                           href: '/solutions/data-center' },
+  { title: 'Healthcare',                sub: 'Outpatient · IL',          img: '/images/verticals/vertical-healthcare.jpg',    href: '/solutions/healthcare' },
+  { title: 'Education',                 sub: 'K-12 retrofit · NJ',       img: '/images/verticals/vertical-education.jpg',     href: '/solutions/education' },
+  { title: 'Hospitality',               sub: 'Hotel reno · MA',          img: null,                                           href: '/solutions/hospitality' },
+  { title: 'Government & Military',     sub: 'Federal logistics · GA',   img: '/images/verticals/vertical-government.jpg',    href: '/solutions/government-military' }
+];
 ---
-<BaseLayout title="Archipelago Lighting Group" description="Specified. Stocked. Shipped.">
-  <section class="section">
-    <div class="container">
-      <h1>Archipelago Lighting Group</h1>
-      <p>
-        Foundation deploy. Iteration 1 (homepage rebuild) lands here next.
-      </p>
-      <p>
-        Brand-mark test:
-        <BrandMark prefix="plano" suffix="RCH" />,
-        <BrandMark prefix="multi-f" suffix="MILY" />,
-        <BrandMark prefix="" suffix="CS" /> by ALG.
-      </p>
-      <p>
-        If the three brand marks above render with red circle-A characters and the
-        rest of this text in black, the brand-mark utility is working.
-      </p>
+
+<BaseLayout
+  title="Archipelago Lighting Group — Specified. Stocked. Shipped."
+  description="Commercial and industrial LED lighting. 2,000+ active SKUs. Five US warehouses. Layouts in under 48 hours."
+  bodyClass="page-home"
+>
+
+  <!-- ==============================================================
+       1. HERO CAROUSEL
+       ============================================================== -->
+  <section class="hero-section" aria-label="Featured products">
+    <div class="hero-carousel" id="heroCarousel">
+
+      {heroSlides.map((slide, i) => (
+        <img
+          class={`hero-image${i === 0 ? ' active' : ''}`}
+          src={slide.img}
+          alt={slide.imgAlt}
+          data-slide={i}
+          width="1280"
+          height="720"
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+      ))}
+
+      <div class="hero-panel">
+        <div class="hero-panel-inner">
+
+          <div class="slot" id="slotEyebrow">
+            {heroSlides.map((slide, i) => (
+              <p class={`slot-content hero-eyebrow${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                {slide.eyebrow}
+              </p>
+            ))}
+          </div>
+
+          <div class="slot" id="slotHeadline">
+            {heroSlides.map((slide, i) => (
+              <h2 class={`slot-content hero-headline${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                {slide.headline}
+              </h2>
+            ))}
+          </div>
+
+          <div class="slot" id="slotSubhead">
+            {heroSlides.map((slide, i) => (
+              <p class={`slot-content hero-subhead${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                {slide.subhead}
+              </p>
+            ))}
+          </div>
+
+          <div class="slot" id="slotStats">
+            {heroSlides.map((slide, i) => (
+              <div class={`slot-content hero-stats${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                <div class="hero-stat">
+                  <span class="hero-stat-value">{slide.stat1.value}</span>
+                  <span class="hero-stat-label">{slide.stat1.label}</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="hero-stat-value">{slide.stat2.value}</span>
+                  <span class="hero-stat-label">{slide.stat2.label}</span>
+                </div>
+                <div class="hero-stat">
+                  <span class="hero-stat-value">{slide.stat3.value}</span>
+                  <span class="hero-stat-label">{slide.stat3.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="slot" id="slotCtas">
+            {heroSlides.map((slide, i) => (
+              <div class={`slot-content hero-ctas${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                <a href={slide.ctaPrimary.href} class="btn btn--primary hero-cta-primary">{slide.ctaPrimary.label}</a>
+                <a href={slide.ctaSecondary.href} class="hero-cta-secondary">{slide.ctaSecondary.label} &rsaquo;</a>
+              </div>
+            ))}
+          </div>
+
+          <div class="hero-controls">
+            <button class="hero-prev" id="prevBtn" aria-label="Previous slide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="hero-dots" role="tablist" aria-label="Slide navigation">
+              {heroSlides.map((_, i) => (
+                <button
+                  class={`carousel-dot${i === 0 ? ' active' : ''}`}
+                  role="tab"
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  aria-label={`Slide ${i + 1}`}
+                  data-dot={i}
+                ></button>
+              ))}
+            </div>
+            <button class="hero-next" id="nextBtn" aria-label="Next slide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <span class="hero-counter" id="carouselCounter" aria-live="polite" aria-atomic="true">01 / 04</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="hero-overlay-text">
+        <p class="hero-overlay-eyebrow">Commercial &amp; Industrial · DLC Premium</p>
+        <h1 class="hero-overlay-headline">
+          Specified.<br>
+          Stocked.<br>
+          <span class="hero-overlay-accent">Shipped.</span>
+        </h1>
+        <p class="hero-overlay-sub">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
+      </div>
+
     </div>
   </section>
+
+  <!-- ==============================================================
+       2. TRUST BAR
+       ============================================================== -->
+  <section class="trust-bar" aria-label="Trust signals">
+    <div class="trust-bar-inner">
+      <div class="trust-item">
+        <img src="/brand/alg-brandmark-red.png" alt="ALG" width="24" height="24" loading="lazy" />
+        <span class="trust-label">ALG</span>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="trust-label">USA</span>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="trust-label">UL Listed</span>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="trust-label">3–10 yr Warranty</span>
+      </div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span class="trust-label">3-Day Ship</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       3. CATEGORY TEASE
+       ============================================================== -->
+  <section class="section section--soft category-section" aria-labelledby="cat-heading">
+    <div class="container">
+      <h2 id="cat-heading" class="section-headline">
+        Lighting that <em>specifies</em>, stocks, and ships.
+      </h2>
+      <p class="section-subhead">
+        From warehouse high-bays to parking-lot area lights. From emergency backup to
+        commercial controls — built for the specifier's bid sheet, the distributor's floor,
+        and the contractor's truck.
+      </p>
+      <div class="category-grid">
+        {categories.map(cat => (
+          <a href={cat.href} class="category-card">
+            <div class="category-card-img">
+              <img src={cat.img} alt={cat.imgAlt} width="400" height="260" loading="lazy" />
+            </div>
+            <div class="category-card-body">
+              <h3 class="category-card-title">{cat.title}</h3>
+              <p class="category-card-desc">{cat.desc}</p>
+              <div class="category-card-families">
+                {cat.families.map(f => (
+                  <span class="family-chip">{f}</span>
+                ))}
+              </div>
+              <span class="category-card-cta">Browse collection &rarr;</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       4. LOCATOR MAP
+       ============================================================== -->
+  <section class="section locator-section" aria-labelledby="locator-heading">
+    <div class="container">
+      <div class="locator-header">
+        <div class="locator-header-text">
+          <p class="section-eyebrow">FIND ALG NEAR YOU</p>
+          <h2 id="locator-heading">
+            One map. <span class="text-accent">Three ways to find us.</span>
+          </h2>
+          <p class="section-subhead">
+            Your local team has stocking distributors, and ALG warehouses — all on one
+            map. Search by ZIP, city, or state. Coverage in every US region.
+          </p>
+        </div>
+        <div class="locator-legend">
+          <div class="legend-item">
+            <span class="legend-dot legend-dot--wh"></span>
+            <span>ALG Warehouse</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-dot--rep"></span>
+            <span>Sales Rep</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot legend-dot--dist"></span>
+            <span>Stocking Distributor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="locator-map-wrap">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse and distributor locator map" role="application"></div>
+      </div>
+
+      <div class="locator-actions">
+        <a href="/find-a-rep" class="btn btn--ghost locator-btn-ghost">Find a Rep</a>
+        <a href="/distributor" class="btn btn--ghost locator-btn-ghost">Become a Distributor</a>
+        <a href="/find-a-rep" class="btn btn--primary">Apply as Sales Rep</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       5. FEATURED FAMILIES
+       ============================================================== -->
+  <section class="section section--soft families-section" aria-labelledby="families-heading">
+    <div class="container">
+      <p class="section-eyebrow">FEATURED FAMILIES</p>
+      <h2 id="families-heading">
+        The families distributors stock<br>and specifiers spec.
+      </h2>
+      <p class="section-subhead">
+        <BrandMark prefix="plano" suffix="RCH" /> families are the connected-systems platform that ties them together
+        — the core of our 2,000+ active SKU catalog.
+      </p>
+      <div class="families-grid">
+        {families.map(fam => (
+          <a href={fam.href} class={`family-card family-card--${fam.bg}`} aria-label={`${fam.name} — ${fam.desc}`}>
+            <div class="family-card-badge-wrap">
+              <span class={`family-badge family-badge--${fam.badgeVariant}`}>{fam.badge}</span>
+            </div>
+            <div class="family-card-img">
+              <img src={fam.img} alt={fam.imgAlt} width="320" height="240" loading="lazy" />
+            </div>
+            <div class="family-card-body">
+              <p class="family-card-eyebrow">{fam.eyebrow}</p>
+              <h3 class="family-card-name">{fam.name}</h3>
+              <p class="family-card-desc">{fam.desc}</p>
+              <div class="family-card-footer">
+                <span class="family-card-skus">{fam.skus} SKUs</span>
+                <span class="family-card-link">VIEW &rarr;</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       6. LAYOUT CTA
+       ============================================================== -->
+  <section class="layout-cta-section" aria-labelledby="layout-heading">
+    <div class="layout-cta-inner">
+      <div class="layout-cta-text">
+        <p class="section-eyebrow layout-eyebrow">PHOTOMETRIC LAYOUT</p>
+        <h2 id="layout-heading">
+          Get a lighting layout in<br>
+          <span class="text-accent">under 48hrs.</span>
+        </h2>
+        <p class="layout-cta-body">
+          Every layout comes from a photometric expert with platform-grade precision.
+          Provide the space with product selection or let us recommend — fixture count,
+          layout, and lux levels included.
+        </p>
+        <ul class="layout-checklist" role="list">
+          <li>Photometric calculations per IES standard</li>
+          <li>Product selection with short-list options</li>
+          <li>Fixture count + BOM</li>
+        </ul>
+        <div class="layout-cta-actions">
+          <a href="/support/layout-request" class="btn btn--primary">Request a Layout</a>
+          <a href="/resources/sell-sheets" class="layout-sample-link">See sample layouts (PDF+) &rsaquo;</a>
+        </div>
+      </div>
+      <div class="layout-cta-visual" aria-hidden="true">
+        <div class="layout-grid-mock">
+          {Array.from({ length: 16 }, (_, i) => (
+            <div class={`layout-grid-cell${i % 2 === 0 ? ' layout-grid-cell--lit' : ''}`}></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       7. INSTALLED AT
+       ============================================================== -->
+  <section class="section installed-section" aria-labelledby="installed-heading">
+    <div class="container">
+      <p class="section-eyebrow">INSTALLED AT</p>
+      <h2 id="installed-heading">
+        Where ALG lighting goes to <span class="text-accent">work.</span>
+      </h2>
+      <p class="section-subhead">
+        From cold storage in Cincinnati to a stadium retrofit in Sacramento — real
+        installations, real results.
+      </p>
+      <div class="verticals-grid">
+        {verticals.map(v => (
+          <a href={v.href} class="vertical-tile" aria-label={`${v.title} — ${v.sub}`}>
+            {v.img
+              ? <img src={v.img} alt={v.title} width="320" height="240" loading="lazy" />
+              : <div class="vertical-placeholder">
+                  <span class="placeholder-label">Photography pending</span>
+                </div>
+            }
+            <div class="vertical-overlay">
+              <h3 class="vertical-title">{v.title}</h3>
+              <p class="vertical-sub">{v.sub}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       8. SPLIT TEASERS
+       ============================================================== -->
+  <section class="section section--soft split-section" aria-label="Rebate and specifier resources">
+    <div class="container">
+      <div class="split-grid">
+
+        <div class="split-card">
+          <p class="section-eyebrow">UTILITY REBATES</p>
+          <h2 class="split-card-headline">
+            Most projects qualify for utility rebates.
+          </h2>
+          <p class="split-card-body">
+            Search by ZIP-mapped rebate library. ALG-stocked family SKUs often return
+            40–90% of project cost in qualifying utility incentives.
+          </p>
+          <div class="split-stat-row">
+            <div class="split-stat">
+              <span class="split-stat-value">2,400+</span>
+              <span class="split-stat-label">Qualifying SKUs</span>
+            </div>
+            <div class="split-stat">
+              <span class="split-stat-value">$0.10–0.30</span>
+              <span class="split-stat-label">Per kWh saved</span>
+            </div>
+          </div>
+          <a href="/resources/rebate-center" class="btn btn--primary">Find Rebates &rarr;</a>
+        </div>
+
+        <div class="split-card">
+          <p class="section-eyebrow">SPECIFIER RESOURCES</p>
+          <h2 class="split-card-headline">
+            Spec sheets, IES files, training.
+          </h2>
+          <p class="split-card-body">
+            Everything you need for the bid sheet — and the lunch-and-learn for your team.
+          </p>
+          <div class="spec-resource-grid">
+            <a href="/resources/ies-files" class="spec-res-item">IES Photometric Library <span class="arr">&rarr;</span></a>
+            <a href="/resources/spec-sheets" class="spec-res-item">Resource Library <span class="arr">&rarr;</span></a>
+            <a href="/resources/sell-sheets" class="spec-res-item">TAA Documentation <span class="arr">&rarr;</span></a>
+            <a href="/resources/catalog" class="spec-res-item">Training Center <span class="arr">&rarr;</span></a>
+          </div>
+          <a href="/resources/spec-sheets" class="btn btn--primary">Browse Spec Resources</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: clamp(480px, 60vw, 720px);
+    background: var(--color-ink, #111111);
+    overflow: hidden;
+  }
+
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 60%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+  .hero-image.active { opacity: 1; }
+
+  .hero-carousel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 65%;
+    background: linear-gradient(to right, rgba(17,17,17,0.5) 0%, rgba(17,17,17,0.1) 80%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 42%;
+    height: 100%;
+    background: rgba(17,17,17,0.92);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-panel-inner {
+    padding: 40px 48px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .slot { position: relative; }
+
+  .slot-content {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 400ms ease, transform 400ms ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .slot-content.active {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #C8102E);
+    margin: 0;
+  }
+
+  .hero-headline {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subhead {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 340px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+
+  .hero-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-cta-primary {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 3px;
+  }
+
+  .hero-cta-secondary {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .hero-cta-secondary:hover { color: #fff; }
+
+  .hero-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .hero-prev, .hero-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    color: #fff;
+    transition: background 150ms ease;
+  }
+  .hero-prev:hover, .hero-next:hover { background: rgba(255,255,255,0.2); }
+
+  .hero-dots {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 200ms ease, transform 200ms ease;
+  }
+  .carousel-dot.active {
+    background: var(--color-alg-red, #C8102E);
+    transform: scale(1.3);
+  }
+
+  .hero-counter {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .hero-overlay-text {
+    position: absolute;
+    bottom: 48px;
+    left: 0;
+    width: 55%;
+    padding-inline: var(--container-pad, 24px);
+    z-index: 3;
+  }
+
+  .hero-overlay-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin: 0 0 8px;
+  }
+
+  .hero-overlay-headline {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.0;
+    margin: 0 0 12px;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-overlay-accent { color: var(--color-alg-red, #C8102E); }
+
+  .hero-overlay-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     TRUST BAR
+     ============================================================ */
+  .trust-bar {
+    background: var(--color-bg-soft, #F7F7F7);
+    border-bottom: 1px solid var(--color-border, #E5E5E5);
+  }
+
+  .trust-bar-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    padding: 14px var(--container-pad, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 20px;
+    color: var(--color-ink-soft, #444444);
+  }
+
+  .trust-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .trust-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--color-border, #E5E5E5);
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     SECTION COMMON
+     ============================================================ */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #C8102E);
+    margin: 0 0 12px;
+  }
+
+  .section-headline {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+    line-height: 1.15;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-headline em {
+    font-style: normal;
+    color: var(--color-alg-red, #C8102E);
+  }
+
+  .section-subhead {
+    font-size: 15px;
+    color: var(--color-ink-soft, #444444);
+    line-height: 1.6;
+    margin: 0 0 40px;
+    max-width: 640px;
+  }
+
+  .text-accent { color: var(--color-alg-red, #C8102E); }
+
+  /* ============================================================
+     CATEGORY TEASE
+     ============================================================ */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #E5E5E5);
+    background: #fff;
+    text-decoration: none;
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .category-card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    transform: translateY(-3px);
+  }
+
+  .category-card-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: var(--color-bg-strong, #F0F0F0);
+  }
+  .category-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 400ms ease;
+  }
+  .category-card:hover .category-card-img img { transform: scale(1.04); }
+
+  .category-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .category-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+    margin: 0;
+  }
+
+  .category-card-desc {
+    font-size: 13px;
+    color: var(--color-ink-soft, #444444);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+  }
+
+  .category-card-families {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .family-chip {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-ink-mute, #6B6B6B);
+    background: var(--color-bg-strong, #F0F0F0);
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .category-card-cta {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-alg-red, #C8102E);
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+
+  /* ============================================================
+     LOCATOR MAP
+     ============================================================ */
+  .locator-section {
+    background: var(--color-ink, #111111);
+    color: #fff;
+  }
+
+  .locator-section .section-subhead { color: rgba(255,255,255,0.65); }
+  .locator-section h2 { color: #fff; }
+
+  .locator-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .locator-header-text { flex: 1; min-width: 280px; }
+
+  .locator-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    padding-top: 8px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-dot--wh   { background: var(--color-alg-red, #C8102E); box-shadow: 0 0 0 3px rgba(200,16,46,0.3); }
+  .legend-dot--rep  { background: #4A9EFF; box-shadow: 0 0 0 3px rgba(74,158,255,0.3); }
+  .legend-dot--dist { background: #F9A825; box-shadow: 0 0 0 3px rgba(249,168,37,0.3); }
+
+  .locator-map-wrap {
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 24px;
+  }
+
+  .locator-map {
+    width: 100%;
+    height: 400px;
+    background: #1a1a2e;
+  }
+
+  .locator-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .locator-btn-ghost {
+    color: rgba(255,255,255,0.85) !important;
+    border-color: rgba(255,255,255,0.35) !important;
+  }
+  .locator-btn-ghost:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: #fff !important;
+    border-color: #fff !important;
+  }
+
+  /* ============================================================
+     FEATURED FAMILIES
+     ============================================================ */
+  .families-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .family-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #E5E5E5);
+    text-decoration: none;
+    position: relative;
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+  .family-card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+    transform: translateY(-3px);
+  }
+
+  .family-card--light { background: #F5F0EB; }
+  .family-card--dark  { background: #1A1A1A; }
+  .family-card--brand { background: var(--color-alg-red, #C8102E); }
+
+  .family-card-badge-wrap {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+  }
+
+  .family-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: rgba(17,17,17,0.75);
+    color: #fff;
+  }
+
+  .family-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .family-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 400ms ease;
+  }
+  .family-card:hover .family-card-img img { transform: scale(1.05); }
+
+  .family-card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .family-card-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .family-card--light .family-card-eyebrow { color: var(--color-ink-mute, #6B6B6B); }
+  .family-card--dark  .family-card-eyebrow { color: rgba(255,255,255,0.5); }
+  .family-card--brand .family-card-eyebrow { color: rgba(255,255,255,0.75); }
+
+  .family-card-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .family-card--light .family-card-name { color: var(--color-ink, #111111); }
+  .family-card--dark  .family-card-name { color: #fff; }
+  .family-card--brand .family-card-name { color: #fff; }
+
+  .family-card-desc {
+    font-size: 12px;
+    line-height: 1.45;
+    margin: 0;
+    flex: 1;
+  }
+  .family-card--light .family-card-desc { color: var(--color-ink-soft, #444444); }
+  .family-card--dark  .family-card-desc { color: rgba(255,255,255,0.6); }
+  .family-card--brand .family-card-desc { color: rgba(255,255,255,0.8); }
+
+  .family-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  .family-card--dark  .family-card-footer,
+  .family-card--brand .family-card-footer { border-top-color: rgba(255,255,255,0.12); }
+
+  .family-card-skus {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .family-card--light .family-card-skus { color: var(--color-ink-mute, #6B6B6B); }
+  .family-card--dark  .family-card-skus { color: rgba(255,255,255,0.4); }
+  .family-card--brand .family-card-skus { color: rgba(255,255,255,0.6); }
+
+  .family-card-link {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-alg-red, #C8102E);
+  }
+  .family-card--brand .family-card-link { color: rgba(255,255,255,0.9); }
+
+  /* ============================================================
+     LAYOUT CTA
+     ============================================================ */
+  .layout-cta-section {
+    background: var(--color-ink, #111111);
+    color: #fff;
+  }
+
+  .layout-cta-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    padding: clamp(48px, 8vw, 96px) var(--container-pad, 24px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .layout-eyebrow { color: var(--color-alg-red, #C8102E); }
+
+  .layout-cta-text h2 {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .layout-cta-body {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin: 0 0 20px;
+    max-width: 480px;
+  }
+
+  .layout-checklist {
+    list-style: none;
+    margin: 0 0 28px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .layout-checklist li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    padding-left: 20px;
+    position: relative;
+  }
+  .layout-checklist li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--color-alg-red, #C8102E);
+    font-weight: 700;
+  }
+
+  .layout-cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .layout-sample-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .layout-sample-link:hover { color: #fff; }
+
+  .layout-cta-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .layout-grid-mock {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 1;
+  }
+
+  .layout-grid-cell {
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    aspect-ratio: 1;
+  }
+
+  .layout-grid-cell--lit {
+    background: rgba(200,16,46,0.25);
+    box-shadow: inset 0 0 0 1px rgba(200,16,46,0.4), 0 0 20px rgba(200,16,46,0.15);
+  }
+
+  /* ============================================================
+     INSTALLED AT
+     ============================================================ */
+  .verticals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .vertical-tile {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 3px;
+    display: block;
+    text-decoration: none;
+    background: var(--color-bg-strong, #F0F0F0);
+  }
+
+  .vertical-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 400ms ease;
+  }
+  .vertical-tile:hover img { transform: scale(1.05); }
+
+  .vertical-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-strong, #F0F0F0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-ink-mute, #6B6B6B);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .vertical-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    transition: background 200ms ease;
+  }
+  .vertical-tile:hover .vertical-overlay {
+    background: linear-gradient(to top, rgba(17,17,17,0.85) 0%, rgba(17,17,17,0.2) 60%, transparent 100%);
+  }
+
+  .vertical-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 2px;
+    line-height: 1.2;
+  }
+
+  .vertical-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============================================================
+     SPLIT TEASERS
+     ============================================================ */
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .split-card {
+    padding: 40px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border, #E5E5E5);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .split-card-headline {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .split-card-body {
+    font-size: 14px;
+    color: var(--color-ink-soft, #444444);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .split-stat-row {
+    display: flex;
+    gap: 32px;
+  }
+
+  .split-stat { display: flex; flex-direction: column; gap: 2px; }
+
+  .split-stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .split-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-ink-mute, #6B6B6B);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .spec-resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .spec-res-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: var(--color-bg-soft, #F7F7F7);
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink, #111111);
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .spec-res-item:hover {
+    background: var(--color-bg-strong, #F0F0F0);
+    color: var(--color-alg-red, #C8102E);
+  }
+
+  .arr {
+    color: var(--color-alg-red, #C8102E);
+    font-weight: 700;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1024px) {
+    .families-grid { grid-template-columns: repeat(2, 1fr); }
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+    .layout-cta-inner { grid-template-columns: 1fr; gap: 40px; }
+    .layout-cta-visual { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .hero-image { width: 100%; }
+    .hero-carousel::before {
+      width: 100%;
+      background: linear-gradient(to top, rgba(17,17,17,0.8) 0%, rgba(17,17,17,0.3) 60%, transparent 100%);
+    }
+    .hero-panel { display: none; }
+    .hero-overlay-text { width: 100%; bottom: 80px; }
+    .category-grid { grid-template-columns: 1fr; }
+    .split-grid { grid-template-columns: 1fr; }
+    .locator-header { flex-direction: column; }
+  }
+
+  @media (max-width: 640px) {
+    .families-grid { grid-template-columns: 1fr; }
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+    .trust-bar-inner { justify-content: flex-start; overflow-x: auto; }
+  }
+</style>
+
+<script>
+  /* ============================================================
+     HERO CAROUSEL
+     ============================================================ */
+  (function () {
+    const carousel = document.getElementById('heroCarousel');
+    if (!carousel) return;
+
+    const images = carousel.querySelectorAll('.hero-image') as NodeListOf<HTMLElement>;
+    const dots = carousel.querySelectorAll('.carousel-dot') as NodeListOf<HTMLButtonElement>;
+    const slotStacks = carousel.querySelectorAll('.slot') as NodeListOf<HTMLElement>;
+    const prevBtn = document.getElementById('prevBtn') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement | null;
+    const counter = document.getElementById('carouselCounter');
+
+    const TOTAL = 4;
+    const AUTO_MS = 7000;
+    let current = 0;
+    let timer: number | null = null;
+
+    function setActive(n: number) {
+      if (n === current) return;
+      current = ((n % TOTAL) + TOTAL) % TOTAL;
+
+      images.forEach((img, i) => img.classList.toggle('active', i === current));
+
+      slotStacks.forEach(stack => {
+        const contents = stack.querySelectorAll('.slot-content') as NodeListOf<HTMLElement>;
+        contents.forEach(c => c.classList.remove('active'));
+        const incoming = stack.querySelector(`.slot-content[data-slot-slide="${current}"]`) as HTMLElement | null;
+        if (incoming) requestAnimationFrame(() => incoming.classList.add('active'));
+      });
+
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+        d.setAttribute('aria-selected', String(i === current));
+      });
+
+      if (counter) {
+        const pad = String(current + 1).padStart(2, '0');
+        counter.textContent = `${pad} / 04`;
+      }
+    }
+
+    function next() { setActive(current + 1); }
+    function prev() { setActive(current - 1); }
+    function start() { stop(); timer = window.setInterval(next, AUTO_MS); }
+    function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
+
+    prevBtn?.addEventListener('click', () => { prev(); start(); });
+    nextBtn?.addEventListener('click', () => { next(); start(); });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { setActive(i); start(); }));
+
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') { prev(); start(); }
+      if (e.key === 'ArrowRight') { next(); start(); }
+    });
+
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+
+    start();
+  })();
+
+  /* ============================================================
+     LEAFLET MAP
+     ============================================================ */
+  (function () {
+    const el = document.getElementById('algLocatorMap');
+    if (!el) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = function () {
+      const L = (window as any).L;
+      if (!L) return;
+
+      const map = L.map('algLocatorMap', {
+        center: [39.5, -96.5],
+        zoom: 4,
+        scrollWheelZoom: false,
+        zoomControl: true,
+        attributionControl: true
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+      }).addTo(map);
+
+      const whIcon = L.divIcon({
+        className: 'alg-pin-wh',
+        html: '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#C8102E;border:2px solid rgba(12,13,18,0.85);box-shadow:0 0 0 4px rgba(200,16,46,0.25),0 0 14px rgba(200,16,46,0.5);"></span>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
+      });
+
+      const warehouses = [
+        { name: 'Montclair, CA',   lat: 34.0776, lng: -117.6897, address: '4615 State Street, Montclair CA' },
+        { name: 'Riverside, CA',   lat: 33.9213, lng: -117.3517, address: '9345 Sycamore Canyon Blvd, Riverside CA 92508' },
+        { name: 'Crestwood, IL',   lat: 41.6647, lng:  -87.7372, address: 'Crestwood, IL' },
+        { name: 'Rahway, NJ',      lat: 40.6082, lng:  -74.2776, address: 'Rahway, NJ' },
+        { name: 'Brockton, MA',    lat: 42.0834, lng:  -71.0184, address: 'Brockton, MA' },
+        { name: 'Cincinnati, OH',  lat: 39.1031, lng:  -84.5120, address: 'Cincinnati, OH' }
+      ];
+
+      warehouses.forEach(wh => {
+        L.marker([wh.lat, wh.lng], { icon: whIcon, title: wh.name })
+          .bindPopup(`<strong>${wh.name}</strong><br>${wh.address}`)
+          .addTo(map);
+      });
+    };
+    document.head.appendChild(script);
+  })();
+</script>
