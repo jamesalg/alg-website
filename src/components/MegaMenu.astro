@@ -2,39 +2,446 @@
 /**
  * MegaMenu.astro
  *
- * Canonical mega-menu drawer. The THIRD canonical component (alongside
- * Header.astro and Footer.astro). Per Playbook v2.0 §4, imported by Header.astro,
- * byte-identical across every page.
+ * Canonical mega-menu drawer — v2.1.0 full implementation.
+ * Per Playbook v2.0 §4.3, four primary nav buckets.
  *
- * SCAFFOLD — implementation in Iteration 1.
+ * CTA href binding (§4.4): every "View Collection →" href is derived from
+ * the same cat.slug data prop as the pane label — no hardcoded hrefs.
  *
- * Required structure (§4.3):
- *
- * Four primary nav buckets, each with a hover-to-open mega drawer:
- *   1. PRODUCTS — 4 categories: Indoor Industrial, Outdoor C&I, Linear & Specialty,
- *      Controls & EM. Each category has a preview pane on the right.
- *   2. SOLUTIONS — 8 verticals (locked in §3.4):
- *      Warehouse & Logistics, Industrial & Manufacturing, Cold Storage & Grocery,
- *      Data Center, Healthcare, Education, Hospitality, Government & Military.
- *   3. RESOURCES — Spec Sheets, IES Files, Family Sell Sheets, Full Catalog
- *      (the 4-card persona-page pattern — §3.6).
- *   4. SUPPORT — Distributor Login, Find a Rep, Photometric Layout Request,
- *      Warranty/RMA, Contact.
- *
- * CTA per preview pane (§4.4):
- *   - Each pane carries a "View Collection →" link
- *   - The href must match the data-cat slug for that pane
- *   - This was the failure mode of v3.14.7-v3.14.19 — Astro components solve it
- *     by binding the href to the same data prop the pane uses for its label
+ * NO naked Ⓐ — all brand marks rendered via BrandMark.astro (§3.3).
+ * NO accreditation claims (§3.5).
  */
+
+// §4.4 — Products: data-driven, href bound to same slug as label
+const productCategories = [
+  {
+    slug: 'indoor-industrial',
+    title: 'Indoor Industrial',
+    preview: '/images/heroes/hero-warehouse-highbay.jpg',
+    desc: 'High-bay, low-bay, and strip fixtures for warehouses, manufacturing, and industrial facilities.'
+  },
+  {
+    slug: 'outdoor-ci',
+    title: 'Outdoor C&I',
+    preview: '/images/heroes/hero-outdoor-area.jpg',
+    desc: 'Area, wall pack, flood, and canopy luminaires for commercial and industrial exteriors.'
+  },
+  {
+    slug: 'linear-specialty',
+    title: 'Linear & Specialty',
+    preview: null,
+    desc: 'Linear architectural and specialty luminaires for commercial interiors.'
+  },
+  {
+    slug: 'controls-em',
+    title: 'Controls & EM',
+    preview: '/images/megamenu/mega-controls.jpg',
+    desc: 'Occupancy sensors, networked controls, and emergency battery backup systems.'
+  }
+];
+
+// §3.4 — Solutions: 8 locked verticals
+const solutions = [
+  { title: 'Warehouse & Logistics',      href: '/solutions/warehouse-logistics' },
+  { title: 'Industrial & Manufacturing', href: '/solutions/industrial-manufacturing' },
+  { title: 'Cold Storage & Grocery',     href: '/solutions/cold-storage-grocery' },
+  { title: 'Data Center',               href: '/solutions/data-center' },
+  { title: 'Healthcare',                href: '/solutions/healthcare' },
+  { title: 'Education',                 href: '/solutions/education' },
+  { title: 'Hospitality',               href: '/solutions/hospitality' },
+  { title: 'Government & Military',     href: '/solutions/government-military' }
+];
+
+// §3.6 — Resources: exactly 4 cards
+const resources = [
+  { title: 'Spec Sheets',        href: '/resources/spec-sheets',  desc: 'Full product specifications and dimensional drawings.' },
+  { title: 'IES Files',          href: '/resources/ies-files',    desc: 'Photometric data files for lighting design software.' },
+  { title: 'Family Sell Sheets', href: '/resources/sell-sheets',  desc: 'One-page overviews for distributor and specifier use.' },
+  { title: 'Full Catalog',       href: '/resources/catalog',      desc: 'Complete product catalog — 2,000+ active SKUs.' }
+];
+
+// Support: 5 items
+const support = [
+  { title: 'Distributor Login',          href: '/distributor' },
+  { title: 'Find a Rep',                 href: '/find-a-rep' },
+  { title: 'Photometric Layout Request', href: '/support/layout-request' },
+  { title: 'Warranty / RMA',             href: '/support/warranty-rma' },
+  { title: 'Contact',                    href: '/contact' }
+];
 ---
-<nav class="mega-menu">
-  <!-- IMPLEMENTATION PENDING: Iteration 1 (homepage) -->
-  <p>Mega menu placeholder — pending Iteration 1</p>
-</nav>
+
+<div class="megamenu-wrapper" id="megaMenuWrapper" aria-hidden="true">
+
+  <!-- ============================================================
+       PRODUCTS PANEL
+       ============================================================ -->
+  <div class="mm-panel" data-panel="products" role="region" aria-label="Products menu">
+    <div class="mm-panel-inner">
+      <div class="mm-panes-grid">
+        {productCategories.map(cat => (
+          <div class="mm-pane" data-cat={cat.slug}>
+            <div class="mm-pane-img-wrap">
+              {cat.preview
+                ? <img src={cat.preview} alt={cat.title} width="280" height="158" loading="lazy" />
+                : <div class="placeholder-tile" aria-label="Photography pending">
+                    <span class="placeholder-label">Photography pending</span>
+                  </div>
+              }
+            </div>
+            <div class="mm-pane-body">
+              <h3 class="mm-pane-title">{cat.title}</h3>
+              <p class="mm-pane-desc">{cat.desc}</p>
+              <a href={`/collections/${cat.slug}`} class="mm-pane-cta">
+                View Collection &rarr;
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SOLUTIONS PANEL
+       ============================================================ -->
+  <div class="mm-panel" data-panel="solutions" role="region" aria-label="Solutions menu">
+    <div class="mm-panel-inner">
+      <div class="mm-solutions-grid">
+        {solutions.map(sol => (
+          <a href={sol.href} class="mm-solution-item">
+            {sol.title}
+          </a>
+        ))}
+      </div>
+      <div class="mm-solutions-cta">
+        <a href="/solutions" class="mm-panel-view-all">View All Solutions &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       RESOURCES PANEL (§3.6 — exactly 4 cards)
+       ============================================================ -->
+  <div class="mm-panel" data-panel="resources" role="region" aria-label="Resources menu">
+    <div class="mm-panel-inner">
+      <div class="mm-resources-grid">
+        {resources.map(res => (
+          <a href={res.href} class="mm-resource-card">
+            <span class="mm-resource-title">{res.title}</span>
+            <span class="mm-resource-desc">{res.desc}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SUPPORT PANEL
+       ============================================================ -->
+  <div class="mm-panel" data-panel="support" role="region" aria-label="Support menu">
+    <div class="mm-panel-inner">
+      <ul class="mm-support-list" role="list">
+        {support.map(item => (
+          <li>
+            <a href={item.href} class="mm-support-item">
+              {item.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+</div>
 
 <style>
-  .mega-menu {
+  /* ============================================================
+     MEGA-MENU WRAPPER
+     ============================================================ */
+  .megamenu-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 2px solid var(--color-alg-red, #F32740);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.14);
+    z-index: 198;
+    display: none;
+  }
+  .megamenu-wrapper.open {
+    display: block;
+  }
+
+  /* ============================================================
+     PANELS
+     ============================================================ */
+  .mm-panel {
+    display: none;
+  }
+  .mm-panel.active {
+    display: block;
+  }
+
+  .mm-panel-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    padding: 32px var(--container-pad, 24px);
+  }
+
+  /* ============================================================
+     PRODUCTS — 4-pane grid (§4.4 data-driven)
+     ============================================================ */
+  .mm-panes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .mm-pane {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--color-border, #E5E5E5);
+    transition: box-shadow 150ms ease, transform 150ms ease;
+  }
+  .mm-pane:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+  }
+
+  .mm-pane-img-wrap {
     width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--color-bg-strong, #F0F0F0);
+  }
+  .mm-pane-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .placeholder-tile {
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-strong, #F0F0F0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .placeholder-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-ink-mute, #6B6B6B);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .mm-pane-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .mm-pane-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+    margin: 0;
+  }
+
+  .mm-pane-desc {
+    font-size: 12px;
+    color: var(--color-ink-soft, #444444);
+    line-height: 1.45;
+    margin: 0;
+    flex: 1;
+  }
+
+  .mm-pane-cta {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-alg-red, #F32740);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+  .mm-pane-cta:hover {
+    text-decoration: underline;
+  }
+
+  /* ============================================================
+     SOLUTIONS — 8-item grid
+     ============================================================ */
+  .mm-solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .mm-solution-item {
+    display: block;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink, #111111);
+    background: var(--color-bg-soft, #F7F7F7);
+    border-radius: 3px;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+    transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+  }
+  .mm-solution-item:hover {
+    background: #fff;
+    border-left-color: var(--color-alg-red, #F32740);
+    color: var(--color-alg-red, #F32740);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+
+  .mm-solutions-cta {
+    padding-top: 4px;
+  }
+
+  .mm-panel-view-all {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .mm-panel-view-all:hover {
+    text-decoration: underline;
+  }
+
+  /* ============================================================
+     RESOURCES — 4 cards (§3.6)
+     ============================================================ */
+  .mm-resources-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .mm-resource-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    background: var(--color-bg-soft, #F7F7F7);
+    border-radius: 4px;
+    border: 1px solid var(--color-border, #E5E5E5);
+    text-decoration: none;
+    transition: box-shadow 150ms ease, border-color 150ms ease;
+  }
+  .mm-resource-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: var(--color-alg-red, #F32740);
+  }
+
+  .mm-resource-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-ink, #111111);
+  }
+
+  .mm-resource-desc {
+    font-size: 12px;
+    color: var(--color-ink-soft, #444444);
+    line-height: 1.45;
+  }
+
+  /* ============================================================
+     SUPPORT — list
+     ============================================================ */
+  .mm-support-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 400px;
+  }
+
+  .mm-support-item {
+    display: block;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink, #111111);
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .mm-support-item:hover {
+    background: var(--color-bg-soft, #F7F7F7);
+    color: var(--color-alg-red, #F32740);
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 900px) {
+    .megamenu-wrapper {
+      display: none !important;
+    }
   }
 </style>
+
+<script>
+  (function () {
+    const wrapper = document.getElementById('megaMenuWrapper') as HTMLElement | null;
+    const panels = document.querySelectorAll<HTMLElement>('.mm-panel');
+
+    function showPanel(key: string) {
+      if (!wrapper) return;
+      panels.forEach(p => {
+        p.classList.toggle('active', p.dataset.panel === key);
+      });
+      wrapper.classList.add('open');
+      wrapper.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideMenu() {
+      wrapper?.classList.remove('open');
+      wrapper?.setAttribute('aria-hidden', 'true');
+      panels.forEach(p => p.classList.remove('active'));
+    }
+
+    const navBtns = document.querySelectorAll<HTMLButtonElement>('.nav-item-btn');
+    navBtns.forEach(btn => {
+      const li = btn.closest<HTMLElement>('li[data-mm]');
+      if (!li) return;
+      const key = li.dataset.mm ?? '';
+
+      btn.addEventListener('click', () => {
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          showPanel(key);
+        } else {
+          hideMenu();
+        }
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.site-nav')) {
+        hideMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        hideMenu();
+        navBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
+      }
+    });
+  })();
+</script>

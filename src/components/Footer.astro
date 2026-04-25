@@ -2,32 +2,363 @@
 /**
  * Footer.astro
  *
- * Canonical site footer. Per Playbook v2.0 §4, imported by every page,
- * byte-identical by construction.
+ * Canonical site footer — v2.1.0 full implementation.
+ * Per Playbook v2.0 §4.5, imported by BaseLayout.astro and rendered
+ * byte-identically on every page.
  *
- * SCAFFOLD — implementation in Iteration 1.
+ * Structure (§4.5):
+ *   - Tagline row: "Specified. Stocked. Shipped."
+ *   - Four-column nav: Products / Solutions / Resources / Company
+ *   - Sub-footer: copyright, addresses, legal links
  *
- * Required structure (§4.2):
- *   - Tagline row ("Specified. Stocked. Shipped.")
- *   - Four-column nav (Products / Solutions / Resources / Company)
- *   - Sub-footer (legal, contact, copyright, addresses)
- *
- * Addresses (locked from memory):
+ * Addresses (locked):
  *   - HQ: 4615 State Street, Montclair, CA
  *   - USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508
  *
- * NO "CLEARANCE" badges or accreditation claims anywhere.
+ * NO "CLEARANCE" badges (§3.7).
+ * NO accreditation claims (§3.5).
+ * NO naked Ⓐ (§3.3).
  */
 ---
+
 <footer class="site-footer">
-  <!-- IMPLEMENTATION PENDING: Iteration 1 (homepage) -->
-  <p>Footer placeholder — pending Iteration 1</p>
+
+  <!-- ============================================================
+       FOOTER CTA STRIP — red band
+       ============================================================ -->
+  <div class="footer-cta-strip">
+    <div class="footer-cta-inner">
+      <p class="footer-cta-msg">
+        Need a quote, layout, sample, or rebate match?
+        <strong>We respond same business day.</strong>
+      </p>
+      <div class="footer-cta-actions">
+        <a href="/contact" class="footer-cta-outline">Contact Sales</a>
+        <a href="/support/layout-request" class="footer-cta-filled">Request Layout</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN FOOTER BODY
+       ============================================================ -->
+  <div class="footer-body">
+    <div class="footer-inner">
+
+      <!-- Tagline + logo -->
+      <div class="footer-brand">
+        <a href="/" aria-label="Archipelago Lighting Group — home">
+          <img src="/brand/alg-logo-white.png" alt="Archipelago Lighting Group" width="160" height="40" loading="lazy" />
+        </a>
+        <p class="footer-tagline">Specified. Stocked. Shipped.</p>
+      </div>
+
+      <!-- Four-column nav -->
+      <div class="footer-col">
+        <h4 class="footer-col-head">Products</h4>
+        <ul role="list">
+          <li><a href="/collections/indoor-industrial">Indoor Industrial</a></li>
+          <li><a href="/collections/outdoor-ci">Outdoor C&amp;I</a></li>
+          <li><a href="/collections/linear-specialty">Linear &amp; Specialty</a></li>
+          <li><a href="/collections/controls-em">Controls &amp; EM</a></li>
+          <li><a href="/collections">View All Products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-head">Solutions</h4>
+        <ul role="list">
+          <li><a href="/solutions/warehouse-logistics">Warehouse &amp; Logistics</a></li>
+          <li><a href="/solutions/industrial-manufacturing">Industrial &amp; Manufacturing</a></li>
+          <li><a href="/solutions/cold-storage-grocery">Cold Storage</a></li>
+          <li><a href="/solutions/data-center">Data Center</a></li>
+          <li><a href="/solutions/healthcare">Healthcare</a></li>
+          <li><a href="/solutions/education">Education</a></li>
+          <li><a href="/solutions/hospitality">Hospitality</a></li>
+          <li><a href="/solutions/government-military">Government</a></li>
+          <li><a href="/solutions">View All Solutions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-head">Resources</h4>
+        <ul role="list">
+          <li><a href="/resources/spec-sheets">Spec Sheets</a></li>
+          <li><a href="/resources/ies-files">IES Files</a></li>
+          <li><a href="/resources/sell-sheets">Family Sell Sheets</a></li>
+          <li><a href="/resources/catalog">Full Catalog</a></li>
+          <li><a href="/support/layout-request">Photometric Layout Request</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-col-head">Company</h4>
+        <ul role="list">
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/find-a-rep">Find a Rep</a></li>
+          <li><a href="/distributor">Distributor Login</a></li>
+          <li><a href="/careers">Careers</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SUB-FOOTER
+       ============================================================ -->
+  <div class="footer-sub">
+    <div class="footer-sub-inner">
+      <div class="footer-sub-left">
+        <img src="/brand/alg-brandmark-white.png" alt="" width="20" height="20" loading="lazy" aria-hidden="true" />
+        <span>&copy; 2026 Archipelago Lighting Group</span>
+      </div>
+      <div class="footer-sub-center">
+        <span>HQ: 4615 State Street, Montclair, CA</span>
+        <span class="footer-sub-divider" aria-hidden="true">&middot;</span>
+        <span>USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508</span>
+      </div>
+      <div class="footer-sub-right">
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/accessibility">Accessibility</a>
+      </div>
+    </div>
+  </div>
+
 </footer>
 
 <style>
-  .site-footer {
-    width: 100%;
-    border-top: 1px solid var(--color-border, #e5e5e5);
-    padding: 2rem 0;
+  /* ============================================================
+     FOOTER CTA STRIP
+     ============================================================ */
+  .footer-cta-strip {
+    background: var(--color-alg-red, #F32740);
+    padding: 40px var(--container-pad, 24px);
+  }
+
+  .footer-cta-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-cta-msg {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .footer-cta-msg strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .footer-cta-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .footer-cta-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .footer-cta-outline:hover {
+    background: #fff;
+    color: var(--color-alg-red, #F32740);
+  }
+
+  .footer-cta-filled {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: #fff;
+    color: var(--color-alg-red, #F32740);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .footer-cta-filled:hover {
+    background: var(--color-ink, #111111);
+    color: #fff;
+  }
+
+  /* ============================================================
+     MAIN FOOTER BODY
+     ============================================================ */
+  .footer-body {
+    background: var(--color-ink, #111111);
+    padding: 64px var(--container-pad, 24px) 48px;
+  }
+
+  .footer-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  /* Brand column */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-brand img {
+    height: 36px;
+    width: auto;
+  }
+
+  .footer-tagline {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* Nav columns */
+  .footer-col-head {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .footer-col a:hover {
+    color: #fff;
+  }
+
+  /* ============================================================
+     SUB-FOOTER
+     ============================================================ */
+  .footer-sub {
+    background: var(--color-ink, #111111);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 20px var(--container-pad, 24px);
+  }
+
+  .footer-sub-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-sub-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-sub-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.03em;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-sub-divider {
+    opacity: 0.4;
+  }
+
+  .footer-sub-right {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-sub-right a {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 150ms ease;
+  }
+  .footer-sub-right a:hover {
+    color: #fff;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1024px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-sub-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .footer-sub-center {
+      justify-content: flex-start;
+    }
   }
 </style>

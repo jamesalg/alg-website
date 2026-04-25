@@ -2,35 +2,509 @@
 /**
  * Header.astro
  *
- * Canonical site header. Per Playbook v2.0 §4, this component is imported by
- * every page on the site. Astro renders it byte-identically across all pages
- * by construction — no copy-paste, no md5 verification needed.
+ * Canonical site header — v2.1.0 full implementation.
+ * Per Playbook v2.0 §4.1, imported by BaseLayout.astro and rendered
+ * byte-identically on every page.
  *
- * This is a SCAFFOLD — full implementation lands in Iteration 1 (homepage rebuild).
- * Manus will populate this file in that iteration, using v3.14.6 as the visual
- * reference.
+ * Structure (§4.2):
+ *   - Top utility row: Distributor Login, Find a Rep, Cart icon → ALG Shop
+ *   - Main nav row: logo left, primary nav center, Search + "Request Quote" right
+ *   - Mobile: hamburger collapses both rows; mega-menu becomes drawer
  *
- * Required structure (locked in §4.1):
- *   - Top utility row (Distributor Login, Find a Rep, Cart icon → ALG Shop external link)
- *   - Main nav row (logo left, primary nav center, Search/Quote CTAs right)
- *   - Mega-menu drawer (Products, Solutions, Resources, Support — see MegaMenu.astro)
- *
- * Brand assets to use:
- *   - Logo: /brand/alg-logo-color.png (light bg) or /brand/alg-logo-white.png (dark bg)
- *   - Brand-red Ⓐ wrapping handled by BrandMark.astro component
- *
- * NO accreditation claims (§3.5) — never reference CEU/AIA/IDCEC/LU/HSW.
+ * NO accreditation claims (§3.5).
+ * NO naked Ⓐ — all brand marks via BrandMark.astro (§3.3).
  */
+import MegaMenu from './MegaMenu.astro';
 ---
-<header class="site-header">
-  <!-- IMPLEMENTATION PENDING: Iteration 1 (homepage) -->
-  <!-- Per Playbook v2.0 §4.1, full markup lands when Manus rebuilds homepage -->
-  <p>Header placeholder — pending Iteration 1</p>
-</header>
+
+<!-- ============================================================
+     TOP UTILITY ROW
+     ============================================================ -->
+<div class="utility-bar">
+  <div class="utility-inner">
+    <a href="/distributor" class="utility-link">Distributor Login</a>
+    <a href="/find-a-rep" class="utility-link">Find a Rep</a>
+    <a
+      href="https://algportal.archipelagolighting.com"
+      class="utility-link utility-cart"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="ALG Shop — opens in new tab"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span>ALG Shop</span>
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN NAV ROW
+     ============================================================ -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="site-nav-inner">
+
+    <!-- Logo -->
+    <a href="/" class="nav-logo" aria-label="Archipelago Lighting Group — home">
+      <img src="/brand/alg-logo-color.png" alt="Archipelago Lighting Group" width="140" height="36" />
+    </a>
+
+    <!-- Primary nav (desktop) -->
+    <ul class="main-nav" role="list">
+      <li class="has-dropdown" data-mm="products">
+        <button class="nav-item-btn" aria-expanded="false" aria-haspopup="true">
+          Products
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </li>
+      <li class="has-dropdown" data-mm="solutions">
+        <button class="nav-item-btn" aria-expanded="false" aria-haspopup="true">
+          Solutions
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </li>
+      <li class="has-dropdown" data-mm="resources">
+        <button class="nav-item-btn" aria-expanded="false" aria-haspopup="true">
+          Resources
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </li>
+      <li class="has-dropdown" data-mm="support">
+        <button class="nav-item-btn" aria-expanded="false" aria-haspopup="true">
+          Support
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Right CTAs -->
+    <div class="nav-ctas">
+      <button class="nav-search-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <a href="/request-quote" class="btn btn--primary nav-quote-btn">Request Quote</a>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button class="nav-toggle" aria-expanded="false" aria-label="Open navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <!-- Mega-menu drawer (rendered inside nav for positioning context) -->
+  <MegaMenu />
+
+</nav>
+
+<!-- ============================================================
+     MOBILE OVERLAY
+     ============================================================ -->
+<div class="mobile-overlay" aria-hidden="true"></div>
+
+<!-- ============================================================
+     MOBILE NAV DRAWER
+     ============================================================ -->
+<div class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+  <div class="mobile-drawer-header">
+    <a href="/" aria-label="Archipelago Lighting Group — home">
+      <img src="/brand/alg-logo-color.png" alt="Archipelago Lighting Group" width="120" height="30" />
+    </a>
+    <button class="mobile-close-btn" aria-label="Close navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <ul role="list">
+      <li><a href="/collections/indoor-industrial">Products</a></li>
+      <li><a href="/solutions/warehouse-logistics">Solutions</a></li>
+      <li><a href="/resources/spec-sheets">Resources</a></li>
+      <li><a href="/support/layout-request">Support</a></li>
+    </ul>
+    <div class="mobile-nav-ctas">
+      <a href="/distributor" class="mobile-nav-link">Distributor Login</a>
+      <a href="/find-a-rep" class="mobile-nav-link">Find a Rep</a>
+      <a href="/request-quote" class="btn btn--primary mobile-quote-btn">Request Quote</a>
+    </div>
+  </nav>
+</div>
 
 <style>
-  .site-header {
+  /* ============================================================
+     UTILITY BAR
+     ============================================================ */
+  .utility-bar {
+    background: var(--color-ink, #111111);
+    color: #fff;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .utility-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--container-pad, 24px);
     width: 100%;
-    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .utility-link {
+    color: rgba(255,255,255,0.8);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 150ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .utility-link:hover {
+    color: #fff;
+  }
+
+  /* ============================================================
+     MAIN NAV
+     ============================================================ */
+  .site-nav {
+    position: sticky;
+    top: 36px;
+    z-index: 199;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    height: 60px;
+  }
+
+  .site-nav-inner {
+    max-width: var(--container-max, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--container-pad, 24px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-logo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .nav-logo img {
+    height: 32px;
+    width: auto;
+  }
+
+  /* Primary nav list */
+  .main-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .main-nav li {
+    position: static;
+  }
+
+  .nav-item-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft, #444444);
+    background: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+    white-space: nowrap;
+  }
+  .nav-item-btn:hover,
+  .main-nav li.active .nav-item-btn,
+  .nav-item-btn[aria-expanded="true"] {
+    color: var(--color-alg-red, #F32740);
+  }
+
+  .chevron {
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+  }
+  .nav-item-btn[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Right CTAs */
+  .nav-ctas {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid var(--color-border, #E5E5E5);
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--color-ink-soft, #444444);
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+  .nav-search-btn:hover {
+    border-color: var(--color-alg-red, #F32740);
+    color: var(--color-alg-red, #F32740);
+  }
+
+  .nav-quote-btn {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  /* Hamburger (hidden on desktop) */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: 1px solid var(--color-border, #E5E5E5);
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--color-ink, #111111);
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ============================================================
+     MOBILE OVERLAY
+     ============================================================ */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 297;
+  }
+  .mobile-overlay.active {
+    display: block;
+  }
+
+  /* ============================================================
+     MOBILE DRAWER
+     ============================================================ */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 90vw);
+    background: #fff;
+    z-index: 298;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 300ms ease;
+    overflow-y: auto;
+  }
+  .mobile-drawer:not([hidden]) {
+    transform: translateX(0);
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border, #E5E5E5);
+  }
+
+  .mobile-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid var(--color-border, #E5E5E5);
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--color-ink, #111111);
+  }
+
+  .mobile-nav {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav ul li a {
+    display: block;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink, #111111);
+    border-bottom: 1px solid var(--color-border, #E5E5E5);
+    text-decoration: none;
+  }
+  .mobile-nav ul li a:hover {
+    color: var(--color-alg-red, #F32740);
+  }
+
+  .mobile-nav-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-nav-link {
+    font-size: 14px;
+    color: var(--color-ink-soft, #444444);
+    text-decoration: none;
+  }
+  .mobile-nav-link:hover {
+    color: var(--color-alg-red, #F32740);
+  }
+
+  .mobile-quote-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px 18px;
+    border-radius: 3px;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 900px) {
+    .main-nav,
+    .nav-ctas {
+      display: none;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+    .site-nav-inner {
+      gap: 16px;
+    }
   }
 </style>
+
+<script>
+  (function () {
+    const toggle = document.querySelector('.nav-toggle') as HTMLButtonElement | null;
+    const drawer = document.querySelector('.mobile-drawer') as HTMLElement | null;
+    const overlay = document.querySelector('.mobile-overlay') as HTMLElement | null;
+    const closeBtn = document.querySelector('.mobile-close-btn') as HTMLButtonElement | null;
+
+    function openDrawer() {
+      drawer?.removeAttribute('hidden');
+      toggle?.setAttribute('aria-expanded', 'true');
+      overlay?.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer?.setAttribute('hidden', '');
+      toggle?.setAttribute('aria-expanded', 'false');
+      overlay?.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeDrawer() : openDrawer();
+    });
+
+    closeBtn?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+
+    // Mega-menu toggle for desktop nav buttons
+    const navBtns = document.querySelectorAll<HTMLButtonElement>('.nav-item-btn');
+    navBtns.forEach(btn => {
+      const li = btn.closest('li');
+      btn.addEventListener('click', () => {
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        navBtns.forEach(b => {
+          b.setAttribute('aria-expanded', 'false');
+          b.closest('li')?.classList.remove('active');
+        });
+        if (!isExpanded) {
+          btn.setAttribute('aria-expanded', 'true');
+          li?.classList.add('active');
+        }
+      });
+    });
+
+    // Close mega-menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.site-nav')) {
+        navBtns.forEach(b => {
+          b.setAttribute('aria-expanded', 'false');
+          b.closest('li')?.classList.remove('active');
+        });
+      }
+    });
+  })();
+</script>
