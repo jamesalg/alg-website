@@ -35,3 +35,15 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Contractor page | `src/pages/contractor.astro` | Pixel-locked persona page |
 | ESCO page | `src/pages/esco.astro` | Pixel-locked persona page |
 | Facility Manager page | `src/pages/facility-manager.astro` | Pixel-locked persona page |
+
+## v2.4.0 — locked 2026-04-26
+
+| Component | Path(s) | Lock reason |
+|---|---|---|
+| luxoⒶRCH collection page | `src/pages/collections/luxoarch.astro` | First collection landing page; 10-section layout, 23-family grid |
+
+### Reopens against v2.4.0
+
+| Date | Branch | Paths | Reason |
+|---|---|---|---|
+| 2026-04-26 | reopen/v2.4.0-luxoarch | `src/pages/index.astro` (Illuminator card href); `src/pages/collections/luxoarch.astro` (new file) | First collection landing page; routes homepage Illuminator card to luxoⒶRCH |
