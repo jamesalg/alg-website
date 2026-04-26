@@ -28,7 +28,7 @@ const heroSlides = [
     name: 'Illuminator',
     gradClass: 'grad-slide0',
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
-    productImg: '/images/families/family-illuminator.png',
+    lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
     stats: [
       { num: 'Up to 116,000', lbl: 'Peak Lumens' },
       { num: '150 lm/W', lbl: 'DLC Premium Efficacy' },
@@ -44,7 +44,7 @@ const heroSlides = [
     name: 'Titan-II',
     gradClass: 'grad-slide1',
     desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
-    productImg: '/images/families/family-titan.png',
+    lineDrawing: '/images/heroes/line-drawings/line-titan.png',
     stats: [
       { num: '3-Step', lbl: 'WATTselect' },
       { num: '150+ lm/W', lbl: 'DLC Premium' },
@@ -60,7 +60,7 @@ const heroSlides = [
     name: 'Liberty',
     gradClass: 'grad-slide2',
     desc: null,
-    productImg: '/images/families/family-illuminator.png',
+    lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
     stats: [
       { num: 'proⒶPTICS', lbl: 'Type III · IV · V', hasBrandMark: true },
       { num: '150 lm/W', lbl: 'DLC Premium' },
@@ -76,7 +76,7 @@ const heroSlides = [
     name: null,
     gradClass: 'grad-slide3',
     desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
-    productImg: '/images/families/family-astra.png',
+    lineDrawing: '/images/heroes/line-drawings/line-panel.png',
     stats: [
       { num: '5-Step', lbl: 'WATTselect' },
       { num: '5-Step', lbl: 'CCTselect' },
@@ -98,11 +98,11 @@ const diffSignals = [
 const verticals = [
   { cls: 't1', vert: 'Warehouse & Logistics',      place: '3PL facility · OH',      hasImg: true },
   { cls: 't2', vert: 'Industrial & Manufacturing', place: 'Auto plant · TX',         hasImg: true },
-  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: false },
-  { cls: 't4', vert: 'Data Center',                place: 'Hyperscale · VA',          hasImg: false },
+  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: true },
+  { cls: 't4', vert: 'Data Center',                place: 'Hyperscale · VA',          hasImg: true },
   { cls: 't5', vert: 'Healthcare',                 place: 'Outpatient · IL',          hasImg: true },
   { cls: 't6', vert: 'Education',                  place: 'K-12 retrofit · NJ',       hasImg: true },
-  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: false },
+  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: true },
   { cls: 't8', vert: 'Government & Military',      place: 'Federal logistics · GA',    hasImg: true },
 ];
 ---
@@ -180,7 +180,7 @@ const verticals = [
             <div class="slot slot-stats">
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                  <div class="stat-row">
+                  <div class="stat-grid">
                     {slide.stats.map(s => (
                       <div class="stat">
                         <div class="stat-num">
@@ -197,14 +197,11 @@ const verticals = [
               ))}
             </div>
 
-            <!-- PRODUCT IMAGE SLOT (anchored bottom-right, per-slide render) -->
+            <!-- LINE DRAWING SLOT (anchored bottom-right, per-slide) -->
             <div class="slot slot-product-img">
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                  {slide.productImg
-                    ? <img src={slide.productImg} alt={`${slide.name ?? 'Product'} render`} class="product-render" loading="eager" />
-                    : <div class="product-render-placeholder">Product image pending</div>
-                  }
+                  <img src={slide.lineDrawing} alt={`${slide.name ?? 'Product'} line drawing`} class="product-render" loading="eager" />
                 </div>
               ))}
             </div>
@@ -289,8 +286,8 @@ const verticals = [
   <section class="content-section" aria-labelledby="wm-heading">
     <div class="section-inner">
       <div class="sec-eyebrow">What we make</div>
-      <h2 id="wm-heading" class="sec-title">Lighting that <span class="accent">specifies</span>, stocks, and ships.</h2>
-      <p class="sec-sub">From warehouse high-bays to parking-lot area lights, from emergency backup to networked controls — built for the specifier's bid sheet, the distributor's floor, and the contractor's truck.</p>
+      <h2 id="wm-heading" class="sec-title">Built for the bid sheet, the floor, and the <span class="accent">truck.</span></h2>
+      <p class="sec-sub">From warehouse high-bays to parking-lot area lights, from emergency backup to networked controls — built for the specifier, the distributor, and the contractor.</p>
       <div class="what-we-make">
         <a href="/collections/indoor" class="wm-card indoor">
           <div class="wm-img"></div>
@@ -414,7 +411,7 @@ const verticals = [
     <div class="section-inner">
       <div class="sec-eyebrow">Featured families</div>
       <h2 id="fam-heading" class="sec-title">The families distributors stock and specifiers spec.</h2>
-      <p class="sec-sub">Three fixture families plus the connected systems platform that ties them together — the core of our 2,000+ active SKU catalog.</p>
+      <p class="sec-sub" style="max-width:none">Three fixture families plus the connected systems platform that ties them together — the core of our 2,000+ active SKU catalog.</p>
       <div class="families-rail">
         <a href="/collections/indoor-industrial" class="fam-card">
           <div class="fam-img cream">
@@ -509,7 +506,7 @@ const verticals = [
     <div class="section-inner">
       <div class="sec-eyebrow">Installed at</div>
       <h2 id="inst-heading" class="sec-title">Where ALG lighting goes to <span class="accent">work.</span></h2>
-      <p class="sec-sub">From cold storage in Cincinnati to a stadium retrofit in Sacramento — real installations, real results.</p>
+      <p class="sec-sub" style="max-width:none">From cold storage in Cincinnati to a stadium retrofit in Sacramento — real installations, real results.</p>
       <div class="installed-grid">
         {verticals.map(v => (
           <div class={`installed-tile ${v.cls}${!v.hasImg ? ' placeholder' : ''}`}>
@@ -802,27 +799,34 @@ const verticals = [
 
   .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
 
-  .stat-row {
-    display: flex;
-    gap: 40px;
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
     align-items: flex-start;
   }
-  .stat { padding: 0; }
+  .stat { padding: 0; min-width: 0; }
   .stat-num {
     font-family: 'Sora', sans-serif;
-    font-size: clamp(22px, 2.8vw, 48px);
+    font-size: clamp(18px, 2vw, 38px);
     font-weight: 300;
-    line-height: 1.05;
+    line-height: 1.0;
     margin-bottom: 4px;
     color: #fff;
     letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .stat-lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.55);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .cta-pair { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -1027,6 +1031,11 @@ const verticals = [
     font-weight: 700;
     margin-bottom: 16px;
   }
+  .sec-eyebrow::before {
+    content: '— ';
+    color: var(--brand);
+    font-weight: 700;
+  }
   .sec-title {
     font-family: 'Sora', sans-serif;
     font-size: clamp(28px, 3.5vw, 48px);
@@ -1067,10 +1076,18 @@ const verticals = [
     height: 200px;
     background: var(--dark2);
     overflow: hidden;
+    position: relative;
   }
-  .wm-card.indoor .wm-img { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
-  .wm-card.outdoor .wm-img { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
-  .wm-card.controls .wm-img { background: url('/images/heroes/hero-controls-panel.jpg') center/cover no-repeat; }
+  .wm-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+    pointer-events: none;
+  }
+  .wm-card.indoor .wm-img { background: url('/images/wwm/wwm-indoor.jpg') center/cover no-repeat; }
+  .wm-card.outdoor .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
+  .wm-card.controls .wm-img { background: url('/images/wwm/wwm-safety.jpg') center/cover no-repeat; }
 
   .wm-body { padding: 28px 28px 32px; }
   .wm-body h3 {
@@ -1186,7 +1203,8 @@ const verticals = [
     min-height: 420px;
     border-radius: var(--radius);
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
   }
   .loc-sidebar {
     display: flex;
@@ -1462,8 +1480,11 @@ const verticals = [
   .installed-tile:hover { transform: scale(1.02); z-index: 2; }
   .installed-tile.t1 { background: url('/images/verticals/vertical-warehouse.jpg') center/cover no-repeat; }
   .installed-tile.t2 { background: url('/images/verticals/vertical-manufacturing.jpg') center/cover no-repeat; }
+  .installed-tile.t3 { background: url('/images/verticals/vertical-coldstorage.jpg') center/cover no-repeat; }
+  .installed-tile.t4 { background: url('/images/verticals/vertical-datacenter.jpg') center/cover no-repeat; }
   .installed-tile.t5 { background: url('/images/verticals/vertical-healthcare.jpg') center/cover no-repeat; }
   .installed-tile.t6 { background: url('/images/verticals/vertical-education.jpg') center/cover no-repeat; }
+  .installed-tile.t7 { background: url('/images/verticals/vertical-hospitality.jpg') center/cover no-repeat; }
   .installed-tile.t8 { background: url('/images/verticals/vertical-government.jpg') center/cover no-repeat; }
   .installed-tile.placeholder { background: linear-gradient(135deg, #1a1d28 0%, #0c0d12 100%); }
   .installed-label {
