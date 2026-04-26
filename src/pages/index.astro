@@ -316,8 +316,8 @@ const verticals = [
         <div class="loc-filter-group">
           <span class="loc-filter-label">Show:</span>
           <span class="loc-pill active" data-filter="all">All</span>
-          <span class="loc-pill" data-filter="warehouse">
-            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(5)</span>
+            <span class="loc-pill" data-filter="warehouse">
+            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(6)</span>
           </span>
           <span class="loc-pill" data-filter="rep">
             <span class="kind-dot rep"></span>Sales Reps
@@ -331,11 +331,53 @@ const verticals = [
           <button class="loc-search-btn">Find Nearest</button>
         </div>
       </div>
-      <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse and distributor locator map" role="application"></div>
-      <div class="locator-actions">
-        <a href="/find-a-rep" class="loc-action-link">Find a Rep or Distributor</a>
-        <a href="/distributor" class="loc-action-link">Become a Distributor</a>
-        <a href="/careers/sales-rep" class="loc-action-link">Apply as Sales Rep</a>
+      <div class="locator-map-wrap">
+        <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse, sales rep, and distributor locations across the United States" role="application"></div>
+        <div class="loc-sidebar">
+          <div class="loc-legend">
+            <h4>Map key</h4>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
+              <span class="legend-count">6 locations</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
+              <span class="legend-count">All 50 states</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#0FAE7C;"></span>Stocking Distributor</span>
+              <span class="legend-count">Nationwide</span>
+            </div>
+          </div>
+          <div class="loc-results">
+            <h4>Nearest to 91761</h4>
+            <div class="result-row">
+              <span class="result-kind" style="background:#F32740;"></span>
+              <div class="result-info"><span class="result-name">Montclair, CA</span><span class="result-meta">West Coast HQ &middot; Warehouse</span></div>
+              <span class="result-dist">On-site</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#f0a932;"></span>
+              <div class="result-info"><span class="result-name">Pacific Lighting Rep</span><span class="result-meta">Southern California territory</span></div>
+              <span class="result-dist">8 mi</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#0FAE7C;"></span>
+              <div class="result-info"><span class="result-name">Ontario Electric Supply</span><span class="result-meta">Stocking distributor</span></div>
+              <span class="result-dist">3 mi</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#0FAE7C;"></span>
+              <div class="result-info"><span class="result-name">Inland Lighting Dist.</span><span class="result-meta">Stocking distributor</span></div>
+              <span class="result-dist">12 mi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="locator-ctas">
+        <a href="/find-a-rep" class="cta-primary">Find a Rep or Distributor</a>
+        <a href="/distributor" class="cta-secondary on-dark">Become a Distributor</a>
+        <a href="/careers/sales-rep" class="cta-secondary on-dark">Apply as Sales Rep</a>
       </div>
     </div>
   </section>
@@ -1061,32 +1103,108 @@ const verticals = [
     transition: background var(--transition);
   }
   .loc-search-btn:hover { background: var(--brand-dk); }
+  .locator-map-wrap {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+    min-height: 440px;
+    margin-bottom: 28px;
+  }
   .locator-map {
-    height: 420px;
+    min-height: 420px;
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 12px;
   }
-  .locator-actions {
+  .loc-sidebar {
     display: flex;
-    gap: 24px;
-    margin-top: 32px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .loc-legend, .loc-results {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .loc-legend h4, .loc-results h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .legend-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .dot-vis {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .legend-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+  }
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-kind {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .result-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .result-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+  }
+  .result-dist {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand);
+  }
+  .locator-ctas {
+    display: flex;
+    gap: 14px;
+    margin-top: 28px;
     flex-wrap: wrap;
   }
-  .loc-action-link {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding-bottom: 2px;
-    transition: color var(--transition), border-color var(--transition);
-  }
-  .loc-action-link:hover { color: #fff; border-color: #fff; }
 
   /* ============================================================
      FEATURED FAMILIES
@@ -1474,11 +1592,12 @@ const verticals = [
         maxZoom: 19,
       }).addTo(map);
       const warehouses = [
-        { lat: 34.0736, lng: -117.6895, name: 'Montclair, CA — West Coast HQ' },
-        { lat: 33.9806, lng: -118.0530, name: 'Pico Rivera, CA — SoCal DC' },
-        { lat: 33.6609, lng: -112.0099, name: 'Phoenix, AZ — Southwest DC' },
-        { lat: 32.7767, lng: -96.7970, name: 'Dallas, TX — South Central DC' },
-        { lat: 41.8781, lng: -87.6298, name: 'Chicago, IL — Midwest DC' },
+        { lat: 34.0776, lng: -117.6897, name: 'Montclair, CA', address: '4615 State Street, Montclair CA' },
+        { lat: 33.9213, lng: -117.3517, name: 'Riverside, CA', address: '9345 Sycamore Canyon Blvd, Riverside CA 92508 (USA Production)' },
+        { lat: 41.6647, lng:  -87.7372, name: 'Crestwood, IL', address: 'Crestwood, IL' },
+        { lat: 40.6082, lng:  -74.2776, name: 'Rahway, NJ', address: 'Rahway, NJ' },
+        { lat: 42.0834, lng:  -71.0184, name: 'Brockton, MA', address: 'Brockton, MA' },
+        { lat: 39.1031, lng:  -84.5120, name: 'Cincinnati, OH', address: 'Cincinnati, OH' },
       ];
       const icon = L.divIcon({
         className: '',
@@ -1486,7 +1605,7 @@ const verticals = [
         iconSize: [12, 12],
         iconAnchor: [6, 6],
       });
-      warehouses.forEach(w => L.marker([w.lat, w.lng], { icon }).addTo(map).bindPopup(`<strong>${w.name}</strong><br>ALG Warehouse`));
+      warehouses.forEach(w => L.marker([w.lat, w.lng], { icon }).addTo(map).bindPopup('<strong>' + w.name + '</strong><br>' + w.address));
     };
     document.head.appendChild(script);
   }
