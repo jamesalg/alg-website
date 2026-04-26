@@ -1,0 +1,120 @@
+---
+/**
+ * CollectionAnchorNav.astro
+ *
+ * Shared sticky right-rail anchor nav for collection pages (luxoARCH, planoARCH, etc.).
+ * Extracted from luxoarch.astro v2.4.2 (Fix 5) for reuse across all collection pages.
+ *
+ * Props:
+ *   sections: Array of { id: string; label: string }
+ *
+ * Usage:
+ *   import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
+ *   <CollectionAnchorNav sections={[
+ *     { id: 'sec-hero', label: 'Overview' },
+ *     { id: 'sec-stats', label: 'Quick stats' },
+ *     ...
+ *   ]} />
+ */
+
+interface Props {
+  sections: { id: string; label: string }[];
+}
+const { sections } = Astro.props;
+---
+
+<nav class="anchor-nav" aria-label="Page sections">
+  {sections.map((s) => (
+    <div class="anchor-dot-wrap">
+      <span class="anchor-label">{s.label}</span>
+      <div class="anchor-dot" data-target={s.id}></div>
+    </div>
+  ))}
+</nav>
+
+<style>
+  /* Sticky right-rail anchor nav — shared across collection pages */
+  .anchor-nav {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 900;
+  }
+  @media (max-width: 1023px) { .anchor-nav { display: none; } }
+  .anchor-dot-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .anchor-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.28);
+    cursor: pointer;
+    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+  }
+  .anchor-dot.active {
+    width: 10px;
+    height: 10px;
+    background: var(--color-alg-red, #F32740);
+  }
+  .anchor-dot-wrap:hover .anchor-dot {
+    background: var(--color-alg-red, #F32740);
+  }
+  .anchor-label {
+    position: absolute;
+    right: 18px;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0,0,0,0.72);
+    padding: 3px 8px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .anchor-dot-wrap:hover .anchor-label { opacity: 1; }
+</style>
+
+<script>
+  /* Sticky right-rail anchor nav — shared across collection pages.
+   * Dots scroll to sections; active dot tracks viewport via IntersectionObserver. */
+  (function () {
+    var dots = document.querySelectorAll('.anchor-dot[data-target]');
+
+    dots.forEach(function (dot: Element) {
+      dot.addEventListener('click', function () {
+        var target = (dot as HTMLElement).dataset.target;
+        var sec = target ? document.getElementById(target) : null;
+        if (sec) { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    var sections = document.querySelectorAll('section[id]');
+    if (!sections.length) return;
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          dots.forEach(function (d) {
+            d.classList.toggle('active', (d as HTMLElement).dataset.target === id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-20% 0% -20% 0%' });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  })();
+</script>
