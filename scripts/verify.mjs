@@ -240,7 +240,9 @@ async function main() {
     try {
       const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
       // iter/v2.1.0-homepage is the branch that built out the scaffolds — exempt
-      if (!branch.startsWith('reopen/') && branch !== 'main' && branch !== 'iter/v2.1.0-homepage') {
+      if (branch.startsWith('reopen/') || branch === 'main' || branch === 'iter/v2.1.0-homepage') {
+        console.log('✅ Lock register check SKIPPED — branch is exempt: ' + branch);
+      } else {
         const changed = execSync('git diff --name-only origin/main...HEAD').toString().trim().split('\n').filter(Boolean);
         const violations = changed.filter(f => LOCKED_PATHS.some(p => f === p || f.startsWith(p + '/')));
         if (violations.length > 0) {
@@ -255,8 +257,8 @@ async function main() {
             fail('G.1', 'LOCK VIOLATION — locked paths modified outside reopen/ branch: ' + hardViolations.join(', '));
           }
         }
+        console.log('✅ Lock register clean (no locked paths modified)');
       }
-      console.log('✅ Lock register clean (no locked paths modified)');
     } catch (e) {
       console.warn('⚠ Lock check skipped:', e.message);
     }

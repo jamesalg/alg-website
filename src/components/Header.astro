@@ -965,6 +965,12 @@
     .utility-bar{padding:0 16px;font-size:12px;}
     .utility-bar a:not(.signin){display:none;}
   }
+  /* Fix A (v2.2.1): Sticky header — whole unit (utility strip + nav) pins to top of viewport */
+  :global(#site-header) {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
 </style>
 
 <script>

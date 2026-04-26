@@ -19,3 +19,9 @@ Locked components MUST NOT be modified in any future iteration without an explic
 1. James posts "REOPEN REQUEST: <path> — <reason>" in the iteration prompt
 2. Manus opens new PR labeled `reopen/<component>-<version>`
 3. Reopen PR requires James approval; cannot auto-merge
+
+### Reopens against v2.1.0
+
+| Date | Branch | Paths | Reason |
+|---|---|---|---|
+| 2026-04-26 | reopen/v2.1.0-sticky-and-tablet | Header.astro, index.astro | Global sticky header + tablet-landscape line-drawing hide |
