@@ -1,340 +1,1161 @@
 ---
 /**
- * Header.astro — v2.1.0 Rev3
+ * Header.astro — v3.14 · exact port of alglighting-he6frhek.manus.space
  *
- * Row 1 — Utility strip (dark bg)
- *   Left:  Find a Distributor · Find a Rep · Sample Request · Contact
- *   Right: SIGN IN ▼ → two-pane dropdown
- *            Pane 1: Sales Reps → AURA Portal
- *            Pane 2: Distributors · ESCOs · Specifiers → ALG Shop
- * Row 2 — Main header (white bg)
- *   Left:  color SVG logo /brand/alg-logo-color.svg
- *   Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT (5 items)
- *   Right: REQUEST SAMPLE (outline) + REQUEST LAYOUT (red filled)
+ * Structure:
+ *   Row 1 — Utility bar (dark bg, sticky top:0): Find a Distributor · Find a Rep · Sample Request · Contact · Sign In
+ *   Row 2 — site-nav (white, sticky top:34px):
+ *     Left:  color SVG logo
+ *     Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT
+ *     Right: Request Sample (outline) + Request Layout (red filled)
+ *     Far right: hamburger (mobile)
+ *
+ * Mega menus:
+ *   SOLUTIONS  — 3-col: Main nav | 8 industry verticals | Preview pane
+ *   PRODUCTS   — 4-col wide: Main | Category | Application | Preview + tier strip
+ *   TOOLS      — 2-col narrow: For Buyers | For Specifiers
+ *   SUPPORT    — 2-col narrow: Service | Legal & Compliance
+ *
+ * Behavior: hover on <li.has-dropdown> shows .megamenu via CSS opacity/visibility.
+ *           JS IIFE handles 3-tier cascade for Products and Solutions preview swap.
+ *           Mobile: hamburger toggles .mobile-drawer.open, accordion via data-expand.
  */
-import MegaMenu from './MegaMenu.astro';
 ---
+<!-- UTILITY BAR -->
+<div class="utility-bar">
+  <a href="/find-a-distributor">Find a Distributor</a>
+  <a href="/find-a-rep">Find a Rep</a>
+  <a href="/support/sample-request">Sample Request</a>
+  <a href="/contact">Contact</a>
+  <span class="signin" id="signinTrigger">
+    Sign In
+    <div class="signin-dropdown" id="signinDropdown">
+      <a href="https://aura.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
+        <span class="label">Sales Reps</span>
+        <span>AURA Portal →</span>
+      </a>
+      <a href="https://algportal.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
+        <span class="label">Distributors · ESCOs · Specifiers</span>
+        <span>ALG Shop →</span>
+      </a>
+    </div>
+  </span>
+</div>
 
-<div class="site-header-wrap">
+<!-- PERSISTENT SITE NAV -->
+<nav class="site-nav" id="siteNav">
+  <div class="logo-wrap">
+    <a href="/" aria-label="Archipelago Lighting Group home">
+      <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="160" height="44" loading="eager" />
+    </a>
+  </div>
 
-  <!-- UTILITY STRIP -->
-  <div class="util-strip">
-    <div class="util-inner">
-      <nav class="util-left" aria-label="Utility navigation">
-        <a href="/find-a-distributor" class="util-link">Find a Distributor</a>
-        <a href="/find-a-rep" class="util-link">Find a Rep</a>
-        <a href="/support/sample-request" class="util-link">Sample Request</a>
-        <a href="/contact" class="util-link">Contact</a>
-      </nav>
-      <div class="util-right">
-        <div class="signin-wrap" id="signinWrap">
-          <button class="signin-btn" id="signinBtn" aria-expanded="false" aria-haspopup="true" aria-controls="signinDropdown">
-            SIGN IN
-            <svg class="signin-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-          </button>
-          <div class="signin-dropdown" id="signinDropdown" hidden>
-            <a href="https://aura.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
-              <div class="sd-label">Sales Reps</div>
-              <div class="sd-dest">AURA Portal <span class="sd-ext">&#8599;</span></div>
-            </a>
-            <div class="sd-divider"></div>
-            <a href="https://algportal.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
-              <div class="sd-label">Distributors · ESCOs · Specifiers</div>
-              <div class="sd-dest">ALG Shop <span class="sd-ext">&#8599;</span></div>
-            </a>
+  <ul class="main-nav">
+
+    <!-- ============================================================
+         SOLUTIONS — 3-col: Main | Verticals | Preview
+         ============================================================ -->
+    <li class="has-dropdown" data-mm="solutions">
+      <a href="/solutions">Solutions</a>
+      <div class="megamenu solutions">
+        <div class="mm-col mm-col-main">
+          <div class="mm-col-head">Browse by</div>
+          <div class="mm-main-group-label">Start here</div>
+          <a href="/solutions" class="mm-main-item active">Solutions<span class="mm-main-sub">By vertical · 8 industries</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">Purchase tools</div>
+          <a href="/find-a-distributor" class="mm-main-item">Where to Buy</a>
+          <a href="/taa-compliant-lighting" class="mm-main-item">TAA Compliant Lighting</a>
+          <a href="/find-a-rep" class="mm-main-item">Find a Rep</a>
+          <a href="/find-a-distributor" class="mm-main-item">Find a Distributor</a>
+        </div>
+        <div class="mm-col mm-col-vert">
+          <div class="mm-col-head">Industry Vertical</div>
+          <a href="/solutions/warehouse-logistics" class="mm-vert-item active"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Warehouse &amp; Logistics"
+             data-preview-label="Vertical · Warehouse"
+             data-preview-desc="High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC Premium listed with integrated sensors and emergency egress.">
+             Warehouse &amp; Logistics<span class="mm-vert-sub">High bays · EM · sensors</span>
+          </a>
+          <a href="/solutions/industrial-manufacturing" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Industrial &amp; Manufacturing"
+             data-preview-label="Vertical · Industrial"
+             data-preview-desc="Production-floor and process-facility lighting engineered for uptime. Washdown-rated, vibration-resistant, and hazardous-location configurations.">
+             Industrial &amp; Manufacturing<span class="mm-vert-sub">Washdown · hazloc · strip</span>
+          </a>
+          <a href="/solutions/cold-storage-grocery" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Cold Storage &amp; Grocery"
+             data-preview-label="Vertical · Cold Chain"
+             data-preview-desc="Freezer, cooler, and grocery cold-chain fixtures rated for low-temperature starts down to -40°F. IP-rated with moisture-resistant gaskets.">
+             Cold Storage &amp; Grocery<span class="mm-vert-sub">Cooler luminaires · refer</span>
+          </a>
+          <a href="/solutions/data-center" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Data Center"
+             data-preview-label="Vertical · Data Center"
+             data-preview-desc="Hyperscale and colocation facility lighting with controls integration. Low-profile troffers and linear with BMS-ready DALI and 0–10V dimming.">
+             Data Center<span class="mm-vert-sub">Troffers · linear · DALI</span>
+          </a>
+          <a href="/solutions/healthcare" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Healthcare"
+             data-preview-label="Vertical · Healthcare"
+             data-preview-desc="Patient-care, surgical, and administrative lighting with compliance coverage. UL1598 listed with anti-microbial finish options and tunable-white.">
+             Healthcare<span class="mm-vert-sub">Tunable-white · surgical</span>
+          </a>
+          <a href="/solutions/education" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Education"
+             data-preview-label="Vertical · Education"
+             data-preview-desc="K-12 and higher-ed lighting with CEC JA8 and DLC Premium. Panel, troffer, and classroom controls packages with occupancy + daylight harvesting.">
+             Education<span class="mm-vert-sub">Panels · JA8 · controls</span>
+          </a>
+          <a href="/solutions/hospitality" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+             data-preview-name="Hospitality"
+             data-preview-label="Vertical · Hospitality"
+             data-preview-desc="Hotels, restaurants, and hospitality venues with warm-dimming and controls. Décor-grade finishes with 2700K–3000K warm CCT and phase-cut compatibility.">
+             Hospitality<span class="mm-vert-sub">Warm-dim · décor · phase</span>
+          </a>
+          <a href="/solutions/government-military" class="mm-vert-item"
+             data-preview="https://www.archipelagolighting.com/cdn/shop/files/OUTDOOR-CITY-HOME_2_1400x.png"
+             data-preview-name="Government &amp; Military"
+             data-preview-label="Vertical · Gov &amp; Mil"
+             data-preview-desc="TAA-compliant fixtures for federal, state, and DoD facilities. Buy American Act eligible with documentation for GSA schedules and set-aside procurements.">
+             Government &amp; Military<span class="mm-vert-sub">TAA · BAA · GSA</span>
+          </a>
+        </div>
+        <div class="mm-col mm-col-preview">
+          <div class="mm-preview">
+            <div class="preview-img-wrap">
+              <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="Solutions preview" id="solPreviewImg">
+            </div>
+            <div class="preview-label" id="solPreviewLabel">Vertical · Warehouse</div>
+            <div class="preview-name" id="solPreviewName">Warehouse &amp; Logistics</div>
+            <div class="preview-desc" id="solPreviewDesc">High-bay and low-bay systems engineered for distribution centers and 3PL facilities. DLC Premium listed with integrated sensors and emergency egress.</div>
+            <a href="/solutions" class="preview-cta">View solutions →</a>
           </div>
         </div>
       </div>
-    </div>
+    </li>
+
+    <!-- ============================================================
+         PRODUCTS — 4-col wide: Main | Category | Application | Preview
+         ============================================================ -->
+    <li class="has-dropdown" data-mm="products">
+      <a href="/collections">Products</a>
+      <div class="megamenu wide">
+        <!-- COLUMN 1: MAIN MENU (dark panel) -->
+        <div class="mm-col mm-col-main">
+          <div class="mm-col-head">Browse by</div>
+          <div class="mm-main-group-label">Category</div>
+          <a href="#" class="mm-main-item active" data-main="indoor">Indoor<span class="mm-main-sub">plano<span class="aa">Ⓐ</span>RCH · lampar<span class="aa">Ⓐ</span>RCH</span></a>
+          <a href="#" class="mm-main-item" data-main="outdoor">Outdoor<span class="mm-main-sub">luxo<span class="aa">Ⓐ</span>RCH · city<span class="aa">Ⓐ</span>RCH</span></a>
+          <a href="#" class="mm-main-item" data-main="residential">Residential<span class="mm-main-sub">Consumer · multi-f<span class="aa">Ⓐ</span>MILY</span></a>
+          <a href="#" class="mm-main-item" data-main="lamps">Lamps<span class="mm-main-sub">tubul<span class="aa">Ⓐ</span>RCH · T8 · T5 · PL · HID</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">By tech capability</div>
+          <a href="#" class="mm-main-item" data-main="controls">Safety &amp; Controls<span class="mm-main-sub">const<span class="aa">Ⓐ</span>NT · contr<span class="aa">Ⓐ</span>LS</span></a>
+          <div class="mm-main-divider"></div>
+          <a href="#" class="mm-main-item" data-main="openbox">Warehouse Deals<span class="mm-main-sub">Last-run inventory</span></a>
+          <div class="mm-main-divider"></div>
+          <div class="mm-main-group-label">Purchase tools</div>
+          <a href="/find-a-distributor" class="mm-main-item">Where to Buy</a>
+          <a href="/taa-compliant-lighting" class="mm-main-item">TAA Compliant</a>
+        </div>
+
+        <!-- COLUMN 2: CATEGORY -->
+        <div class="mm-col mm-col-cat">
+          <div class="mm-col-head">Category</div>
+          <!-- INDOOR · 2 categories -->
+          <div class="mm-cat-group active" data-cat-group="indoor">
+            <a href="/collections/planoarch/index.html" class="mm-cat-item active" data-cat="indoor-plano"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Commercial | plano&#9424;RCH"
+               data-preview-label="Indoor · Commercial"
+               data-preview-desc="Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.">
+               Commercial | plano<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Architectural linear · panels · troffers</span>
+            </a>
+            <a href="/collections/lampararch/index.html" class="mm-cat-item" data-cat="indoor-lampar"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/Body_1400x.gif"
+               data-preview-name="Industrial | lampar&#9424;RCH"
+               data-preview-label="Indoor · Industrial"
+               data-preview-desc="Industrial LED lighting for warehouses and manufacturing facilities. Linear and round high bays, low bay strips, and washdown fixtures.">
+               Industrial | lampar<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">High bays · strips · washdown</span>
+            </a>
+          </div>
+          <!-- OUTDOOR · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="outdoor">
+            <a href="/collections/luxoarch/index.html" class="mm-cat-item active" data-cat="outdoor-luxo"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/Body_4136_x_4136_px_1400x.png"
+               data-preview-name="Commercial | luxo&#9424;RCH"
+               data-preview-label="Outdoor · Commercial"
+               data-preview-desc="Outdoor commercial LED lighting for parking lots, building exteriors, and sports venues. Area, canopy, flood, sports, and wall packs.">
+               Commercial | luxo<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Area · canopy · flood · wall</span>
+            </a>
+            <a href="/collections/cityarch/index.html" class="mm-cat-item" data-cat="outdoor-city"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/OUTDOOR-CITY-HOME_2_1400x.png"
+               data-preview-name="Municipal | city&#9424;RCH"
+               data-preview-label="Outdoor · Municipal"
+               data-preview-desc="Municipal outdoor LED lighting for cities, parks, and public infrastructure. Bollards, high-mast, post-top, roadway, street-sign, and traffic control.">
+               Municipal | city<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">Bollard · post-top · roadway</span>
+            </a>
+          </div>
+          <!-- RESIDENTIAL · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="residential">
+            <a href="/collections/consumer/index.html" class="mm-cat-item active" data-cat="res-consumer"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Consumer"
+               data-preview-label="Residential · Consumer"
+               data-preview-desc="Consumer-facing residential lighting. Shop by room, type, or style. Modern, rustic, coastal, industrial, mid-century, and farmhouse collections.">
+               Consumer<span class="mm-cat-sub">Shop by room · type · style</span>
+            </a>
+            <a href="/collections/multifamily/index.html" class="mm-cat-item" data-cat="res-multi"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="multi-f&#9424;MILY"
+               data-preview-label="Residential · multi-family"
+               data-preview-desc="multi-family and light-commercial fixtures for apartment buildings, condos, and MDU properties. Recessed, surface mount, vanity, landscape, and utility.">
+               multi-f<span class="aa">Ⓐ</span>MILY<span class="mm-cat-sub">Recessed · vanity · landscape</span>
+            </a>
+          </div>
+          <!-- LAMPS · 1 category -->
+          <div class="mm-cat-group" data-cat-group="lamps">
+            <a href="/collections/tubularch/index.html" class="mm-cat-item active" data-cat="lamps-tubul"
+               data-preview="/manus-storage/mega-preview-tubularch_5e25ec35.jpg"
+               data-preview-name="tubul&#9424;RCH"
+               data-preview-label="Lamps · tubul&#9424;RCH"
+               data-preview-desc="LED lamp retrofits for T8, T5, PL, and HID fixtures. UL-A (ballast-compatible), UL-A+B (hybrid), and UL-B (ballast-bypass) types for every retrofit scenario.">
+               Indoor | tubul<span class="aa">Ⓐ</span>RCH<span class="mm-cat-sub">T8 · T5 · PL · HID retrofit</span>
+            </a>
+          </div>
+          <!-- CONTROLS · 2 categories -->
+          <div class="mm-cat-group" data-cat-group="controls">
+            <a href="/collections/constant/index.html" class="mm-cat-item active" data-cat="ctrl-constant"
+               data-preview="/manus-storage/mega-preview-constant_adf12652.jpg"
+               data-preview-name="const&#9424;NT"
+               data-preview-label="Controls · Emergency"
+               data-preview-desc="Emergency battery backup. Drivers, egress lights, exit signs, and combo signs with built-in 90-minute battery backup for code compliance.">
+               const<span class="aa">Ⓐ</span>NT<span class="mm-cat-sub">Emergency battery backup</span>
+            </a>
+            <a href="/collections/controls/index.html" class="mm-cat-item" data-cat="ctrl-controls"
+               data-preview="/manus-storage/mega-preview-controls_d6046f72.jpg"
+               data-preview-name="contr&#9424;LS"
+               data-preview-label="Controls · contr&#9424;LS"
+               data-preview-desc="Occupancy sensing and networked controls by &#9424;CS. Sensors, photocells, wireless controllers, and the &#9424;CS by ALG App for NLC-ready deployments.">
+               contr<span class="aa">Ⓐ</span>LS<span class="mm-cat-sub">Occupancy · networked</span>
+            </a>
+          </div>
+          <!-- WAREHOUSE DEALS · single category -->
+          <div class="mm-cat-group" data-cat-group="openbox">
+            <a href="/collections/warehouse-deals/index.html" class="mm-cat-item active" data-cat="openbox-all"
+               data-preview="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png"
+               data-preview-name="Warehouse Deals"
+               data-preview-label="Last-run · Limited stock"
+               data-preview-desc="Last-run inventory from discontinued SKUs and retired generations. Fully functional, factory-warranted, priced to move. While supplies last — not restocked.">
+               All Warehouse Deals<span class="mm-cat-sub">Last-run · limited stock</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- COLUMN 3: APPLICATION -->
+        <div class="mm-col mm-col-app">
+          <div class="mm-col-head">Application</div>
+          <!-- plano&#9424;RCH applications -->
+          <div class="mm-app-group active" data-app-group="indoor-plano">
+            <a href="/collections/planoarch/index.html?application=architectural-linear" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Lara-I" data-tier-proplus="Luna-I" data-preview-name="plano&#9424;RCH · Architectural Linear" data-preview-label="Indoor · Linear" data-preview-desc="Architectural linear luminaires for suspended, surface-mount, and recessed indoor applications.">Architectural Linear</a>
+            <a href="/collections/planoarch/index.html?application=commercial-downlight" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Solstice-I" data-tier-pro="" data-tier-proplus="Astra-I" data-preview-name="plano&#9424;RCH · Commercial Downlight" data-preview-label="Indoor · Downlight" data-preview-desc="Commercial downlights with integral and modular housings. 4- to 8-inch apertures, Field-Selectable wattage and CCT.">Commercial Downlight</a>
+            <a href="/collections/planoarch/index.html?application=recessed-downlight-housing" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Solstice-I" data-tier-pro="" data-tier-proplus="Astra-I" data-preview-name="plano&#9424;RCH · Recessed Downlight Housing" data-preview-label="Indoor · Downlight Housing" data-preview-desc="IC-rated and non-IC recessed downlight housings. New construction and remodel options.">Recessed Downlight Housing</a>
+            <a href="/collections/planoarch/index.html?application=panels" class="mm-app-item" data-preview-tiers="1" data-tier-eco="pro&#9424;RCH-II" data-tier-pro="pro&#9424;RCH-III" data-tier-proplus="" data-preview-name="plano&#9424;RCH · Panels" data-preview-label="Indoor · Panels" data-preview-desc="Back-lit LED flat panels for drop-ceiling grid and surface mount. 2×2, 2×4, and 1×4 footprints.">Panels</a>
+            <a href="/collections/planoarch/index.html?application=troffer" class="mm-app-item" data-preview-tiers="1" data-tier-eco="pro&#9424;RCH-T1" data-tier-pro="pro&#9424;RCH-T2" data-tier-proplus="LUXMARK" data-preview-name="plano&#9424;RCH · Troffer" data-preview-label="Indoor · Troffer" data-preview-desc="LED troffers with center-basket and volumetric optics. 2×2 and 2×4 grid retrofits and new construction.">Troffer</a>
+            <a href="/collections/planoarch/index.html?application=retrofit-kits" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="retro&#9424;RCH-P1" data-tier-proplus="" data-preview-name="plano&#9424;RCH · Retrofit Kits" data-preview-label="Indoor · Retrofit" data-preview-desc="Fluorescent-to-LED retrofit kits for existing troffer, strip, and wrap housings.">Retrofit Kits</a>
+            <a href="/collections/planoarch/index.html?application=stairwell-passageway" class="mm-app-item" data-preview-name="plano&#9424;RCH · Stairwell &amp; Passageway" data-preview-label="Indoor · Stairwell" data-preview-desc="Bi-level stairwell and passageway fixtures with occupancy-sensing step dim.">Stairwell &amp; Passageway</a>
+            <a href="/collections/planoarch/index.html?application=general-purpose-strips" class="mm-app-item" data-preview-name="plano&#9424;RCH · General Purpose Strips" data-preview-label="Indoor · Strip" data-preview-desc="General-purpose LED strip fixtures for surface and suspended mounting in utility spaces.">General Purpose Strips</a>
+          </div>
+          <!-- lampar&#9424;RCH applications -->
+          <div class="mm-app-group" data-app-group="indoor-lampar">
+            <a href="/collections/lampararch/index.html?application=linear-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Titan-II" data-tier-proplus="Valkyrie-II" data-preview-name="lampar&#9424;RCH · Linear High Bay" data-preview-label="Industrial · Linear HB" data-preview-desc="Linear high-bay fixtures for warehouses, manufacturing, and retail back-of-house.">Linear High Bay</a>
+            <a href="/collections/lampararch/index.html?application=round-high-bay" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Icarus-III" data-tier-pro="Jupiter-II" data-tier-proplus="Millennium-I" data-preview-name="lampar&#9424;RCH · Round High Bay" data-preview-label="Industrial · Round HB" data-preview-desc="UFO-form round high bays for open-ceiling industrial spaces. Up to 60,000 lumens per fixture.">Round High Bay</a>
+            <a href="/collections/lampararch/index.html?application=washdown" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Eureka-II" data-tier-pro="Eureka-I" data-tier-proplus="Poseidon-I" data-preview-name="lampar&#9424;RCH · Washdown" data-preview-label="Industrial · Washdown" data-preview-desc="IP69K-rated washdown fixtures for food-processing, commercial kitchen, and pharmaceutical environments.">Washdown</a>
+          </div>
+          <!-- luxo&#9424;RCH applications -->
+          <div class="mm-app-group" data-app-group="outdoor-luxo">
+            <a href="/collections/luxoarch/index.html?application=area-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Heritage-I" data-tier-pro="Liberty-I" data-tier-proplus="Rosetta-III" data-preview-name="luxo&#9424;RCH · Area Luminaire" data-preview-label="Outdoor · Area" data-preview-desc="Area luminaires for parking lots, dealerships, and commercial exteriors.">Area Luminaire</a>
+            <a href="/collections/luxoarch/index.html?application=canopy" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Pathfinder-I" data-tier-pro="Navigator-I" data-tier-proplus="" data-preview-name="luxo&#9424;RCH · Canopy Luminaire" data-preview-label="Outdoor · Canopy" data-preview-desc="Recessed and surface-mount canopy fixtures for service station, drive-thru, and covered-entry applications.">Canopy Luminaire</a>
+            <a href="/collections/luxoarch/index.html?application=flood-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Everest-I" data-tier-pro="" data-tier-proplus="Zion-II" data-preview-name="luxo&#9424;RCH · Flood" data-preview-label="Outdoor · Flood" data-preview-desc="Flood luminaires for façade, signage, and sports practice fields.">Flood</a>
+            <a href="/collections/luxoarch/index.html?application=sports-lighting" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Radiator-III" data-tier-pro="Illuminator-I" data-tier-proplus="" data-preview-name="luxo&#9424;RCH · Sports Lighters" data-preview-label="Outdoor · Sports" data-preview-desc="Sports lighters for outdoor athletic venues. Broadcast-grade visual comfort with precision optics.">Sports Lighters</a>
+            <a href="/collections/luxoarch/index.html?application=wall-pack" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Watchtower-I" data-tier-pro="Nightwatch-I" data-tier-proplus="Palisade-I" data-preview-name="luxo&#9424;RCH · Wall Pack" data-preview-label="Outdoor · Wall" data-preview-desc="Full-cutoff and semi-cutoff wall packs for building exteriors. IP65 rated with 10kV surge protection.">Wall Pack</a>
+          </div>
+          <!-- city&#9424;RCH applications -->
+          <div class="mm-app-group" data-app-group="outdoor-city">
+            <a href="/collections/cityarch/index.html?application=bollard" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Sentry-I" data-tier-proplus="Morphos-I" data-preview-name="city&#9424;RCH · Bollard" data-preview-label="Municipal · Bollard" data-preview-desc="Bollard luminaires for pathways, landscape, and pedestrian areas.">Bollard</a>
+            <a href="/collections/cityarch/index.html?application=high-mast" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="" data-tier-proplus="OmniMax-I" data-preview-name="city&#9424;RCH · High-Mast" data-preview-label="Municipal · High-Mast" data-preview-desc="High-mast fixtures for roadway interchanges, seaports, and large open-area applications.">High-Mast</a>
+            <a href="/collections/cityarch/index.html?application=post-top" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Unity-I" data-tier-pro="Symmetry-I" data-tier-proplus="" data-preview-name="city&#9424;RCH · Post Top" data-preview-label="Municipal · Post Top" data-preview-desc="Decorative and traditional post-top luminaires for streetscape and municipal applications.">Post Top</a>
+            <a href="/collections/cityarch/index.html?application=roadway" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Abbey-I" data-tier-proplus="" data-preview-name="city&#9424;RCH · Roadway" data-preview-label="Municipal · Roadway" data-preview-desc="Cobra-head and shoebox roadway luminaires. NEMA 7-pin ready for utility-grade controls.">Roadway</a>
+            <a href="/collections/cityarch/index.html?application=street-sign" class="mm-app-item" data-preview-name="city&#9424;RCH · Street Sign" data-preview-label="Municipal · Street Sign" data-preview-desc="Street sign lamps for illuminated signage and wayfinding applications.">Street Sign</a>
+            <a href="/collections/cityarch/index.html?application=traffic-control-lamps" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="Traffic Control" data-tier-proplus="" data-preview-name="city&#9424;RCH · Traffic Control Lamps" data-preview-label="Municipal · Traffic" data-preview-desc="LED traffic signal and pedestrian crossing lamps for DOT and municipal specifications.">Traffic Control Lamps</a>
+          </div>
+          <!-- Consumer applications -->
+          <div class="mm-app-group" data-app-group="res-consumer">
+            <div class="mm-app-group-head">New &amp; Featured</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · New Arrivals" data-preview-label="Consumer · New" data-preview-desc="New consumer residential arrivals this season.">New Arrivals</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Signature Series" data-preview-label="Consumer · Signature" data-preview-desc="Signature Series: ALG's flagship residential collection.">Signature Series</a>
+            <div class="mm-app-group-head">Shop by Room</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Living Room" data-preview-label="Consumer · Living Room" data-preview-desc="Living room fixtures: chandeliers, pendants, floor lamps, and ambient lighting.">Living Room</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Kitchen" data-preview-label="Consumer · Kitchen" data-preview-desc="Kitchen fixtures: island pendants, under-cabinet, and task lighting.">Kitchen</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Dining Room" data-preview-label="Consumer · Dining" data-preview-desc="Dining room fixtures: chandeliers and statement pendants.">Dining Room</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Bedroom" data-preview-label="Consumer · Bedroom" data-preview-desc="Bedroom fixtures: ceiling lights, sconces, and bedside lamps.">Bedroom</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Bathroom" data-preview-label="Consumer · Bathroom" data-preview-desc="Bathroom fixtures: vanity lights, mirror fixtures, and damp-location ceiling lights.">Bathroom</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Outdoor" data-preview-label="Consumer · Outdoor" data-preview-desc="Outdoor residential fixtures: porch lights, path lights, and décor outdoor string lights.">Outdoor</a>
+            <div class="mm-app-group-head">Shop by Type</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Ceiling Lights" data-preview-label="Consumer · Type" data-preview-desc="Flush-mount and semi-flush ceiling lights across all styles.">Ceiling Lights</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Wall Sconces" data-preview-label="Consumer · Type" data-preview-desc="Wall sconces for bathrooms, hallways, and accent lighting.">Wall Sconces</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Lamps" data-preview-label="Consumer · Type" data-preview-desc="Table and floor lamps across all décor styles.">Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Outdoor Lighting" data-preview-label="Consumer · Type" data-preview-desc="Outdoor residential lighting: wall mounts, post mounts, and landscape.">Outdoor Lighting</a>
+            <div class="mm-app-group-head">Shop by Style</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Modern" data-preview-label="Consumer · Style" data-preview-desc="Modern residential fixtures: clean lines, minimal finishes.">Modern</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Rustic" data-preview-label="Consumer · Style" data-preview-desc="Rustic residential fixtures: distressed metals and reclaimed-wood aesthetics.">Rustic</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Coastal" data-preview-label="Consumer · Style" data-preview-desc="Coastal residential fixtures: driftwood, rope, and marine-inspired details.">Coastal</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Industrial" data-preview-label="Consumer · Style" data-preview-desc="Industrial residential fixtures: exposed hardware and factory-style cages.">Industrial</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Mid-Century" data-preview-label="Consumer · Style" data-preview-desc="Mid-century modern residential fixtures: atomic-age silhouettes.">Mid-Century</a>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Farmhouse" data-preview-label="Consumer · Style" data-preview-desc="Farmhouse residential fixtures: barn-inspired silhouettes and matte-black hardware.">Farmhouse</a>
+            <div class="mm-app-group-head">Curated</div>
+            <a href="#" class="mm-app-item" data-preview-name="Consumer · Curated Collections" data-preview-label="Consumer · Curated" data-preview-desc="Curated designer collections across rooms and styles.">Curated Collections</a>
+          </div>
+          <!-- multi-f&#9424;MILY applications -->
+          <div class="mm-app-group" data-app-group="res-multi">
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Recessed Downlights" data-preview-label="multi-family · Recessed" data-preview-desc="Recessed downlights for multi-family construction.">Recessed Downlights</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Surface Mount Downlights" data-preview-label="multi-family · Surface" data-preview-desc="Surface-mount downlights for multi-family construction — ideal for retrofit.">Surface Mount Downlights</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Vanity Lights" data-preview-label="multi-family · Vanity" data-preview-desc="Bathroom vanity lights for apartments, condos, and MDU properties.">Vanity Lights</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Landscape" data-preview-label="multi-family · Landscape" data-preview-desc="Landscape and pathway lighting for multi-family property common areas.">Landscape</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Utility Lamps" data-preview-label="multi-family · Utility" data-preview-desc="Utility and maintenance lamps for multi-family back-of-house areas.">Utility Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Bi-Level" data-preview-label="multi-family · Bi-Level" data-preview-desc="Bi-level occupancy fixtures for corridor and stairwell 24/7 operation.">Bi-Level</a>
+            <a href="#" class="mm-app-item" data-preview-name="multi-f&#9424;MILY · Retrofit Downlights" data-preview-label="multi-family · Retrofit" data-preview-desc="Recessed retrofit kits for existing multi-family downlight housings.">Retrofit Downlights</a>
+          </div>
+          <!-- const&#9424;NT applications -->
+          <div class="mm-app-group" data-app-group="ctrl-constant">
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Emergency Battery Backup" data-preview-label="EM · Battery Backup" data-preview-desc="Integral emergency battery backup drivers for new-construction luminaires. 90-minute runtime.">Emergency Battery Backup</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · const&#9424;NTLink EM Batteries" data-preview-label="EM · Remote Battery" data-preview-desc="Remote emergency battery packs for retrofit of non-EM fixtures. NiMH chemistry, 90-minute runtime.">const<span class="aa">Ⓐ</span>NTLink EM Batteries</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Exit Signs" data-preview-label="EM · Exit Sign" data-preview-desc="LED exit signs: single and double face, edge-lit and stencil. Self-testing and self-diagnostic options.">Exit Signs</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Combo Signs" data-preview-label="EM · Combo" data-preview-desc="Combination exit sign + egress light. One fixture, two code-compliance functions.">Combo Signs</a>
+            <a href="#" class="mm-app-item" data-preview-name="const&#9424;NT · Emergency Light" data-preview-label="EM · Egress" data-preview-desc="Emergency egress light fixtures with integral battery backup for path-of-egress illumination.">Emergency Light</a>
+          </div>
+          <!-- contr&#9424;LS applications -->
+          <div class="mm-app-group" data-app-group="ctrl-controls">
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · Bi-Level" data-preview-label="Controls · Bi-Level" data-preview-desc="Bi-level occupancy sensing for corridor and stairwell. Integrated step-dim mode for 24/7 code compliance.">Bi-Level</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · &#9424;RCH Connected Systems" data-preview-label="Controls · Connected" data-preview-desc="&#9424;RCH Connected Systems: NLC-ready networked lighting controls across the full ALG product portfolio."><span class="aa">Ⓐ</span>RCH Connected Systems</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS · blue&#9424;RCH" data-preview-label="Controls · Sensors" data-preview-desc="blue&#9424;RCH occupancy and daylight sensors for code-compliant commercial installations.">blue<span class="aa">Ⓐ</span>RCH</a>
+            <a href="#" class="mm-app-item" data-preview-name="contr&#9424;LS by Silvair" data-preview-label="Controls · NLC" data-preview-desc="contr&#9424;LS by Silvair: Bluetooth-mesh networked lighting controls with &#9424;CS by ALG App integration.">contr<span class="aa">Ⓐ</span>LS by Silvair</a>
+          </div>
+          <!-- Warehouse Deals applications -->
+          <div class="mm-app-group" data-app-group="openbox-all">
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Indoor" data-preview-label="Warehouse Deals · Indoor" data-preview-desc="Last-run indoor fixtures. Panels, downlights, linear, and retrofit.">Indoor</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Outdoor" data-preview-label="Warehouse Deals · Outdoor" data-preview-desc="Last-run outdoor fixtures. Area, flood, wall, and canopy.">Outdoor</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Lamps" data-preview-label="Warehouse Deals · Lamps" data-preview-desc="Last-run LED lamps. T8, décor, and utility.">Lamps</a>
+            <a href="#" class="mm-app-item" data-preview-name="Warehouse Deals · Accessories" data-preview-label="Warehouse Deals · Accessories" data-preview-desc="Last-run mounting brackets, lenses, and retrofit trim kits.">Accessories</a>
+          </div>
+          <!-- tubul&#9424;RCH applications -->
+          <div class="mm-app-group" data-app-group="lamps-tubul">
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="UL-A" data-tier-pro="" data-tier-proplus="UL-B" data-preview-name="tubul&#9424;RCH · T8 Linear" data-preview-label="Lamps · T8 Linear" data-preview-desc="T8 LED linear lamps for 2ft, 4ft, and 8ft fluorescent retrofits. UL-A and UL-B types.">T8 Linear</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="" data-tier-pro="UL-A+B" data-tier-proplus="" data-preview-name="tubul&#9424;RCH · T5 / T5HO" data-preview-label="Lamps · T5 / T5HO" data-preview-desc="T5 and T5HO LED linear lamps. UL-A+B hybrid type works in both ballast-compatible and bypass modes.">T5 / T5HO</a>
+            <a href="#" class="mm-app-item" data-preview-tiers="1" data-tier-eco="UL-A" data-tier-pro="" data-tier-proplus="" data-preview-name="tubul&#9424;RCH · PL / PLL Compact" data-preview-label="Lamps · PL / PLL Compact" data-preview-desc="PL and PLL compact fluorescent LED retrofits. UL-A ballast-compatible type for 2-pin and 4-pin base configurations.">PL / PLL Compact</a>
+            <a href="#" class="mm-app-item" data-preview-name="tubul&#9424;RCH · HID Corn-Cob" data-preview-label="Lamps · HID Corn-Cob" data-preview-desc="High-bay and area-light HID replacements. Mogul and medium base corn-cob LEDs.">HID Corn-Cob</a>
+            <a href="#" class="mm-app-item" data-preview-name="tubul&#9424;RCH · Décor Lamps" data-preview-label="Lamps · Décor Lamps" data-preview-desc="Decorative LED lamps for residential and hospitality applications. A19, BR30, PAR, globe, and filament-style.">Décor Lamps</a>
+          </div>
+        </div>
+
+        <!-- COLUMN 4: PREVIEW PANE -->
+        <div class="mm-col mm-col-preview">
+          <div class="mm-preview">
+            <div class="preview-img-wrap">
+              <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="Products preview" id="mmPreviewImg">
+            </div>
+            <div class="preview-label" id="mmPreviewLabel">Indoor · Commercial</div>
+            <div class="preview-name" id="mmPreviewName">Commercial | plano<span class="aa">Ⓐ</span>RCH</div>
+            <div class="preview-desc" id="mmPreviewDesc">Commercial LED lighting for offices, retail, education, and healthcare. Recessed downlights, back-lit panels, architectural linear, troffers, and surface-mount.</div>
+            <a href="/collections/planoarch/index.html" class="preview-cta" id="mmPreviewCta">View collection →</a>
+            <!-- Tier-preview sandbox (ECO / PRO / PRO+) -->
+            <div class="tier-strip hidden" id="mmTierStrip">
+              <div class="tier-card t-eco">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="ECO tier" id="tierImgEco">
+                <div class="tier-label">ECO</div>
+                <div class="tier-sku" id="tierSkuEco">—</div>
+              </div>
+              <div class="tier-card t-pro">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="PRO tier" id="tierImgPro">
+                <div class="tier-label">PRO</div>
+                <div class="tier-sku" id="tierSkuPro">—</div>
+              </div>
+              <div class="tier-card t-proplus">
+                <img src="https://www.archipelagolighting.com/cdn/shop/files/INDOOR-PLANO-HOME_1_1400x.png" alt="PRO+ tier" id="tierImgProplus">
+                <div class="tier-label">PRO+</div>
+                <div class="tier-sku" id="tierSkuProplus">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <!-- ============================================================
+         TOOLS — 2-col narrow
+         ============================================================ -->
+    <li class="has-dropdown">
+      <a href="/tools">Tools</a>
+      <div class="megamenu">
+        <div>
+          <div class="mm-head">For Buyers</div>
+          <a href="/find-a-distributor">Find a Distributor</a>
+          <a href="/find-a-rep">Find a Rep</a>
+        </div>
+        <div>
+          <div class="mm-head">For Specifiers</div>
+          <a href="/support/layout-request">Layout &amp; Design Request</a>
+          <a href="/support/photometric-library">LM-79 Photometric Library</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- ============================================================
+         SUPPORT — 2-col narrow
+         ============================================================ -->
+    <li class="has-dropdown">
+      <a href="/support">Support</a>
+      <div class="megamenu">
+        <div>
+          <div class="mm-head">Service</div>
+          <a href="/about">About Us</a>
+          <a href="/contact">Contact Us</a>
+          <a href="/support/returns">Returns &amp; Exchanges</a>
+          <a href="/support/sample-request">Sample Request</a>
+          <a href="/support/library">Library</a>
+          <a href="/support/rebate-center">Rebate Center</a>
+        </div>
+        <div>
+          <div class="mm-head">Legal &amp; Compliance</div>
+          <a href="/support/warranty">Warranty Statement</a>
+          <a href="/support/terms">Terms &amp; Conditions</a>
+          <a href="/support/patents">Patents</a>
+          <a href="/support/cec-ja8">CEC JA8 Compliance</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+      </div>
+    </li>
+
+    <li><a href="/about">About</a></li>
+  </ul>
+
+  <div class="cta-pair">
+    <a href="/support/sample-request" class="cta-secondary">Request Sample</a>
+    <a href="/support/layout-request" class="cta-primary">Request Layout</a>
   </div>
 
-  <!-- MAIN HEADER -->
-  <header class="main-header" id="mainHeader">
-    <div class="mh-inner">
-      <a href="/" class="mh-logo" aria-label="Archipelago Lighting Group home">
-        <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="160" height="44" loading="eager" />
-      </a>
-      <nav class="primary-nav" aria-label="Primary navigation">
-        <button class="nav-item has-mega" data-mega="solutions" aria-expanded="false" aria-haspopup="true">
-          SOLUTIONS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <button class="nav-item has-mega" data-mega="products" aria-expanded="false" aria-haspopup="true">
-          PRODUCTS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <button class="nav-item has-mega" data-mega="tools" aria-expanded="false" aria-haspopup="true">
-          TOOLS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <button class="nav-item has-mega" data-mega="support" aria-expanded="false" aria-haspopup="true">
-          SUPPORT <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <a href="/about" class="nav-item nav-link">ABOUT</a>
-      </nav>
-      <div class="mh-ctas">
-        <a href="/support/sample-request" class="hcta hcta--outline">Request Sample</a>
-        <a href="/support/layout-request" class="hcta hcta--filled">Request Layout</a>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+  <!-- Mobile hamburger (visible <900px) -->
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ================================================================
+     MOBILE DRAWER (accordion)
+     ================================================================ -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer-inner">
+    <a href="#" class="mob-l1" data-expand="m-solutions">Solutions<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-solutions">
+      <a href="/solutions/warehouse-logistics" class="mob-l2">Warehouse &amp; Logistics</a>
+      <a href="/solutions/industrial-manufacturing" class="mob-l2">Industrial &amp; Manufacturing</a>
+      <a href="/solutions/cold-storage-grocery" class="mob-l2">Cold Storage &amp; Grocery</a>
+      <a href="/solutions/data-center" class="mob-l2">Data Center</a>
+      <a href="/solutions/healthcare" class="mob-l2">Healthcare</a>
+      <a href="/solutions/education" class="mob-l2">Education</a>
+      <a href="/solutions/hospitality" class="mob-l2">Hospitality</a>
+      <a href="/solutions/government-military" class="mob-l2">Government &amp; Military</a>
+    </div>
+    <a href="#" class="mob-l1" data-expand="m-products">Products<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-products">
+      <a href="#" class="mob-l2" data-expand="m-indoor">Indoor<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-indoor">
+        <a href="/collections/planoarch/index.html" class="mob-l3">Commercial | plano<span class="aa">Ⓐ</span>RCH</a>
+        <a href="/collections/lampararch/index.html" class="mob-l3">Industrial | lampar<span class="aa">Ⓐ</span>RCH</a>
       </div>
+      <a href="#" class="mob-l2" data-expand="m-outdoor">Outdoor<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-outdoor">
+        <a href="/collections/luxoarch/index.html" class="mob-l3">Commercial | luxo<span class="aa">Ⓐ</span>RCH</a>
+        <a href="/collections/cityarch/index.html" class="mob-l3">Municipal | city<span class="aa">Ⓐ</span>RCH</a>
+      </div>
+      <a href="#" class="mob-l2" data-expand="m-residential">Residential<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-residential">
+        <a href="/collections/consumer/index.html" class="mob-l3">Consumer</a>
+        <a href="/collections/multifamily/index.html" class="mob-l3">Multi-f<span class="aa">Ⓐ</span>MILY</a>
+      </div>
+      <a href="#" class="mob-l2" data-expand="m-controls">Life Safety &amp; Controls<span class="mob-chev">+</span></a>
+      <div class="mob-panel" data-expand-id="m-controls">
+        <a href="/collections/constant/index.html" class="mob-l3">const<span class="aa">Ⓐ</span>NT — Emergency Backup</a>
+        <a href="/collections/controls/index.html" class="mob-l3">contr<span class="aa">Ⓐ</span>LS — Occupancy</a>
+      </div>
+      <a href="/collections/warehouse-deals/index.html" class="mob-l2">Warehouse Deals</a>
+      <a href="/find-a-distributor" class="mob-l2 mob-utility">Where to Buy</a>
+      <a href="/taa-compliant-lighting" class="mob-l2 mob-utility">TAA Compliant Lighting</a>
     </div>
-    <MegaMenu />
-  </header>
-
-  <!-- Mobile drawer -->
-  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
-  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation" hidden>
-    <div class="md-header">
-      <a href="/"><img src="/brand/alg-logo-color.svg" alt="ALG" width="120" height="34" /></a>
-      <button class="md-close" id="mdClose" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
+    <a href="#" class="mob-l1" data-expand="m-tools">Tools<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-tools">
+      <a href="/find-a-distributor" class="mob-l2">Find a Distributor</a>
+      <a href="/find-a-rep" class="mob-l2">Find a Rep</a>
+      <a href="/support/layout-request" class="mob-l2">Layout &amp; Design Request</a>
+      <a href="/support/photometric-library" class="mob-l2">LM-79 Photometric Library</a>
     </div>
-    <div class="md-body">
-      <a href="/solutions" class="md-item">Solutions</a>
-      <a href="/collections" class="md-item">Products</a>
-      <a href="/tools" class="md-item">Tools</a>
-      <a href="/support" class="md-item">Support</a>
-      <a href="/about" class="md-item">About</a>
-      <div class="md-div"></div>
-      <a href="/support/sample-request" class="md-item">Request Sample</a>
-      <a href="/support/layout-request" class="md-item md-item--cta">Request Layout</a>
-      <div class="md-div"></div>
-      <a href="https://aura.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">AURA Portal (Sales Reps)</a>
-      <a href="https://algportal.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">ALG Shop (Distributors)</a>
+    <a href="#" class="mob-l1" data-expand="m-support">Support<span class="mob-chev">+</span></a>
+    <div class="mob-panel" data-expand-id="m-support">
+      <a href="/about" class="mob-l2">About Us</a>
+      <a href="/contact" class="mob-l2">Contact Us</a>
+      <a href="/support/returns" class="mob-l2">Returns &amp; Exchanges</a>
+      <a href="/support/sample-request" class="mob-l2">Sample Request</a>
+      <a href="/support/library" class="mob-l2">Library</a>
+      <a href="/support/rebate-center" class="mob-l2">Rebate Center</a>
+      <a href="/support/warranty" class="mob-l2">Warranty Statement</a>
+      <a href="/support/terms" class="mob-l2">Terms &amp; Conditions</a>
+      <a href="/support/patents" class="mob-l2">Patents</a>
+      <a href="/support/cec-ja8" class="mob-l2">CEC JA8 Compliance</a>
+      <a href="/privacy-policy" class="mob-l2">Privacy Policy</a>
     </div>
-  </nav>
-
+    <a href="/about" class="mob-l1">About</a>
+    <div class="mob-cta-row">
+      <a href="/support/sample-request" class="cta-secondary">Request Sample</a>
+      <a href="/support/layout-request" class="cta-primary">Request Layout</a>
+    </div>
+  </div>
 </div>
 
 <style>
+  /* ================================================================
+     CSS VARIABLES
+     ================================================================ */
   :root {
-    --brand: var(--color-alg-red, #F32740);
-    --brand-dk: var(--color-alg-red-dark, #C41E32);
-    --dark: #0c0d12;
-    --dark2: #14161e;
-    --ink: #111418;
-    --ink2: #3a3f4a;
-    --ink3: #6b7280;
-    --bg: #ffffff;
-    --t: 0.18s ease;
+    --ink:#111418;--ink2:#3a3f47;--ink3:#8a8f99;--ink4:#c8ccd3;
+    --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae4;
+    --dark:#0c0d12;--dark2:#14161e;
+    --brand:#F32740;--brand-dk:#C41F32;
+    --kraft:#c9a876;--amber:#f0a932;--grn:#0FAE7C;
   }
 
-  .site-header-wrap { position: sticky; top: 0; z-index: 1000; width: 100%; }
+  /* ================================================================
+     UTILITY BAR
+     ================================================================ */
+  .utility-bar{
+    background:var(--dark);color:#fff;
+    height:34px;display:flex;align-items:center;justify-content:flex-end;
+    padding:0 28px;font-size:11px;letter-spacing:0.5px;
+    position:sticky;top:0;z-index:101;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .utility-bar a{color:#fff;text-decoration:none;opacity:0.8;margin-left:20px;transition:opacity 0.15s;}
+  .utility-bar a:hover{opacity:1;}
+  .utility-bar .signin{
+    position:relative;
+    background:var(--brand);padding:5px 14px;border-radius:3px;
+    margin-left:24px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+    user-select:none;
+  }
+  .utility-bar .signin::after{content:'▾';font-size:9px;}
+  .signin-dropdown{
+    position:absolute;top:100%;right:0;margin-top:6px;
+    background:#fff;color:var(--ink);
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 8px 24px rgba(0,0,0,0.15);
+    min-width:320px;
+    opacity:0;visibility:hidden;transform:translateY(-4px);
+    transition:all 0.15s;
+    border-radius:4px;
+    overflow:hidden;
+    z-index:200;
+  }
+  .utility-bar .signin:hover .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .signin-dropdown a{
+    display:block;padding:14px 16px;text-align:left;text-transform:none;
+    letter-spacing:0;margin:0;font-size:13px;color:var(--ink);font-weight:400;
+    border-bottom:1px solid rgba(0,0,0,0.06);opacity:1;text-decoration:none;
+  }
+  .signin-dropdown a:hover{background:var(--bg2);color:var(--brand);}
+  .signin-dropdown a:last-child{border-bottom:0;}
+  .signin-dropdown .label{
+    font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--brand);
+    letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+    display:block;margin-bottom:3px;white-space:nowrap;
+  }
 
-  /* UTILITY STRIP */
-  .util-strip { background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .util-inner {
-    max-width: 1440px; margin: 0 auto; padding: 0 28px;
-    height: 36px; display: flex; align-items: center; justify-content: space-between;
+  /* ================================================================
+     SITE NAV
+     ================================================================ */
+  .site-nav{
+    position:sticky;top:34px;z-index:100;
+    background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(0,0,0,0.06);
+    height:56px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;
   }
-  .util-left { display: flex; align-items: center; gap: 0; }
-  .util-link {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-    letter-spacing: 0.04em; color: rgba(255,255,255,0.55); text-decoration: none;
-    padding: 0 14px; height: 36px; display: flex; align-items: center;
-    border-right: 1px solid rgba(255,255,255,0.08); transition: color var(--t);
+  .site-nav .logo-wrap{display:flex;align-items:center;}
+  .site-nav .logo-wrap img{height:26px;width:auto;display:block;}
+  .site-nav ul.main-nav{display:flex;list-style:none;gap:32px;margin:0;padding:0;}
+  .site-nav ul.main-nav > li{position:relative;padding:18px 0;}
+  .site-nav ul.main-nav > li > a{
+    text-decoration:none;color:var(--ink2);
+    font-size:12px;font-weight:600;letter-spacing:0.8px;
+    text-transform:uppercase;
+    transition:color 0.15s;
+    display:inline-flex;align-items:center;gap:5px;
   }
-  .util-link:first-child { padding-left: 0; }
-  .util-link:last-child { border-right: none; }
-  .util-link:hover { color: rgba(255,255,255,0.9); }
-  .util-right { display: flex; align-items: center; }
+  .site-nav ul.main-nav > li.has-dropdown > a::after{
+    content:'▾';font-size:8px;opacity:0.5;
+  }
+  .site-nav ul.main-nav > li > a:hover{color:var(--brand);}
+  .site-nav ul.main-nav > li.has-dropdown:hover .megamenu{opacity:1;visibility:visible;transform:translateY(0);}
 
-  /* Sign In */
-  .signin-wrap { position: relative; }
-  .signin-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 14px; background: var(--brand); color: #fff;
-    border: 1px solid var(--brand); border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all var(--t);
+  /* ================================================================
+     MEGA MENU — base (narrow: Tools / Support)
+     ================================================================ */
+  .megamenu{
+    position:absolute;top:100%;left:-20px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 12px 40px rgba(0,0,0,0.12);
+    padding:24px 28px;
+    min-width:520px;
+    display:grid;grid-template-columns:1fr 1fr;gap:28px;
+    opacity:0;visibility:hidden;transform:translateY(6px);
+    transition:opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+    z-index:60;
+    border-radius:4px;
   }
-  .signin-btn:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
-  .signin-btn[aria-expanded="true"] { background: var(--brand-dk); border-color: var(--brand-dk); }
-  .signin-chev { width: 10px; height: 6px; transition: transform var(--t); }
-  .signin-btn[aria-expanded="true"] .signin-chev { transform: rotate(180deg); }
-  .signin-dropdown {
-    position: absolute; top: calc(100% + 8px); right: 0;
-    background: var(--dark2); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px; min-width: 260px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-    overflow: hidden; z-index: 200;
-  }
-  .sd-pane { display: block; padding: 16px 20px; text-decoration: none; transition: background var(--t); }
-  .sd-pane:hover { background: rgba(255,255,255,0.06); }
-  .sd-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px;
-  }
-  .sd-dest { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
-  .sd-ext { font-size: 12px; color: var(--brand); }
-  .sd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0 20px; }
 
-  /* MAIN HEADER */
-  .main-header { background: var(--bg); border-bottom: 1px solid rgba(17,20,24,0.08); position: relative; }
-  .mh-inner {
-    max-width: 1440px; margin: 0 auto; padding: 0 28px;
-    height: 64px; display: flex; align-items: center; gap: 32px;
+  /* ================================================================
+     MEGA MENU — wide (Products · 4-col)
+     ================================================================ */
+  .megamenu.wide{
+    position:fixed;
+    top:90px;
+    left:2.5vw;
+    right:2.5vw;
+    max-width:none;min-width:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:220px 260px 300px 1fr;
+    gap:0;
+    max-height:calc(100vh - 110px);
+    overflow:hidden;
+    box-shadow:0 24px 80px rgba(0,0,0,0.18);
+    border-radius:4px;
   }
-  .mh-logo { display: flex; align-items: center; flex-shrink: 0; }
-  .mh-logo img { display: block; height: 36px; width: auto; }
+  .megamenu.wide .mm-col{
+    padding:20px 18px;
+    overflow-y:auto;
+    max-height:calc(100vh - 110px);
+    scrollbar-width:thin;
+    scrollbar-color:rgba(0,0,0,0.2) transparent;
+  }
+  .megamenu.wide .mm-col::-webkit-scrollbar{width:6px;}
+  .megamenu.wide .mm-col::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
+  .megamenu.wide .mm-col.mm-col-main{background:var(--dark);}
+  .megamenu.wide .mm-col.mm-col-cat{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
+  .megamenu.wide .mm-col.mm-col-app{background:#fff;border-right:1px solid rgba(0,0,0,0.06);}
+  .megamenu.wide .mm-col.mm-col-preview{background:#fff;padding:20px 24px;}
+  .megamenu.wide .mm-col-head{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--ink3);letter-spacing:0.2em;
+    text-transform:uppercase;font-weight:600;
+    margin-bottom:14px;padding-bottom:10px;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+  }
+  .megamenu.wide .mm-col-main .mm-col-head{
+    color:rgba(255,255,255,0.5);
+    border-bottom-color:rgba(255,255,255,0.1);
+  }
 
-  .primary-nav { display: flex; align-items: center; flex: 1; justify-content: center; gap: 2px; }
-  .nav-item {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 8px 14px; height: 64px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
-    letter-spacing: 0.08em; color: var(--ink2); background: none; border: none;
-    cursor: pointer; text-decoration: none; transition: all var(--t); white-space: nowrap;
-    position: relative;
+  /* ---- COLUMN 1: Main nav items ---- */
+  .mm-main-item{
+    display:block;padding:11px 14px;
+    font-family:'Sora',sans-serif;font-size:14px;font-weight:600;
+    color:rgba(255,255,255,0.85);
+    letter-spacing:0.01em;
+    border-radius:3px;
+    cursor:pointer;
+    transition:background 0.12s, color 0.12s;
+    margin-bottom:2px;
+    text-decoration:none;
   }
-  .nav-item::after {
-    content: ''; position: absolute; bottom: 0; left: 14px; right: 14px;
-    height: 2px; background: var(--brand); transform: scaleX(0); transition: transform var(--t);
+  .mm-main-item:hover,
+  .mm-main-item.active{background:var(--brand);color:#fff;}
+  .mm-main-item .mm-main-sub{
+    display:block;font-size:10px;font-weight:400;
+    color:rgba(255,255,255,0.5);margin-top:2px;letter-spacing:0.02em;
   }
-  .nav-item:hover { color: var(--ink); }
-  .nav-item:hover::after { transform: scaleX(1); }
-  .nav-item[aria-expanded="true"] { color: var(--brand); }
-  .nav-item[aria-expanded="true"]::after { transform: scaleX(1); }
-  .nav-chev { width: 10px; height: 6px; transition: transform var(--t); flex-shrink: 0; }
-  .nav-item[aria-expanded="true"] .nav-chev { transform: rotate(180deg); }
+  .mm-main-item.active .mm-main-sub,
+  .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
+  .mm-main-divider{height:1px;background:rgba(255,255,255,0.08);margin:8px 14px;}
+  .mm-main-group-label{
+    font-family:'JetBrains Mono',monospace;font-size:8px;
+    color:rgba(255,255,255,0.35);letter-spacing:0.2em;
+    text-transform:uppercase;font-weight:600;
+    padding:0 14px 4px;margin-top:6px;
+  }
 
-  .mh-ctas { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-  .hcta {
-    display: inline-flex; align-items: center; padding: 9px 18px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
-    border-radius: 4px; transition: all var(--t); white-space: nowrap;
+  /* ---- COLUMN 2: Category ---- */
+  .mm-cat-group{display:none;}
+  .mm-cat-group.active{display:block;}
+  .mm-cat-item{
+    display:block;padding:10px 12px;
+    font-family:'Sora',sans-serif;font-size:13px;font-weight:600;
+    color:var(--ink);letter-spacing:-0.005em;
+    border-radius:3px;cursor:pointer;
+    border-left:3px solid transparent;
+    transition:background 0.12s, border-color 0.12s, color 0.12s;
+    margin-bottom:2px;text-decoration:none;
   }
-  .hcta--outline { background: transparent; color: var(--ink); border: 1px solid rgba(17,20,24,0.25); }
-  .hcta--outline:hover { background: rgba(17,20,24,0.05); border-color: rgba(17,20,24,0.4); }
-  .hcta--filled { background: var(--brand); color: #fff; border: 1px solid var(--brand); }
-  .hcta--filled:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
+  .mm-cat-item:hover,
+  .mm-cat-item.active{background:#fff;border-left-color:var(--brand);color:var(--brand);}
+  .mm-cat-item .mm-cat-sub{
+    display:block;font-size:10px;font-weight:400;
+    color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
+  }
+  .mm-cat-item:hover .mm-cat-sub,
+  .mm-cat-item.active .mm-cat-sub{color:var(--ink2);}
 
-  /* Hamburger */
-  .hamburger {
-    display: none; flex-direction: column; justify-content: center; gap: 5px;
-    width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px;
+  /* ---- COLUMN 3: Application ---- */
+  .mm-app-group{display:none;}
+  .mm-app-group.active{display:block;}
+  .mm-app-item{
+    display:block;padding:7px 10px;
+    font-size:13px;color:var(--ink2);
+    font-weight:400;line-height:1.35;
+    border-radius:3px;cursor:pointer;
+    transition:background 0.12s, color 0.12s;
+    margin-bottom:1px;text-decoration:none;
   }
-  .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all var(--t); }
+  .mm-app-item:hover{background:var(--bg2);color:var(--brand);}
+  .mm-app-group-head{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    color:var(--brand);letter-spacing:0.16em;
+    text-transform:uppercase;font-weight:600;
+    padding:10px 10px 4px;margin-top:6px;
+    border-top:1px solid rgba(0,0,0,0.06);
+  }
+  .mm-app-group-head:first-child{border-top:0;margin-top:0;padding-top:2px;}
 
-  /* Mobile overlay */
-  .mobile-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-    z-index: 998; backdrop-filter: blur(4px);
+  /* ---- COLUMN 4: Preview Pane ---- */
+  .mm-preview{display:flex;flex-direction:column;}
+  .mm-preview .preview-img-wrap{
+    width:100%;height:240px;background:var(--bg2);border-radius:4px;
+    overflow:hidden;margin-bottom:14px;position:relative;
   }
-  .mobile-overlay.open { display: block; }
+  .mm-preview .preview-img-wrap img{
+    width:100%;height:100%;object-fit:cover;object-position:center;
+    transition:opacity 0.25s ease;
+  }
+  .mm-preview .preview-img-wrap img[src*="hospitality"]{object-position:center 30%;}
+  .mm-preview .preview-label{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    color:var(--brand);letter-spacing:0.18em;text-transform:uppercase;
+    font-weight:600;margin-bottom:6px;
+  }
+  .mm-preview .preview-name{
+    font-family:'Sora',sans-serif;font-size:20px;font-weight:700;
+    color:var(--ink);letter-spacing:-0.015em;margin-bottom:8px;line-height:1.15;
+  }
+  .mm-preview .preview-desc{font-size:13px;color:var(--ink2);line-height:1.5;margin-bottom:14px;}
+  .mm-preview .preview-cta{
+    font-size:11px;font-weight:700;color:var(--brand);
+    letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;
+    align-self:flex-start;
+    padding:10px 14px;border:1px solid var(--brand);border-radius:3px;
+    transition:all 0.15s;
+  }
+  .mm-preview .preview-cta:hover{background:var(--brand);color:#fff;}
 
-  /* Mobile drawer */
-  .mobile-drawer {
-    position: fixed; top: 0; right: 0; bottom: 0; width: 300px;
-    background: var(--bg); z-index: 999; transform: translateX(100%);
-    transition: transform 0.3s ease; overflow-y: auto;
-    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+  /* Tier-preview sandbox */
+  .mm-preview .tier-strip{
+    display:grid;grid-template-columns:1fr 1fr 1fr;
+    grid-template-areas:"eco pro proplus";
+    gap:8px;margin-top:4px;
   }
-  .mobile-drawer:not([hidden]) { transform: translateX(0); }
-  .md-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px; border-bottom: 1px solid rgba(17,20,24,0.08);
+  .mm-preview .tier-strip.hidden{display:none;}
+  .mm-preview .tier-card{
+    background:var(--bg2);border-radius:3px;padding:10px 8px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    border-top:3px solid var(--ink4);min-width:0;
   }
-  .md-close { background: none; border: none; cursor: pointer; padding: 4px; }
-  .md-close svg { width: 20px; height: 20px; color: var(--ink); }
-  .md-body { padding: 12px 0; }
-  .md-item {
-    display: block; padding: 12px 20px; font-size: 14px; font-weight: 600;
-    color: var(--ink2); text-decoration: none; transition: all var(--t);
+  .mm-preview .tier-card.t-eco{grid-area:eco;border-top-color:#8A8F97;}
+  .mm-preview .tier-card.t-pro{grid-area:pro;border-top-color:var(--amber);}
+  .mm-preview .tier-card.t-proplus{grid-area:proplus;border-top-color:var(--brand);}
+  .mm-preview .tier-card.slot-empty{visibility:hidden;}
+  .mm-preview .tier-card img{
+    width:100%;max-width:160px;max-height:160px;aspect-ratio:1/1;object-fit:contain;
+    background:#fff;border-radius:2px;margin-bottom:6px;
   }
-  .md-item:hover { color: var(--brand); background: rgba(243,39,64,0.04); }
-  .md-item--cta { color: var(--brand); font-weight: 700; }
-  .md-div { height: 1px; background: rgba(17,20,24,0.08); margin: 8px 20px; }
+  .mm-preview .tier-card .tier-label{
+    font-family:'JetBrains Mono',monospace;font-size:8px;
+    letter-spacing:0.15em;text-transform:uppercase;font-weight:700;
+    color:var(--ink3);margin-bottom:2px;
+  }
+  .mm-preview .tier-card .tier-sku{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    font-weight:600;color:var(--ink);line-height:1.2;
+  }
 
-  /* RESPONSIVE */
-  @media (max-width: 1024px) {
-    .primary-nav { gap: 0; }
-    .nav-item { padding: 8px 10px; font-size: 11px; }
+  /* ---- Legacy mm-head (Tools / Support narrow menus) ---- */
+  .megamenu .mm-head{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--brand);letter-spacing:2px;text-transform:uppercase;
+    font-weight:600;margin-bottom:10px;padding-bottom:8px;
+    border-bottom:1px solid rgba(0,0,0,0.08);
   }
-  @media (max-width: 768px) {
-    .util-left { gap: 0; }
-    .primary-nav { display: none; }
-    .hcta--outline { display: none; }
-    .hamburger { display: flex; }
-    .mh-inner { gap: 16px; }
+  .megamenu:not(.wide):not(.solutions) a{
+    display:block;padding:6px 0;font-size:13px;
+    color:var(--ink);text-transform:none;letter-spacing:0;
+    font-weight:400;text-decoration:none;
   }
-  @media (max-width: 480px) {
-    .util-link:nth-child(n+3) { display: none; }
+  .megamenu:not(.wide):not(.solutions) a:hover{color:var(--brand);}
+  .megamenu:not(.wide):not(.solutions) a.featured{
+    background:var(--bg2);padding:10px 12px;margin:6px 0;
+    border-left:3px solid var(--brand);font-weight:600;font-size:12px;
+  }
+
+  /* ================================================================
+     SOLUTIONS MEGA MENU
+     ================================================================ */
+  .megamenu.solutions{
+    position:fixed;top:90px;left:2.5vw;right:2.5vw;
+    max-width:none;min-width:0;padding:0;
+    display:grid;grid-template-columns:220px 320px 1fr;
+    gap:0;max-height:calc(100vh - 110px);overflow:hidden;
+    box-shadow:0 24px 80px rgba(0,0,0,0.18);
+    border-radius:4px;
+  }
+  .megamenu.solutions .mm-col{
+    padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);
+  }
+  .megamenu.solutions .mm-col-main{background:var(--dark);}
+  .megamenu.solutions .mm-col-vert{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
+  .megamenu.solutions .mm-col-preview{background:#fff;padding:20px 24px;}
+  .megamenu.solutions .mm-col-head{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    color:var(--ink3);letter-spacing:0.2em;text-transform:uppercase;
+    font-weight:600;margin-bottom:14px;padding-bottom:10px;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+  }
+  .megamenu.solutions .mm-col-main .mm-col-head{
+    color:rgba(255,255,255,0.5);border-bottom-color:rgba(255,255,255,0.1);
+  }
+  .mm-vert-item{
+    display:block;padding:11px 14px;
+    font-family:'Sora',sans-serif;font-size:13px;font-weight:600;
+    color:var(--ink);letter-spacing:-0.005em;
+    border-radius:3px;cursor:pointer;
+    border-left:3px solid transparent;
+    transition:background 0.12s, border-color 0.12s, color 0.12s;
+    margin-bottom:2px;text-decoration:none;
+  }
+  .mm-vert-item:hover,
+  .mm-vert-item.active{background:#fff;border-left-color:var(--brand);color:var(--brand);}
+  .mm-vert-item .mm-vert-sub{
+    display:block;font-size:10px;font-weight:400;
+    color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
+  }
+
+  /* ================================================================
+     CTA PAIR
+     ================================================================ */
+  .site-nav .cta-pair{display:flex;align-items:center;gap:10px;}
+  .site-nav .cta-primary{
+    background:var(--brand);color:#fff;
+    padding:10px 18px;border-radius:3px;
+    font-size:11px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;text-decoration:none;
+    border:0;cursor:pointer;transition:background 0.15s;
+  }
+  .site-nav .cta-primary:hover{background:var(--brand-dk);}
+  .site-nav .cta-secondary{
+    background:transparent;color:var(--ink);
+    padding:10px 16px;border:1px solid var(--ink4);
+    border-radius:3px;font-size:11px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;text-decoration:none;
+    cursor:pointer;transition:all 0.15s;
+  }
+  .site-nav .cta-secondary:hover{border-color:var(--brand);color:var(--brand);}
+
+  /* ================================================================
+     MOBILE HAMBURGER
+     ================================================================ */
+  .nav-toggle{
+    display:none;
+    width:44px;height:44px;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+    background:transparent;border:1px solid rgba(0,0,0,0.1);border-radius:3px;cursor:pointer;
+  }
+  .nav-toggle span{display:block;width:20px;height:2px;background:var(--ink);transition:transform 0.2s, opacity 0.2s;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ================================================================
+     MOBILE DRAWER
+     ================================================================ */
+  .mobile-drawer{
+    position:fixed;top:90px;left:0;right:0;bottom:0;
+    background:#fff;z-index:150;
+    transform:translateX(100%);transition:transform 0.25s ease;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    visibility:hidden;
+  }
+  .mobile-drawer.open{transform:translateX(0);visibility:visible;}
+  .mobile-drawer-inner{padding:8px 0 40px;}
+  .mob-l1{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 24px;
+    font-family:'Sora',sans-serif;font-size:16px;font-weight:700;
+    color:var(--ink);text-transform:none;letter-spacing:-0.01em;
+    border-bottom:1px solid rgba(0,0,0,0.08);text-decoration:none;
+  }
+  .mob-l2{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 24px 14px 40px;
+    font-size:14px;font-weight:600;color:var(--ink2);
+    border-bottom:1px solid rgba(0,0,0,0.04);
+    background:var(--bg2);text-decoration:none;
+  }
+  .mob-l2.mob-utility{font-weight:400;color:var(--ink3);font-style:italic;}
+  .mob-l3{
+    display:block;padding:12px 24px 12px 56px;
+    font-size:13px;color:var(--ink2);
+    border-bottom:1px solid rgba(0,0,0,0.03);
+    background:var(--bg3);text-decoration:none;
+  }
+  .mob-chev{
+    font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:400;
+    color:var(--ink3);transition:transform 0.2s;width:16px;text-align:center;
+  }
+  .mob-l1[aria-expanded="true"] .mob-chev,
+  .mob-l2[aria-expanded="true"] .mob-chev{transform:rotate(45deg);color:var(--brand);}
+  .mob-panel{max-height:0;overflow:hidden;transition:max-height 0.25s ease;}
+  .mob-panel.open{max-height:1600px;}
+  .mob-cta-row{
+    display:flex;gap:10px;padding:24px;
+    border-top:1px solid rgba(0,0,0,0.08);margin-top:12px;
+  }
+  .mob-cta-row .cta-secondary,
+  .mob-cta-row .cta-primary{flex:1;justify-content:center;padding:14px 16px;font-size:12px;}
+
+  /* ================================================================
+     BRAND MARK
+     ================================================================ */
+  .aa{color:var(--brand);}
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width:900px){
+    .site-nav ul.main-nav{display:none;}
+    .site-nav .cta-pair{display:none;}
+    .nav-toggle{display:flex;}
+    .megamenu{display:none !important;}
+    .utility-bar{padding:0 16px;font-size:12px;}
+    .utility-bar a:not(.signin){display:none;}
   }
 </style>
 
 <script>
-(function () {
-  // Sign In dropdown
-  const signinBtn = document.getElementById('signinBtn');
-  const signinDropdown = document.getElementById('signinDropdown');
-  if (signinBtn && signinDropdown) {
-    signinBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = signinBtn.getAttribute('aria-expanded') === 'true';
-      signinBtn.setAttribute('aria-expanded', String(!open));
-      signinDropdown.hidden = open;
-    });
-    document.addEventListener('click', () => {
-      signinBtn.setAttribute('aria-expanded', 'false');
-      signinDropdown.hidden = true;
-    });
-    signinDropdown.addEventListener('click', (e) => e.stopPropagation());
+(function(){
+  const HOVER_DELAY_MS = 600;
+
+  /* ---- Helper: cross-fade preview image ---- */
+  function crossfade(imgEl, newSrc){
+    if (!newSrc || imgEl.getAttribute('src') === newSrc){ return; }
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+      imgEl.setAttribute('src', newSrc);
+      imgEl.style.opacity = '1';
+      imgEl.style.objectPosition = (newSrc && newSrc.indexOf('hospitality') !== -1) ? 'center 30%' : 'center center';
+    }, 120);
   }
 
-  // MegaMenu
-  const megaPanel = document.getElementById('megaMenuPanel');
-  const navBtns = Array.from(document.querySelectorAll('.nav-item.has-mega'));
-  let active = null;
-
-  function closeAll() {
-    navBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
-    if (megaPanel) megaPanel.hidden = true;
-    document.querySelectorAll('.mega-pane').forEach(p => { p.hidden = true; });
-    active = null;
+  /* ---- Helper: render Ⓐ as styled span ---- */
+  function renderAa(str){
+    return (str || '').replace(/&#9424;|Ⓐ/g, '<span class="aa">Ⓐ</span>');
   }
 
-  navBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const pane = btn.dataset.mega;
-      if (active === pane) { closeAll(); return; }
-      closeAll();
-      active = pane;
-      btn.setAttribute('aria-expanded', 'true');
-      if (megaPanel) megaPanel.hidden = false;
-      const target = document.querySelector(`.mega-pane[data-mega="${pane}"]`);
-      if (target) target.hidden = false;
+  /* =============================================================
+     PRODUCTS MEGA MENU · 3-tier cascade
+     ============================================================= */
+  const productsLi = document.querySelector('li[data-mm="products"]');
+  if (productsLi){
+    const menu       = productsLi.querySelector('.megamenu.wide');
+    const mainItems  = menu.querySelectorAll('.mm-col-main .mm-main-item[data-main]');
+    const catGroups  = menu.querySelectorAll('.mm-cat-group');
+    const catItems   = menu.querySelectorAll('.mm-cat-item[data-cat]');
+    const appGroups  = menu.querySelectorAll('.mm-app-group');
+    const appItems   = menu.querySelectorAll('.mm-app-item');
+    const previewImg   = menu.querySelector('#mmPreviewImg');
+    const previewLbl   = menu.querySelector('#mmPreviewLabel');
+    const previewName  = menu.querySelector('#mmPreviewName');
+    const previewDesc  = menu.querySelector('#mmPreviewDesc');
+    const tierStrip    = menu.querySelector('#mmTierStrip');
+    let hoverTimer = null;
+
+    function switchMain(mainKey){
+      mainItems.forEach(el => el.classList.toggle('active', el.dataset.main === mainKey));
+      catGroups.forEach(g => g.classList.toggle('active', g.dataset.catGroup === mainKey));
+      const firstCat = menu.querySelector(`.mm-cat-group[data-cat-group="${mainKey}"] .mm-cat-item`);
+      if (firstCat){ activateCat(firstCat, true); }
+    }
+
+    function activateCat(catEl, auto){
+      catItems.forEach(el => el.classList.remove('active'));
+      catEl.classList.add('active');
+      const catKey = catEl.dataset.cat;
+      appGroups.forEach(g => g.classList.toggle('active', g.dataset.appGroup === catKey));
+      crossfade(previewImg, catEl.dataset.preview);
+      if (catEl.dataset.previewLabel) previewLbl.textContent  = catEl.dataset.previewLabel;
+      if (catEl.dataset.previewName)  previewName.innerHTML   = renderAa(catEl.dataset.previewName);
+      if (catEl.dataset.previewDesc)  previewDesc.textContent = catEl.dataset.previewDesc;
+      tierStrip.classList.add('hidden');
+      const _catHrefMap = {
+        "indoor-plano":"/collections/planoarch/index.html",
+        "indoor-lampar":"/collections/lampararch/index.html",
+        "outdoor-luxo":"/collections/luxoarch/index.html",
+        "outdoor-city":"/collections/cityarch/index.html",
+        "res-consumer":"/collections/consumer/index.html",
+        "res-multi":"/collections/multifamily/index.html",
+        "lamps-tubul":"/collections/tubularch/index.html",
+        "ctrl-constant":"/collections/constant/index.html",
+        "ctrl-controls":"/collections/controls/index.html",
+        "openbox-all":"/collections/warehouse-deals/index.html"
+      };
+      const _previewCta = menu.querySelector('#mmPreviewCta');
+      if (_previewCta && _catHrefMap[catKey]) _previewCta.href = _catHrefMap[catKey];
+    }
+
+    const FAMILY_HERO = {
+      'indoor-plano':   '/manus-storage/tier_hero_plano_0934f9d2.png',
+      'indoor-lampar':  '/manus-storage/tier_hero_lampar_78d79595.png',
+      'outdoor-luxo':   '/manus-storage/tier_hero_luxo_631c3c60.png',
+      'outdoor-city':   '/manus-storage/tier_hero_city_f5ffdf65.png',
+      'lamps-tubul':    '/manus-storage/tier_hero_tubul_9f1c8ee6.png',
+    };
+
+    window._algSwapApp = function(appEl){ swapAppPreview(appEl); };
+    function swapAppPreview(appEl){
+      crossfade(previewImg, appEl.dataset.preview);
+      if (appEl.dataset.previewLabel) previewLbl.textContent  = appEl.dataset.previewLabel;
+      if (appEl.dataset.previewName)  previewName.innerHTML   = renderAa(appEl.dataset.previewName);
+      if (appEl.dataset.previewDesc)  previewDesc.textContent = appEl.dataset.previewDesc;
+      if (appEl.dataset.previewTiers === '1'){
+        tierStrip.classList.remove('hidden');
+        const activeCat = menu.querySelector('.mm-cat-item.active');
+        const catKey    = activeCat ? activeCat.dataset.cat : null;
+        const heroSrc   = catKey && FAMILY_HERO[catKey] ? FAMILY_HERO[catKey] : null;
+        if (heroSrc) {
+          document.getElementById('tierImgEco').src     = heroSrc;
+          document.getElementById('tierImgPro').src     = heroSrc;
+          document.getElementById('tierImgProplus').src = heroSrc;
+        }
+        const eco  = appEl.dataset.tierEco     || '';
+        const pro  = appEl.dataset.tierPro     || '';
+        const plus = appEl.dataset.tierProplus || '';
+        const ecoCard  = document.getElementById('tierSkuEco').closest('.tier-card');
+        const proCard  = document.getElementById('tierSkuPro').closest('.tier-card');
+        const plusCard = document.getElementById('tierSkuProplus').closest('.tier-card');
+        if (eco)  { ecoCard.classList.remove('slot-empty');  document.getElementById('tierSkuEco').innerHTML     = renderAa(eco);  }
+        else      { ecoCard.classList.add('slot-empty'); }
+        if (pro)  { proCard.classList.remove('slot-empty');  document.getElementById('tierSkuPro').innerHTML     = renderAa(pro);  }
+        else      { proCard.classList.add('slot-empty'); }
+        if (plus) { plusCard.classList.remove('slot-empty'); document.getElementById('tierSkuProplus').innerHTML = renderAa(plus); }
+        else      { plusCard.classList.add('slot-empty'); }
+      } else {
+        tierStrip.classList.add('hidden');
+      }
+    }
+
+    mainItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        const key = el.dataset.main;
+        if (!key) return;
+        hoverTimer = setTimeout(() => switchMain(key), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
     });
-  });
+    catItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => activateCat(el, false), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+    appItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => swapAppPreview(el), HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+    });
+    productsLi.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+  }
 
-  document.addEventListener('click', closeAll);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
-  if (megaPanel) megaPanel.addEventListener('click', (e) => e.stopPropagation());
+  /* =============================================================
+     SOLUTIONS MEGA MENU
+     ============================================================= */
+  const solLi = document.querySelector('li[data-mm="solutions"]');
+  if (solLi){
+    const solMenu    = solLi.querySelector('.megamenu.solutions');
+    const vertItems  = solMenu.querySelectorAll('.mm-vert-item');
+    const solPrevImg = solMenu.querySelector('#solPreviewImg');
+    const solPrevLbl = solMenu.querySelector('#solPreviewLabel');
+    const solPrevNm  = solMenu.querySelector('#solPreviewName');
+    const solPrevDsc = solMenu.querySelector('#solPreviewDesc');
+    let solTimer = null;
+    vertItems.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(solTimer);
+        solTimer = setTimeout(() => {
+          vertItems.forEach(v => v.classList.remove('active'));
+          el.classList.add('active');
+          crossfade(solPrevImg, el.dataset.preview);
+          if (el.dataset.previewLabel) solPrevLbl.textContent = el.dataset.previewLabel;
+          if (el.dataset.previewName)  solPrevNm.innerHTML    = renderAa(el.dataset.previewName);
+          if (el.dataset.previewDesc)  solPrevDsc.textContent = el.dataset.previewDesc;
+        }, HOVER_DELAY_MS);
+      });
+      el.addEventListener('mouseleave', () => clearTimeout(solTimer));
+    });
+    solLi.addEventListener('mouseleave', () => clearTimeout(solTimer));
+  }
 
-  // Mobile drawer
-  const hamburger = document.getElementById('hamburger');
+  /* =============================================================
+     MOBILE DRAWER · accordion
+     ============================================================= */
+  const toggle = document.querySelector('.nav-toggle');
   const drawer = document.getElementById('mobileDrawer');
-  const overlay = document.getElementById('mobileOverlay');
-  const mdClose = document.getElementById('mdClose');
-
-  function openDrawer() {
-    if (!drawer || !overlay) return;
-    drawer.hidden = false;
-    overlay.classList.add('open');
-    hamburger?.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    drawer.querySelectorAll('[data-expand]').forEach(trigger => {
+      trigger.addEventListener('click', e => {
+        e.preventDefault();
+        const id    = trigger.dataset.expand;
+        const panel = drawer.querySelector(`[data-expand-id="${id}"]`);
+        if (!panel) return;
+        const isOpen = panel.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
   }
-  function closeDrawer() {
-    if (!drawer || !overlay) return;
-    drawer.hidden = true;
-    overlay.classList.remove('open');
-    hamburger?.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  hamburger?.addEventListener('click', openDrawer);
-  mdClose?.addEventListener('click', closeDrawer);
-  overlay?.addEventListener('click', closeDrawer);
 })();
 </script>
