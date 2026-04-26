@@ -241,10 +241,19 @@ async function main() {
       const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
       // iter/v2.1.0-homepage is the branch that built out the scaffolds — exempt
       if (!branch.startsWith('reopen/') && branch !== 'main' && branch !== 'iter/v2.1.0-homepage') {
-        const changed = execSync('git diff --name-only origin/main...HEAD').toString().trim().split('\n').filter(Boolean);
+        // Use the most recently merged iteration branch as base, falling back to origin/main.
+        // This prevents false positives when a new page branch is cut from a non-main iteration branch.
+        let baseBranch = 'origin/main';
+        try {
+          const remoteBranches = execSync('git branch -r').toString();
+          if (remoteBranches.includes('origin/iter/v2.1.0-homepage')) {
+            baseBranch = 'origin/iter/v2.1.0-homepage';
+          }
+        } catch (_) {}
+        const changed = execSync(`git diff --name-only ${baseBranch}...HEAD`).toString().trim().split('\n').filter(Boolean);
         const violations = changed.filter(f => LOCKED_PATHS.some(p => f === p || f.startsWith(p + '/')));
         if (violations.length > 0) {
-          const verifyDiff = execSync('git diff --numstat origin/main...HEAD -- scripts/verify.mjs').toString().trim();
+          const verifyDiff = execSync(`git diff --numstat ${baseBranch}...HEAD -- scripts/verify.mjs`).toString().trim();
           const verifyOK = verifyDiff === '' || (() => {
             const parts = verifyDiff.split('\t');
             const del = parseInt(parts[1], 10);
