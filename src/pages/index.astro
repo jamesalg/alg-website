@@ -1646,6 +1646,13 @@ const verticals = [
   @media (max-width: 1024px) {
     .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   }
+  /* Fix 1 (rev11): Hide line drawings on tablet/mobile — reference template hides below desktop */
+  @media (max-width: 1023px) {
+    .slot-product-img,
+    .product-render {
+      display: none !important;
+    }
+  }
   @media (max-width: 900px) {
     .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .layout-cta-inner { grid-template-columns: 1fr; gap: 40px; }
