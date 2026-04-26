@@ -13,6 +13,10 @@
 //      so md5 verification of header/footer/megamenu is removed.
 //   3. Brand-mark and copy-policy checks are central — these are content
 //      rules that can't be enforced at the component layer.
+//   4. MEGA MENU DRIFT gate (Group E) added in v2.1: checks that all 5
+//      canonical nav items and all 4 mega-menu panes are present in every
+//      built page. This is a mechanical guard against accidental nav removal
+//      during template refactors.
 //
 // Exit code 0 = pass. Non-zero = fail.
 
@@ -136,6 +140,44 @@ async function main() {
     // D.3: Every page must have a meta description
     if (!/<meta\s+name=["']description["']\s+content=["'][^"']{10,}["']/i.test(html)) {
       fail('D.3', `${rel}: missing or too-short meta description`);
+    }
+
+    // === GROUP E: MEGA MENU DRIFT GATE (Playbook §5.4) ===
+    //
+    // All 5 canonical nav items must be present in every built page.
+    // This prevents accidental nav removal during template refactors.
+    // Checks the built HTML for the nav link text (case-insensitive).
+    // Note: these are text-content checks, not href checks, so they survive
+    // URL changes without false positives.
+    // E.1: All 5 canonical nav items must be present.
+    // Solutions and Products use data-mm; Tools and Support use has-dropdown
+    // without data-mm (CSS-hover only); About is a plain nav link.
+    const canonicalNavItems = [
+      { id: 'E.1.solutions', pattern: /data-mm=["']solutions["']/ },
+      { id: 'E.1.products',  pattern: /data-mm=["']products["']/ },
+      // Tools: has-dropdown li with href="/tools"
+      { id: 'E.1.tools',     pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/tools["']/ },
+      // Support: has-dropdown li with href="/support"
+      { id: 'E.1.support',   pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/support["']/ },
+      // About: plain nav link
+      { id: 'E.1.about',     pattern: /href=["'][^"']*\/about["'][^>]*>About<\/a>/ },
+    ];
+    for (const { id, pattern } of canonicalNavItems) {
+      if (!pattern.test(html)) {
+        fail(id, `${rel}: canonical nav item missing from built HTML — mega menu drift detected`);
+      }
+    }
+
+    // E.2: Solutions and Products mega-menu panes must have data-mm attributes.
+    // Tools and Support use CSS-hover dropdowns without data-mm (by design).
+    const canonicalMegaMenuPanes = [
+      { id: 'E.2.solutions', pattern: /data-mm=["']solutions["']/ },
+      { id: 'E.2.products',  pattern: /data-mm=["']products["']/ },
+    ];
+    for (const { id, pattern } of canonicalMegaMenuPanes) {
+      if (!pattern.test(html)) {
+        fail(id, `${rel}: mega-menu pane ${id.split('.')[2]} missing — drift detected`);
+      }
     }
   }
 

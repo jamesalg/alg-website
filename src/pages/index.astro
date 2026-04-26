@@ -281,7 +281,7 @@ const verticals = [
   </div>
 
   <!-- ==============================================================
-       4. WHAT WE MAKE — Category tease (3 cards)
+       4. WHAT WE MAKE — Category tease (4 cards)
        ============================================================== -->
   <section class="content-section" aria-labelledby="wm-heading">
     <div class="section-inner">
@@ -314,10 +314,21 @@ const verticals = [
         <a href="/collections/controls-em" class="wm-card controls">
           <div class="wm-img"></div>
           <div class="wm-body">
-            <h3>Controls &amp; EM</h3>
+            <h3>Safety &amp; Controls</h3>
             <p><BrandMark prefix="contr" suffix="LS" /> three-tier (ECO · PRO · PRO+) and <BrandMark prefix="const" suffix="NT" /> emergency drivers and egress / exit signs.</p>
             <div class="wm-meta">
               <span class="wm-sub-brands"><BrandMark prefix="contr" suffix="LS" /> · <BrandMark prefix="const" suffix="NT" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/lamps" class="wm-card lamps">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Utility &amp; Décor Lamps</h3>
+            <p>T8 linear, vintage filament, and decorative lamps. Retrofit-ready for every socket.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands">Nostalgic · Vintage · <BrandMark prefix="tubul" suffix="RCH" /></span>
               <span class="wm-arrow">Browse →</span>
             </div>
           </div>
@@ -428,7 +439,7 @@ const verticals = [
         <a href="/collections/indoor-industrial" class="fam-card">
           <div class="fam-img dk">
             <span class="fam-tag">DLC Premium</span>
-            <img class="fam-product" src="/images/families/family-titan.png" alt="Titan-II linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
+            <img class="fam-product" src="/images/families/family-titan.jpg" alt="Titan-II linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
           </div>
           <div class="fam-body">
             <div class="fam-eyebrow"><BrandMark prefix="lampar" suffix="RCH" /> · PRO</div>
@@ -613,14 +624,13 @@ const verticals = [
   .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
   .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
   .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat; }
-  /* Subtle bottom gradient — transparent → 30% black, text-shadow handles the rest */
-  .hero-image-stage::after {
+  /* Full-height overlay — keeps subhead and stat strip legible on all slides */
+  .hero-image::after {
     content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.12) 35%, transparent 65%);
-    z-index: 2;
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%);
     pointer-events: none;
+    z-index: 2;
   }
 
   .hero-persistent {
@@ -658,7 +668,7 @@ const verticals = [
     font-weight: 800;
     letter-spacing: -0.035em;
     color: #fff;
-    text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.5);
   }
   .hero-persistent h1 .stop { color: var(--brand); }
   .hero-persistent h1 .accent { color: var(--brand); }
@@ -719,13 +729,13 @@ const verticals = [
   .slot-desc { min-height: 72px; margin-bottom: 26px; }
   .slot-stats { min-height: 80px; margin-bottom: 26px; }
   .slot-cta { min-height: 48px; }
-  /* Product render slot — anchored bottom-right, ~45% panel width */
+  /* Product render slot — anchored bottom-LEFT, 60% larger than original */
   .slot-product-img {
     position: absolute;
     bottom: 0;
-    right: -24px;
-    width: 52%;
-    height: 260px;
+    left: 16px;
+    width: 83%;  /* 52% × 1.6 = 83.2% */
+    height: 416px;  /* 260px × 1.6 = 416px */
     pointer-events: none;
     z-index: 0;
   }
@@ -734,14 +744,14 @@ const verticals = [
     inset: 0;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
   .product-render {
     max-width: 100%;
-    max-height: 240px;
+    max-height: 384px;  /* 240px × 1.6 = 384px */
     object-fit: contain;
-    object-position: bottom right;
-    opacity: 0.92;
+    object-position: bottom left;
+    opacity: 0.75;
     filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
   }
   .product-render-placeholder {
@@ -1038,11 +1048,17 @@ const verticals = [
     color: var(--brand);
     font-weight: 700;
     margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
   }
   .sec-eyebrow::before {
-    content: '— ';
-    color: var(--brand);
-    font-weight: 700;
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--brand);
+    flex-shrink: 0;
   }
   .sec-title {
     font-family: 'Sora', sans-serif;
@@ -1067,7 +1083,7 @@ const verticals = [
      ============================================================ */
   .what-we-make {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
   .wm-card {
@@ -1094,8 +1110,9 @@ const verticals = [
     pointer-events: none;
   }
   .wm-card.indoor .wm-img { background: url('/images/wwm/wwm-indoor.jpg') center/cover no-repeat; }
-  .wm-card.outdoor .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
+  .wm-card.outdoor .wm-img { background: url('/images/wwm/wwm-outdoor.jpg') center/cover no-repeat; }
   .wm-card.controls .wm-img { background: url('/images/wwm/wwm-safety.jpg') center/cover no-repeat; }
+  .wm-card.lamps .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
 
   .wm-body { padding: 28px 28px 32px; }
   .wm-body h3 {
@@ -1221,7 +1238,8 @@ const verticals = [
   }
   .loc-legend, .loc-results {
     background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
     border-radius: var(--radius);
     padding: 20px 22px;
   }
