@@ -1646,10 +1646,12 @@ const verticals = [
   @media (max-width: 1024px) {
     .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   }
-  /* Fix 1 (rev11): Hide line drawings on tablet/mobile — reference template hides below desktop */
-  @media (max-width: 1023px) {
+  /* Fix B (v2.2.1): Hide line drawings on tablet-landscape + mobile — bumped from 1023px to 1199px */
+  @media (max-width: 1199px) {
     .slot-product-img,
-    .product-render {
+    .product-render,
+    .hero-line-drawing,
+    .hero-stage .line-drawing-img {
       display: none !important;
     }
   }
