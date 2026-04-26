@@ -12,30 +12,32 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BrandMark from '../../components/BrandMark.astro';
 
+/* Fix 3 (v2.4.2): canonical application tokens added to each family.
+ * Tokens match checkbox values exactly (kebab-case). Liberty has two tokens. */
 const families = [
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Illuminator',   maxW: '800W',  skus: 11, dlc: true  },
-  { sub: 'AREA LIGHT',      tier: 'PRO',  name: 'Liberty',       maxW: '450W',  skus: 24, dlc: true  },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-II',   maxW: '1200W', skus: 10, dlc: true  },
-  { sub: 'STRING LIGHT',    tier: 'ECO',  name: 'LSL Series',    maxW: 'n/a',   skus: 20, dlc: false },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO+', name: 'Beacon-I',      maxW: '1200W', skus: 3,  dlc: true  },
-  { sub: 'FLOOD LIGHT',     tier: 'PRO+', name: 'Zion-II',       maxW: '300W',  skus: 16, dlc: true  },
-  { sub: 'WALL PACK · ADJUSTABLE', tier: 'ECO', name: 'Anaheim', maxW: '80W',   skus: 10, dlc: true  },
-  { sub: 'WALL PACK · FULL CUTOFF', tier: 'PRO', name: 'Nightwatch', maxW: '100W', skus: 10, dlc: true },
-  { sub: 'AREA LIGHT',      tier: 'ECO',  name: 'Heritage',      maxW: '300W',  skus: 4,  dlc: true  },
-  { sub: 'AREA LIGHT',      tier: 'PRO+', name: 'Rosetta-III',   maxW: '300W',  skus: 8,  dlc: true  },
-  { sub: 'FLOOD LIGHT',     tier: 'ECO',  name: 'Everest',       maxW: '150W',  skus: 8,  dlc: true  },
-  { sub: 'WALL PACK · CLASSIC', tier: 'ECO', name: 'Guardian',   maxW: '120W',  skus: 4,  dlc: true  },
-  { sub: 'WALL PACK · CLASSIC', tier: 'PRO', name: 'Sentinel',   maxW: '120W',  skus: 5,  dlc: true  },
-  { sub: 'WALL PACK · FULL CUTOFF', tier: 'ECO', name: 'Watchtower', maxW: '120W', skus: 5, dlc: true },
-  { sub: 'CANOPY',          tier: 'PRO',  name: 'Pathfinder',    maxW: '110W',  skus: 4,  dlc: true  },
-  { sub: 'CYLINDER',        tier: 'PRO',  name: 'Aura',          maxW: '45W',   skus: 4,  dlc: false },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-I',    maxW: '1200W', skus: 2,  dlc: true  },
-  { sub: 'WALL PACK · ARCHITECTURAL SLIM', tier: 'ECO', name: 'Shield', maxW: '120W', skus: 4, dlc: true },
-  { sub: 'DOCK LIGHT',      tier: 'PRO',  name: 'Canadarm',      maxW: '60W',   skus: 2,  dlc: false },
-  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Wedge-I',   maxW: '20W',   skus: 4,  dlc: true  },
-  { sub: 'WALL PACK · ADJUSTABLE', tier: 'PRO', name: 'Atlanta', maxW: '120W',  skus: 2,  dlc: true  },
-  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Ramparts',  maxW: '20W',   skus: 2,  dlc: true  },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-III',  maxW: '480W',  skus: 1,  dlc: true  },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Illuminator',   maxW: '800W',  skus: 11, dlc: true,  apps: 'sports-lighting' },
+  { sub: 'AREA LIGHT',      tier: 'PRO',  name: 'Liberty',       maxW: '450W',  skus: 25, dlc: true,  apps: 'area-light wall-pack' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-II',   maxW: '1200W', skus: 10, dlc: true,  apps: 'sports-lighting' },
+  { sub: 'STRING LIGHT',    tier: 'ECO',  name: 'LSL Series',    maxW: 'n/a',   skus: 20, dlc: false, apps: 'string-light' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO+', name: 'Beacon-I',      maxW: '1200W', skus: 3,  dlc: true,  apps: 'sports-lighting' },
+  { sub: 'FLOOD LIGHT',     tier: 'PRO+', name: 'Zion-II',       maxW: '300W',  skus: 16, dlc: true,  apps: 'flood-light' },
+  { sub: 'WALL PACK · ADJUSTABLE', tier: 'ECO', name: 'Anaheim', maxW: '80W',   skus: 10, dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK · FULL CUTOFF', tier: 'PRO', name: 'Nightwatch', maxW: '100W', skus: 10, dlc: true, apps: 'wall-pack' },
+  { sub: 'AREA LIGHT',      tier: 'ECO',  name: 'Heritage',      maxW: '300W',  skus: 4,  dlc: true,  apps: 'area-light' },
+  { sub: 'AREA LIGHT',      tier: 'PRO+', name: 'Rosetta-III',   maxW: '300W',  skus: 8,  dlc: true,  apps: 'area-light' },
+  { sub: 'FLOOD LIGHT',     tier: 'ECO',  name: 'Everest',       maxW: '150W',  skus: 8,  dlc: true,  apps: 'flood-light' },
+  { sub: 'WALL PACK · CLASSIC', tier: 'ECO', name: 'Guardian',   maxW: '120W',  skus: 4,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK · CLASSIC', tier: 'PRO', name: 'Sentinel',   maxW: '120W',  skus: 5,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK · FULL CUTOFF', tier: 'ECO', name: 'Watchtower', maxW: '120W', skus: 5, dlc: true, apps: 'wall-pack' },
+  { sub: 'CANOPY',          tier: 'PRO',  name: 'Pathfinder',    maxW: '110W',  skus: 4,  dlc: true,  apps: 'canopy' },
+  { sub: 'CYLINDER',        tier: 'PRO',  name: 'Aura',          maxW: '45W',   skus: 4,  dlc: false, apps: 'cylinder' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-I',    maxW: '1200W', skus: 2,  dlc: true,  apps: 'sports-lighting' },
+  { sub: 'WALL PACK · ARCHITECTURAL SLIM', tier: 'ECO', name: 'Shield', maxW: '120W', skus: 4, dlc: true, apps: 'wall-pack' },
+  { sub: 'DOCK LIGHT',      tier: 'PRO',  name: 'Canadarm',      maxW: '60W',   skus: 2,  dlc: false, apps: 'dock-light' },
+  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Wedge-I',   maxW: '20W',   skus: 4,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK · ADJUSTABLE', tier: 'PRO', name: 'Atlanta', maxW: '120W',  skus: 2,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Ramparts',  maxW: '20W',   skus: 2,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-III',  maxW: '480W',  skus: 1,  dlc: true,  apps: 'sports-lighting' },
 ];
 
 const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107', 'ECO': '#5B8DEF' };
@@ -122,14 +124,13 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="app-name">Sports Lighting</div>
           <div class="app-sku">61 SKUs</div>
         </div>
-
         <!-- Area Light -->
         <div class="app-tile" data-app="Area Light">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="14" y1="4" x2="14" y2="14" stroke="#8a8f99" stroke-width="1.5"/>
-            <rect x="6" y="14" width="16" height="4" rx="1" stroke="#8a8f99" stroke-width="1.2"/>
-            <path d="M8 18 L6 24 M20 18 L22 24" stroke="#8a8f99" stroke-width="1.2"/>
-            <line x1="6" y1="24" x2="22" y2="24" stroke="#8a8f99" stroke-width="1.2"/>
+          <!-- Fix 4 (v2.4.2): parking-lot pole with arm + fixture -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <line x1="12" y1="3" x2="12" y2="18"/>
+            <line x1="12" y1="5" x2="19" y2="5"/>
+            <rect x="17" y="5" width="4" height="3"/>
           </svg>
           <div class="app-name">Area Light</div>
           <div class="app-sku">90 SKUs</div>
@@ -137,10 +138,12 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
         <!-- Wall Pack -->
         <div class="app-tile" data-app="Wall Pack">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="8" width="18" height="12" rx="2" stroke="#8a8f99" stroke-width="1.5"/>
-            <line x1="5" y1="20" x2="23" y2="20" stroke="#8a8f99" stroke-width="1.2"/>
-            <path d="M9 20 L7 26 M19 20 L21 26" stroke="#8a8f99" stroke-width="1.2"/>
+          <!-- Fix 4 (v2.4.2): vertical wall edge + protruding fixture -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <line x1="6" y1="3" x2="6" y2="21"/>
+            <rect x="6" y="9" width="12" height="6"/>
+            <line x1="9" y1="15" x2="9" y2="18"/>
+            <line x1="15" y1="15" x2="15" y2="18"/>
           </svg>
           <div class="app-name">Wall Pack</div>
           <div class="app-sku">52 SKUs</div>
@@ -148,9 +151,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
         <!-- Flood Light -->
         <div class="app-tile" data-app="Flood Light">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 4 L24 22 L4 22 Z" stroke="#8a8f99" stroke-width="1.5" stroke-linejoin="round"/>
-            <line x1="14" y1="22" x2="14" y2="26" stroke="#8a8f99" stroke-width="1.2"/>
+          <!-- Fix 4 (v2.4.2): rect fixture at top + inverted triangle beam -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="3" width="6" height="3"/>
+            <path d="M 6 18 L 12 6 L 18 18 Z"/>
           </svg>
           <div class="app-name">Flood Light</div>
           <div class="app-sku">24 SKUs</div>
@@ -170,10 +174,12 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
         <!-- Canopy -->
         <div class="app-tile" data-app="Canopy">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 18 Q14 6 24 18" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
-            <line x1="4" y1="18" x2="24" y2="18" stroke="#8a8f99" stroke-width="1.2"/>
-            <rect x="11" y="18" width="6" height="4" rx="1" stroke="#8a8f99" stroke-width="1.2"/>
+          <!-- Fix 4 (v2.4.2): inverted-U dome + hanging luminaire -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 3 8 Q 12 3 21 8"/>
+            <line x1="3" y1="8" x2="3" y2="11"/>
+            <line x1="21" y1="8" x2="21" y2="11"/>
+            <circle cx="12" cy="14" r="2"/>
           </svg>
           <div class="app-name">Canopy</div>
           <div class="app-sku">7 SKUs</div>
@@ -181,8 +187,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
         <!-- Cylinder -->
         <div class="app-tile" data-app="Cylinder">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="4" width="8" height="20" rx="4" stroke="#8a8f99" stroke-width="1.5"/>
+          <!-- Fix 4 (v2.4.2): vertical pill/capsule + downlight beam -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="3" width="6" height="14" rx="3"/>
+            <line x1="10" y1="20" x2="14" y2="20"/>
           </svg>
           <div class="app-name">Cylinder</div>
           <div class="app-sku">4 SKUs</div>
@@ -190,10 +198,11 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
         <!-- Dock Light -->
         <div class="app-tile" data-app="Dock Light">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="14" y1="4" x2="14" y2="14" stroke="#8a8f99" stroke-width="1.5"/>
-            <path d="M14 14 Q20 14 22 20" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
-            <circle cx="22" cy="22" r="3" stroke="#8a8f99" stroke-width="1.2"/>
+          <!-- Fix 4 (v2.4.2): lamp head + articulating arm -->
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="8" r="3"/>
+            <line x1="15" y1="10" x2="6" y2="20"/>
+            <circle cx="6" cy="20" r="1.5"/>
           </svg>
           <div class="app-name">Dock Light</div>
           <div class="app-sku">4 SKUs</div>
@@ -232,7 +241,24 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
       <p class="sec-sub">The most-specified <BrandMark prefix="luxo" suffix="RCH" /> families across stadium, parking, wall, and flood applications.</p>
       <div class="featured-grid">
 
-        <!-- Card 1: Illuminator — line drawing provided -->
+        <!-- Card 1: Aura — grey block placeholder (Fix 1 v2.4.2) -->
+        <div class="fam-card">
+          <div class="fam-card-top">
+            <span class="fam-sub-tag">CYLINDER</span>
+            <span class="tier-badge tier-pro">PRO</span>
+          </div>
+          <div class="fam-img-placeholder">Aura</div>
+          <div class="fam-card-bottom">
+            <div class="fam-info">
+              <div class="fam-name">Aura</div>
+              <div class="fam-meta">45W max · 4 SKUs</div>
+              <span class="dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="fam-view">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Illuminator — line drawing (Fix 1 v2.4.2) -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">SPORTS LIGHTING</span>
@@ -251,7 +277,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           </div>
         </div>
 
-        <!-- Card 2: Liberty — line drawing provided -->
+        <!-- Card 3: Liberty — line drawing (Fix 1 v2.4.2, SKU 24→25) -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">AREA LIGHT</span>
@@ -263,48 +289,14 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="fam-card-bottom">
             <div class="fam-info">
               <div class="fam-name">Liberty</div>
-              <div class="fam-meta">450W max · 24 SKUs</div>
+              <div class="fam-meta">450W max · 25 SKUs</div>
               <span class="dlc-pill">DLC</span>
             </div>
             <a href="#" class="fam-view">VIEW →</a>
           </div>
         </div>
 
-        <!-- Card 3: Beacon-I — grey block placeholder -->
-        <div class="fam-card">
-          <div class="fam-card-top">
-            <span class="fam-sub-tag">SPORTS LIGHTING</span>
-            <span class="tier-badge tier-proplus">PRO+</span>
-          </div>
-          <div class="fam-img-placeholder">Beacon-I</div>
-          <div class="fam-card-bottom">
-            <div class="fam-info">
-              <div class="fam-name">Beacon-I</div>
-              <div class="fam-meta">1200W max · 3 SKUs</div>
-              <span class="dlc-pill">DLC</span>
-            </div>
-            <a href="#" class="fam-view">VIEW →</a>
-          </div>
-        </div>
-
-        <!-- Card 4: Zion-II — grey block placeholder -->
-        <div class="fam-card">
-          <div class="fam-card-top">
-            <span class="fam-sub-tag">FLOOD LIGHT</span>
-            <span class="tier-badge tier-proplus">PRO+</span>
-          </div>
-          <div class="fam-img-placeholder">Zion-II</div>
-          <div class="fam-card-bottom">
-            <div class="fam-info">
-              <div class="fam-name">Zion-II</div>
-              <div class="fam-meta">300W max · 16 SKUs</div>
-              <span class="dlc-pill">DLC</span>
-            </div>
-            <a href="#" class="fam-view">VIEW →</a>
-          </div>
-        </div>
-
-        <!-- Card 5: Nightwatch — grey block placeholder -->
+        <!-- Card 4: Nightwatch — grey block placeholder (Fix 1 v2.4.2) -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">WALL PACK · FULL CUTOFF</span>
@@ -315,6 +307,23 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
             <div class="fam-info">
               <div class="fam-name">Nightwatch</div>
               <div class="fam-meta">100W max · 10 SKUs</div>
+              <span class="dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="fam-view">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 5: Sentinel — grey block placeholder (Fix 1 v2.4.2) -->
+        <div class="fam-card">
+          <div class="fam-card-top">
+            <span class="fam-sub-tag">WALL PACK · CLASSIC</span>
+            <span class="tier-badge tier-pro">PRO</span>
+          </div>
+          <div class="fam-img-placeholder">Sentinel</div>
+          <div class="fam-card-bottom">
+            <div class="fam-info">
+              <div class="fam-name">Sentinel</div>
+              <div class="fam-meta">120W max · 5 SKUs</div>
               <span class="dlc-pill">DLC</span>
             </div>
             <a href="#" class="fam-view">VIEW →</a>
@@ -344,14 +353,15 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="filter-group">
             <div class="filter-group-label">Application <span class="fg-arrow">▲</span></div>
             <div class="filter-options">
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Sports Lighting" /> Sports Lighting <span class="fg-count">(6)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Area Light" /> Area Light <span class="fg-count">(4)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Wall Pack" /> Wall Pack <span class="fg-count">(10)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Flood Light" /> Flood Light <span class="fg-count">(2)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="String Light" /> String Light <span class="fg-count">(1)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Canopy" /> Canopy <span class="fg-count">(1)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Cylinder" /> Cylinder <span class="fg-count">(1)</span></label>
-              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Dock Light" /> Dock Light <span class="fg-count">(1)</span></label>
+              <!-- Fix 3 (v2.4.2): canonical kebab-case tokens, name=filter-application, corrected counts -->
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="sports-lighting" /> Sports Lighting <span class="fg-count">(5)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="area-light" /> Area Light <span class="fg-count">(4)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="wall-pack" /> Wall Pack <span class="fg-count">(11)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="flood-light" /> Flood Light <span class="fg-count">(2)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="string-light" /> String Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="canopy" /> Canopy <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="cylinder" /> Cylinder <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="dock-light" /> Dock Light <span class="fg-count">(1)</span></label>
             </div>
           </div>
 
@@ -439,7 +449,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
           <div class="all-fam-grid" id="all-fam-grid">
             {families.map((f) => (
-              <div class="af-card" data-application={f.sub.split(' · ')[0]}>
+              <div class="family-card af-card" data-application={f.apps}>
                 <div class="af-card-top">
                   <span class="fam-sub-tag">{f.sub}</span>
                   <span class={`tier-badge tier-${f.tier === 'PRO+' ? 'proplus' : f.tier.toLowerCase()}`}>{f.tier}</span>
@@ -1261,67 +1271,158 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     .rb-div { display: none; }
     .legacy-box { padding: 24px 20px; }
   }
-  /* Fix 4 (v2.4.1): hidden af-cards */
-  .af-card[hidden] { display: none !important; }
+  /* Fix 3 (v2.4.2): hidden family-cards */
+  .family-card[style*="display: none"] { display: none !important; }
+  /* Fix 5 (v2.4.2): sticky right-rail anchor nav */
+  .anchor-nav {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 900;
+  }
+  @media (max-width: 1023px) { .anchor-nav { display: none; } }
+  .anchor-dot-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .anchor-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.28);
+    cursor: pointer;
+    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+  }
+  .anchor-dot.active {
+    width: 10px;
+    height: 10px;
+    background: var(--brand, #F32740);
+  }
+  .anchor-dot-wrap:hover .anchor-dot {
+    background: var(--brand, #F32740);
+  }
+  .anchor-label {
+    position: absolute;
+    right: 18px;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0,0,0,0.72);
+    padding: 3px 8px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .anchor-dot-wrap:hover .anchor-label { opacity: 1; }
 </style>
 
+<!-- Fix 5 (v2.4.2): sticky right-rail anchor nav -->
+<nav class="anchor-nav" aria-label="Page sections">
+  <div class="anchor-dot-wrap"><span class="anchor-label">Overview</span><div class="anchor-dot" data-target="sec-hero"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Quick stats</span><div class="anchor-dot" data-target="sec-stats"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Browse by application</span><div class="anchor-dot" data-target="sec-apps"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Featured families</span><div class="anchor-dot" data-target="sec-featured"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">All families</span><div class="anchor-dot" data-target="sec-all-families"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Legacy</span><div class="anchor-dot" data-target="sec-legacy"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Get started</span><div class="anchor-dot" data-target="sec-get-started"></div></div>
+  <div class="anchor-dot-wrap"><span class="anchor-label">Related collections</span><div class="anchor-dot" data-target="sec-related"></div></div>
+</nav>
+
 <script>
-  /* Fix 4 (v2.4.1) - Application filter.
-   * Clicking an app tile or a sidebar checkbox filters the all-families grid.
-   * Tile click also scrolls to #sec-all-families.
-   * Reset all clears all active filters. */
+  /* Fix 3 (v2.4.2) - Application filter (canonical kebab-case tokens).
+   * Checkbox name=filter-application, value=kebab-case token.
+   * Each .family-card has data-application with space-separated tokens.
+   * OR logic: card visible if any checked token is in its token list. */
+  function applyApplicationFilter() {
+    var checked = Array.from(document.querySelectorAll('input[name="filter-application"]:checked'))
+      .map(function (cb) { return cb.value; });
+    var cards = document.querySelectorAll('.family-card[data-application]');
+    var visibleCount = 0;
+    cards.forEach(function (card) {
+      var apps = card.dataset.application.split(/\s+/);
+      var visible = checked.length === 0 || checked.some(function (c) { return apps.indexOf(c) !== -1; });
+      card.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+    var countEl = document.querySelector('.grid-count');
+    if (countEl) {
+      countEl.textContent = visibleCount === 23
+        ? 'Showing 23 families'
+        : 'Showing ' + visibleCount + ' families';
+    }
+    /* Sync app tile active state */
+    document.querySelectorAll('.app-tile[data-app]').forEach(function (tile) {
+      var token = tile.dataset.app
+        .toLowerCase()
+        .replace(/\s+/g, '-');
+      tile.classList.toggle('is-active', checked.indexOf(token) !== -1);
+    });
+  }
+
+  document.querySelectorAll('input[name="filter-application"]').forEach(function (cb) {
+    cb.addEventListener('change', applyApplicationFilter);
+  });
+
+  var resetBtn = document.querySelector('.filter-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelectorAll('input[name="filter-application"]:checked').forEach(function (cb) {
+        cb.checked = false;
+      });
+      applyApplicationFilter();
+    });
+  }
+
+  /* App tile click: set matching checkbox + apply + scroll */
+  document.querySelectorAll('.app-tile[data-app]').forEach(function (tile) {
+    tile.addEventListener('click', function () {
+      var token = tile.dataset.app.toLowerCase().replace(/\s+/g, '-');
+      var cb = document.querySelector('input[name="filter-application"][value="' + token + '"]');
+      if (cb) { cb.checked = !cb.checked; }
+      applyApplicationFilter();
+      var sec = document.getElementById('sec-all-families');
+      if (sec) { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  /* Fix 5 (v2.4.2) - Sticky right-rail anchor nav.
+   * Dots scroll to sections; active dot tracks viewport via IntersectionObserver. */
   (function () {
-    const tiles = Array.from(document.querySelectorAll('.app-tile[data-app]'));
-    const cbs   = Array.from(document.querySelectorAll('.app-filter-cb'));
-    const cards = Array.from(document.querySelectorAll('#all-fam-grid .af-card[data-application]'));
-    const countEl = document.querySelector('.grid-count');
-    const resetBtn = document.querySelector('.filter-reset');
-    const allFamSection = document.getElementById('sec-all-families');
+    var dots = document.querySelectorAll('.anchor-dot[data-target]');
 
-    function getActive() {
-      return cbs.filter(cb => cb.checked).map(cb => cb.value);
-    }
-
-    function applyFilter() {
-      const active = getActive();
-      let shown = 0;
-      cards.forEach(function (card) {
-        const app = card.dataset.application || '';
-        const match = active.length === 0 || active.some(function (a) { return app.startsWith(a); });
-        if (match) { card.removeAttribute('hidden'); shown++; }
-        else { card.setAttribute('hidden', ''); }
-      });
-      if (countEl) {
-        countEl.textContent = active.length === 0
-          ? 'Showing 23 families'
-          : 'Showing ' + shown + ' of 23 families';
-      }
-      tiles.forEach(function (tile) {
-        const app = tile.dataset.app || '';
-        tile.classList.toggle('is-active', active.indexOf(app) !== -1);
-      });
-    }
-
-    tiles.forEach(function (tile) {
-      tile.addEventListener('click', function () {
-        const app = tile.dataset.app;
-        const cb = cbs.find(function (c) { return c.value === app; });
-        if (cb) { cb.checked = !cb.checked; }
-        applyFilter();
-        if (allFamSection) {
-          allFamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        var sec = document.getElementById(dot.dataset.target);
+        if (sec) { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
 
-    cbs.forEach(function (cb) { cb.addEventListener('change', applyFilter); });
+    var sections = document.querySelectorAll('section[id]');
+    if (!sections.length) return;
 
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function (e) {
-        e.preventDefault();
-        cbs.forEach(function (cb) { cb.checked = false; });
-        applyFilter();
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          dots.forEach(function (d) {
+            d.classList.toggle('active', d.dataset.target === id);
+          });
+        }
       });
-    }
+    }, { threshold: 0.3, rootMargin: '-20% 0% -20% 0%' });
+
+    sections.forEach(function (s) { observer.observe(s); });
   })();
 </script>
