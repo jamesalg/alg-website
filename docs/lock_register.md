@@ -25,3 +25,13 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Date | Branch | Paths | Reason |
 |---|---|---|---|
 | 2026-04-26 | reopen/v2.1.0-sticky-and-tablet | Header.astro, index.astro | Global sticky header + tablet-landscape line-drawing hide |
+
+## v2.3.0 — locked 2026-04-26
+
+| Component | Path(s) | Lock reason |
+|---|---|---|
+| Distributor page | `src/pages/distributor.astro` | Pixel-locked persona page; template for all persona pages |
+| Specifier page | `src/pages/specifier.astro` | Pixel-locked persona page |
+| Contractor page | `src/pages/contractor.astro` | Pixel-locked persona page |
+| ESCO page | `src/pages/esco.astro` | Pixel-locked persona page |
+| Facility Manager page | `src/pages/facility-manager.astro` | Pixel-locked persona page |
