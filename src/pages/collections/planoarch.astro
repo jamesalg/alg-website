@@ -1,0 +1,1208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandMark from '../../components/BrandMark.astro';
+
+/* v2.5.0: planoⒶRCH collection page.
+ * Pixel-by-pixel mirror of luxoarch.astro structure.
+ * Sort: ECO → PRO → PRO+, A→Z within tier (build-time, per v2.4.3 canonical pattern). */
+const _TIER_ORDER: Record<string, number> = { 'ECO': 0, 'PRO': 1, 'PRO+': 2 };
+const families = ([
+  { sub: 'ARCHITECTURAL LINEAR', tier: 'ECO',  name: 'Lara',              maxW: '60W',  skus: 6,  dlc: true,  apps: 'architectural-linear' },
+  { sub: 'PANEL',                tier: 'ECO',  name: 'proⒶRCH-II',       maxW: '30W',  skus: 7,  dlc: true,  apps: 'panel' },
+  { sub: 'TROFFER',              tier: 'ECO',  name: 'proⒶRCH-T1',       maxW: '26W',  skus: 13, dlc: true,  apps: 'troffer' },
+  { sub: 'TROFFER',              tier: 'ECO',  name: 'selectⒶRCH',       maxW: '40W',  skus: 6,  dlc: true,  apps: 'troffer' },
+  { sub: 'DOWNLIGHT',            tier: 'ECO',  name: 'Solstice',          maxW: '22W',  skus: 7,  dlc: true,  apps: 'downlight' },
+  { sub: 'TRACK LIGHT',          tier: 'ECO',  name: 'Trackstar',         maxW: '20W',  skus: 4,  dlc: false, apps: 'track-light' },
+  { sub: 'TROFFER',              tier: 'PRO',  name: 'proⒶRCH-T2',       maxW: '30W',  skus: 2,  dlc: true,  apps: 'troffer' },
+  { sub: 'RETROFIT PANEL',       tier: 'PRO',  name: 'retroⒶRCH-P1',     maxW: '26W',  skus: 12, dlc: true,  apps: 'retrofit-panel' },
+  { sub: 'RETROFIT TROFFER',     tier: 'PRO',  name: 'retroⒶRCH-T1',     maxW: '26W',  skus: 12, dlc: true,  apps: 'retrofit-troffer' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO',  name: 'Solstice SafeZone', maxW: '26W',  skus: 4,  dlc: true,  apps: 'downlight' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO',  name: 'Stellar',           maxW: '22W',  skus: 1,  dlc: true,  apps: 'downlight' },
+  { sub: 'WRAPAROUND',           tier: 'PRO',  name: 'Waymark',           maxW: '35W',  skus: 4,  dlc: true,  apps: 'wraparound' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Astra',             maxW: '18W',  skus: 27, dlc: true,  apps: 'downlight' },
+  { sub: 'ARCHITECTURAL LINEAR', tier: 'PRO+', name: 'Luna',              maxW: '50W',  skus: 5,  dlc: true,  apps: 'architectural-linear' },
+  { sub: 'TROFFER',              tier: 'PRO+', name: 'Luxmark',           maxW: '35W',  skus: 6,  dlc: true,  apps: 'troffer' },
+  { sub: 'PANEL',                tier: 'PRO+', name: 'proⒶRCH-III',      maxW: '30W',  skus: 13, dlc: true,  apps: 'panel' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Spectra',           maxW: '30W',  skus: 3,  dlc: true,  apps: 'downlight' },
+] as const).slice().sort((a: any, b: any) => {
+  const td = (_TIER_ORDER[a.tier] ?? 99) - (_TIER_ORDER[b.tier] ?? 99);
+  return td !== 0 ? td : a.name.localeCompare(b.name);
+});
+
+const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107', 'ECO': '#5B8DEF' };
+---
+<BaseLayout
+  title="planoARCH Indoor Collection — Archipelago Lighting Group"
+  description="Commercial indoor lighting for offices, retail, healthcare, education, and hospitality. 17 active families, 132 active SKUs, ECO through PRO+."
+  bodyClass="page-collection page-planoarch"
+>
+
+  <!-- §1 BREADCRUMB -->
+  <nav class="breadcrumb-band" aria-label="Breadcrumb">
+    <div class="bc-inner">
+      <a href="/" class="bc-link">Home</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections" class="bc-link">Products</a>
+      <span class="bc-sep">›</span>
+      <a href="/collections/indoor" class="bc-link">Indoor</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">plano<span class="aa">Ⓐ</span>RCH</span>
+    </div>
+  </nav>
+
+  <!-- §2 HERO -->
+  <section class="persona-hero plano-hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-text-col">
+        <span class="hero-eyebrow">INDOOR · COLLECTION</span>
+        <h1 class="hero-wordmark">PLANO<span class="aa">Ⓐ</span>rch</h1>
+        <p class="hero-desc">Commercial indoor lighting for offices, retail, healthcare, education, and hospitality. 17 active families, 132 active SKUs, ECO through PRO+.</p>
+        <div class="hero-pills">
+          <span class="hero-pill">DLC PREMIUM</span>
+          <span class="hero-pill">TAA AVAILABLE</span>
+          <span class="hero-pill">5 US WAREHOUSES</span>
+          <span class="hero-pill">3-DAY DELIVERY</span>
+          <span class="hero-pill">8 SUB-CATEGORIES</span>
+        </div>
+      </div>
+      <div class="hero-photo-placeholder"></div>
+    </div>
+  </section>
+
+  <!-- §3 STAT STRIP -->
+  <section class="stat-strip" id="stats">
+    <div class="stat-strip-inner">
+      <div class="ss-stat"><span class="ss-num">17</span><span class="ss-lbl">Fixture Families</span></div>
+      <div class="ss-stat"><span class="ss-num">132</span><span class="ss-lbl">Active SKUs</span></div>
+      <div class="ss-stat"><span class="ss-num">8</span><span class="ss-lbl">Sub-categories</span></div>
+      <div class="ss-stat"><span class="ss-num ss-red">DLC</span><span class="ss-lbl">Premium Listed</span></div>
+    </div>
+  </section>
+
+  <!-- §4 BROWSE BY SUB-CATEGORY -->
+  <section class="app-browse" id="apps">
+    <div class="section-inner">
+      <span class="sec-eyebrow">BROWSE BY SUB-CATEGORY</span>
+      <h2 class="sec-h2">Eight indoor sub-categories.</h2>
+      <div class="app-tile-grid">
+
+        <button class="app-tile" data-app="downlight" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M 8 12 L 6 20 M 16 12 L 18 20"/>
+          </svg>
+          <span class="app-label">Downlight</span>
+          <span class="app-count">42 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="troffer" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="12" rx="1"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <line x1="3" y1="14" x2="21" y2="14"/>
+          </svg>
+          <span class="app-label">Troffer</span>
+          <span class="app-count">27 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="panel" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="9" width="18" height="6" rx="0.5"/>
+          </svg>
+          <span class="app-label">Panel</span>
+          <span class="app-count">20 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="retrofit-panel" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="11" width="14" height="4" rx="0.5"/>
+            <path d="M 18 8 L 21 8 L 21 11 M 21 8 L 18 11"/>
+          </svg>
+          <span class="app-label">Retrofit Panel</span>
+          <span class="app-count">12 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="retrofit-troffer" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="9" width="14" height="8" rx="1"/>
+            <line x1="3" y1="13" x2="17" y2="13"/>
+            <path d="M 18 5 L 21 5 L 21 8 M 21 5 L 18 8"/>
+          </svg>
+          <span class="app-label">Retrofit Troffer</span>
+          <span class="app-count">12 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="architectural-linear" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="2" y="11" width="20" height="2" rx="1"/>
+          </svg>
+          <span class="app-label">Architectural Linear</span>
+          <span class="app-count">11 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="wraparound" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="4" y="8" width="16" height="8" rx="3"/>
+          </svg>
+          <span class="app-label">Wraparound</span>
+          <span class="app-count">4 SKUs</span>
+        </button>
+
+        <button class="app-tile" data-app="track-light" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <line x1="3" y1="8" x2="21" y2="8"/>
+            <circle cx="7" cy="13" r="2"/>
+            <circle cx="12" cy="13" r="2"/>
+            <circle cx="17" cy="13" r="2"/>
+          </svg>
+          <span class="app-label">Track Light</span>
+          <span class="app-count">4 SKUs</span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 RED STAT BANNER -->
+  <section class="red-stat-banner">
+    <div class="rsb-inner">
+      <div class="rsb-stat"><span class="rsb-num">17</span><span class="rsb-lbl">Families</span></div>
+      <div class="rsb-stat"><span class="rsb-num">132</span><span class="rsb-lbl">Active SKUs</span></div>
+      <div class="rsb-stat"><span class="rsb-num">8</span><span class="rsb-lbl">Sub-categories</span></div>
+      <div class="rsb-stat"><span class="rsb-num">DLC</span><span class="rsb-lbl">Premium</span></div>
+      <div class="rsb-stat"><span class="rsb-num">TAA</span><span class="rsb-lbl">Available</span></div>
+      <div class="rsb-stat"><span class="rsb-num">5 US</span><span class="rsb-lbl">Warehouses</span></div>
+    </div>
+  </section>
+
+  <!-- §6 FEATURED FAMILIES -->
+  <section class="featured-fam" id="highlights">
+    <div class="section-inner">
+      <span class="sec-eyebrow">FEATURED FAMILIES</span>
+      <h2 class="sec-h2">Five families worth specifying first.</h2>
+      <p class="sec-sub">The most-specified plano<span class="aa">Ⓐ</span>RCH families across downlight, linear, troffer, panel, and track.</p>
+      <div class="feat-fam-grid">
+
+        <!-- Card 1: Astra PRO+ Downlight -->
+        <div class="feat-card">
+          <div class="feat-card-img grey-block">
+            <span class="tier-badge pro-plus">PRO+</span>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-sub">DOWNLIGHT</span>
+            <h3 class="feat-name">Astra</h3>
+            <div class="feat-meta">
+              <span class="feat-maxw">18W max</span>
+              <span class="feat-skus">27 SKUs</span>
+              <span class="feat-dlc dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="feat-cta">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Luna PRO+ Architectural Linear -->
+        <div class="feat-card">
+          <div class="feat-card-img grey-block">
+            <span class="tier-badge pro-plus">PRO+</span>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-sub">ARCHITECTURAL LINEAR</span>
+            <h3 class="feat-name">Luna</h3>
+            <div class="feat-meta">
+              <span class="feat-maxw">50W max</span>
+              <span class="feat-skus">5 SKUs</span>
+              <span class="feat-dlc dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="feat-cta">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Luxmark PRO+ Troffer -->
+        <div class="feat-card">
+          <div class="feat-card-img grey-block">
+            <span class="tier-badge pro-plus">PRO+</span>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-sub">TROFFER</span>
+            <h3 class="feat-name">Luxmark</h3>
+            <div class="feat-meta">
+              <span class="feat-maxw">35W max</span>
+              <span class="feat-skus">6 SKUs</span>
+              <span class="feat-dlc dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="feat-cta">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 4: proⒶRCH-III PRO+ Panel -->
+        <div class="feat-card">
+          <div class="feat-card-img grey-block">
+            <span class="tier-badge pro-plus">PRO+</span>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-sub">PANEL</span>
+            <h3 class="feat-name">pro<span class="aa">Ⓐ</span>RCH-III</h3>
+            <div class="feat-meta">
+              <span class="feat-maxw">30W max</span>
+              <span class="feat-skus">13 SKUs</span>
+              <span class="feat-dlc dlc-pill">DLC</span>
+            </div>
+            <a href="#" class="feat-cta">VIEW →</a>
+          </div>
+        </div>
+
+        <!-- Card 5: Trackstar ECO Track Light -->
+        <div class="feat-card">
+          <div class="feat-card-img grey-block">
+            <span class="tier-badge eco">ECO</span>
+          </div>
+          <div class="feat-card-body">
+            <span class="feat-sub">TRACK LIGHT</span>
+            <h3 class="feat-name">Trackstar</h3>
+            <div class="feat-meta">
+              <span class="feat-maxw">20W max</span>
+              <span class="feat-skus">4 SKUs</span>
+            </div>
+            <a href="#" class="feat-cta">VIEW →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- §7 ALL FAMILIES -->
+  <section class="all-families" id="families">
+    <div class="section-inner af-layout">
+
+      <!-- LEFT: Filter rail -->
+      <aside class="filter-rail">
+        <div class="filter-group">
+          <h3 class="filter-group-title">Sub-category</h3>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="downlight"> Downlight <span class="filter-count">(5)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="troffer"> Troffer <span class="filter-count">(4)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="panel"> Panel <span class="filter-count">(2)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-panel"> Retrofit Panel <span class="filter-count">(1)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-troffer"> Retrofit Troffer <span class="filter-count">(1)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="architectural-linear"> Architectural Linear <span class="filter-count">(2)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="wraparound"> Wraparound <span class="filter-count">(1)</span></label>
+          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="track-light"> Track Light <span class="filter-count">(1)</span></label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">Echelon</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> ECO <span class="filter-count">(6)</span></label>
+          <label class="filter-opt"><input type="checkbox" disabled> PRO <span class="filter-count">(6)</span></label>
+          <label class="filter-opt"><input type="checkbox" disabled> PRO+ <span class="filter-count">(5)</span></label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">Max Wattage</h3>
+          <div class="filter-range-wrap">
+            <input type="range" min="10" max="60" value="60" disabled class="filter-range" />
+            <div class="filter-range-labels"><span>10W</span><span>60W</span></div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">CCT</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> 2700K</label>
+          <label class="filter-opt"><input type="checkbox" disabled> 3000K</label>
+          <label class="filter-opt"><input type="checkbox" disabled> 3500K</label>
+          <label class="filter-opt"><input type="checkbox" disabled> 4000K</label>
+          <label class="filter-opt"><input type="checkbox" disabled> 5000K</label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">Voltage</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> 120-277V</label>
+          <label class="filter-opt"><input type="checkbox" disabled> 120V Only</label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">DLC</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> DLC Premium</label>
+          <label class="filter-opt"><input type="checkbox" disabled> DLC Standard</label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">TAA Compliant</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> TAA Compliant</label>
+        </div>
+        <div class="filter-group">
+          <h3 class="filter-group-title">Mount Type</h3>
+          <label class="filter-opt"><input type="checkbox" disabled> Recessed</label>
+          <label class="filter-opt"><input type="checkbox" disabled> Surface</label>
+          <label class="filter-opt"><input type="checkbox" disabled> Suspended</label>
+          <label class="filter-opt"><input type="checkbox" disabled> Track</label>
+        </div>
+        <button class="filter-reset" id="reset-filter">Reset all</button>
+      </aside>
+
+      <!-- RIGHT: Grid -->
+      <div class="af-grid-col">
+        <div class="grid-header">
+          <span class="grid-count" id="grid-count">Showing 17 families</span>
+          <div class="sort-wrap">
+            <select class="sort-select" disabled>
+              <option>Sort: ECO → PRO+</option>
+              <option>Wattage Low to High</option>
+              <option>Wattage High to Low</option>
+              <option>A to Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="all-fam-grid" id="all-fam-grid">
+          {families.map((f: any) => (
+            <div class="af-card" data-subcategory={f.apps}>
+              <div class="af-img grey-block">
+                <span class="tier-badge" style={`background:${f.tier === 'PRO+' ? '#F32740' : f.tier === 'PRO' ? '#fff' : 'rgba(255,255,255,0.10)'}; color:${f.tier === 'PRO+' ? '#fff' : f.tier === 'PRO' ? '#F32740' : '#fff'}; border:${f.tier === 'PRO' ? '1.5px solid #F32740' : 'none'}`}>{f.tier}</span>
+              </div>
+              <div class="af-body">
+                <span class="af-sub">{f.sub}</span>
+                <h3 class="af-name">{f.name.includes('Ⓐ') ? <Fragment set:html={f.name.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>')} /> : f.name}</h3>
+                <div class="af-meta">
+                  <span class="af-maxw">{f.maxW}</span>
+                  <span class="af-skus">{f.skus} SKUs</span>
+                  {f.dlc && <span class="af-dlc dlc-pill">DLC</span>}
+                </div>
+                <a href="#" class="af-cta">VIEW →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="af-no-results" id="no-results" style="display:none">
+          <p>No families match the selected filters. <button class="reset-inline" id="reset-inline">Reset filters</button></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- §8 LEGACY -->
+  <section class="legacy-section" id="legacy">
+    <div class="section-inner">
+      <span class="sec-eyebrow">LEGACY · COMING SOON</span>
+      <h2 class="sec-h2">Replacement guidance for discontinued families.</h2>
+      <p class="legacy-body">A cross-reference map for discontinued plano<span class="aa">Ⓐ</span>RCH families will route specifiers and contractors from a legacy SKU to the current-generation replacement family at the matching tier and sub-category. Expected publishing window: Q2 2026.</p>
+      <a href="#" class="legacy-cta">Notify me when legacy mapping is published →</a>
+    </div>
+  </section>
+
+  <!-- §9 GET STARTED -->
+  <section class="get-started" id="get-started">
+    <div class="section-inner">
+      <span class="sec-eyebrow">GET STARTED</span>
+      <h2 class="sec-h2">Four ways to move a plano<span class="aa">Ⓐ</span>RCH project forward.</h2>
+      <p class="sec-sub">Layout, sample, distributor, or rep — pick the one that matches what you need next.</p>
+      <div class="gs-grid">
+        <div class="gs-card">
+          <h3 class="gs-title">Request a Layout</h3>
+          <p class="gs-body">Submit your floor plan. AGI32-grade photometric layout in 48 hours, no charge.</p>
+          <a href="#" class="gs-cta">Request Layout →</a>
+        </div>
+        <div class="gs-card">
+          <h3 class="gs-title">Request a Sample</h3>
+          <p class="gs-body">Spec samples for active projects. Ships from the nearest of 5 US warehouses.</p>
+          <a href="#" class="gs-cta">Request Sample →</a>
+        </div>
+        <div class="gs-card">
+          <h3 class="gs-title">Find a Distributor</h3>
+          <p class="gs-body">plano<span class="aa">Ⓐ</span>RCH ships through ALG's national distributor network.</p>
+          <a href="/distributor" class="gs-cta">Find Distributor →</a>
+        </div>
+        <div class="gs-card">
+          <h3 class="gs-title">Talk to a Rep</h3>
+          <p class="gs-body">Regional rep coverage for spec support, pricing, and field walkthrough.</p>
+          <a href="#" class="gs-cta">Find a Rep →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §10 RELATED COLLECTIONS -->
+  <section class="related-collections" id="related">
+    <div class="section-inner">
+      <span class="sec-eyebrow">RELATED COLLECTIONS</span>
+      <h2 class="sec-h2">More from the <span class="aa">Ⓐ</span>RCH portfolio.</h2>
+      <div class="rc-grid">
+        <a href="/collections/luxoarch" class="rc-card">
+          <span class="rc-eyebrow">OUTDOOR · COLLECTION</span>
+          <h3 class="rc-name">luxo<span class="aa">Ⓐ</span>RCH</h3>
+          <p class="rc-desc">Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs.</p>
+          <span class="rc-cta">Explore →</span>
+        </a>
+        <a href="#" class="rc-card">
+          <span class="rc-eyebrow">INDOOR · COLLECTION</span>
+          <h3 class="rc-name">lampar<span class="aa">Ⓐ</span>RCH</h3>
+          <p class="rc-desc">Industrial linear high-bay and low-bay luminaires. Built for warehouse and manufacturing.</p>
+          <span class="rc-cta">Coming soon →</span>
+        </a>
+        <a href="#" class="rc-card">
+          <span class="rc-eyebrow">OUTDOOR · COLLECTION</span>
+          <h3 class="rc-name">city<span class="aa">Ⓐ</span>RCH</h3>
+          <p class="rc-desc">Street and roadway luminaires for municipal and utility applications.</p>
+          <span class="rc-cta">Coming soon →</span>
+        </a>
+        <a href="#" class="rc-card">
+          <span class="rc-eyebrow">LAMP · COLLECTION</span>
+          <h3 class="rc-name">tubul<span class="aa">Ⓐ</span>RCH</h3>
+          <p class="rc-desc">T8/T5/PL/HID retrofit lamps. Drop-in replacements for legacy fluorescent.</p>
+          <span class="rc-cta">Coming soon →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT-RAIL ANCHOR NAV (8 dots) -->
+  <nav class="side-anchor-nav" aria-label="Page sections">
+    <a href="#hero"        class="san-dot" data-label="Overview"           aria-label="Overview"></a>
+    <a href="#stats"       class="san-dot" data-label="Quick stats"        aria-label="Quick stats"></a>
+    <a href="#apps"        class="san-dot" data-label="Sub-categories"     aria-label="Sub-categories"></a>
+    <a href="#highlights"  class="san-dot" data-label="Featured families"  aria-label="Featured families"></a>
+    <a href="#families"    class="san-dot" data-label="All families"       aria-label="All families"></a>
+    <a href="#legacy"      class="san-dot" data-label="Legacy"             aria-label="Legacy"></a>
+    <a href="#get-started" class="san-dot" data-label="Get started"        aria-label="Get started"></a>
+    <a href="#related"     class="san-dot" data-label="Related collections" aria-label="Related collections"></a>
+  </nav>
+
+</BaseLayout>
+
+<style>
+/* ============================================================
+   PAGE-LEVEL TOKENS
+   ============================================================ */
+:root {
+  --brand:      #F32740;
+  --dark:       #0c0d12;
+  --dark2:      #13151e;
+  --surface:    #1a1d28;
+  --border:     rgba(255,255,255,0.08);
+  --text:       #e8eaf0;
+  --text-muted: #8a8fa8;
+  --radius:     12px;
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   BREADCRUMB
+   ============================================================ */
+.breadcrumb-band {
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+}
+.bc-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.bc-link { color: var(--text-muted); text-decoration: none; }
+.bc-link:hover { color: var(--text); }
+.bc-sep { color: var(--border); }
+.bc-current { color: var(--text); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.persona-hero {
+  background: var(--dark);
+  padding: 64px 0 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+.hero-text-col { flex: 1; }
+.hero-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--brand);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-wordmark {
+  font-family: 'Sora', sans-serif;
+  font-weight: 900;
+  font-size: clamp(72px, 10vw, 128px);
+  line-height: 1;
+  color: #fff;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+}
+.hero-wordmark .aa { color: var(--brand); }
+.hero-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hero-pill {
+  border: 1px solid var(--brand);
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: transparent;
+}
+.hero-photo-placeholder {
+  flex: 0 0 420px;
+  height: 280px;
+  background: linear-gradient(135deg, #1a1f2e, #0a0e1a);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   STAT STRIP
+   ============================================================ */
+.stat-strip {
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0;
+}
+.stat-strip-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.ss-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.ss-num {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #fff;
+  line-height: 1;
+}
+.ss-red { color: var(--brand); }
+.ss-lbl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* ============================================================
+   BROWSE BY SUB-CATEGORY
+   ============================================================ */
+.app-browse {
+  background: var(--dark2);
+  padding: 72px 0;
+}
+.section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.sec-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--brand);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.sec-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 84px;
+  height: 1.5px;
+  background: var(--brand);
+  flex-shrink: 0;
+}
+.sec-h2 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: #fff;
+  margin: 0 0 40px;
+  line-height: 1.15;
+}
+.app-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.app-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+}
+.app-tile:hover { border-color: var(--brand); }
+.app-tile[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: rgba(243,39,64,0.08);
+}
+.app-tile[aria-pressed="true"] svg { stroke: var(--brand); }
+.app-tile[aria-pressed="true"] .app-label { color: var(--brand); }
+.app-tile svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--text-muted);
+  transition: stroke 0.2s;
+}
+.app-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.app-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   RED STAT BANNER
+   ============================================================ */
+.red-stat-banner {
+  background: var(--brand);
+  padding: 40px 0;
+}
+.rsb-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.rsb-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.rsb-num {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: #fff;
+  line-height: 1;
+}
+.rsb-lbl {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* ============================================================
+   FEATURED FAMILIES
+   ============================================================ */
+.featured-fam {
+  background: var(--dark);
+  padding: 80px 0;
+}
+.sec-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: -28px 0 40px;
+  line-height: 1.6;
+}
+.feat-fam-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.feat-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.feat-card-img {
+  position: relative;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grey-block { background: #1e2130; }
+.tier-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.tier-badge.eco { background: rgba(255,255,255,0.10); color: #fff; }
+.tier-badge.pro { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
+.tier-badge.pro-plus { background: #F32740; color: #fff; }
+.feat-card-body { padding: 16px; }
+.feat-sub {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.feat-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.feat-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.feat-maxw, .feat-skus {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.dlc-pill {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: rgba(243,39,64,0.15);
+  color: var(--brand);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.feat-cta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.feat-cta:hover { text-decoration: underline; }
+
+/* ============================================================
+   ALL FAMILIES
+   ============================================================ */
+.all-families {
+  background: var(--dark2);
+  padding: 80px 0;
+}
+.af-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.filter-rail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: sticky;
+  top: 140px;
+}
+.filter-group { margin-bottom: 20px; }
+.filter-group:last-of-type { margin-bottom: 0; }
+.filter-group-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.filter-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.filter-opt input[type="checkbox"] { accent-color: var(--brand); cursor: pointer; }
+.filter-opt input[disabled] { opacity: 0.4; cursor: not-allowed; }
+.filter-count { color: var(--text-muted); font-size: 0.75rem; }
+.filter-range-wrap { padding: 4px 0; }
+.filter-range { width: 100%; accent-color: var(--brand); opacity: 0.4; cursor: not-allowed; }
+.filter-range-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
+.filter-reset {
+  width: 100%;
+  margin-top: 16px;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.filter-reset:hover { border-color: var(--brand); color: var(--brand); }
+.af-grid-col { min-width: 0; }
+.grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.grid-count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.sort-wrap select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.all-fam-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.af-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.af-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.af-card.hidden { display: none; }
+.af-img {
+  position: relative;
+  height: 120px;
+}
+.af-body { padding: 14px; }
+.af-sub {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.af-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+.af-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.af-maxw, .af-skus {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.af-dlc { font-size: 0.6rem; }
+.af-cta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+}
+.af-no-results { padding: 40px; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+.reset-inline { background: none; border: none; color: var(--brand); cursor: pointer; font-size: 0.9rem; text-decoration: underline; }
+
+/* ============================================================
+   LEGACY
+   ============================================================ */
+.legacy-section {
+  background: var(--dark);
+  padding: 72px 0;
+  border-top: 1px solid var(--border);
+}
+.legacy-body {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 0 24px;
+}
+.legacy-cta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+}
+.legacy-cta:hover { text-decoration: underline; }
+
+/* ============================================================
+   GET STARTED
+   ============================================================ */
+.get-started {
+  background: var(--dark2);
+  padding: 80px 0;
+}
+.gs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.gs-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+}
+.gs-title {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.gs-body {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+.gs-cta {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+}
+.gs-cta:hover { text-decoration: underline; }
+
+/* ============================================================
+   RELATED COLLECTIONS
+   ============================================================ */
+.related-collections {
+  background: var(--dark);
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+}
+.rc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.rc-card {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rc-card:hover { border-color: var(--brand); transform: translateY(-3px); }
+.rc-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--brand);
+  text-transform: uppercase;
+}
+.rc-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0;
+}
+.rc-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+.rc-cta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+/* ============================================================
+   SIDE ANCHOR NAV
+   ============================================================ */
+.side-anchor-nav {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.san-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: block;
+  position: relative;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.san-dot:hover,
+.san-dot.active { background: var(--brand); transform: scale(1.4); }
+.san-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--dark);
+  color: var(--text);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.san-dot:hover::after { opacity: 1; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1199px) {
+  .side-anchor-nav { display: none; }
+  .feat-fam-grid { grid-template-columns: repeat(3, 1fr); }
+  .gs-grid { grid-template-columns: repeat(2, 1fr); }
+  .rc-grid { grid-template-columns: repeat(2, 1fr); }
+  .rsb-inner { grid-template-columns: repeat(3, 1fr); }
+  .stat-strip-inner { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1023px) {
+  .af-layout { grid-template-columns: 1fr; }
+  .filter-rail { position: static; }
+  .all-fam-grid { grid-template-columns: repeat(2, 1fr); }
+  .app-tile-grid { grid-template-columns: repeat(4, 1fr); }
+  .hero-photo-placeholder { display: none; }
+}
+@media (max-width: 767px) {
+  .app-tile-grid { grid-template-columns: repeat(2, 1fr); }
+  .feat-fam-grid { grid-template-columns: repeat(2, 1fr); }
+  .all-fam-grid { grid-template-columns: 1fr; }
+  .gs-grid { grid-template-columns: 1fr; }
+  .rc-grid { grid-template-columns: 1fr; }
+  .rsb-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat-strip-inner { grid-template-columns: repeat(2, 1fr); }
+  .hero-wordmark { font-size: clamp(48px, 12vw, 72px); }
+}
+@media (min-width: 1200px) {
+  .hero-desc { white-space: nowrap; }
+}
+</style>
+
+<script>
+// ============================================================
+// INTERACTIVE SUB-CATEGORY FILTER (live) + ANCHOR NAV
+// ============================================================
+(function () {
+  const grid = document.getElementById('all-fam-grid');
+  const countEl = document.getElementById('grid-count');
+  const noResults = document.getElementById('no-results');
+  const resetBtn = document.getElementById('reset-filter');
+  const resetInline = document.getElementById('reset-inline');
+  const cbs = Array.from(document.querySelectorAll<HTMLInputElement>('.app-filter-cb'));
+  const appTiles = Array.from(document.querySelectorAll<HTMLButtonElement>('.app-tile'));
+
+  function getActiveTokens(): string[] {
+    return cbs.filter(cb => cb.checked).map(cb => cb.value);
+  }
+
+  function applyFilter() {
+    const tokens = getActiveTokens();
+    const cards = Array.from(grid!.querySelectorAll<HTMLElement>('.af-card'));
+    let visible = 0;
+    cards.forEach(card => {
+      const cardApps = (card.dataset.subcategory || '').split(/\s+/);
+      const show = tokens.length === 0 || tokens.some(t => cardApps.indexOf(t) !== -1);
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    if (countEl) countEl.textContent = tokens.length === 0 ? 'Showing 17 families' : `Showing ${visible} famil${visible === 1 ? 'y' : 'ies'}`;
+    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+    // sync tile pressed state
+    appTiles.forEach(tile => {
+      const tok = tile.dataset.app || '';
+      tile.setAttribute('aria-pressed', tokens.includes(tok) ? 'true' : 'false');
+    });
+  }
+
+  cbs.forEach(cb => cb.addEventListener('change', applyFilter));
+
+  appTiles.forEach(tile => {
+    tile.addEventListener('click', () => {
+      const tok = tile.dataset.app || '';
+      const cb = cbs.find(c => c.value === tok);
+      if (cb) {
+        cb.checked = !cb.checked;
+        applyFilter();
+        const sec = document.getElementById('families');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  function resetAll() {
+    cbs.forEach(cb => { cb.checked = false; });
+    applyFilter();
+  }
+  if (resetBtn) resetBtn.addEventListener('click', resetAll);
+  if (resetInline) resetInline.addEventListener('click', resetAll);
+
+  // Anchor nav IntersectionObserver
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('.san-dot'));
+  const sections = dots.map(d => document.querySelector(d.getAttribute('href') || '')).filter(Boolean) as Element[];
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        dots.forEach(d => d.classList.toggle('active', d.getAttribute('href') === id));
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => obs.observe(s));
+})();
+</script>
