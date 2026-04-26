@@ -311,7 +311,7 @@ const verticals = [
     <div class="locator-inner">
       <div class="sec-eyebrow">Find your local support</div>
       <h2 id="loc-heading" class="sec-title">One map. <span class="accent">Three ways to find us.</span></h2>
-      <p class="sec-sub">Your local sales rep, nearest stocking distributor, and ALG warehouse — all on one map. Search by ZIP, city, or state.</p>
+      <p class="sec-sub">Your local sales rep, nearest stocking distributor, and ALG warehouse — all on one map. Search by ZIP, city, or state. Coverage in every US region.</p>
       <div class="locator-toolbar">
         <div class="loc-filter-group">
           <span class="loc-filter-label">Show:</span>
@@ -449,7 +449,7 @@ const verticals = [
             <div class="installed-label">
               <div class="il-vert">{v.vert}</div>
               <div class="il-place">{v.place}</div>
-              {!v.hasImg && <div class="placeholder-tag">Photography pending</div>}
+
             </div>
           </div>
         ))}
@@ -1463,7 +1463,7 @@ const verticals = [
   if (mapEl) {
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLI=';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
     script.crossOrigin = '';
     script.onload = function () {
       const L = window.L;
