@@ -1,0 +1,340 @@
+---
+/**
+ * Header.astro — v2.1.0 Rev3
+ *
+ * Row 1 — Utility strip (dark bg)
+ *   Left:  Find a Distributor · Find a Rep · Sample Request · Contact
+ *   Right: SIGN IN ▼ → two-pane dropdown
+ *            Pane 1: Sales Reps → AURA Portal
+ *            Pane 2: Distributors · ESCOs · Specifiers → ALG Shop
+ * Row 2 — Main header (white bg)
+ *   Left:  color SVG logo /brand/alg-logo-color.svg
+ *   Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT (5 items)
+ *   Right: REQUEST SAMPLE (outline) + REQUEST LAYOUT (red filled)
+ */
+import MegaMenu from './MegaMenu.astro';
+---
+
+<div class="site-header-wrap">
+
+  <!-- UTILITY STRIP -->
+  <div class="util-strip">
+    <div class="util-inner">
+      <nav class="util-left" aria-label="Utility navigation">
+        <a href="/find-a-distributor" class="util-link">Find a Distributor</a>
+        <a href="/find-a-rep" class="util-link">Find a Rep</a>
+        <a href="/support/sample-request" class="util-link">Sample Request</a>
+        <a href="/contact" class="util-link">Contact</a>
+      </nav>
+      <div class="util-right">
+        <div class="signin-wrap" id="signinWrap">
+          <button class="signin-btn" id="signinBtn" aria-expanded="false" aria-haspopup="true" aria-controls="signinDropdown">
+            SIGN IN
+            <svg class="signin-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+          <div class="signin-dropdown" id="signinDropdown" hidden>
+            <a href="https://aura.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
+              <div class="sd-label">Sales Reps</div>
+              <div class="sd-dest">AURA Portal <span class="sd-ext">&#8599;</span></div>
+            </a>
+            <div class="sd-divider"></div>
+            <a href="https://algportal.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
+              <div class="sd-label">Distributors · ESCOs · Specifiers</div>
+              <div class="sd-dest">ALG Shop <span class="sd-ext">&#8599;</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER -->
+  <header class="main-header" id="mainHeader">
+    <div class="mh-inner">
+      <a href="/" class="mh-logo" aria-label="Archipelago Lighting Group home">
+        <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="160" height="44" loading="eager" />
+      </a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <button class="nav-item has-mega" data-mega="solutions" aria-expanded="false" aria-haspopup="true">
+          SOLUTIONS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <button class="nav-item has-mega" data-mega="products" aria-expanded="false" aria-haspopup="true">
+          PRODUCTS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <button class="nav-item has-mega" data-mega="tools" aria-expanded="false" aria-haspopup="true">
+          TOOLS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <button class="nav-item has-mega" data-mega="support" aria-expanded="false" aria-haspopup="true">
+          SUPPORT <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+        </button>
+        <a href="/about" class="nav-item nav-link">ABOUT</a>
+      </nav>
+      <div class="mh-ctas">
+        <a href="/support/sample-request" class="hcta hcta--outline">Request Sample</a>
+        <a href="/support/layout-request" class="hcta hcta--filled">Request Layout</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <MegaMenu />
+  </header>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation" hidden>
+    <div class="md-header">
+      <a href="/"><img src="/brand/alg-logo-color.svg" alt="ALG" width="120" height="34" /></a>
+      <button class="md-close" id="mdClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="md-body">
+      <a href="/solutions" class="md-item">Solutions</a>
+      <a href="/collections" class="md-item">Products</a>
+      <a href="/tools" class="md-item">Tools</a>
+      <a href="/support" class="md-item">Support</a>
+      <a href="/about" class="md-item">About</a>
+      <div class="md-div"></div>
+      <a href="/support/sample-request" class="md-item">Request Sample</a>
+      <a href="/support/layout-request" class="md-item md-item--cta">Request Layout</a>
+      <div class="md-div"></div>
+      <a href="https://aura.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">AURA Portal (Sales Reps)</a>
+      <a href="https://algportal.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">ALG Shop (Distributors)</a>
+    </div>
+  </nav>
+
+</div>
+
+<style>
+  :root {
+    --brand: var(--color-alg-red, #F32740);
+    --brand-dk: var(--color-alg-red-dark, #C41E32);
+    --dark: #0c0d12;
+    --dark2: #14161e;
+    --ink: #111418;
+    --ink2: #3a3f4a;
+    --ink3: #6b7280;
+    --bg: #ffffff;
+    --t: 0.18s ease;
+  }
+
+  .site-header-wrap { position: sticky; top: 0; z-index: 1000; width: 100%; }
+
+  /* UTILITY STRIP */
+  .util-strip { background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .util-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 28px;
+    height: 36px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .util-left { display: flex; align-items: center; gap: 0; }
+  .util-link {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.04em; color: rgba(255,255,255,0.55); text-decoration: none;
+    padding: 0 14px; height: 36px; display: flex; align-items: center;
+    border-right: 1px solid rgba(255,255,255,0.08); transition: color var(--t);
+  }
+  .util-link:first-child { padding-left: 0; }
+  .util-link:last-child { border-right: none; }
+  .util-link:hover { color: rgba(255,255,255,0.9); }
+  .util-right { display: flex; align-items: center; }
+
+  /* Sign In */
+  .signin-wrap { position: relative; }
+  .signin-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; background: var(--brand); color: #fff;
+    border: 1px solid var(--brand); border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all var(--t);
+  }
+  .signin-btn:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
+  .signin-btn[aria-expanded="true"] { background: var(--brand-dk); border-color: var(--brand-dk); }
+  .signin-chev { width: 10px; height: 6px; transition: transform var(--t); }
+  .signin-btn[aria-expanded="true"] .signin-chev { transform: rotate(180deg); }
+  .signin-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; min-width: 260px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    overflow: hidden; z-index: 200;
+  }
+  .sd-pane { display: block; padding: 16px 20px; text-decoration: none; transition: background var(--t); }
+  .sd-pane:hover { background: rgba(255,255,255,0.06); }
+  .sd-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px;
+  }
+  .sd-dest { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+  .sd-ext { font-size: 12px; color: var(--brand); }
+  .sd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0 20px; }
+
+  /* MAIN HEADER */
+  .main-header { background: var(--bg); border-bottom: 1px solid rgba(17,20,24,0.08); position: relative; }
+  .mh-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 28px;
+    height: 64px; display: flex; align-items: center; gap: 32px;
+  }
+  .mh-logo { display: flex; align-items: center; flex-shrink: 0; }
+  .mh-logo img { display: block; height: 36px; width: auto; }
+
+  .primary-nav { display: flex; align-items: center; flex: 1; justify-content: center; gap: 2px; }
+  .nav-item {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 14px; height: 64px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--ink2); background: none; border: none;
+    cursor: pointer; text-decoration: none; transition: all var(--t); white-space: nowrap;
+    position: relative;
+  }
+  .nav-item::after {
+    content: ''; position: absolute; bottom: 0; left: 14px; right: 14px;
+    height: 2px; background: var(--brand); transform: scaleX(0); transition: transform var(--t);
+  }
+  .nav-item:hover { color: var(--ink); }
+  .nav-item:hover::after { transform: scaleX(1); }
+  .nav-item[aria-expanded="true"] { color: var(--brand); }
+  .nav-item[aria-expanded="true"]::after { transform: scaleX(1); }
+  .nav-chev { width: 10px; height: 6px; transition: transform var(--t); flex-shrink: 0; }
+  .nav-item[aria-expanded="true"] .nav-chev { transform: rotate(180deg); }
+
+  .mh-ctas { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .hcta {
+    display: inline-flex; align-items: center; padding: 9px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    border-radius: 4px; transition: all var(--t); white-space: nowrap;
+  }
+  .hcta--outline { background: transparent; color: var(--ink); border: 1px solid rgba(17,20,24,0.25); }
+  .hcta--outline:hover { background: rgba(17,20,24,0.05); border-color: rgba(17,20,24,0.4); }
+  .hcta--filled { background: var(--brand); color: #fff; border: 1px solid var(--brand); }
+  .hcta--filled:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
+
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all var(--t); }
+
+  /* Mobile overlay */
+  .mobile-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 998; backdrop-filter: blur(4px);
+  }
+  .mobile-overlay.open { display: block; }
+
+  /* Mobile drawer */
+  .mobile-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 300px;
+    background: var(--bg); z-index: 999; transform: translateX(100%);
+    transition: transform 0.3s ease; overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+  }
+  .mobile-drawer:not([hidden]) { transform: translateX(0); }
+  .md-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid rgba(17,20,24,0.08);
+  }
+  .md-close { background: none; border: none; cursor: pointer; padding: 4px; }
+  .md-close svg { width: 20px; height: 20px; color: var(--ink); }
+  .md-body { padding: 12px 0; }
+  .md-item {
+    display: block; padding: 12px 20px; font-size: 14px; font-weight: 600;
+    color: var(--ink2); text-decoration: none; transition: all var(--t);
+  }
+  .md-item:hover { color: var(--brand); background: rgba(243,39,64,0.04); }
+  .md-item--cta { color: var(--brand); font-weight: 700; }
+  .md-div { height: 1px; background: rgba(17,20,24,0.08); margin: 8px 20px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .primary-nav { gap: 0; }
+    .nav-item { padding: 8px 10px; font-size: 11px; }
+  }
+  @media (max-width: 768px) {
+    .util-left { gap: 0; }
+    .primary-nav { display: none; }
+    .hcta--outline { display: none; }
+    .hamburger { display: flex; }
+    .mh-inner { gap: 16px; }
+  }
+  @media (max-width: 480px) {
+    .util-link:nth-child(n+3) { display: none; }
+  }
+</style>
+
+<script>
+(function () {
+  // Sign In dropdown
+  const signinBtn = document.getElementById('signinBtn');
+  const signinDropdown = document.getElementById('signinDropdown');
+  if (signinBtn && signinDropdown) {
+    signinBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = signinBtn.getAttribute('aria-expanded') === 'true';
+      signinBtn.setAttribute('aria-expanded', String(!open));
+      signinDropdown.hidden = open;
+    });
+    document.addEventListener('click', () => {
+      signinBtn.setAttribute('aria-expanded', 'false');
+      signinDropdown.hidden = true;
+    });
+    signinDropdown.addEventListener('click', (e) => e.stopPropagation());
+  }
+
+  // MegaMenu
+  const megaPanel = document.getElementById('megaMenuPanel');
+  const navBtns = Array.from(document.querySelectorAll('.nav-item.has-mega'));
+  let active = null;
+
+  function closeAll() {
+    navBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
+    if (megaPanel) megaPanel.hidden = true;
+    document.querySelectorAll('.mega-pane').forEach(p => { p.hidden = true; });
+    active = null;
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pane = btn.dataset.mega;
+      if (active === pane) { closeAll(); return; }
+      closeAll();
+      active = pane;
+      btn.setAttribute('aria-expanded', 'true');
+      if (megaPanel) megaPanel.hidden = false;
+      const target = document.querySelector(`.mega-pane[data-mega="${pane}"]`);
+      if (target) target.hidden = false;
+    });
+  });
+
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  if (megaPanel) megaPanel.addEventListener('click', (e) => e.stopPropagation());
+
+  // Mobile drawer
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('mobileOverlay');
+  const mdClose = document.getElementById('mdClose');
+
+  function openDrawer() {
+    if (!drawer || !overlay) return;
+    drawer.hidden = false;
+    overlay.classList.add('open');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (!drawer || !overlay) return;
+    drawer.hidden = true;
+    overlay.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger?.addEventListener('click', openDrawer);
+  mdClose?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+})();
+</script>

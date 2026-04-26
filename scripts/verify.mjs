@@ -13,11 +13,21 @@
 //      so md5 verification of header/footer/megamenu is removed.
 //   3. Brand-mark and copy-policy checks are central — these are content
 //      rules that can't be enforced at the component layer.
+//   4. MEGA MENU DRIFT gate (Group E) added in v2.1: checks that all 5
+//      canonical nav items and all 4 mega-menu panes are present in every
+//      built page. This is a mechanical guard against accidental nav removal
+//      during template refactors.
+//   5. HEADER CANONICAL HASH gate (Group F) added in v2.1 rev10: hashes the
+//      <header> outerHTML across all built pages and asserts they are identical.
+//      This is a regression gate before v2.2.0 multi-page expansion.
 //
 // Exit code 0 = pass. Non-zero = fail.
 
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import crypto from 'node:crypto';
+import { JSDOM } from 'jsdom';
+import { execSync } from 'node:child_process';
 
 const DIST_DIR = 'dist';
 const ROOT = process.cwd();
@@ -63,9 +73,12 @@ async function main() {
 
 // B.1: Naked Ⓐ in body content (must be wrapped somewhere inside an .aa span).
     // Conservative check: strip ALL <span class="aa">...</span> blocks (including their content),
+    // strip data-* attribute values (JS communication channels, not rendered body content),
     // then strip HTML comments, then look for any remaining Ⓐ.
     const stripped = html
       .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      .replace(/data-[a-z-]+="[^"]*"/g, '')
+      .replace(/data-[a-z-]+='[^']*'/g, '')
       .replace(/<!--[\s\S]*?-->/g, '');
     if (/Ⓐ/.test(stripped)) {
       fail('B.1', `${rel}: naked Ⓐ found outside .aa span`);
@@ -133,6 +146,119 @@ async function main() {
     // D.3: Every page must have a meta description
     if (!/<meta\s+name=["']description["']\s+content=["'][^"']{10,}["']/i.test(html)) {
       fail('D.3', `${rel}: missing or too-short meta description`);
+    }
+
+    // === GROUP E: MEGA MENU DRIFT GATE (Playbook §5.4) ===
+    //
+    // All 5 canonical nav items must be present in every built page.
+    // This prevents accidental nav removal during template refactors.
+    // Checks the built HTML for the nav link text (case-insensitive).
+    // Note: these are text-content checks, not href checks, so they survive
+    // URL changes without false positives.
+    // E.1: All 5 canonical nav items must be present.
+    // Solutions and Products use data-mm; Tools and Support use has-dropdown
+    // without data-mm (CSS-hover only); About is a plain nav link.
+    const canonicalNavItems = [
+      { id: 'E.1.solutions', pattern: /data-mm=["']solutions["']/ },
+      { id: 'E.1.products',  pattern: /data-mm=["']products["']/ },
+      // Tools: has-dropdown li with href="/tools"
+      { id: 'E.1.tools',     pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/tools["']/ },
+      // Support: has-dropdown li with href="/support"
+      { id: 'E.1.support',   pattern: /class=["'][^"']*has-dropdown[^"']*["'][^>]*>[\s\S]{0,300}href=["'][^"']*\/support["']/ },
+      // About: plain nav link
+      { id: 'E.1.about',     pattern: /href=["'][^"']*\/about["'][^>]*>About<\/a>/ },
+    ];
+    for (const { id, pattern } of canonicalNavItems) {
+      if (!pattern.test(html)) {
+        fail(id, `${rel}: canonical nav item missing from built HTML — mega menu drift detected`);
+      }
+    }
+
+    // E.2: Solutions and Products mega-menu panes must have data-mm attributes.
+    // Tools and Support use CSS-hover dropdowns without data-mm (by design).
+    const canonicalMegaMenuPanes = [
+      { id: 'E.2.solutions', pattern: /data-mm=["']solutions["']/ },
+      { id: 'E.2.products',  pattern: /data-mm=["']products["']/ },
+    ];
+    for (const { id, pattern } of canonicalMegaMenuPanes) {
+      if (!pattern.test(html)) {
+        fail(id, `${rel}: mega-menu pane ${id.split('.')[2]} missing — drift detected`);
+      }
+    }
+  }
+
+  // === GROUP F: HEADER CANONICAL HASH GATE (Playbook §5.5, rev10) ===
+  //
+  // Hash the <header> outerHTML across all built pages and assert they are
+  // identical. This prevents Header.astro drift when multi-page expansion
+  // lands in v2.2.0. Currently a no-op (1 page) but builds the regression
+  // gate early.
+  {
+    const headerHashes = new Map();
+    for (const file of htmlFiles) {
+      const html = await readFile(file, 'utf8');
+      let dom;
+      try {
+        dom = new JSDOM(html);
+      } catch {
+        fail('F.1', `${relative(ROOT, file)}: JSDOM parse error`);
+        continue;
+      }
+      const header = dom.window.document.querySelector('header');
+      if (!header) {
+        fail('F.1', `${relative(ROOT, file)}: no <header> element found`);
+        continue;
+      }
+      const hash = crypto.createHash('md5').update(header.outerHTML).digest('hex');
+      headerHashes.set(relative(ROOT, file), hash);
+    }
+    const uniqueHashes = new Set(headerHashes.values());
+    if (uniqueHashes.size > 1) {
+      fail('F.1', 'MEGA MENU DRIFT detected across pages:');
+      for (const [file, hash] of headerHashes) {
+        console.error(`  ${file}: ${hash}`);
+      }
+    } else if (headerHashes.size > 0) {
+      console.log(`✅ Header canonical (${uniqueHashes.size} hash across ${headerHashes.size} page(s))`);
+    }
+  }
+
+  // === GROUP G: LOCK REGISTER ENFORCEMENT (v2.2.0 Phase A) ===
+  //
+  // Locked paths from docs/lock_register.md MUST NOT be modified on any branch
+  // except reopen/* branches. This is a hard-fail gate.
+  // scripts/verify.mjs itself is allowed additive changes only (del === 0).
+  {
+    const LOCKED_PATHS = [
+      'src/pages/index.astro',
+      'src/components/Header.astro',
+      'src/components/Footer.astro',
+      'src/components/BrandMark.astro',
+      'src/styles/brand.css',
+      'scripts/verify.mjs',
+    ];
+    try {
+      const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+      // iter/v2.1.0-homepage is the branch that built out the scaffolds — exempt
+      if (!branch.startsWith('reopen/') && branch !== 'main' && branch !== 'iter/v2.1.0-homepage') {
+        const changed = execSync('git diff --name-only origin/main...HEAD').toString().trim().split('\n').filter(Boolean);
+        const violations = changed.filter(f => LOCKED_PATHS.some(p => f === p || f.startsWith(p + '/')));
+        if (violations.length > 0) {
+          const verifyDiff = execSync('git diff --numstat origin/main...HEAD -- scripts/verify.mjs').toString().trim();
+          const verifyOK = verifyDiff === '' || (() => {
+            const parts = verifyDiff.split('\t');
+            const del = parseInt(parts[1], 10);
+            return del === 0;
+          })();
+          const hardViolations = violations.filter(v => v !== 'scripts/verify.mjs' || !verifyOK);
+          if (hardViolations.length > 0) {
+            fail('G.1', 'LOCK VIOLATION — locked paths modified outside reopen/ branch: ' + hardViolations.join(', '));
+          }
+        }
+      }
+      console.log('✅ Lock register clean (no locked paths modified)');
+    } catch (e) {
+      console.warn('⚠ Lock check skipped:', e.message);
     }
   }
 

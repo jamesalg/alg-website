@@ -1,34 +1,1754 @@
 ---
 /**
- * Homepage — placeholder
+ * Homepage — v2.1.0 (revision 2 — fixes per rejection notes 2026-04-25)
  *
- * This file exists ONLY so the initial deploy has SOMETHING to render.
- * Iteration 1 (Manus) replaces this with the full homepage rebuilt against
- * the v3.14.6 visual reference.
+ * Sections:
+ *   1. Hero carousel (4 slides, slot-cycling right panel, 7s auto-advance)
+ *   2. Differentiation strip (6 trust signals — matches reference diff-strip)
+ *   3. Persona segmenter (NEW — "I am a…" pill strip)
+ *   4. Category tease / "What we make" (3 cards, BrandMark stems)
+ *   5. Locator map (Leaflet, 5 warehouse pins)
+ *   6. Featured Families (4 cards, BrandMark stems, locked SKU counts from reference)
+ *   7. Layout CTA (4-item checklist, stat overlay)
+ *   8. Installed At (8 vertical tiles — 3 CSS-only placeholders for missing assets)
+ *   9. Split teasers (Rebate + Specifier)
  *
- * If you are seeing this page on staging.archipelagolighting.com after
- * Iteration 1 has been merged, something went wrong.
+ * SKU counts (locked from reference v3.14.x): Illuminator 11 · Titan-II 20 · Astra 18 · Connected Systems 9
+ * Brand-mark rule: every Ⓐ in body content MUST be inside .aa span (via BrandMark or manual span).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
+
+const heroSlides = [
+  {
+    // SKU basis: LSPL-xxx series (Illuminator sports lighter, peak 116klm config)
+    id: 0,
+    bgClass: 'img-illuminator',
+    eyebrow: 'Featured · Sports Lighting · LSPL',
+    name: 'Illuminator',
+    gradClass: 'grad-slide0',
+    desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
+    lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
+    stats: [
+      { num: '<span class="uptotag">Up to</span><span style="white-space:nowrap">116,000</span>', lbl: 'Peak Lumens', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">150 lm/W</span>', lbl: 'DLC Premium Efficacy', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">10-Year</span>', lbl: 'Tiered Warranty', hasBrandMark: true },
+    ],
+    brandMark: null,
+  },
+  {
+    // SKU basis: LLHB-xxx series (Titan-II linear high-bay, 155W peak config)
+    id: 1,
+    bgClass: 'img-titan',
+    eyebrow: 'Featured · High-Bay · LLHB',
+    name: 'Titan-II',
+    gradClass: 'grad-slide1',
+    desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
+    lineDrawing: '/images/heroes/line-drawings/line-titan.png',
+    stats: [
+      { num: '<span style="white-space:nowrap">3-Step</span>', lbl: 'WATTselect', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">150+ lm/W</span>', lbl: 'DLC Premium', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">90×90</span>', lbl: 'Photometric', hasBrandMark: true },
+    ],
+    brandMark: null,
+  },
+  {
+    // SKU basis: LSBX-xxx series (Liberty area luminaire, full optic + SPD config)
+    id: 2,
+    bgClass: 'img-outdoor',
+    eyebrow: 'Featured · Area Lighting · LSBX',
+    name: 'Liberty',
+    gradClass: 'grad-slide2',
+    desc: null,
+    lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
+    stats: [
+      { num: 'proⒶPTICS', lbl: 'Type III · IV · V', hasBrandMark: true },
+      { num: '150 lm/W', lbl: 'DLC Premium' },
+      { num: 'surgeⒶRMOR', lbl: '10 kVA SPD', hasBrandMark: true },
+    ],
+    brandMark: null,
+  },
+  {
+    // SKU basis: LBLP-xxx series (proⒶRCH-III back-lit panel, 5×5 matrix config)
+    id: 3,
+    bgClass: 'img-proarch',
+    eyebrow: 'Featured · Back-Lit Panel · LBLP',
+    name: null,
+    gradClass: 'grad-slide3',
+    desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
+    lineDrawing: '/images/heroes/line-drawings/line-panel.png',
+    stats: [
+      { num: '<span style="white-space:nowrap">5-Step</span>', lbl: 'WATTselect', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">5-Step</span>', lbl: 'CCTselect', hasBrandMark: true },
+      { num: 'TAA', lbl: 'Compliant' },
+    ],
+    brandMark: 'proarch',
+  },
+];
+
+const diffSignals = [
+  { num: '5',      lbl: 'US Warehouses',    svg: '<path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/>' },
+  { num: 'DLC',   lbl: 'Premium Listed',    svg: '<circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/>' },
+  { num: 'USA',   lbl: 'TAA Compliant',     svg: '<path d="M3 12h18M12 3v18M3 6h18M3 18h18"/>' },
+  { num: 'UL',    lbl: 'Listed & Tested',   svg: '<path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/>' },
+  { num: '3–10 yr', lbl: 'Tiered Warranty', svg: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>' },
+  { num: '3-Day', lbl: 'US Shipping',       svg: '<path d="M3 9l4-6h10l4 6M3 9v9a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 14h6"/>' },
+];
+
+const verticals = [
+  { cls: 't1', vert: 'Warehouse & Logistics',      place: '3PL facility · OH',      hasImg: true },
+  { cls: 't2', vert: 'Industrial & Manufacturing', place: 'Auto plant · TX',         hasImg: true },
+  { cls: 't3', vert: 'Cold Storage & Grocery',     place: 'Freezer DC · CA',         hasImg: true },
+  { cls: 't4', vert: 'Data Center',                place: 'Hyperscale · VA',          hasImg: true },
+  { cls: 't5', vert: 'Healthcare',                 place: 'Outpatient · IL',          hasImg: true },
+  { cls: 't6', vert: 'Education',                  place: 'K-12 retrofit · NJ',       hasImg: true },
+  { cls: 't7', vert: 'Hospitality',                place: 'Hotel reno · MA',           hasImg: true },
+  { cls: 't8', vert: 'Government & Military',      place: 'Federal logistics · GA',    hasImg: true },
+];
 ---
-<BaseLayout title="Archipelago Lighting Group" description="Specified. Stocked. Shipped.">
-  <section class="section">
-    <div class="container">
-      <h1>Archipelago Lighting Group</h1>
-      <p>
-        Foundation deploy. Iteration 1 (homepage rebuild) lands here next.
-      </p>
-      <p>
-        Brand-mark test:
-        <BrandMark prefix="plano" suffix="RCH" />,
-        <BrandMark prefix="multi-f" suffix="MILY" />,
-        <BrandMark prefix="" suffix="CS" /> by ALG.
-      </p>
-      <p>
-        If the three brand marks above render with red circle-A characters and the
-        rest of this text in black, the brand-mark utility is working.
-      </p>
+<BaseLayout
+  title="Archipelago Lighting Group — Specified. Stocked. Shipped."
+  description="Commercial and industrial LED lighting. 2,000+ active SKUs. Five US warehouses. Layouts in under 48 hours."
+  bodyClass="page-home"
+>
+
+  <!-- ==============================================================
+       1. HERO CAROUSEL
+       ============================================================== -->
+  <section class="hero-carousel" id="heroCarousel" aria-label="Featured products">
+    <div class="hero-carousel-inner">
+
+      <!-- LEFT: Application image layer (cycles) -->
+      <div class="hero-image-stage">
+        {heroSlides.map((slide, i) => (
+          <div class={`hero-image ${slide.bgClass}${i === 0 ? ' active' : ''}`} data-slide={i}></div>
+        ))}
+        <!-- Persistent overlay — stays fixed across all slides -->
+        <div class="hero-persistent">
+          <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
+          <h1>
+            Specified<span class="period-red">.</span><br />
+            Stocked<span class="period-red">.</span><br />
+            <span class="accent">Shipped<span class="period-red">.</span></span>
+          </h1>
+          <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Content panel (slot-cycling) -->
+      <div class="hero-panel">
+        <div class="hero-panel-inner">
+          <div class="slide-label">
+            <span class="slide-num" id="slideNum">01</span> / 04 · Now shipping
+          </div>
+
+          <div class="slot-stack">
+            <!-- EYEBROW SLOT -->
+            <div class="slot slot-eyebrow">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <span class="eyebrow">{slide.eyebrow}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- PRODUCT NAME SLOT -->
+            <div class="slot slot-name">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  {slide.brandMark === 'proarch'
+                    ? <h2 class={`display-product ${slide.gradClass}`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
+                    : <h2 class={`display-product ${slide.gradClass}`}>{slide.name}</h2>
+                  }
+                </div>
+              ))}
+            </div>
+
+            <!-- DESCRIPTION SLOT -->
+            <div class="slot slot-desc">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  {slide.id === 2
+                    ? <p>Commercial area lighting for parking, campuses, and outdoor grounds. Type III/IV/V optics. surge<span class="aa">Ⓐ</span>RMOR built in.</p>
+                    : <p>{slide.desc}</p>
+                  }
+                </div>
+              ))}
+            </div>
+
+            <!-- STATS SLOT -->
+            <div class="slot slot-stats">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <div class="stat-grid">
+                    {slide.stats.map(s => (
+                      <div class="stat">
+                        <div class="stat-num">
+                          {s.hasBrandMark
+                            ? <Fragment set:html={s.num.replace('Ⓐ', '<span class="aa">Ⓐ</span>')} />
+                            : s.num
+                          }
+                        </div>
+                        <div class="stat-lbl">{s.lbl}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- LINE DRAWING SLOT (anchored bottom-right, per-slide) -->
+            <div class="slot slot-product-img">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <img src={slide.lineDrawing} alt={`${slide.name ?? 'Product'} line drawing`} class="product-render" loading="eager" />
+                </div>
+              ))}
+            </div>
+
+            <!-- CTA SLOT -->
+            <div class="slot slot-cta">
+              {heroSlides.map((_, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  <div class="cta-pair">
+                    <a href="/resources/spec-sheets" class="cta-primary">Download Spec</a>
+                    <a href="/collections" class="cta-link">Learn more ›</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carousel controls -->
+    <div class="carousel-controls">
+      <div class="carousel-dots">
+        {heroSlides.map((slide, i) => (
+          <button
+            class={`carousel-dot${i === 0 ? ' active' : ''}`}
+            data-slide-to={i}
+            aria-label={slide.name ?? 'Slide'}
+          ></button>
+        ))}
+      </div>
+      <div class="carousel-arrows">
+        <span class="carousel-counter" id="carouselCounter">01 / 04</span>
+        <button class="carousel-arrow" id="prevBtn" aria-label="Previous slide">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 1L3 7l6 6"/></svg>
+        </button>
+        <button class="carousel-arrow" id="nextBtn" aria-label="Next slide">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 1l6 6-6 6"/></svg>
+        </button>
+      </div>
     </div>
   </section>
+
+  <!-- ==============================================================
+       2. DIFFERENTIATION STRIP (6 trust signals)
+       ============================================================== -->
+  <div class="diff-strip" aria-label="Trust signals">
+    <div class="diff-inner">
+      {diffSignals.map(sig => (
+        <div class="diff-item">
+          <div class="diff-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" set:html={sig.svg} aria-hidden="true"></svg>
+          </div>
+          <div class="diff-text">
+            <div class="diff-num">{sig.num}</div>
+            <div class="diff-lbl">{sig.lbl}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       3. PERSONA SEGMENTER
+       ============================================================== -->
+  <div class="persona-strip" aria-label="Persona selector">
+    <div class="persona-inner">
+      <span class="persona-label">I am a…</span>
+      <div class="persona-chips">
+        <a href="/distributor" class="persona-chip active" data-persona="distributor">Distributor</a>
+        <button class="persona-chip" data-persona="specifier" title="Coming soon">Specifier / Engineer</button>
+        <button class="persona-chip" data-persona="contractor" title="Coming soon">Contractor</button>
+        <button class="persona-chip" data-persona="esco" title="Coming soon">ESCO</button>
+        <button class="persona-chip" data-persona="facility-manager" title="Coming soon">Facility Manager</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       4. WHAT WE MAKE — Category tease (4 cards)
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="wm-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">What we make</div>
+      <h2 id="wm-heading" class="sec-title">Built for the bid sheet, the floor, and the <span class="accent">truck.</span></h2>
+      <p class="sec-sub">From warehouse high-bays to parking-lot area lights, from emergency backup to networked controls — built for the specifier, the distributor, and the contractor.</p>
+      <div class="what-we-make">
+        <a href="/collections/indoor" class="wm-card indoor">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Indoor Luminaires</h3>
+            <p>Troffers, panels, high-bays, downlights. The catalog distributors stock and specifiers spec.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="lampar" suffix="RCH" /> · <BrandMark prefix="plano" suffix="RCH" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/outdoor" class="wm-card outdoor">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Outdoor Luminaires</h3>
+            <p>Wall packs, parking-lot area lights, canopy, floods, and bollards. Built for the elements.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="city" suffix="RCH" /> · <BrandMark prefix="luxo" suffix="RCH" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/controls-em" class="wm-card controls">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Safety &amp; Controls</h3>
+            <p><BrandMark prefix="contr" suffix="LS" /> three-tier (ECO · PRO · PRO+) and <BrandMark prefix="const" suffix="NT" /> emergency drivers and egress / exit signs.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="contr" suffix="LS" /> · <BrandMark prefix="const" suffix="NT" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/lamps" class="wm-card lamps">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Utility &amp; Décor Lamps</h3>
+            <p>T8 linear, vintage filament, and decorative lamps. Retrofit-ready for every socket.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands">Nostalgic · Vintage · <BrandMark prefix="tubul" suffix="RCH" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       5. LOCATOR MAP
+       ============================================================== -->
+  <section class="locator-section" aria-labelledby="loc-heading">
+    <div class="locator-inner">
+      <div class="sec-eyebrow">Find your local support</div>
+      <h2 id="loc-heading" class="sec-title">One map. <span class="accent">Three ways to find us.</span></h2>
+      <p class="sec-sub">Your local sales rep, nearest stocking distributor, and ALG warehouse — all on one map. Search by ZIP, city, or state. Coverage in every US region.</p>
+      <div class="locator-toolbar">
+        <div class="loc-filter-group">
+          <span class="loc-filter-label">Show:</span>
+          <span class="loc-pill active" data-filter="all">All</span>
+            <span class="loc-pill" data-filter="warehouse">
+            <span class="kind-dot wh"></span>Warehouses <span class="loc-count">(6)</span>
+          </span>
+          <span class="loc-pill" data-filter="rep">
+            <span class="kind-dot rep"></span>Sales Reps
+          </span>
+          <span class="loc-pill" data-filter="dist">
+            <span class="kind-dot dist"></span>Distributors
+          </span>
+        </div>
+        <div class="loc-search-group">
+          <input type="text" class="loc-search-input" placeholder="ZIP, city, or state" aria-label="Search by ZIP, city, or state" />
+          <button class="loc-search-btn">Find Nearest</button>
+        </div>
+      </div>
+      <div class="locator-map-wrap">
+        <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse, sales rep, and distributor locations across the United States" role="application"></div>
+        <div class="loc-sidebar">
+          <div class="loc-legend">
+            <h4>Map key</h4>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#F32740;"></span>ALG Warehouse</span>
+              <span class="legend-count">6 locations</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#f0a932;"></span>Sales Rep</span>
+              <span class="legend-count">All 50 states</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-dot"><span class="dot-vis" style="background:#0FAE7C;"></span>Stocking Distributor</span>
+              <span class="legend-count">Nationwide</span>
+            </div>
+          </div>
+          <div class="loc-results">
+            <h4>Nearest to 91761</h4>
+            <div class="result-row">
+              <span class="result-kind" style="background:#F32740;"></span>
+              <div class="result-info"><span class="result-name">Montclair, CA</span><span class="result-meta">West Coast HQ &middot; Warehouse</span></div>
+              <span class="result-dist">On-site</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#f0a932;"></span>
+              <div class="result-info"><span class="result-name">Pacific Lighting Rep</span><span class="result-meta">Southern California territory</span></div>
+              <span class="result-dist">8 mi</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#0FAE7C;"></span>
+              <div class="result-info"><span class="result-name">Ontario Electric Supply</span><span class="result-meta">Stocking distributor</span></div>
+              <span class="result-dist">3 mi</span>
+            </div>
+            <div class="result-row">
+              <span class="result-kind" style="background:#0FAE7C;"></span>
+              <div class="result-info"><span class="result-name">Inland Lighting Dist.</span><span class="result-meta">Stocking distributor</span></div>
+              <span class="result-dist">12 mi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="locator-ctas">
+        <a href="/find-a-rep" class="cta-primary">Find a Rep or Distributor</a>
+        <a href="/distributor" class="cta-secondary on-dark">Become a Distributor</a>
+        <a href="/careers/sales-rep" class="cta-secondary on-dark">Apply as Sales Rep</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       6. FEATURED FAMILIES (4 cards — locked SKU counts from reference)
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="fam-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">Featured families</div>
+      <h2 id="fam-heading" class="sec-title">The families distributors stock and specifiers spec.</h2>
+      <p class="sec-sub" style="max-width:none">Three fixture families plus the connected systems platform that ties them together — the core of our 2,000+ active SKU catalog.</p>
+      <div class="families-rail">
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img cream">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-illuminator.png" alt="Illuminator sports lighter" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="luxo" suffix="RCH" /> · PRO</div>
+            <div class="fam-name">Illuminator</div>
+            <div class="fam-desc">Sports lighter · stadiums + athletic fields</div>
+            <div class="fam-meta"><span class="fam-skucount">11 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img dk">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-titan.jpg" alt="Titan-II linear high-bay LED luminaire" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="lampar" suffix="RCH" /> · PRO</div>
+            <div class="fam-name">Titan-II</div>
+            <div class="fam-desc">Linear high-bay · warehouse + industrial</div>
+            <div class="fam-meta"><span class="fam-skucount">20 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/indoor-industrial" class="fam-card">
+          <div class="fam-img brand">
+            <span class="fam-tag">DLC Premium</span>
+            <img class="fam-product" src="/images/families/family-astra.png" alt="Astra commercial downlight with white trim and chrome reflector" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="plano" suffix="RCH" /> · PRO+</div>
+            <div class="fam-name">Astra</div>
+            <div class="fam-desc">Commercial downlight · retail + hospitality</div>
+            <div class="fam-meta"><span class="fam-skucount">18 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+        <a href="/collections/controls-em" class="fam-card">
+          <div class="fam-img dark2">
+            <span class="fam-tag">NLC-Ready</span>
+            <img class="fam-product" src="/images/families/family-contrals.png" alt="contrALS outdoor PIR occupancy sensor and controller pair" width="320" height="240" loading="lazy" />
+          </div>
+          <div class="fam-body">
+            <div class="fam-eyebrow"><BrandMark prefix="contr" suffix="LS" /></div>
+            <div class="fam-name">Connected Systems</div>
+            <div class="fam-desc">NLC-ready sensors + controls · every <span class="aa">Ⓐ</span>RCH fixture</div>
+            <div class="fam-meta"><span class="fam-skucount">9 SKUs</span><span class="fam-arrow">View →</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       7. LAYOUT CTA
+       ============================================================== -->
+  <section class="layout-cta" aria-labelledby="lc-heading">
+    <div class="layout-cta-inner">
+      <div>
+        <div class="sec-eyebrow">Free professional service</div>
+        <h2 id="lc-heading">Get a lighting layout in <span class="accent">under 48hrs.</span></h2>
+        <p>Send us your floor plan. Our layout team returns a photometric layout with product callouts, IES files, fixture counts, and footcandle calculations — at no cost.</p>
+        <div class="layout-features">
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Photometric calculations per IES standards</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Product callouts with exact SKUs</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> IES files included</div>
+          <div class="lf-item"><span class="lf-check">&#10003;</span> Fixture count + BOM</div>
+        </div>
+        <div class="layout-cta-actions">
+          <a href="/support/layout-request" class="cta-primary">Request a Layout</a>
+          <a href="/resources/sample-layouts" class="cta-secondary on-dark">See Sample Layouts (100+)</a>
+        </div>
+      </div>
+      <div class="layout-visual" aria-hidden="true">
+        <div class="lv-grid">
+          <div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell bright"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell med"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell fix"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell dim"></div><div class="lv-cell dim"></div><div class="lv-cell bright"></div><div class="lv-cell bright"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+          <div class="lv-cell"></div><div class="lv-cell dim"></div><div class="lv-cell med"></div><div class="lv-cell med"></div><div class="lv-cell dim"></div><div class="lv-cell"></div><div class="lv-cell"></div><div class="lv-cell"></div>
+        </div>
+        <div class="lv-overlay">90 fc avg · 0.65 uniformity</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       8. INSTALLED AT — 8 vertical tiles
+       ============================================================== -->
+  <section class="content-section" aria-labelledby="inst-heading">
+    <div class="section-inner">
+      <div class="sec-eyebrow">Installed at</div>
+      <h2 id="inst-heading" class="sec-title">Where ALG lighting goes to <span class="accent">work.</span></h2>
+      <p class="sec-sub" style="max-width:none">From cold storage in Cincinnati to a stadium retrofit in Sacramento — real installations, real results.</p>
+      <div class="installed-grid">
+        {verticals.map(v => (
+          <div class={`installed-tile ${v.cls}${!v.hasImg ? ' placeholder' : ''}`}>
+            <div class="installed-label">
+              <div class="il-vert">{v.vert}</div>
+              <div class="il-place">{v.place}</div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       9. SPLIT TEASERS — Rebate + Specifier
+       ============================================================== -->
+  <section class="content-section" aria-label="Rebate and specifier resources">
+    <div class="section-inner">
+      <div class="split-teasers">
+        <div class="teaser teaser-rebate">
+          <div class="sec-eyebrow">Find your rebate</div>
+          <h3>Most projects qualify for utility rebates.</h3>
+          <p>Search by ZIP and product family. Rebates can offset 15–40% of project cost in qualifying utilities.</p>
+          <div class="rebate-stat">
+            <div>
+              <div class="rebate-stat-num">2,400+</div>
+              <div class="rebate-stat-lbl">Active utility programs</div>
+            </div>
+            <div>
+              <div class="rebate-stat-num">$0.10-0.30</div>
+              <div class="rebate-stat-lbl">Per sqft typical</div>
+            </div>
+          </div>
+          <a href="/resources/rebate-center" class="cta-primary">Open Rebate Center</a>
+        </div>
+        <div class="teaser teaser-spec">
+          <div class="sec-eyebrow">For specifiers</div>
+          <h3>Spec sheets, IES files, training.</h3>
+          <p>Everything you need for the bid sheet — and the lunch-and-learn for your team.</p>
+          <div class="spec-resource-grid">
+            <a href="/resources/ies-files" class="spec-res-item">IES Photometric Library <span class="arr">&#8594;</span></a>
+            <a href="/resources/spec-sheets" class="spec-res-item">Resource Library <span class="arr">&#8594;</span></a>
+            <a href="/resources/taa" class="spec-res-item">TAA Documentation <span class="arr">&#8594;</span></a>
+            <a href="/training" class="spec-res-item">Training Center <span class="arr">&#8594;</span></a>
+          </div>
+          <a href="/resources/spec-sheets" class="cta-primary">Browse Spec Resources</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+  /* ============================================================
+     LOCAL TOKENS
+     ============================================================ */
+  :root {
+    --transition: 0.2s ease;
+    --cascade: 0.35s ease;
+    --radius: 8px;
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.18);
+    --dark: #0c0d12;
+    --dark2: #14161e;
+    --brand: var(--color-alg-red, #F32740);
+    --brand-dk: var(--color-alg-red-dark, #C41E32);
+    --ink: #111418;
+    --ink2: #3a3f4a;
+    --ink3: #6b7280;
+    --ink4: #9ca3af;
+    --bg: #ffffff;
+  }
+
+  /* ============================================================
+     HERO CAROUSEL
+     ============================================================ */
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--dark);
+  }
+  .hero-carousel-inner {
+    display: grid;
+    grid-template-columns: 56fr 44fr;
+    min-height: 860px;
+  }
+  .hero-image-stage {
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+  }
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0c0d12 0%, #14161e 100%);
+    opacity: 0;
+    transition: opacity 800ms ease;
+  }
+  .hero-image.active { opacity: 1; }
+  /* No dark overlay on image — clean image fill, bottom-only gradient for text legibility */
+  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.jpg') center/cover no-repeat; }
+  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
+  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
+  .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat; }
+  /* Fix 1: Hero left-panel image overlay — darker than rev9 attempt */
+  .hero-image-stage { position: relative; }
+  .hero-image-stage::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.20) 0%,
+      rgba(0,0,0,0.35) 40%,
+      rgba(0,0,0,0.65) 100%
+    );
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .hero-persistent {
+    position: absolute;
+    left: 56px;
+    bottom: 56px;
+    z-index: 5;
+    pointer-events: none;
+    color: #fff;
+    max-width: 640px;
+  }
+  .p-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+  .p-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--brand);
+  }
+  .hero-persistent h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(56px, 7.5vw, 108px);
+    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.6);
+  }
+  .hero-persistent h1 .stop { color: var(--brand); }
+  .hero-persistent h1 .accent { color: var(--brand); }
+  /* Brand signature: red trailing period on each headline word */
+  .period-red { color: var(--brand); }
+  .hero-persistent .tag {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    margin-top: 22px;
+    max-width: 420px;
+    line-height: 1.5;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  .hero-panel {
+    background: var(--dark2);
+    color: #fff;
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(243,39,64,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, rgba(201,168,118,0.06) 0%, transparent 50%);
+  }
+  .hero-panel-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .slide-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .slide-num { color: var(--brand); font-weight: 700; }
+
+  .slot-stack { display: flex; flex-direction: column; flex: 1; }
+  .slot { position: relative; }
+  .slot-eyebrow { min-height: 32px; margin-bottom: 10px; }
+  .slot-name { min-height: 72px; margin-bottom: 18px; }
+  .slot-desc { min-height: 72px; margin-bottom: 26px; }
+  .slot-stats { min-height: 80px; margin-bottom: 26px; }
+  .slot-cta { min-height: 48px; }
+  /* Fix 3: Product render slot — anchored bottom-LEFT per golden template */
+  .slot-product-img {
+    position: absolute;
+    bottom: 0;
+    left: 24px;
+    width: 70%;
+    height: 440px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .slot-product-img .slot-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  .product-render {
+    max-width: 100%;
+    max-height: 440px;
+    object-fit: contain;
+    object-position: bottom left;
+    opacity: 0.70;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
+  }
+  .product-render-placeholder {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px;
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 4px;
+    margin: auto;
+  }
+  .slot-content {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--cascade), transform var(--cascade);
+    pointer-events: none;
+  }
+  .slot-content.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .slot-eyebrow .slot-content { transition-delay: 0ms; }
+  .slot-name .slot-content { transition-delay: 80ms; }
+  .slot-desc .slot-content { transition-delay: 160ms; }
+  .slot-stats .slot-content { transition-delay: 240ms; }
+  .slot-cta .slot-content { transition-delay: 320ms; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+  }
+  .display-product {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .grad-slide0 { background-image: linear-gradient(135deg, #f0a932 0%, #F32740 100%); }
+  .grad-slide1 { background-image: linear-gradient(135deg, #e8ecf0 0%, #f0a932 100%); }
+  .grad-slide2 { background-image: linear-gradient(135deg, #fff8eb 0%, #c9a876 100%); }
+  .grad-slide3 { background-image: linear-gradient(135deg, #ffffff 0%, #a8c4d8 100%); }
+
+  .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .stat { padding: 0; min-width: 0; }
+  .stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(16px, 1.8vw, 32px);
+    font-weight: 300;
+    line-height: 1.0;
+    margin-bottom: 4px;
+    color: #fff;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .uptotag {
+    display: block;
+    font-size: 0.55em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2px;
+  }
+
+  .cta-pair { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: var(--brand);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background var(--transition);
+    border: none;
+    cursor: pointer;
+  }
+  .cta-primary:hover { background: var(--brand-dk); }
+  .cta-link {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 2px;
+    transition: border-color var(--transition);
+  }
+  .cta-link:hover { border-color: #fff; }
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(17,20,24,0.25);
+    border-radius: 4px;
+    transition: all var(--transition);
+  }
+  .cta-secondary:hover { background: rgba(17,20,24,0.06); }
+  .cta-secondary.on-dark { color: #fff; border-color: rgba(255,255,255,0.4); }
+  .cta-secondary.on-dark:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+
+  .carousel-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 56px;
+  }
+  /* Pagination: 4 horizontal dashes, 24px inactive, active brand red */
+  .carousel-dots { display: flex; gap: 4px; align-items: center; }
+  .carousel-dot {
+    width: 24px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition), width var(--transition);
+    padding: 0;
+    border-radius: 1px;
+  }
+  .carousel-dot:hover { background: rgba(255,255,255,0.45); }
+  .carousel-dot.active { background: var(--brand); width: 24px; }
+  .carousel-arrows { display: flex; gap: 8px; align-items: center; }
+  .carousel-arrow {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    backdrop-filter: blur(8px);
+  }
+  .carousel-arrow:hover { background: var(--brand); border-color: var(--brand); }
+  .carousel-arrow svg { width: 14px; height: 14px; }
+  .carousel-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    padding: 0 12px;
+    min-width: 64px;
+  }
+
+  /* ============================================================
+     DIFFERENTIATION STRIP
+     ============================================================ */
+  .diff-strip {
+    background: var(--bg);
+    padding: 36px 28px;
+    border-bottom: 1px solid rgba(17,20,24,0.06);
+  }
+  .diff-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+  }
+  .diff-item { display: flex; align-items: center; gap: 14px; }
+  .diff-icon { width: 38px; height: 38px; color: var(--brand); flex-shrink: 0; }
+  .diff-icon svg { width: 100%; height: 100%; }
+  .diff-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .diff-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-top: 2px;
+  }
+
+  /* ============================================================
+     PERSONA STRIP
+     ============================================================ */
+  .persona-strip {
+    background: #eceae4;
+    padding: 28px 28px;
+    border-top: 1px solid rgba(17,20,24,0.06);
+    border-bottom: 1px solid rgba(17,20,24,0.06);
+  }
+  .persona-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .persona-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    font-weight: 500;
+    white-space: nowrap;
+    padding-right: 16px;
+  }
+  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+  .persona-chip {
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    padding: 14px 26px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition), transform var(--transition);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .persona-chip:hover { background: var(--ink2); }
+  .persona-chip.active { background: var(--brand); }
+  .persona-chip.active:hover { background: var(--brand-dk); }
+
+  /* ============================================================
+     SHARED SECTION STYLES
+     ============================================================ */
+  .content-section { padding: 100px 28px; }
+  .section-inner { max-width: 1440px; margin: 0 auto; }
+  .sec-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .sec-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--brand);
+    flex-shrink: 0;
+  }
+  .sec-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .sec-title .accent { color: var(--brand); }
+  .sec-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink2);
+    max-width: 680px;
+    margin-bottom: 48px;
+  }
+
+  /* ============================================================
+     WHAT WE MAKE
+     ============================================================ */
+  .what-we-make {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .wm-card {
+    background: var(--bg);
+    border: 1px solid rgba(17,20,24,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .wm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .wm-img {
+    height: 200px;
+    background: var(--dark2);
+    overflow: hidden;
+    position: relative;
+  }
+  .wm-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
+    pointer-events: none;
+  }
+  .wm-card.indoor .wm-img { background: url('/images/wwm/wwm-indoor.jpg') center/cover no-repeat; }
+  .wm-card.outdoor .wm-img { background: url('/images/wwm/wwm-outdoor.jpg') center/cover no-repeat; }
+  .wm-card.controls .wm-img { background: url('/images/wwm/wwm-safety.jpg') center/cover no-repeat; }
+  .wm-card.lamps .wm-img { background: url('/images/wwm/wwm-utility.jpg') center/cover no-repeat; }
+
+  .wm-body { padding: 28px 28px 32px; }
+  .wm-body h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .wm-body p { font-size: 15px; line-height: 1.55; color: var(--ink2); margin-bottom: 22px; }
+  .wm-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17,20,24,0.08);
+  }
+  .wm-sub-brands {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--ink2);
+    font-weight: 600;
+  }
+  .wm-arrow { font-size: 13px; color: var(--brand); font-weight: 700; }
+
+  /* ============================================================
+     LOCATOR MAP
+     ============================================================ */
+  .locator-section {
+    background: var(--dark);
+    color: #fff;
+    padding: 100px 28px;
+  }
+  .locator-inner { max-width: 1440px; margin: 0 auto; }
+  .locator-section .sec-title { color: #fff; }
+  .locator-section .sec-sub { color: var(--ink4); }
+  .locator-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .loc-filter-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .loc-filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+  }
+  .loc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .loc-pill.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .loc-pill:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
+  .loc-count { color: var(--ink3); }
+  /* Fix 5b: colored dots vertically centered with text labels */
+  .kind-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 0;
+  }
+  .kind-dot.wh { background: #F32740; }
+  .kind-dot.rep { background: #FFC107; }
+  .kind-dot.dist { background: #10B981; }
+  .loc-search-group { display: flex; gap: 8px; }
+  .loc-search-input {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    width: 220px;
+  }
+  .loc-search-input::placeholder { color: var(--ink3); }
+  .loc-search-btn {
+    padding: 8px 18px;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background var(--transition);
+  }
+  .loc-search-btn:hover { background: var(--brand-dk); }
+  .locator-map-wrap {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 24px;
+    min-height: 440px;
+    margin-bottom: 28px;
+  }
+  .locator-map {
+    min-height: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+  }
+  .locator-map .leaflet-container { border-radius: 12px; }
+  .loc-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .loc-legend, .loc-results {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 12px;
+    padding: 20px 22px;
+    overflow: hidden;
+  }
+  .loc-legend h4, .loc-results h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .legend-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .dot-vis {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .legend-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+  }
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .result-row:last-child { border-bottom: none; }
+  .result-kind {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .result-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .result-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+  }
+  .result-dist {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--brand);
+  }
+  .locator-ctas {
+    display: flex;
+    gap: 14px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  /* ============================================================
+     FEATURED FAMILIES
+     ============================================================ */
+  .families-rail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .fam-card {
+    background: var(--bg);
+    border: 1px solid rgba(17,20,24,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
+  }
+  .fam-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .fam-img {
+    position: relative;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .fam-img.cream { background: #f5f0e8; }
+  .fam-img.dk { background: var(--dark2); }
+  .fam-img.brand { background: var(--brand); }
+  .fam-img.dark2 { background: #1a1d28; }
+  .fam-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+  .fam-product {
+    max-height: 180px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .fam-body { padding: 20px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+  .fam-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .fam-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .fam-desc { font-size: 13px; color: var(--ink2); line-height: 1.5; flex: 1; margin-bottom: 16px; }
+  .fam-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid rgba(17,20,24,0.08);
+  }
+  .fam-skucount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    font-weight: 600;
+  }
+  .fam-arrow { font-size: 13px; color: var(--brand); font-weight: 700; }
+
+  /* ============================================================
+     LAYOUT CTA
+     ============================================================ */
+  .layout-cta {
+    background: var(--dark);
+    color: #fff;
+    padding: 120px 28px;
+  }
+  .layout-cta-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .layout-cta .sec-eyebrow { color: var(--brand); }
+  .layout-cta h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .layout-cta h2 .accent { color: var(--brand); }
+  .layout-cta > .layout-cta-inner > div > p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink4);
+    max-width: 520px;
+    margin-bottom: 28px;
+  }
+  .layout-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .lf-item { font-size: 14px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .lf-check { color: var(--brand); font-weight: 700; font-size: 16px; }
+  .layout-cta-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .layout-visual { position: relative; }
+  .lv-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+  }
+  .lv-cell { aspect-ratio: 1; background: rgba(255,255,255,0.03); }
+  .lv-cell.bright { background: rgba(243,39,64,0.35); }
+  .lv-cell.med { background: rgba(243,39,64,0.18); }
+  .lv-cell.dim { background: rgba(243,39,64,0.07); }
+  .lv-cell.fix { background: rgba(255,255,255,0.85); border-radius: 50%; }
+  .lv-overlay {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.9);
+    background: rgba(0,0,0,0.6);
+    padding: 6px 12px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ============================================================
+     INSTALLED AT
+     ============================================================ */
+  .installed-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: rgba(17,20,24,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .installed-tile {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--dark2);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .installed-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.3) 35%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.95) 100%);
+  }
+  .installed-tile:hover { transform: scale(1.02); z-index: 2; }
+  .installed-tile.t1 { background: url('/images/verticals/vertical-warehouse.jpg') center/cover no-repeat; }
+  .installed-tile.t2 { background: url('/images/verticals/vertical-manufacturing.jpg') center/cover no-repeat; }
+  .installed-tile.t3 { background: url('/images/verticals/vertical-coldstorage.jpg') center/cover no-repeat; }
+  .installed-tile.t4 { background: url('/images/verticals/vertical-datacenter.jpg') center/cover no-repeat; }
+  .installed-tile.t5 { background: url('/images/verticals/vertical-healthcare.jpg') center/cover no-repeat; }
+  .installed-tile.t6 { background: url('/images/verticals/vertical-education.jpg') center/cover no-repeat; }
+  .installed-tile.t7 { background: url('/images/verticals/vertical-hospitality.jpg') center/cover no-repeat; }
+  .installed-tile.t8 { background: url('/images/verticals/vertical-government.jpg') center/cover no-repeat; }
+  .installed-tile.placeholder { background: linear-gradient(135deg, #1a1d28 0%, #0c0d12 100%); }
+  .installed-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 16px 18px;
+  }
+  .il-vert {
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .il-place {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+  }
+  .placeholder-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+  }
+
+  /* ============================================================
+     SPLIT TEASERS
+     ============================================================ */
+  .split-teasers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .teaser { padding: 48px; border-radius: var(--radius); }
+  .teaser-rebate { background: linear-gradient(135deg, #eceae4 0%, #d8d5cc 100%); color: var(--ink); }
+  .teaser-spec { background: var(--dark2); color: #fff; }
+  .teaser .sec-eyebrow { margin-bottom: 12px; }
+  .teaser h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .teaser-rebate h3 { color: var(--ink); }
+  .teaser-spec h3 { color: #fff; }
+  .teaser p { font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+  .teaser-rebate p { color: var(--ink2); }
+  .teaser-spec p { color: var(--ink4); }
+  .rebate-stat {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(17,20,24,0.15);
+  }
+  .rebate-stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .rebate-stat-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .spec-resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .spec-res-item {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition);
+  }
+  .spec-res-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .arr { color: var(--brand); }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1200px) {
+    .diff-inner { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .families-rail { grid-template-columns: repeat(2, 1fr); }
+    .hero-carousel-inner { grid-template-columns: 1fr; }
+    .hero-image-stage { min-height: 480px; }
+    .hero-panel { padding: 48px 32px; }
+    .carousel-controls { padding: 0 32px; }
+  }
+  @media (max-width: 1024px) {
+    .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  /* Fix 1 (rev11): Hide line drawings on tablet/mobile — reference template hides below desktop */
+  @media (max-width: 1023px) {
+    .slot-product-img,
+    .product-render {
+      display: none !important;
+    }
+  }
+  @media (max-width: 900px) {
+    .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .layout-cta-inner { grid-template-columns: 1fr; gap: 40px; }
+    .split-teasers { grid-template-columns: 1fr; gap: 40px; }
+    .installed-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .what-we-make { grid-template-columns: 1fr; }
+    .diff-inner { grid-template-columns: repeat(2, 1fr); }
+    .installed-grid { grid-template-columns: 1fr; }
+    .families-rail { grid-template-columns: 1fr; }
+    .hero-persistent { left: 20px; bottom: 20px; right: 20px; }
+    .carousel-controls { padding: 0 20px; }
+    .content-section { padding: 60px 20px; }
+    .locator-section { padding: 60px 20px; }
+    .layout-cta { padding: 60px 20px; }
+  }
+</style>
+
+<script>
+(function () {
+  const carousel = document.getElementById('heroCarousel');
+  if (!carousel) return;
+
+  const images = Array.from(carousel.querySelectorAll('.hero-image'));
+  const dots = Array.from(carousel.querySelectorAll('.carousel-dot'));
+  const counter = document.getElementById('carouselCounter');
+  const slideNumEl = document.getElementById('slideNum');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const TOTAL = images.length;
+  let current = 0;
+  let timer;
+
+  function pad(n) { return String(n + 1).padStart(2, '0'); }
+
+  function goTo(idx) {
+    carousel.querySelectorAll(`.slot-content[data-slot-slide="${current}"]`).forEach(el => el.classList.remove('active'));
+    images[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + TOTAL) % TOTAL;
+    images[current].classList.add('active');
+    dots[current].classList.add('active');
+    carousel.querySelectorAll(`.slot-content[data-slot-slide="${current}"]`).forEach(el => el.classList.add('active'));
+    if (counter) counter.textContent = `${pad(current)} / ${pad(TOTAL - 1)}`;
+    if (slideNumEl) slideNumEl.textContent = pad(current);
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 7000);
+  }
+
+  prevBtn?.addEventListener('click', () => { goTo(current - 1); startTimer(); });
+  nextBtn?.addEventListener('click', () => { goTo(current + 1); startTimer(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); startTimer(); }));
+  carousel.addEventListener('mouseenter', () => clearInterval(timer));
+  carousel.addEventListener('mouseleave', startTimer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { goTo(current - 1); startTimer(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); startTimer(); }
+  });
+  startTimer();
+
+  // Leaflet map
+  const mapEl = document.getElementById('algLocatorMap');
+  if (mapEl) {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    script.crossOrigin = '';
+    script.onload = function () {
+      const L = window.L;
+      const map = L.map('algLocatorMap', { zoomControl: true, scrollWheelZoom: false }).setView([37.5, -96], 4);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }).addTo(map);
+      const warehouses = [
+        { lat: 34.0776, lng: -117.6897, name: 'Montclair, CA', address: '4615 State Street, Montclair CA' },
+        { lat: 33.9213, lng: -117.3517, name: 'Riverside, CA', address: '9345 Sycamore Canyon Blvd, Riverside CA 92508 (USA Production)' },
+        { lat: 41.6647, lng:  -87.7372, name: 'Crestwood, IL', address: 'Crestwood, IL' },
+        { lat: 40.6082, lng:  -74.2776, name: 'Rahway, NJ', address: 'Rahway, NJ' },
+        { lat: 42.0834, lng:  -71.0184, name: 'Brockton, MA', address: 'Brockton, MA' },
+        { lat: 39.1031, lng:  -84.5120, name: 'Cincinnati, OH', address: 'Cincinnati, OH' },
+      ];
+      const icon = L.divIcon({
+        className: '',
+        html: '<div style="width:12px;height:12px;background:#F32740;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px rgba(243,39,64,0.6);"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+      });
+      warehouses.forEach(w => L.marker([w.lat, w.lng], { icon }).addTo(map).bindPopup('<strong>' + w.name + '</strong><br>' + w.address));
+    };
+    document.head.appendChild(script);
+  }
+})();
+</script>
