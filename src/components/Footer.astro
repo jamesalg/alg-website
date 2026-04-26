@@ -127,9 +127,8 @@ const year = new Date().getFullYear();
   <!-- SUB-FOOTER -->
   <div class="sub-footer">
     <div class="sub-footer-inner">
-      <p class="sub-footer-line">
-        &copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763 &middot; USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508 &middot; +1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a>
-      </p>
+      <span class="sub-footer-line">&copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763</span>
+      <span class="sub-footer-line">+1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a></span>
     </div>
   </div>
 </footer>
@@ -194,7 +193,10 @@ const year = new Date().getFullYear();
 
   /* SUB-FOOTER */
   .sub-footer { border-top: 1px solid rgba(255,255,255,0.06); }
-  .sub-footer-inner { max-width: 1440px; margin: 0 auto; padding: 18px 28px; }
+  .sub-footer-inner {
+    max-width: 1440px; margin: 0 auto; padding: 18px 28px;
+    display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
   .sub-footer-line {
     font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.04em;
     color: var(--ink3); line-height: 1.6;

@@ -143,13 +143,13 @@ import MegaMenu from './MegaMenu.astro';
   .signin-wrap { position: relative; }
   .signin-btn {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 14px; background: rgba(255,255,255,0.1); color: #fff;
-    border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+    padding: 5px 14px; background: var(--brand); color: #fff;
+    border: 1px solid var(--brand); border-radius: 3px;
     font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 0.1em; cursor: pointer; transition: all var(--t);
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all var(--t);
   }
-  .signin-btn:hover { background: rgba(255,255,255,0.16); }
-  .signin-btn[aria-expanded="true"] { background: rgba(255,255,255,0.16); }
+  .signin-btn:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
+  .signin-btn[aria-expanded="true"] { background: var(--brand-dk); border-color: var(--brand-dk); }
   .signin-chev { width: 10px; height: 6px; transition: transform var(--t); }
   .signin-btn[aria-expanded="true"] .signin-chev { transform: rotate(180deg); }
   .signin-dropdown {

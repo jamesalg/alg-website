@@ -292,21 +292,10 @@ const verticals = [
         <a href="/collections/controls-em" class="wm-card controls">
           <div class="wm-img"></div>
           <div class="wm-body">
-            <h3>Safety &amp; Controls</h3>
+            <h3>Controls &amp; EM</h3>
             <p><BrandMark prefix="contr" suffix="LS" /> three-tier (ECO · PRO · PRO+) and <BrandMark prefix="const" suffix="NT" /> emergency drivers and egress / exit signs.</p>
             <div class="wm-meta">
               <span class="wm-sub-brands"><BrandMark prefix="contr" suffix="LS" /> · <BrandMark prefix="const" suffix="NT" /></span>
-              <span class="wm-arrow">Browse →</span>
-            </div>
-          </div>
-        </a>
-        <a href="/collections/lamps" class="wm-card lamps">
-          <div class="wm-img"></div>
-          <div class="wm-body">
-            <h3>Utility &amp; D&eacute;cor Lamps</h3>
-            <p>T8/T5/PL/HID retrofit lamps and d&eacute;cor lamps for utility and architectural applications. The catalog distributors stock for retrofit and replacement.</p>
-            <div class="wm-meta">
-              <span class="wm-sub-brands"><BrandMark prefix="tubul" suffix="RCH" /> · D&eacute;cor</span>
               <span class="wm-arrow">Browse →</span>
             </div>
           </div>
@@ -861,51 +850,53 @@ const verticals = [
      PERSONA STRIP
      ============================================================ */
   .persona-strip {
-    background: var(--dark);
-    padding: 20px 28px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: #eceae4;
+    padding: 28px 28px;
+    border-top: 1px solid rgba(17,20,24,0.06);
+    border-bottom: 1px solid rgba(17,20,24,0.06);
   }
   .persona-inner {
     max-width: 1440px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 18px;
     flex-wrap: wrap;
   }
   .persona-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    font-size: 12px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink3);
-    font-weight: 600;
+    color: var(--ink2);
+    font-weight: 500;
     white-space: nowrap;
+    padding-right: 16px;
   }
-  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; }
   .persona-chip {
     -webkit-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 8px 18px;
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.7);
-    border: 1px solid rgba(255,255,255,0.18);
+    letter-spacing: -0.005em;
+    padding: 14px 26px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
-    transition: all var(--transition);
+    transition: background var(--transition), transform var(--transition);
     display: inline-flex;
     align-items: center;
     line-height: 1;
     white-space: nowrap;
   }
-  .persona-chip:hover { background: rgba(255,255,255,0.12); color: #fff; }
-  .persona-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .persona-chip:hover { background: var(--ink2); }
+  .persona-chip.active { background: var(--brand); }
   .persona-chip.active:hover { background: var(--brand-dk); }
 
   /* ============================================================
@@ -945,7 +936,7 @@ const verticals = [
      ============================================================ */
   .what-we-make {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
   .wm-card {
@@ -966,7 +957,7 @@ const verticals = [
   .wm-card.indoor .wm-img { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
   .wm-card.outdoor .wm-img { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
   .wm-card.controls .wm-img { background: url('/images/heroes/hero-controls-panel.jpg') center/cover no-repeat; }
-  .wm-card.lamps .wm-img { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+
   .wm-body { padding: 28px 28px 32px; }
   .wm-body h3 {
     font-family: 'Sora', sans-serif;
