@@ -83,3 +83,9 @@ a {
 a:hover {
   color: var(--color-alg-red);
 }
+
+/* Fix 2 (v2.4.3): Global anchor-scroll offset — compensates for sticky header (~120px) + 20px breathing room.
+   Applies to all section[id] elements across all pages so browser-native hash navigation also works. */
+section[id] {
+  scroll-margin-top: 140px;
+}
