@@ -30,9 +30,9 @@ const heroSlides = [
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
     lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
     stats: [
-      { num: 'Up to 116,000', lbl: 'Peak Lumens' },
-      { num: '150 lm/W', lbl: 'DLC Premium Efficacy' },
-      { num: '10-Year', lbl: 'Tiered Warranty' },
+      { num: '<span class="uptotag">Up to</span><span style="white-space:nowrap">116,000</span>', lbl: 'Peak Lumens', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">150 lm/W</span>', lbl: 'DLC Premium Efficacy', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">10-Year</span>', lbl: 'Tiered Warranty', hasBrandMark: true },
     ],
     brandMark: null,
   },
@@ -46,9 +46,9 @@ const heroSlides = [
     desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
     lineDrawing: '/images/heroes/line-drawings/line-titan.png',
     stats: [
-      { num: '3-Step', lbl: 'WATTselect' },
-      { num: '150+ lm/W', lbl: 'DLC Premium' },
-      { num: '90×90', lbl: 'Photometric' },
+      { num: '<span style="white-space:nowrap">3-Step</span>', lbl: 'WATTselect', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">150+ lm/W</span>', lbl: 'DLC Premium', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">90×90</span>', lbl: 'Photometric', hasBrandMark: true },
     ],
     brandMark: null,
   },
@@ -78,8 +78,8 @@ const heroSlides = [
     desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
     lineDrawing: '/images/heroes/line-drawings/line-panel.png',
     stats: [
-      { num: '5-Step', lbl: 'WATTselect' },
-      { num: '5-Step', lbl: 'CCTselect' },
+      { num: '<span style="white-space:nowrap">5-Step</span>', lbl: 'WATTselect', hasBrandMark: true },
+      { num: '<span style="white-space:nowrap">5-Step</span>', lbl: 'CCTselect', hasBrandMark: true },
       { num: 'TAA', lbl: 'Compliant' },
     ],
     brandMark: 'proarch',
@@ -592,8 +592,8 @@ const verticals = [
   }
   .hero-carousel-inner {
     display: grid;
-    grid-template-columns: 1fr 480px;
-    min-height: 640px;
+    grid-template-columns: 56fr 44fr;
+    min-height: 860px;
   }
   .hero-image-stage {
     position: relative;
@@ -801,14 +801,14 @@ const verticals = [
 
   .stat-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 32px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
     align-items: flex-start;
   }
   .stat { padding: 0; min-width: 0; }
   .stat-num {
     font-family: 'Sora', sans-serif;
-    font-size: clamp(18px, 2vw, 38px);
+    font-size: clamp(16px, 1.8vw, 32px);
     font-weight: 300;
     line-height: 1.0;
     margin-bottom: 4px;
@@ -827,6 +827,14 @@ const verticals = [
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .uptotag {
+    display: block;
+    font-size: 0.55em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2px;
   }
 
   .cta-pair { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
