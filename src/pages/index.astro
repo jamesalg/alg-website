@@ -624,13 +624,19 @@ const verticals = [
   .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
   .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
   .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat; }
-  /* Full-height overlay — keeps subhead and stat strip legible on all slides */
-  .hero-image::after {
+  /* Fix 1: Hero left-panel image overlay — darker than rev9 attempt */
+  .hero-image-stage { position: relative; }
+  .hero-image-stage::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.20) 0%,
+      rgba(0,0,0,0.35) 40%,
+      rgba(0,0,0,0.65) 100%
+    );
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
   }
 
   .hero-persistent {
@@ -668,7 +674,7 @@ const verticals = [
     font-weight: 800;
     letter-spacing: -0.035em;
     color: #fff;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.6);
   }
   .hero-persistent h1 .stop { color: var(--brand); }
   .hero-persistent h1 .accent { color: var(--brand); }
@@ -729,13 +735,13 @@ const verticals = [
   .slot-desc { min-height: 72px; margin-bottom: 26px; }
   .slot-stats { min-height: 80px; margin-bottom: 26px; }
   .slot-cta { min-height: 48px; }
-  /* Product render slot — anchored bottom-LEFT, 60% larger than original */
+  /* Fix 3: Product render slot — anchored bottom-LEFT per golden template */
   .slot-product-img {
     position: absolute;
     bottom: 0;
-    left: 16px;
-    width: 83%;  /* 52% × 1.6 = 83.2% */
-    height: 416px;  /* 260px × 1.6 = 416px */
+    left: 24px;
+    width: 70%;
+    height: 440px;
     pointer-events: none;
     z-index: 0;
   }
@@ -748,10 +754,10 @@ const verticals = [
   }
   .product-render {
     max-width: 100%;
-    max-height: 384px;  /* 240px × 1.6 = 384px */
+    max-height: 440px;
     object-fit: contain;
     object-position: bottom left;
-    opacity: 0.75;
+    opacity: 0.70;
     filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
   }
   .product-render-placeholder {
@@ -1186,10 +1192,18 @@ const verticals = [
   .loc-pill.active { background: var(--brand); color: #fff; border-color: var(--brand); }
   .loc-pill:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
   .loc-count { color: var(--ink3); }
-  .kind-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-  .kind-dot.wh { background: var(--brand); }
-  .kind-dot.rep { background: #4ade80; }
-  .kind-dot.dist { background: #60a5fa; }
+  /* Fix 5b: colored dots vertically centered with text labels */
+  .kind-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: 0;
+  }
+  .kind-dot.wh { background: #F32740; }
+  .kind-dot.rep { background: #FFC107; }
+  .kind-dot.dist { background: #10B981; }
   .loc-search-group { display: flex; gap: 8px; }
   .loc-search-input {
     padding: 8px 16px;
@@ -1226,22 +1240,23 @@ const verticals = [
   }
   .locator-map {
     min-height: 420px;
-    border-radius: var(--radius);
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
   }
+  .locator-map .leaflet-container { border-radius: 12px; }
   .loc-sidebar {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
   .loc-legend, .loc-results {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
-    border-radius: var(--radius);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 12px;
     padding: 20px 22px;
+    overflow: hidden;
   }
   .loc-legend h4, .loc-results h4 {
     font-family: 'JetBrains Mono', monospace;

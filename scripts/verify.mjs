@@ -17,11 +17,16 @@
 //      canonical nav items and all 4 mega-menu panes are present in every
 //      built page. This is a mechanical guard against accidental nav removal
 //      during template refactors.
+//   5. HEADER CANONICAL HASH gate (Group F) added in v2.1 rev10: hashes the
+//      <header> outerHTML across all built pages and asserts they are identical.
+//      This is a regression gate before v2.2.0 multi-page expansion.
 //
 // Exit code 0 = pass. Non-zero = fail.
 
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import crypto from 'node:crypto';
+import { JSDOM } from 'jsdom';
 
 const DIST_DIR = 'dist';
 const ROOT = process.cwd();
@@ -178,6 +183,42 @@ async function main() {
       if (!pattern.test(html)) {
         fail(id, `${rel}: mega-menu pane ${id.split('.')[2]} missing — drift detected`);
       }
+    }
+  }
+
+  // === GROUP F: HEADER CANONICAL HASH GATE (Playbook §5.5, rev10) ===
+  //
+  // Hash the <header> outerHTML across all built pages and assert they are
+  // identical. This prevents Header.astro drift when multi-page expansion
+  // lands in v2.2.0. Currently a no-op (1 page) but builds the regression
+  // gate early.
+  {
+    const headerHashes = new Map();
+    for (const file of htmlFiles) {
+      const html = await readFile(file, 'utf8');
+      let dom;
+      try {
+        dom = new JSDOM(html);
+      } catch {
+        fail('F.1', `${relative(ROOT, file)}: JSDOM parse error`);
+        continue;
+      }
+      const header = dom.window.document.querySelector('header');
+      if (!header) {
+        fail('F.1', `${relative(ROOT, file)}: no <header> element found`);
+        continue;
+      }
+      const hash = crypto.createHash('md5').update(header.outerHTML).digest('hex');
+      headerHashes.set(relative(ROOT, file), hash);
+    }
+    const uniqueHashes = new Set(headerHashes.values());
+    if (uniqueHashes.size > 1) {
+      fail('F.1', 'MEGA MENU DRIFT detected across pages:');
+      for (const [file, hash] of headerHashes) {
+        console.error(`  ${file}: ${hash}`);
+      }
+    } else if (headerHashes.size > 0) {
+      console.log(`✅ Header canonical (${uniqueHashes.size} hash across ${headerHashes.size} page(s))`);
     }
   }
 
