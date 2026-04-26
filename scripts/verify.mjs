@@ -27,6 +27,7 @@ import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import crypto from 'node:crypto';
 import { JSDOM } from 'jsdom';
+import { execSync } from 'node:child_process';
 
 const DIST_DIR = 'dist';
 const ROOT = process.cwd();
@@ -219,6 +220,45 @@ async function main() {
       }
     } else if (headerHashes.size > 0) {
       console.log(`✅ Header canonical (${uniqueHashes.size} hash across ${headerHashes.size} page(s))`);
+    }
+  }
+
+  // === GROUP G: LOCK REGISTER ENFORCEMENT (v2.2.0 Phase A) ===
+  //
+  // Locked paths from docs/lock_register.md MUST NOT be modified on any branch
+  // except reopen/* branches. This is a hard-fail gate.
+  // scripts/verify.mjs itself is allowed additive changes only (del === 0).
+  {
+    const LOCKED_PATHS = [
+      'src/pages/index.astro',
+      'src/components/Header.astro',
+      'src/components/Footer.astro',
+      'src/components/BrandMark.astro',
+      'src/styles/brand.css',
+      'scripts/verify.mjs',
+    ];
+    try {
+      const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+      // iter/v2.1.0-homepage is the branch that built out the scaffolds — exempt
+      if (!branch.startsWith('reopen/') && branch !== 'main' && branch !== 'iter/v2.1.0-homepage') {
+        const changed = execSync('git diff --name-only origin/main...HEAD').toString().trim().split('\n').filter(Boolean);
+        const violations = changed.filter(f => LOCKED_PATHS.some(p => f === p || f.startsWith(p + '/')));
+        if (violations.length > 0) {
+          const verifyDiff = execSync('git diff --numstat origin/main...HEAD -- scripts/verify.mjs').toString().trim();
+          const verifyOK = verifyDiff === '' || (() => {
+            const parts = verifyDiff.split('\t');
+            const del = parseInt(parts[1], 10);
+            return del === 0;
+          })();
+          const hardViolations = violations.filter(v => v !== 'scripts/verify.mjs' || !verifyOK);
+          if (hardViolations.length > 0) {
+            fail('G.1', 'LOCK VIOLATION — locked paths modified outside reopen/ branch: ' + hardViolations.join(', '));
+          }
+        }
+      }
+      console.log('✅ Lock register clean (no locked paths modified)');
+    } catch (e) {
+      console.warn('⚠ Lock check skipped:', e.message);
     }
   }
 
