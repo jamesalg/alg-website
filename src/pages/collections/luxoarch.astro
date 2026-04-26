@@ -75,9 +75,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         <span class="hero-pill">8 APPLICATIONS</span>
       </div>
     </div>
-    <div class="hero-image-strip">
-      <!-- Placeholder until hero-luxo.jpg is provided -->
-    </div>
+    <!-- Fix 3 (v2.4.1): hero-image-strip removed; re-add in v2.4.x with hero-luxo.jpg -->
   </section>
 
   <!-- ================================================================
@@ -114,7 +112,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
       <div class="app-grid">
 
         <!-- Sports Lighting -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Sports Lighting">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="14" cy="14" r="10" stroke="#8a8f99" stroke-width="1.5"/>
             <line x1="14" y1="4" x2="14" y2="24" stroke="#8a8f99" stroke-width="1.2"/>
@@ -126,7 +124,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Area Light -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Area Light">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="14" y1="4" x2="14" y2="14" stroke="#8a8f99" stroke-width="1.5"/>
             <rect x="6" y="14" width="16" height="4" rx="1" stroke="#8a8f99" stroke-width="1.2"/>
@@ -138,7 +136,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Wall Pack -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Wall Pack">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="5" y="8" width="18" height="12" rx="2" stroke="#8a8f99" stroke-width="1.5"/>
             <line x1="5" y1="20" x2="23" y2="20" stroke="#8a8f99" stroke-width="1.2"/>
@@ -149,7 +147,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Flood Light -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Flood Light">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14 4 L24 22 L4 22 Z" stroke="#8a8f99" stroke-width="1.5" stroke-linejoin="round"/>
             <line x1="14" y1="22" x2="14" y2="26" stroke="#8a8f99" stroke-width="1.2"/>
@@ -159,7 +157,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- String Light -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="String Light">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 8 Q7 4 10 8 Q13 12 16 8 Q19 4 22 8 Q25 12 28 8" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
             <circle cx="7" cy="8" r="2" stroke="#8a8f99" stroke-width="1.2"/>
@@ -171,7 +169,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Canopy -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Canopy">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 18 Q14 6 24 18" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
             <line x1="4" y1="18" x2="24" y2="18" stroke="#8a8f99" stroke-width="1.2"/>
@@ -182,7 +180,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Cylinder -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Cylinder">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="10" y="4" width="8" height="20" rx="4" stroke="#8a8f99" stroke-width="1.5"/>
           </svg>
@@ -191,7 +189,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         </div>
 
         <!-- Dock Light -->
-        <div class="app-tile">
+        <div class="app-tile" data-app="Dock Light">
           <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="14" y1="4" x2="14" y2="14" stroke="#8a8f99" stroke-width="1.5"/>
             <path d="M14 14 Q20 14 22 20" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
@@ -346,14 +344,14 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="filter-group">
             <div class="filter-group-label">Application <span class="fg-arrow">▲</span></div>
             <div class="filter-options">
-              <label class="filter-opt"><input type="checkbox" disabled /> Sports Lighting <span class="fg-count">(5)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Area Light <span class="fg-count">(5)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Wall Pack <span class="fg-count">(10)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Flood Light <span class="fg-count">(2)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> String Light <span class="fg-count">(2)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Canopy <span class="fg-count">(2)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Cylinder <span class="fg-count">(1)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> Dock Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Sports Lighting" /> Sports Lighting <span class="fg-count">(6)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Area Light" /> Area Light <span class="fg-count">(4)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Wall Pack" /> Wall Pack <span class="fg-count">(10)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Flood Light" /> Flood Light <span class="fg-count">(2)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="String Light" /> String Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Canopy" /> Canopy <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Cylinder" /> Cylinder <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" class="app-filter-cb" value="Dock Light" /> Dock Light <span class="fg-count">(1)</span></label>
             </div>
           </div>
 
@@ -439,9 +437,9 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
             </div>
           </div>
 
-          <div class="all-fam-grid">
+          <div class="all-fam-grid" id="all-fam-grid">
             {families.map((f) => (
-              <div class="af-card">
+              <div class="af-card" data-application={f.sub.split(' · ')[0]}>
                 <div class="af-card-top">
                   <span class="fam-sub-tag">{f.sub}</span>
                   <span class={`tier-badge tier-${f.tier === 'PRO+' ? 'proplus' : f.tier.toLowerCase()}`}>{f.tier}</span>
@@ -591,7 +589,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     color: #fff;
   }
   .hero-top {
-    padding: 72px 28px 56px;
+    padding: 72px 28px 80px; /* Fix 3 (v2.4.1): bottom padding ~80px below pill row */
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -634,6 +632,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     max-width: 560px;
     margin-bottom: 32px;
   }
+  /* Fix 5 (v2.4.1): hero-desc single line at desktop */
+  @media (min-width: 1200px) {
+    .hero-desc { white-space: nowrap; max-width: none; }
+  }
   .hero-pills {
     display: flex;
     flex-wrap: wrap;
@@ -650,13 +652,8 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     padding: 5px 10px;
     white-space: nowrap;
   }
-  .hero-image-strip {
-    width: 100%;
-    height: 420px;
-    background: linear-gradient(to bottom, #1a1f2e, #0a0e1a);
-    /* Placeholder until hero-luxo.jpg is provided */
-    /* When image is ready: background: url('/images/collections/luxoarch/hero-luxo.jpg') center/cover no-repeat; */
-  }
+  /* Fix 3 (v2.4.1): hero-image-strip removed — hero ends ~80px below pill row */
+  /* .hero-image-strip removed; re-add in v2.4.x when hero-luxo.jpg is provided */
 
   /* ── §3 STAT STRIP ──────────────────────────────────────────────── */
   .stat-strip {
@@ -742,6 +739,13 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     color: var(--ink2, #3a3f47);
     max-width: 640px;
     margin-bottom: 48px;
+  }
+  /* Fix 5 (v2.4.1): Featured Families subhead single line at desktop */
+  #sec-featured .sec-sub {
+    max-width: none;
+  }
+  @media (min-width: 1200px) {
+    #sec-featured .sec-sub { white-space: nowrap; }
   }
 
   /* ── §4 APPLICATION TILES ───────────────────────────────────────── */
@@ -867,9 +871,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .tier-pro   { background: #F32740; }
-  .tier-proplus { background: #FFC107; }
-  .tier-eco   { background: #5B8DEF; }
+  /* Fix 2 (v2.4.1): Tier badge visual treatments */
+  .tier-eco     { background: rgba(255,255,255,0.10); color: #fff; border: none; }
+  .tier-pro     { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
+  .tier-proplus { background: #F32740; color: #fff; border: none; }
   .fam-img-wrap {
     padding: 16px 14px;
     display: flex;
@@ -1004,9 +1009,24 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     gap: 8px;
     font-size: 12px;
     color: var(--ink2, #3a3f47);
-    cursor: default;
+    cursor: pointer; /* Fix 4 (v2.4.1): interactive */
   }
-  .filter-opt input { cursor: default; }
+  .filter-opt input { cursor: pointer; }
+  /* Fix 4 (v2.4.1): app tile active state */
+  .app-tile.is-active {
+    border-color: var(--brand, #F32740);
+    background: #fff0f2;
+    box-shadow: 0 0 0 2px var(--brand, #F32740);
+  }
+  .app-tile.is-active .app-icon circle,
+  .app-tile.is-active .app-icon line,
+  .app-tile.is-active .app-icon path,
+  .app-tile.is-active .app-icon rect {
+    stroke: var(--brand, #F32740);
+  }
+  .app-tile.is-active .app-name { color: var(--brand, #F32740); }
+  /* Fix 4 (v2.4.1): app tile cursor */
+  .app-tile { cursor: pointer; }
   .fg-count { color: var(--ink3, #8a8f99); margin-left: auto; }
   .range-placeholder { padding: 4px 0; }
   .range-track {
@@ -1241,4 +1261,67 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     .rb-div { display: none; }
     .legacy-box { padding: 24px 20px; }
   }
+  /* Fix 4 (v2.4.1): hidden af-cards */
+  .af-card[hidden] { display: none !important; }
 </style>
+
+<script>
+  /* Fix 4 (v2.4.1) - Application filter.
+   * Clicking an app tile or a sidebar checkbox filters the all-families grid.
+   * Tile click also scrolls to #sec-all-families.
+   * Reset all clears all active filters. */
+  (function () {
+    const tiles = Array.from(document.querySelectorAll('.app-tile[data-app]'));
+    const cbs   = Array.from(document.querySelectorAll('.app-filter-cb'));
+    const cards = Array.from(document.querySelectorAll('#all-fam-grid .af-card[data-application]'));
+    const countEl = document.querySelector('.grid-count');
+    const resetBtn = document.querySelector('.filter-reset');
+    const allFamSection = document.getElementById('sec-all-families');
+
+    function getActive() {
+      return cbs.filter(cb => cb.checked).map(cb => cb.value);
+    }
+
+    function applyFilter() {
+      const active = getActive();
+      let shown = 0;
+      cards.forEach(function (card) {
+        const app = card.dataset.application || '';
+        const match = active.length === 0 || active.some(function (a) { return app.startsWith(a); });
+        if (match) { card.removeAttribute('hidden'); shown++; }
+        else { card.setAttribute('hidden', ''); }
+      });
+      if (countEl) {
+        countEl.textContent = active.length === 0
+          ? 'Showing 23 families'
+          : 'Showing ' + shown + ' of 23 families';
+      }
+      tiles.forEach(function (tile) {
+        const app = tile.dataset.app || '';
+        tile.classList.toggle('is-active', active.indexOf(app) !== -1);
+      });
+    }
+
+    tiles.forEach(function (tile) {
+      tile.addEventListener('click', function () {
+        const app = tile.dataset.app;
+        const cb = cbs.find(function (c) { return c.value === app; });
+        if (cb) { cb.checked = !cb.checked; }
+        applyFilter();
+        if (allFamSection) {
+          allFamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    cbs.forEach(function (cb) { cb.addEventListener('change', applyFilter); });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        cbs.forEach(function (cb) { cb.checked = false; });
+        applyFilter();
+      });
+    }
+  })();
+</script>
