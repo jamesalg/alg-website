@@ -120,7 +120,7 @@ const verticals = [
           <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
           <h1>
             Specified.<br />
-            Stocked.<span class="stop">.</span><br />
+            Stocked<span class="stop">.</span><br />
             <span class="accent">Shipped.</span>
           </h1>
           <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
@@ -342,7 +342,6 @@ const verticals = [
           <button class="loc-search-btn">Find Nearest</button>
         </div>
       </div>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
       <div id="algLocatorMap" class="locator-map" aria-label="ALG warehouse and distributor locator map" role="application"></div>
       <div class="locator-actions">
         <a href="/find-a-rep" class="loc-action-link">Find a Rep or Distributor</a>
@@ -403,7 +402,7 @@ const verticals = [
             <img class="fam-product" src="/images/families/family-contrals.png" alt="contrALS outdoor PIR occupancy sensor and controller pair" width="320" height="240" loading="lazy" />
           </div>
           <div class="fam-body">
-            <div class="fam-eyebrow"><BrandMark prefix="contr" suffix="LS" /> · by <BrandMark prefix="" suffix="CS" /></div>
+            <div class="fam-eyebrow"><BrandMark prefix="contr" suffix="LS" /></div>
             <div class="fam-name">Connected Systems</div>
             <div class="fam-desc">NLC-ready sensors + controls · every <span class="aa">Ⓐ</span>RCH fixture</div>
             <div class="fam-meta"><span class="fam-skucount">9 SKUs</span><span class="fam-arrow">View →</span></div>
@@ -883,8 +882,11 @@ const verticals = [
     font-weight: 600;
     white-space: nowrap;
   }
-  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; }
+  .persona-chips { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
   .persona-chip {
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 600;
@@ -892,13 +894,15 @@ const verticals = [
     padding: 8px 18px;
     background: rgba(255,255,255,0.06);
     color: rgba(255,255,255,0.7);
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
     transition: all var(--transition);
     display: inline-flex;
     align-items: center;
+    line-height: 1;
+    white-space: nowrap;
   }
   .persona-chip:hover { background: rgba(255,255,255,0.12); color: #fff; }
   .persona-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
