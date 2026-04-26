@@ -14,7 +14,9 @@ import BrandMark from '../../components/BrandMark.astro';
 
 /* Fix 3 (v2.4.2): canonical application tokens added to each family.
  * Tokens match checkbox values exactly (kebab-case). Liberty has two tokens. */
-const families = [
+// Fix 1 (v2.4.3): Sort ECO → PRO → PRO+, then A→Z within tier (build-time, generic pattern)
+const _TIER_ORDER: Record<string, number> = { 'ECO': 0, 'PRO': 1, 'PRO+': 2 };
+const families = ([
   { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Illuminator',   maxW: '800W',  skus: 11, dlc: true,  apps: 'sports-lighting' },
   { sub: 'AREA LIGHT',      tier: 'PRO',  name: 'Liberty',       maxW: '450W',  skus: 25, dlc: true,  apps: 'area-light wall-pack' },
   { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-II',   maxW: '1200W', skus: 10, dlc: true,  apps: 'sports-lighting' },
@@ -38,7 +40,10 @@ const families = [
   { sub: 'WALL PACK · ADJUSTABLE', tier: 'PRO', name: 'Atlanta', maxW: '120W',  skus: 2,  dlc: true,  apps: 'wall-pack' },
   { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Ramparts',  maxW: '20W',   skus: 2,  dlc: true,  apps: 'wall-pack' },
   { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-III',  maxW: '480W',  skus: 1,  dlc: true,  apps: 'sports-lighting' },
-];
+] as const).slice().sort((a: any, b: any) => {
+  const td = (_TIER_ORDER[a.tier] ?? 99) - (_TIER_ORDER[b.tier] ?? 99);
+  return td !== 0 ? td : a.name.localeCompare(b.name);
+});
 
 const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107', 'ECO': '#5B8DEF' };
 ---
@@ -439,7 +444,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
             <span class="grid-count">Showing 23 families</span>
             <div class="sort-wrap">
               <select class="sort-select" disabled>
-                <option>Sort: Featured</option>
+                <option>Sort: ECO → PRO+</option>
                 <option>Wattage Low to High</option>
                 <option>Wattage High to Low</option>
                 <option>A to Z</option>

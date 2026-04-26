@@ -47,3 +47,4 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Date | Branch | Paths | Reason |
 |---|---|---|---|
 | 2026-04-26 | reopen/v2.4.0-luxoarch | `src/pages/index.astro` (Illuminator card href); `src/pages/collections/luxoarch.astro` (new file) | First collection landing page; routes homepage Illuminator card to luxoⒶRCH |
+| 2026-04-26 | reopen/v2.4.3-collection-polish | `src/styles/brand.css` (scroll-margin-top global rule), `src/pages/collections/luxoarch.astro` (sort logic, sort dropdown label) | Global anchor-scroll offset; ECO→PRO→PRO+ sort canonical |
