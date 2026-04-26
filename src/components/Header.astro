@@ -1,24 +1,21 @@
 ---
 /**
- * Header.astro — v2.1.0 canonical header
+ * Header.astro — v2.1.0 Rev3
  *
- * Two-row structure:
- *   Row 1 — Utility strip (amber/gold bg, sticky top:0)
- *     Left:  Find a Distributor · Find a Rep · Sample Request · Contact
- *     Right: SIGN IN ▼ (two-pane dropdown)
- *              Pane 1: Sales Reps → AURA Portal (https://aura.archipelagolighting.com)
- *              Pane 2: Distributors · ESCOs · Specifiers → ALG Shop (https://algportal.archipelagolighting.com)
- *   Row 2 — Main nav (white bg, sticky top:36px)
- *     Left:  ALG logo (color SVG /brand/alg-logo-color.svg)
- *     Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT
- *     Right: REQUEST SAMPLE (ghost) · REQUEST LAYOUT (red filled)
- *
- * MegaMenu is rendered inline below main nav via MegaMenu.astro.
+ * Row 1 — Utility strip (dark bg)
+ *   Left:  Find a Distributor · Find a Rep · Sample Request · Contact
+ *   Right: SIGN IN ▼ → two-pane dropdown
+ *            Pane 1: Sales Reps → AURA Portal
+ *            Pane 2: Distributors · ESCOs · Specifiers → ALG Shop
+ * Row 2 — Main header (white bg)
+ *   Left:  color SVG logo /brand/alg-logo-color.svg
+ *   Center: SOLUTIONS · PRODUCTS · TOOLS · SUPPORT · ABOUT (5 items)
+ *   Right: REQUEST SAMPLE (outline) + REQUEST LAYOUT (red filled)
  */
 import MegaMenu from './MegaMenu.astro';
 ---
 
-<header class="site-header" id="siteHeader">
+<div class="site-header-wrap">
 
   <!-- UTILITY STRIP -->
   <div class="util-strip">
@@ -29,25 +26,21 @@ import MegaMenu from './MegaMenu.astro';
         <a href="/support/sample-request" class="util-link">Sample Request</a>
         <a href="/contact" class="util-link">Contact</a>
       </nav>
-      <div class="signin-wrap" id="signinWrap">
-        <button class="signin-btn" id="signinBtn" aria-haspopup="true" aria-expanded="false" aria-controls="signinDropdown">
-          SIGN IN
-          <svg class="signin-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="signin-dropdown" id="signinDropdown" role="menu" aria-label="Sign in options" hidden>
-          <div class="signin-pane">
-            <p class="signin-pane-label">Sales Reps</p>
-            <a href="https://aura.archipelagolighting.com" class="signin-pane-link" target="_blank" rel="noopener" role="menuitem">
-              <span class="signin-pane-name">AURA Portal</span>
-              <span class="signin-pane-arrow">→</span>
+      <div class="util-right">
+        <div class="signin-wrap" id="signinWrap">
+          <button class="signin-btn" id="signinBtn" aria-expanded="false" aria-haspopup="true" aria-controls="signinDropdown">
+            SIGN IN
+            <svg class="signin-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+          <div class="signin-dropdown" id="signinDropdown" hidden>
+            <a href="https://aura.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
+              <div class="sd-label">Sales Reps</div>
+              <div class="sd-dest">AURA Portal <span class="sd-ext">&#8599;</span></div>
             </a>
-          </div>
-          <div class="signin-divider" aria-hidden="true"></div>
-          <div class="signin-pane">
-            <p class="signin-pane-label">Distributors · ESCOs · Specifiers</p>
-            <a href="https://algportal.archipelagolighting.com" class="signin-pane-link" target="_blank" rel="noopener" role="menuitem">
-              <span class="signin-pane-name">ALG Shop</span>
-              <span class="signin-pane-arrow">→</span>
+            <div class="sd-divider"></div>
+            <a href="https://algportal.archipelagolighting.com" class="sd-pane" target="_blank" rel="noopener noreferrer">
+              <div class="sd-label">Distributors · ESCOs · Specifiers</div>
+              <div class="sd-dest">ALG Shop <span class="sd-ext">&#8599;</span></div>
             </a>
           </div>
         </div>
@@ -55,397 +48,293 @@ import MegaMenu from './MegaMenu.astro';
     </div>
   </div>
 
-  <!-- MAIN NAV -->
-  <div class="main-nav" id="mainNav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo" aria-label="Archipelago Lighting Group — home">
-        <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="140" height="40" loading="eager" />
+  <!-- MAIN HEADER -->
+  <header class="main-header" id="mainHeader">
+    <div class="mh-inner">
+      <a href="/" class="mh-logo" aria-label="Archipelago Lighting Group home">
+        <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="160" height="44" loading="eager" />
       </a>
       <nav class="primary-nav" aria-label="Primary navigation">
-        <button class="nav-item" data-mega="solutions" aria-haspopup="true" aria-expanded="false">
-          SOLUTIONS <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        <button class="nav-item has-mega" data-mega="solutions" aria-expanded="false" aria-haspopup="true">
+          SOLUTIONS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
         </button>
-        <button class="nav-item" data-mega="products" aria-haspopup="true" aria-expanded="false">
-          PRODUCTS <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        <button class="nav-item has-mega" data-mega="products" aria-expanded="false" aria-haspopup="true">
+          PRODUCTS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
         </button>
-        <button class="nav-item" data-mega="tools" aria-haspopup="true" aria-expanded="false">
-          TOOLS <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        <button class="nav-item has-mega" data-mega="tools" aria-expanded="false" aria-haspopup="true">
+          TOOLS <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
         </button>
-        <button class="nav-item" data-mega="support" aria-haspopup="true" aria-expanded="false">
-          SUPPORT <svg class="nav-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        <button class="nav-item has-mega" data-mega="support" aria-expanded="false" aria-haspopup="true">
+          SUPPORT <svg class="nav-chev" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
         </button>
-        <a href="/about" class="nav-item nav-item--link">ABOUT</a>
+        <a href="/about" class="nav-item nav-link">ABOUT</a>
       </nav>
-      <div class="nav-ctas">
-        <a href="/support/sample-request" class="btn btn--ghost nav-cta-ghost">REQUEST SAMPLE</a>
-        <a href="/support/layout-request" class="btn btn--primary nav-cta-primary">REQUEST LAYOUT</a>
+      <div class="mh-ctas">
+        <a href="/support/sample-request" class="hcta hcta--outline">Request Sample</a>
+        <a href="/support/layout-request" class="hcta hcta--filled">Request Layout</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileDrawer">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
     </div>
     <MegaMenu />
-  </div>
+  </header>
 
-  <!-- Mobile overlay + drawer -->
+  <!-- Mobile drawer -->
   <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
-  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation" aria-hidden="true">
-    <div class="mobile-drawer-header">
-      <a href="/" aria-label="Home">
-        <img src="/brand/alg-logo-color.svg" alt="Archipelago Lighting Group" width="120" height="34" />
-      </a>
-      <button class="mobile-close" id="mobileClose" aria-label="Close navigation menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  <nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile navigation" hidden>
+    <div class="md-header">
+      <a href="/"><img src="/brand/alg-logo-color.svg" alt="ALG" width="120" height="34" /></a>
+      <button class="md-close" id="mdClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <div class="mobile-drawer-body">
-      <a href="/solutions" class="mobile-nav-item">Solutions</a>
-      <a href="/collections" class="mobile-nav-item">Products</a>
-      <a href="/tools" class="mobile-nav-item">Tools</a>
-      <a href="/support" class="mobile-nav-item">Support</a>
-      <a href="/about" class="mobile-nav-item">About</a>
-      <div class="mobile-divider"></div>
-      <a href="/support/sample-request" class="mobile-nav-item">Request Sample</a>
-      <a href="/support/layout-request" class="mobile-nav-item mobile-nav-item--cta">Request Layout</a>
-      <div class="mobile-divider"></div>
-      <a href="https://aura.archipelagolighting.com" class="mobile-nav-item" target="_blank" rel="noopener">AURA Portal (Sales Reps)</a>
-      <a href="https://algportal.archipelagolighting.com" class="mobile-nav-item" target="_blank" rel="noopener">ALG Shop (Distributors)</a>
+    <div class="md-body">
+      <a href="/solutions" class="md-item">Solutions</a>
+      <a href="/collections" class="md-item">Products</a>
+      <a href="/tools" class="md-item">Tools</a>
+      <a href="/support" class="md-item">Support</a>
+      <a href="/about" class="md-item">About</a>
+      <div class="md-div"></div>
+      <a href="/support/sample-request" class="md-item">Request Sample</a>
+      <a href="/support/layout-request" class="md-item md-item--cta">Request Layout</a>
+      <div class="md-div"></div>
+      <a href="https://aura.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">AURA Portal (Sales Reps)</a>
+      <a href="https://algportal.archipelagolighting.com" class="md-item" target="_blank" rel="noopener">ALG Shop (Distributors)</a>
     </div>
   </nav>
 
-</header>
+</div>
 
 <style>
-  .util-strip {
-    background: #F5A623;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 200;
+  :root {
+    --brand: var(--color-alg-red, #F32740);
+    --brand-dk: var(--color-alg-red-dark, #C41E32);
+    --dark: #0c0d12;
+    --dark2: #14161e;
+    --ink: #111418;
+    --ink2: #3a3f4a;
+    --ink3: #6b7280;
+    --bg: #ffffff;
+    --t: 0.18s ease;
   }
+
+  .site-header-wrap { position: sticky; top: 0; z-index: 1000; width: 100%; }
+
+  /* UTILITY STRIP */
+  .util-strip { background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.06); }
   .util-inner {
-    max-width: var(--container-max, 1280px);
-    margin-inline: auto;
-    padding: 0 var(--container-pad, 24px);
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    max-width: 1440px; margin: 0 auto; padding: 0 28px;
+    height: 36px; display: flex; align-items: center; justify-content: space-between;
   }
-  .util-left {
-    display: flex;
-    align-items: center;
-  }
+  .util-left { display: flex; align-items: center; gap: 0; }
   .util-link {
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(0,0,0,0.75);
-    text-decoration: none;
-    padding: 0 12px;
-    letter-spacing: 0.04em;
-    transition: color 150ms ease;
-    border-right: 1px solid rgba(0,0,0,0.15);
-    height: 36px;
-    display: flex;
-    align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.04em; color: rgba(255,255,255,0.55); text-decoration: none;
+    padding: 0 14px; height: 36px; display: flex; align-items: center;
+    border-right: 1px solid rgba(255,255,255,0.08); transition: color var(--t);
   }
   .util-link:first-child { padding-left: 0; }
   .util-link:last-child { border-right: none; }
-  .util-link:hover { color: #000; }
+  .util-link:hover { color: rgba(255,255,255,0.9); }
+  .util-right { display: flex; align-items: center; }
 
+  /* Sign In */
   .signin-wrap { position: relative; }
   .signin-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #fff;
-    background: var(--color-alg-red, #F32740);
-    border: none;
-    border-radius: 3px;
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: background 150ms ease;
-    height: 26px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; background: rgba(255,255,255,0.1); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; cursor: pointer; transition: all var(--t);
   }
-  .signin-btn:hover { background: var(--color-alg-red-dark, #C41E32); }
-  .signin-chevron { transition: transform 200ms ease; flex-shrink: 0; }
-  .signin-btn[aria-expanded="true"] .signin-chevron { transform: rotate(180deg); }
-
+  .signin-btn:hover { background: rgba(255,255,255,0.16); }
+  .signin-btn[aria-expanded="true"] { background: rgba(255,255,255,0.16); }
+  .signin-chev { width: 10px; height: 6px; transition: transform var(--t); }
+  .signin-btn[aria-expanded="true"] .signin-chev { transform: rotate(180deg); }
   .signin-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    background: #fff;
-    border: 1px solid var(--color-border, #E5E5E5);
-    border-radius: 4px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    min-width: 240px;
-    z-index: 300;
-    padding: 8px 0;
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; min-width: 260px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    overflow: hidden; z-index: 200;
   }
-  .signin-dropdown[hidden] { display: none; }
-  .signin-pane { padding: 10px 16px; }
-  .signin-pane-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-ink-mute, #6B6B6B);
-    margin: 0 0 6px;
+  .sd-pane { display: block; padding: 16px 20px; text-decoration: none; transition: background var(--t); }
+  .sd-pane:hover { background: rgba(255,255,255,0.06); }
+  .sd-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px;
   }
-  .signin-pane-link {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--color-ink, #111111);
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 3px;
-    transition: background 150ms ease, color 150ms ease;
-  }
-  .signin-pane-link:hover {
-    background: var(--color-bg-soft, #F7F7F7);
-    color: var(--color-alg-red, #F32740);
-  }
-  .signin-pane-arrow { color: var(--color-alg-red, #F32740); font-weight: 700; }
-  .signin-divider { height: 1px; background: var(--color-border, #E5E5E5); margin: 4px 0; }
+  .sd-dest { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+  .sd-ext { font-size: 12px; color: var(--brand); }
+  .sd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0 20px; }
 
-  .main-nav {
-    background: #fff;
-    border-bottom: 1px solid var(--color-border, #E5E5E5);
-    position: sticky;
-    top: 36px;
-    z-index: 199;
+  /* MAIN HEADER */
+  .main-header { background: var(--bg); border-bottom: 1px solid rgba(17,20,24,0.08); position: relative; }
+  .mh-inner {
+    max-width: 1440px; margin: 0 auto; padding: 0 28px;
+    height: 64px; display: flex; align-items: center; gap: 32px;
   }
-  .nav-inner {
-    max-width: var(--container-max, 1280px);
-    margin-inline: auto;
-    padding: 0 var(--container-pad, 24px);
-    height: 64px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-  .nav-logo { flex-shrink: 0; display: flex; align-items: center; }
-  .nav-logo img { height: 36px; width: auto; display: block; }
+  .mh-logo { display: flex; align-items: center; flex-shrink: 0; }
+  .mh-logo img { display: block; height: 36px; width: auto; }
 
-  .primary-nav { display: flex; align-items: center; flex: 1; }
+  .primary-nav { display: flex; align-items: center; flex: 1; justify-content: center; gap: 2px; }
   .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--color-ink, #111111);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0 14px;
-    height: 64px;
-    text-decoration: none;
-    transition: color 150ms ease;
-    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 14px; height: 64px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--ink2); background: none; border: none;
+    cursor: pointer; text-decoration: none; transition: all var(--t); white-space: nowrap;
     position: relative;
   }
   .nav-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 14px;
-    right: 14px;
-    height: 2px;
-    background: var(--color-alg-red, #F32740);
-    transform: scaleX(0);
-    transition: transform 200ms ease;
+    content: ''; position: absolute; bottom: 0; left: 14px; right: 14px;
+    height: 2px; background: var(--brand); transform: scaleX(0); transition: transform var(--t);
   }
-  .nav-item:hover, .nav-item.active { color: var(--color-alg-red, #F32740); }
-  .nav-item:hover::after, .nav-item.active::after { transform: scaleX(1); }
-  .nav-chevron { transition: transform 200ms ease; flex-shrink: 0; }
-  .nav-item[aria-expanded="true"] .nav-chevron { transform: rotate(180deg); }
+  .nav-item:hover { color: var(--ink); }
+  .nav-item:hover::after { transform: scaleX(1); }
+  .nav-item[aria-expanded="true"] { color: var(--brand); }
+  .nav-item[aria-expanded="true"]::after { transform: scaleX(1); }
+  .nav-chev { width: 10px; height: 6px; transition: transform var(--t); flex-shrink: 0; }
+  .nav-item[aria-expanded="true"] .nav-chev { transform: rotate(180deg); }
 
-  .nav-ctas { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .nav-cta-ghost {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    padding: 8px 16px;
-    border-radius: 3px;
-    color: var(--color-ink, #111111);
-    border-color: var(--color-border-strong, #C5C5C5);
+  .mh-ctas { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .hcta {
+    display: inline-flex; align-items: center; padding: 9px 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    border-radius: 4px; transition: all var(--t); white-space: nowrap;
   }
-  .nav-cta-ghost:hover { background: var(--color-ink, #111111); color: #fff; }
-  .nav-cta-primary { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 8px 16px; border-radius: 3px; }
+  .hcta--outline { background: transparent; color: var(--ink); border: 1px solid rgba(17,20,24,0.25); }
+  .hcta--outline:hover { background: rgba(17,20,24,0.05); border-color: rgba(17,20,24,0.4); }
+  .hcta--filled { background: var(--brand); color: #fff; border: 1px solid var(--brand); }
+  .hcta--filled:hover { background: var(--brand-dk); border-color: var(--brand-dk); }
 
+  /* Hamburger */
   .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 36px;
-    height: 36px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    margin-left: auto;
-    flex-shrink: 0;
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px;
   }
-  .hamburger-line { display: block; width: 100%; height: 2px; background: var(--color-ink, #111111); border-radius: 1px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all var(--t); }
 
+  /* Mobile overlay */
   .mobile-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 400;
-    opacity: 0;
-    transition: opacity 200ms ease;
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 998; backdrop-filter: blur(4px);
   }
-  .mobile-overlay.open { opacity: 1; }
-  .mobile-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(320px, 90vw);
-    height: 100vh;
-    background: #fff;
-    z-index: 500;
-    transform: translateX(100%);
-    transition: transform 300ms ease;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-  .mobile-drawer.open { transform: translateX(0); }
-  .mobile-drawer-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--color-border, #E5E5E5);
-    flex-shrink: 0;
-  }
-  .mobile-close { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: none; border: none; cursor: pointer; color: var(--color-ink, #111111); }
-  .mobile-drawer-body { padding: 8px 0; flex: 1; }
-  .mobile-nav-item {
-    display: block;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-ink, #111111);
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-bg-soft, #F7F7F7);
-    transition: background 150ms ease, color 150ms ease;
-  }
-  .mobile-nav-item:hover { background: var(--color-bg-soft, #F7F7F7); color: var(--color-alg-red, #F32740); }
-  .mobile-nav-item--cta { color: var(--color-alg-red, #F32740); font-weight: 700; }
-  .mobile-divider { height: 1px; background: var(--color-border, #E5E5E5); margin: 8px 0; }
+  .mobile-overlay.open { display: block; }
 
-  @media (max-width: 900px) {
-    .primary-nav { display: none; }
-    .nav-ctas { display: none; }
-    .hamburger { display: flex; }
+  /* Mobile drawer */
+  .mobile-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 300px;
+    background: var(--bg); z-index: 999; transform: translateX(100%);
+    transition: transform 0.3s ease; overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
   }
-  @media (max-width: 600px) {
-    .util-left .util-link:nth-child(n+3) { display: none; }
+  .mobile-drawer:not([hidden]) { transform: translateX(0); }
+  .md-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid rgba(17,20,24,0.08);
+  }
+  .md-close { background: none; border: none; cursor: pointer; padding: 4px; }
+  .md-close svg { width: 20px; height: 20px; color: var(--ink); }
+  .md-body { padding: 12px 0; }
+  .md-item {
+    display: block; padding: 12px 20px; font-size: 14px; font-weight: 600;
+    color: var(--ink2); text-decoration: none; transition: all var(--t);
+  }
+  .md-item:hover { color: var(--brand); background: rgba(243,39,64,0.04); }
+  .md-item--cta { color: var(--brand); font-weight: 700; }
+  .md-div { height: 1px; background: rgba(17,20,24,0.08); margin: 8px 20px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .primary-nav { gap: 0; }
+    .nav-item { padding: 8px 10px; font-size: 11px; }
+  }
+  @media (max-width: 768px) {
+    .util-left { gap: 0; }
+    .primary-nav { display: none; }
+    .hcta--outline { display: none; }
+    .hamburger { display: flex; }
+    .mh-inner { gap: 16px; }
+  }
+  @media (max-width: 480px) {
+    .util-link:nth-child(n+3) { display: none; }
   }
 </style>
 
 <script>
-  (function () {
-    const signinBtn = document.getElementById('signinBtn') as HTMLButtonElement | null;
-    const signinDropdown = document.getElementById('signinDropdown') as HTMLElement | null;
-    const signinWrap = document.getElementById('signinWrap');
-
-    function openSignin() {
-      if (!signinBtn || !signinDropdown) return;
-      signinDropdown.hidden = false;
-      signinBtn.setAttribute('aria-expanded', 'true');
-    }
-    function closeSignin() {
-      if (!signinBtn || !signinDropdown) return;
-      signinDropdown.hidden = true;
-      signinBtn.setAttribute('aria-expanded', 'false');
-    }
-    signinBtn?.addEventListener('click', (e) => {
+(function () {
+  // Sign In dropdown
+  const signinBtn = document.getElementById('signinBtn');
+  const signinDropdown = document.getElementById('signinDropdown');
+  if (signinBtn && signinDropdown) {
+    signinBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      signinBtn.getAttribute('aria-expanded') === 'true' ? closeSignin() : openSignin();
+      const open = signinBtn.getAttribute('aria-expanded') === 'true';
+      signinBtn.setAttribute('aria-expanded', String(!open));
+      signinDropdown.hidden = open;
     });
-    document.addEventListener('click', (e) => {
-      if (signinWrap && !signinWrap.contains(e.target as Node)) closeSignin();
+    document.addEventListener('click', () => {
+      signinBtn.setAttribute('aria-expanded', 'false');
+      signinDropdown.hidden = true;
     });
+    signinDropdown.addEventListener('click', (e) => e.stopPropagation());
+  }
 
-    const navItems = document.querySelectorAll<HTMLButtonElement>('.nav-item[data-mega]');
-    const megaPanel = document.getElementById('megaMenuPanel');
+  // MegaMenu
+  const megaPanel = document.getElementById('megaMenuPanel');
+  const navBtns = Array.from(document.querySelectorAll('.nav-item.has-mega'));
+  let active = null;
 
-    function openMegaMenu(key: string) {
-      if (!megaPanel) return;
-      megaPanel.querySelectorAll<HTMLElement>('.mega-pane').forEach(p => {
-        p.hidden = p.dataset.mega !== key;
-      });
-      megaPanel.hidden = false;
-      navItems.forEach(btn => {
-        const isThis = btn.dataset.mega === key;
-        btn.setAttribute('aria-expanded', String(isThis));
-        btn.classList.toggle('active', isThis);
-      });
-    }
-    function closeMegaMenu() {
-      if (!megaPanel) return;
-      megaPanel.hidden = true;
-      navItems.forEach(btn => {
-        btn.setAttribute('aria-expanded', 'false');
-        btn.classList.remove('active');
-      });
-    }
-    navItems.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const key = btn.dataset.mega!;
-        btn.getAttribute('aria-expanded') === 'true' ? closeMegaMenu() : openMegaMenu(key);
-      });
-    });
-    document.addEventListener('click', (e) => {
-      const header = document.getElementById('siteHeader');
-      if (header && !header.contains(e.target as Node)) closeMegaMenu();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') { closeSignin(); closeMegaMenu(); }
-    });
+  function closeAll() {
+    navBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
+    if (megaPanel) megaPanel.hidden = true;
+    document.querySelectorAll('.mega-pane').forEach(p => { p.hidden = true; });
+    active = null;
+  }
 
-    const hamburger = document.getElementById('hamburger') as HTMLButtonElement | null;
-    const mobileDrawer = document.getElementById('mobileDrawer');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileClose = document.getElementById('mobileClose');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pane = btn.dataset.mega;
+      if (active === pane) { closeAll(); return; }
+      closeAll();
+      active = pane;
+      btn.setAttribute('aria-expanded', 'true');
+      if (megaPanel) megaPanel.hidden = false;
+      const target = document.querySelector(`.mega-pane[data-mega="${pane}"]`);
+      if (target) target.hidden = false;
+    });
+  });
 
-    function openDrawer() {
-      if (!mobileDrawer || !mobileOverlay || !hamburger) return;
-      mobileDrawer.classList.add('open');
-      mobileDrawer.setAttribute('aria-hidden', 'false');
-      mobileOverlay.style.display = 'block';
-      requestAnimationFrame(() => mobileOverlay!.classList.add('open'));
-      hamburger.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeDrawer() {
-      if (!mobileDrawer || !mobileOverlay || !hamburger) return;
-      mobileDrawer.classList.remove('open');
-      mobileDrawer.setAttribute('aria-hidden', 'true');
-      mobileOverlay.classList.remove('open');
-      setTimeout(() => { mobileOverlay!.style.display = 'none'; }, 200);
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-    hamburger?.addEventListener('click', openDrawer);
-    mobileClose?.addEventListener('click', closeDrawer);
-    mobileOverlay?.addEventListener('click', closeDrawer);
-  })();
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  if (megaPanel) megaPanel.addEventListener('click', (e) => e.stopPropagation());
+
+  // Mobile drawer
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('mobileOverlay');
+  const mdClose = document.getElementById('mdClose');
+
+  function openDrawer() {
+    if (!drawer || !overlay) return;
+    drawer.hidden = false;
+    overlay.classList.add('open');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (!drawer || !overlay) return;
+    drawer.hidden = true;
+    overlay.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger?.addEventListener('click', openDrawer);
+  mdClose?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+})();
 </script>

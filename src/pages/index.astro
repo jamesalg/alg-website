@@ -292,10 +292,21 @@ const verticals = [
         <a href="/collections/controls-em" class="wm-card controls">
           <div class="wm-img"></div>
           <div class="wm-body">
-            <h3>Controls &amp; EM</h3>
+            <h3>Safety &amp; Controls</h3>
             <p><BrandMark prefix="contr" suffix="LS" /> three-tier (ECO · PRO · PRO+) and <BrandMark prefix="const" suffix="NT" /> emergency drivers and egress / exit signs.</p>
             <div class="wm-meta">
               <span class="wm-sub-brands"><BrandMark prefix="contr" suffix="LS" /> · <BrandMark prefix="const" suffix="NT" /></span>
+              <span class="wm-arrow">Browse →</span>
+            </div>
+          </div>
+        </a>
+        <a href="/collections/lamps" class="wm-card lamps">
+          <div class="wm-img"></div>
+          <div class="wm-body">
+            <h3>Utility &amp; D&eacute;cor Lamps</h3>
+            <p>T8/T5/PL/HID retrofit lamps and d&eacute;cor lamps for utility and architectural applications. The catalog distributors stock for retrofit and replacement.</p>
+            <div class="wm-meta">
+              <span class="wm-sub-brands"><BrandMark prefix="tubul" suffix="RCH" /> · D&eacute;cor</span>
               <span class="wm-arrow">Browse →</span>
             </div>
           </div>
@@ -930,7 +941,7 @@ const verticals = [
      ============================================================ */
   .what-we-make {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
   .wm-card {
@@ -951,6 +962,7 @@ const verticals = [
   .wm-card.indoor .wm-img { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
   .wm-card.outdoor .wm-img { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
   .wm-card.controls .wm-img { background: url('/images/heroes/hero-controls-panel.jpg') center/cover no-repeat; }
+  .wm-card.lamps .wm-img { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
   .wm-body { padding: 28px 28px 32px; }
   .wm-body h3 {
     font-family: 'Sora', sans-serif;
@@ -1384,13 +1396,17 @@ const verticals = [
     .hero-panel { padding: 48px 32px; }
     .carousel-controls { padding: 0 32px; }
   }
+  @media (max-width: 1024px) {
+    .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
   @media (max-width: 900px) {
-    .what-we-make { grid-template-columns: 1fr; gap: 20px; }
+    .what-we-make { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .layout-cta-inner { grid-template-columns: 1fr; gap: 40px; }
     .split-teasers { grid-template-columns: 1fr; gap: 40px; }
     .installed-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {
+    .what-we-make { grid-template-columns: 1fr; }
     .diff-inner { grid-template-columns: repeat(2, 1fr); }
     .installed-grid { grid-template-columns: 1fr; }
     .families-rail { grid-template-columns: 1fr; }

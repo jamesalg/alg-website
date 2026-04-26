@@ -1,65 +1,22 @@
 ---
 /**
- * Footer.astro — v2.1.0 canonical footer
+ * Footer.astro — v2.1.0 Rev3
  *
- * Structure (per reference v3.14.x):
- *   - Footer CTA strip
- *   - Footer body: 5 columns (Brand + Products + Solutions + Resources + Company)
- *   - Footer bottom bar: copyright · Privacy · Terms · Sitemap
- *
- * Brand-mark rule: Ⓐ in body text MUST be inside .aa span.
+ * Structure:
+ *   - Footer CTA strip: "Need a quote, layout, sample, or rebate match? We respond same business day."
+ *                       CTAs: Contact Sales (outline) + Request Layout (red filled)
+ *   - Footer body: 5 columns
+ *       Col 1: Brand (white SVG logo + tagline "Lighting | Reinvented, since 1997." + social)
+ *       Col 2: Products
+ *       Col 3: Solutions (8 full vertical names)
+ *       Col 4: Resources
+ *       Col 5: Support
+ *   - Sub-footer: single line with both addresses, phone, URL
  */
-import BrandMark from './BrandMark.astro';
 const year = new Date().getFullYear();
-const footerCols = [
-  {
-    heading: 'Products',
-    links: [
-      { label: 'Indoor Luminaires',    href: '/collections/indoor' },
-      { label: 'Outdoor Luminaires',   href: '/collections/outdoor' },
-      { label: 'Controls & EM',        href: '/collections/controls-em' },
-      { label: 'Featured Families',    href: '/collections/families' },
-      { label: 'Full Catalog (PDF)',   href: '/resources/catalog' },
-    ],
-  },
-  {
-    heading: 'Solutions',
-    links: [
-      { label: 'Warehouse & Logistics',      href: '/solutions/warehouse-logistics' },
-      { label: 'Industrial & Manufacturing', href: '/solutions/industrial-manufacturing' },
-      { label: 'Cold Storage & Grocery',     href: '/solutions/cold-storage-grocery' },
-      { label: 'Data Center',               href: '/solutions/data-center' },
-      { label: 'Healthcare',                href: '/solutions/healthcare' },
-      { label: 'Education',                 href: '/solutions/education' },
-      { label: 'Hospitality',               href: '/solutions/hospitality' },
-      { label: 'Government & Military',     href: '/solutions/government-military' },
-    ],
-  },
-  {
-    heading: 'Resources',
-    links: [
-      { label: 'Spec Sheets',           href: '/resources/spec-sheets' },
-      { label: 'IES Photometric Files', href: '/resources/ies-files' },
-      { label: 'TAA Documentation',     href: '/resources/taa' },
-      { label: 'Rebate Center',         href: '/resources/rebate-center' },
-      { label: 'Training Center',       href: '/training' },
-      { label: 'Sample Layouts',        href: '/resources/sample-layouts' },
-    ],
-  },
-  {
-    heading: 'Company',
-    links: [
-      { label: 'About ALG',            href: '/about' },
-      { label: 'Careers',              href: '/careers' },
-      { label: 'Find a Rep',           href: '/find-a-rep' },
-      { label: 'Find a Distributor',   href: '/find-a-distributor' },
-      { label: 'Become a Distributor', href: '/distributor' },
-      { label: 'Contact',              href: '/contact' },
-    ],
-  },
-];
 ---
 
+<!-- FOOTER CTA STRIP -->
 <div class="footer-cta">
   <div class="footer-cta-inner">
     <div class="footer-cta-msg">
@@ -67,22 +24,22 @@ const footerCols = [
       <strong>We respond same business day.</strong>
     </div>
     <div class="footer-cta-actions">
-      <a href="/support/layout-request" class="fcta-btn fcta-btn--primary">Request a Layout</a>
-      <a href="/support/sample-request" class="fcta-btn fcta-btn--ghost">Request a Sample</a>
-      <a href="/contact" class="fcta-btn fcta-btn--ghost">Get a Quote</a>
+      <a href="/contact" class="fcta-btn fcta-btn--ghost">Contact Sales</a>
+      <a href="/support/layout-request" class="fcta-btn fcta-btn--primary">Request Layout</a>
     </div>
   </div>
 </div>
 
+<!-- FOOTER BODY -->
 <footer class="site-footer" aria-label="Site footer">
   <div class="footer-inner">
+
+    <!-- Col 1: Brand -->
     <div class="footer-brand">
       <a href="/" class="footer-logo-link" aria-label="Archipelago Lighting Group home">
         <img src="/brand/alg-logo-white.svg" alt="Archipelago Lighting Group" width="140" height="40" loading="lazy" />
       </a>
-      <p class="footer-tagline">
-        Commercial &amp; industrial LED lighting — specified, stocked, and shipped from five US warehouses.
-      </p>
+      <p class="footer-tagline">Lighting | Reinvented, since 1997.</p>
       <div class="footer-social">
         <a href="https://www.linkedin.com/company/archipelago-lighting-group" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="ALG on LinkedIn">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -96,26 +53,72 @@ const footerCols = [
       </div>
     </div>
 
-    {footerCols.map(col => (
-      <div class="footer-col">
-        <h3 class="footer-col-heading">{col.heading}</h3>
-        <ul class="footer-col-links">
-          {col.links.map(link => (
-            <li><a href={link.href} class="footer-link">{link.label}</a></li>
-          ))}
-        </ul>
-      </div>
-    ))}
+    <!-- Col 2: Products -->
+    <div class="footer-col">
+      <h3 class="footer-col-heading">Products</h3>
+      <ul class="footer-col-links">
+        <li><a href="/collections/indoor" class="footer-link">Indoor</a></li>
+        <li><a href="/collections/outdoor" class="footer-link">Outdoor</a></li>
+        <li><a href="/collections/residential" class="footer-link">Residential</a></li>
+        <li><a href="/collections/lamps" class="footer-link">Lamps</a></li>
+        <li><a href="/collections/controls-em" class="footer-link">Safety &amp; Controls</a></li>
+        <li><a href="/collections/warehouse-deals" class="footer-link">Warehouse Deals</a></li>
+        <li><a href="/resources/taa" class="footer-link">TAA Compliant</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: Solutions -->
+    <div class="footer-col">
+      <h3 class="footer-col-heading">Solutions</h3>
+      <ul class="footer-col-links">
+        <li><a href="/solutions/warehouse-logistics" class="footer-link">Warehouse &amp; Logistics</a></li>
+        <li><a href="/solutions/industrial-manufacturing" class="footer-link">Industrial &amp; Manufacturing</a></li>
+        <li><a href="/solutions/cold-storage-grocery" class="footer-link">Cold Storage &amp; Grocery</a></li>
+        <li><a href="/solutions/data-center" class="footer-link">Data Center</a></li>
+        <li><a href="/solutions/healthcare" class="footer-link">Healthcare</a></li>
+        <li><a href="/solutions/education" class="footer-link">Education</a></li>
+        <li><a href="/solutions/hospitality" class="footer-link">Hospitality</a></li>
+        <li><a href="/solutions/government-military" class="footer-link">Government &amp; Military</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 4: Resources -->
+    <div class="footer-col">
+      <h3 class="footer-col-heading">Resources</h3>
+      <ul class="footer-col-links">
+        <li><a href="/resources/spec-sheets" class="footer-link">Spec Sheets</a></li>
+        <li><a href="/find-a-distributor" class="footer-link">Where to Buy</a></li>
+        <li><a href="https://aura.archipelagolighting.com" class="footer-link" target="_blank" rel="noopener">Sales Rep Portal</a></li>
+        <li><a href="https://algportal.archipelagolighting.com" class="footer-link" target="_blank" rel="noopener">Customer Portal</a></li>
+        <li><a href="/consumers" class="footer-link">Consumers</a></li>
+        <li><a href="/resources/rebate-center" class="footer-link">Rebate Center</a></li>
+        <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 5: Support -->
+    <div class="footer-col">
+      <h3 class="footer-col-heading">Support</h3>
+      <ul class="footer-col-links">
+        <li><a href="/about" class="footer-link">About Us</a></li>
+        <li><a href="/support/returns" class="footer-link">Returns &amp; Exchanges</a></li>
+        <li><a href="/support/sample-request" class="footer-link">Sample Request</a></li>
+        <li><a href="/support/layout-request" class="footer-link">Layout &amp; Design Request</a></li>
+        <li><a href="/terms" class="footer-link">Terms &amp; Conditions</a></li>
+        <li><a href="/warranty" class="footer-link">Warranty Statement</a></li>
+        <li><a href="/patents" class="footer-link">Patents</a></li>
+        <li><a href="/contact" class="footer-link">Contact Us</a></li>
+      </ul>
+    </div>
+
   </div>
 
-  <div class="footer-bottom">
-    <div class="footer-bottom-inner">
-      <p class="footer-copy">&copy; {year} Archipelago Lighting Group. All rights reserved.</p>
-      <nav class="footer-legal" aria-label="Legal navigation">
-        <a href="/privacy" class="footer-legal-link">Privacy Policy</a>
-        <a href="/terms" class="footer-legal-link">Terms of Use</a>
-        <a href="/sitemap.xml" class="footer-legal-link">Sitemap</a>
-      </nav>
+  <!-- SUB-FOOTER -->
+  <div class="sub-footer">
+    <div class="sub-footer-inner">
+      <p class="sub-footer-line">
+        &copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763 &middot; USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508 &middot; +1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a>
+      </p>
     </div>
   </div>
 </footer>
@@ -128,99 +131,67 @@ const footerCols = [
     --dark2: #14161e;
     --ink3: #6b7280;
     --ink4: #9ca3af;
-    --transition: 0.2s ease;
+    --t: 0.18s ease;
   }
-  .footer-cta {
-    background: var(--brand);
-    padding: 28px;
-  }
+
+  /* FOOTER CTA STRIP */
+  .footer-cta { background: var(--brand); padding: 28px; }
   .footer-cta-inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
+    max-width: 1440px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
   }
   .footer-cta-msg { font-size: 17px; color: #fff; line-height: 1.4; max-width: 560px; }
   .footer-cta-msg strong { font-weight: 700; }
   .footer-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
   .fcta-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 11px 22px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: all var(--transition);
-    white-space: nowrap;
+    display: inline-flex; align-items: center; padding: 11px 22px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    border-radius: 4px; transition: all var(--t); white-space: nowrap;
   }
   .fcta-btn--primary { background: #fff; color: var(--brand); border: 1px solid #fff; }
   .fcta-btn--primary:hover { background: rgba(255,255,255,0.9); }
   .fcta-btn--ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.6); }
   .fcta-btn--ghost:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
 
+  /* FOOTER BODY */
   .site-footer { background: var(--dark); color: rgba(255,255,255,0.7); }
   .footer-inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 80px 28px 60px;
-    display: grid;
-    grid-template-columns: 280px repeat(4, 1fr);
-    gap: 48px;
+    max-width: 1440px; margin: 0 auto; padding: 80px 28px 60px;
+    display: grid; grid-template-columns: 260px repeat(4, 1fr); gap: 48px;
   }
   .footer-brand { display: flex; flex-direction: column; gap: 20px; }
   .footer-logo-link { display: inline-block; }
-  .footer-tagline { font-size: 14px; line-height: 1.6; color: var(--ink4); max-width: 240px; }
+  .footer-tagline { font-size: 14px; line-height: 1.6; color: var(--ink4); max-width: 220px; }
   .footer-social { display: flex; gap: 12px; }
   .social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px;
-    color: rgba(255,255,255,0.6);
-    transition: all var(--transition);
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+    color: rgba(255,255,255,0.6); transition: all var(--t);
   }
   .social-link:hover { background: var(--brand); border-color: var(--brand); color: #fff; }
   .social-link svg { width: 16px; height: 16px; }
   .footer-col { display: flex; flex-direction: column; }
   .footer-col-heading {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 20px;
   }
   .footer-col-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-  .footer-link { font-size: 14px; color: var(--ink4); text-decoration: none; transition: color var(--transition); line-height: 1.4; }
+  .footer-link { font-size: 14px; color: var(--ink4); text-decoration: none; transition: color var(--t); line-height: 1.4; }
   .footer-link:hover { color: #fff; }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); }
-  .footer-bottom-inner {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 20px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.05em; color: var(--ink3); }
-  .footer-legal { display: flex; gap: 20px; }
-  .footer-legal-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.05em; color: var(--ink3); text-decoration: none; transition: color var(--transition); }
-  .footer-legal-link:hover { color: rgba(255,255,255,0.7); }
 
+  /* SUB-FOOTER */
+  .sub-footer { border-top: 1px solid rgba(255,255,255,0.06); }
+  .sub-footer-inner { max-width: 1440px; margin: 0 auto; padding: 18px 28px; }
+  .sub-footer-line {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.04em;
+    color: var(--ink3); line-height: 1.6;
+  }
+  .sub-footer-url { color: var(--ink3); text-decoration: none; transition: color var(--t); }
+  .sub-footer-url:hover { color: rgba(255,255,255,0.7); }
+
+  /* RESPONSIVE */
   @media (max-width: 1200px) {
     .footer-inner { grid-template-columns: 1fr 1fr 1fr; }
     .footer-brand { grid-column: 1 / -1; }
@@ -232,6 +203,6 @@ const footerCols = [
   }
   @media (max-width: 480px) {
     .footer-inner { grid-template-columns: 1fr; }
-    .footer-bottom-inner { flex-direction: column; align-items: flex-start; }
+    .sub-footer-inner { padding: 16px 20px; }
   }
 </style>
