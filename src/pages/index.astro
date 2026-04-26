@@ -21,57 +21,65 @@ import BrandMark from '../components/BrandMark.astro';
 
 const heroSlides = [
   {
+    // SKU basis: LSPL-xxx series (Illuminator sports lighter, peak 116klm config)
     id: 0,
     bgClass: 'img-illuminator',
     eyebrow: 'Featured · Sports Lighting · LSPL',
     name: 'Illuminator',
     gradClass: 'grad-slide0',
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
+    productImg: '/images/families/family-illuminator.png',
     stats: [
-      { num: '116,000', lbl: 'Max Lumens' },
-      { num: '150 lm/W', lbl: 'Efficacy' },
-      { num: '10 yr', lbl: 'Warranty' },
+      { num: 'Up to 116,000', lbl: 'Peak Lumens' },
+      { num: '150 lm/W', lbl: 'DLC Premium Efficacy' },
+      { num: '10-Year', lbl: 'Tiered Warranty' },
     ],
     brandMark: null,
   },
   {
+    // SKU basis: LLHB-xxx series (Titan-II linear high-bay, 155W peak config)
     id: 1,
     bgClass: 'img-titan',
     eyebrow: 'Featured · High-Bay · LLHB',
     name: 'Titan-II',
     gradClass: 'grad-slide1',
-    desc: 'Linear high-bay for warehouses and industrial interiors. 3-WATTselect 85/130/155W. DLC Premium, built-in 6kVA surge.',
+    desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
+    productImg: '/images/families/family-titan.png',
     stats: [
-      { num: '155 W', lbl: 'Max Wattage' },
-      { num: '150+ lm/W', lbl: 'Efficacy' },
-      { num: '90x90', lbl: 'Distribution' },
+      { num: '3-Step', lbl: 'WATTselect' },
+      { num: '150+ lm/W', lbl: 'DLC Premium' },
+      { num: '90×90', lbl: 'Photometric' },
     ],
     brandMark: null,
   },
   {
+    // SKU basis: LSBX-xxx series (Liberty area luminaire, full optic + SPD config)
     id: 2,
     bgClass: 'img-outdoor',
     eyebrow: 'Featured · Area Lighting · LSBX',
     name: 'Liberty',
     gradClass: 'grad-slide2',
     desc: null,
+    productImg: '/images/families/family-illuminator.png',
     stats: [
-      { num: 'Type III/IV/V', lbl: 'Optics' },
-      { num: '150 lm/W', lbl: 'Efficacy' },
-      { num: '10 kVA', lbl: 'SPD' },
+      { num: 'proⒶPTICS', lbl: 'Type III · IV · V', hasBrandMark: true },
+      { num: '150 lm/W', lbl: 'DLC Premium' },
+      { num: 'surgeⒶRMOR', lbl: '10 kVA SPD', hasBrandMark: true },
     ],
     brandMark: null,
   },
   {
+    // SKU basis: LBLP-xxx series (proⒶRCH-III back-lit panel, 5×5 matrix config)
     id: 3,
     bgClass: 'img-proarch',
     eyebrow: 'Featured · Back-Lit Panel · LBLP',
     name: null,
     gradClass: 'grad-slide3',
-    desc: 'Back-lit panel for offices, classrooms, and commercial interiors. 5-WATTselect x 5-CCTselect across 1x4 / 2x2 / 2x4 form factors. TAA Compliant.',
+    desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
+    productImg: '/images/families/family-astra.png',
     stats: [
-      { num: '20 – 50 W', lbl: 'WATTselect' },
-      { num: '2700 – 5000K', lbl: 'CCTselect' },
+      { num: '5-Step', lbl: 'WATTselect' },
+      { num: '5-Step', lbl: 'CCTselect' },
       { num: 'TAA', lbl: 'Compliant' },
     ],
     brandMark: 'proarch',
@@ -119,9 +127,9 @@ const verticals = [
         <div class="hero-persistent">
           <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
           <h1>
-            Specified.<br />
-            Stocked<span class="stop">.</span><br />
-            <span class="accent">Shipped.</span>
+            Specified<span class="period-red">.</span><br />
+            Stocked<span class="period-red">.</span><br />
+            <span class="accent">Shipped<span class="period-red">.</span></span>
           </h1>
           <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
         </div>
@@ -175,11 +183,28 @@ const verticals = [
                   <div class="stat-row">
                     {slide.stats.map(s => (
                       <div class="stat">
-                        <div class="stat-num">{s.num}</div>
+                        <div class="stat-num">
+                          {s.hasBrandMark
+                            ? <Fragment set:html={s.num.replace('Ⓐ', '<span class="aa">Ⓐ</span>')} />
+                            : s.num
+                          }
+                        </div>
                         <div class="stat-lbl">{s.lbl}</div>
                       </div>
                     ))}
                   </div>
+                </div>
+              ))}
+            </div>
+
+            <!-- PRODUCT IMAGE SLOT (anchored bottom-right, per-slide render) -->
+            <div class="slot slot-product-img">
+              {heroSlides.map((slide, i) => (
+                <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
+                  {slide.productImg
+                    ? <img src={slide.productImg} alt={`${slide.name ?? 'Product'} render`} class="product-render" loading="eager" />
+                    : <div class="product-render-placeholder">Product image pending</div>
+                  }
                 </div>
               ))}
             </div>
@@ -586,10 +611,20 @@ const verticals = [
     transition: opacity 800ms ease;
   }
   .hero-image.active { opacity: 1; }
-  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
-  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
-  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
-  .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat, linear-gradient(135deg,#0c0d12 0%,#14161e 100%); }
+  /* No dark overlay on image — clean image fill, bottom-only gradient for text legibility */
+  .img-illuminator { background: url('/images/heroes/hero-illuminator-stadium.jpg') center/cover no-repeat; }
+  .img-titan       { background: url('/images/heroes/hero-warehouse-highbay.jpg') center/cover no-repeat; }
+  .img-outdoor     { background: url('/images/heroes/hero-outdoor-area.jpg') center/cover no-repeat; }
+  .img-proarch     { background: url('/images/heroes/hero-commercial-office.jpg') center/cover no-repeat; }
+  /* Subtle bottom gradient — transparent → 30% black, text-shadow handles the rest */
+  .hero-image-stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.12) 35%, transparent 65%);
+    z-index: 2;
+    pointer-events: none;
+  }
 
   .hero-persistent {
     position: absolute;
@@ -630,6 +665,8 @@ const verticals = [
   }
   .hero-persistent h1 .stop { color: var(--brand); }
   .hero-persistent h1 .accent { color: var(--brand); }
+  /* Brand signature: red trailing period on each headline word */
+  .period-red { color: var(--brand); }
   .hero-persistent .tag {
     font-size: 15px;
     font-weight: 500;
@@ -665,6 +702,7 @@ const verticals = [
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
   .slide-label {
     font-family: 'JetBrains Mono', monospace;
@@ -684,6 +722,42 @@ const verticals = [
   .slot-desc { min-height: 72px; margin-bottom: 26px; }
   .slot-stats { min-height: 80px; margin-bottom: 26px; }
   .slot-cta { min-height: 48px; }
+  /* Product render slot — anchored bottom-right, ~45% panel width */
+  .slot-product-img {
+    position: absolute;
+    bottom: 0;
+    right: -24px;
+    width: 52%;
+    height: 260px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .slot-product-img .slot-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  .product-render {
+    max-width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    object-position: bottom right;
+    opacity: 0.92;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
+  }
+  .product-render-placeholder {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px;
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 4px;
+    margin: auto;
+  }
   .slot-content {
     position: absolute;
     inset: 0;
@@ -729,29 +803,26 @@ const verticals = [
   .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
 
   .stat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: rgba(255,255,255,0.08);
-    border-radius: var(--radius);
-    overflow: hidden;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
   }
-  .stat { padding: 14px 16px; background: var(--dark2); }
+  .stat { padding: 0; }
   .stat-num {
     font-family: 'Sora', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 2px;
+    font-size: clamp(22px, 2.8vw, 48px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 4px;
     color: #fff;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
   .stat-lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ink3);
+    color: rgba(255,255,255,0.55);
   }
 
   .cta-pair { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -813,19 +884,20 @@ const verticals = [
     justify-content: space-between;
     padding: 0 56px;
   }
-  .carousel-dots { display: flex; gap: 10px; align-items: center; }
+  /* Pagination: 4 horizontal dashes, 24px inactive, active brand red */
+  .carousel-dots { display: flex; gap: 4px; align-items: center; }
   .carousel-dot {
-    width: 28px;
-    height: 3px;
-    background: rgba(255,255,255,0.3);
+    width: 24px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
     border: none;
     cursor: pointer;
     transition: background var(--transition), width var(--transition);
     padding: 0;
-    border-radius: 2px;
+    border-radius: 1px;
   }
-  .carousel-dot:hover { background: rgba(255,255,255,0.55); }
-  .carousel-dot.active { background: var(--brand); width: 48px; }
+  .carousel-dot:hover { background: rgba(255,255,255,0.45); }
+  .carousel-dot.active { background: var(--brand); width: 24px; }
   .carousel-arrows { display: flex; gap: 8px; align-items: center; }
   .carousel-arrow {
     width: 44px;

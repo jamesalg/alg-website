@@ -63,9 +63,12 @@ async function main() {
 
 // B.1: Naked Ⓐ in body content (must be wrapped somewhere inside an .aa span).
     // Conservative check: strip ALL <span class="aa">...</span> blocks (including their content),
+    // strip data-* attribute values (JS communication channels, not rendered body content),
     // then strip HTML comments, then look for any remaining Ⓐ.
     const stripped = html
       .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      .replace(/data-[a-z-]+="[^"]*"/g, '')
+      .replace(/data-[a-z-]+='[^']*'/g, '')
       .replace(/<!--[\s\S]*?-->/g, '');
     if (/Ⓐ/.test(stripped)) {
       fail('B.1', `${rel}: naked Ⓐ found outside .aa span`);
