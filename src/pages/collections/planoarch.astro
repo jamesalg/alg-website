@@ -3,48 +3,48 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BrandMark from '../../components/BrandMark.astro';
 import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
 
-/* v2.5.1: planoⒶRCH collection page — aligned to luxoarch.astro canonical.
- * Fix 1: Remove hero-photo-placeholder (hero is text-only, matching luxo).
- * Fix 2: Replace bespoke side-anchor-nav with shared CollectionAnchorNav component.
- * Fix 3: Stat strip uses flex + dividers (matching luxo .stat-strip pattern).
- * Fix 4: Sub-category tiles sorted A→Z.
- * Fix 5: Red banner uses flex + dividers (matching luxo .red-banner-inner pattern).
- * Fix 6: Related headline matches luxo canonical copy.
- * Fix 7: Breadcrumb, hero, stat strip, browse, legacy, get-started, related all use
- *         luxo-canonical color palette (#0c0d12 dark, #14161e dark2, #1a1f2e hero,
- *         #f5f5f3 bg2, #111418 ink, #3a3f47 ink2, #8a8f99 ink3, #c8ccd3 ink4).
- * Sort: ECO → PRO → PRO+, A→Z within tier (build-time, per v2.4.3 canonical pattern). */
+/* v2.5.3: planoⒶRCH collection page — roster update + canonical alignment.
+ * Fix 1 (v2.5.3): Remove selectⒶRCH and Stellar. Updated counts to 15/125.
+ * Fix 3 (v2.5.3): §7 All Families — white outer bg + visible title + "FILTER BY" header matching luxo.
+ * Fix 4 (v2.5.3): §4 Browse — white bg + light tiles + headline removed.
+ * Fix 5 (v2.5.3): §4 tile order alphabetical; updated SKU counts.
+ * Fix 7 (v2.5.3): Sort by sub-category A→Z, then ECO→PRO→PRO+, then A→Z within tier.
+ * Fix 8 (v2.5.3): Tier badges static (no hover-conditional opacity).
+ * Fix 10 (v2.5.3): Hero pill "8 APPLICATIONS".
+ * Fix 11 (v2.5.3): Related Collections — luxoarch live link; lampar/city/tubul Coming soon. */
 const _TIER_ORDER: Record<string, number> = { 'ECO': 0, 'PRO': 1, 'PRO+': 2 };
 const families = ([
+  /* Fix 1 (v2.5.3): selectⒶRCH and Stellar removed. 15 families remain. */
   { sub: 'ARCHITECTURAL LINEAR', tier: 'ECO',  name: 'Lara',              maxW: '60W',  skus: 6,  dlc: true,  apps: 'architectural-linear' },
-  { sub: 'PANEL',                tier: 'ECO',  name: 'proⒶRCH-II',       maxW: '30W',  skus: 7,  dlc: true,  apps: 'panel' },
-  { sub: 'TROFFER',              tier: 'ECO',  name: 'proⒶRCH-T1',       maxW: '26W',  skus: 13, dlc: true,  apps: 'troffer' },
-  { sub: 'TROFFER',              tier: 'ECO',  name: 'selectⒶRCH',       maxW: '40W',  skus: 6,  dlc: true,  apps: 'troffer' },
+  { sub: 'ARCHITECTURAL LINEAR', tier: 'PRO+', name: 'Luna',              maxW: '50W',  skus: 5,  dlc: true,  apps: 'architectural-linear' },
   { sub: 'DOWNLIGHT',            tier: 'ECO',  name: 'Solstice',          maxW: '22W',  skus: 7,  dlc: true,  apps: 'downlight' },
-  { sub: 'TRACK LIGHT',          tier: 'ECO',  name: 'Trackstar',         maxW: '20W',  skus: 4,  dlc: false, apps: 'track-light' },
-  { sub: 'TROFFER',              tier: 'PRO',  name: 'proⒶRCH-T2',       maxW: '30W',  skus: 2,  dlc: true,  apps: 'troffer' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO',  name: 'Solstice SafeZone', maxW: '26W',  skus: 4,  dlc: true,  apps: 'downlight' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Astra',             maxW: '18W',  skus: 27, dlc: true,  apps: 'downlight' },
+  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Spectra',           maxW: '30W',  skus: 3,  dlc: true,  apps: 'downlight' },
+  { sub: 'PANEL',                tier: 'ECO',  name: 'proⒶRCH-II',       maxW: '30W',  skus: 7,  dlc: true,  apps: 'panel' },
+  { sub: 'PANEL',                tier: 'PRO+', name: 'proⒶRCH-III',      maxW: '30W',  skus: 13, dlc: true,  apps: 'panel' },
   { sub: 'RETROFIT PANEL',       tier: 'PRO',  name: 'retroⒶRCH-P1',     maxW: '26W',  skus: 12, dlc: true,  apps: 'retrofit-panel' },
   { sub: 'RETROFIT TROFFER',     tier: 'PRO',  name: 'retroⒶRCH-T1',     maxW: '26W',  skus: 12, dlc: true,  apps: 'retrofit-troffer' },
-  { sub: 'DOWNLIGHT',            tier: 'PRO',  name: 'Solstice SafeZone', maxW: '26W',  skus: 4,  dlc: true,  apps: 'downlight' },
-  { sub: 'DOWNLIGHT',            tier: 'PRO',  name: 'Stellar',           maxW: '22W',  skus: 1,  dlc: true,  apps: 'downlight' },
-  { sub: 'WRAPAROUND',           tier: 'PRO',  name: 'Waymark',           maxW: '35W',  skus: 4,  dlc: true,  apps: 'wraparound' },
-  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Astra',             maxW: '18W',  skus: 27, dlc: true,  apps: 'downlight' },
-  { sub: 'ARCHITECTURAL LINEAR', tier: 'PRO+', name: 'Luna',              maxW: '50W',  skus: 5,  dlc: true,  apps: 'architectural-linear' },
+  { sub: 'TRACK LIGHT',          tier: 'ECO',  name: 'Trackstar',         maxW: '20W',  skus: 4,  dlc: false, apps: 'track-light' },
+  { sub: 'TROFFER',              tier: 'ECO',  name: 'proⒶRCH-T1',       maxW: '26W',  skus: 13, dlc: true,  apps: 'troffer' },
+  { sub: 'TROFFER',              tier: 'PRO',  name: 'proⒶRCH-T2',       maxW: '30W',  skus: 2,  dlc: true,  apps: 'troffer' },
   { sub: 'TROFFER',              tier: 'PRO+', name: 'Luxmark',           maxW: '35W',  skus: 6,  dlc: true,  apps: 'troffer' },
-  { sub: 'PANEL',                tier: 'PRO+', name: 'proⒶRCH-III',      maxW: '30W',  skus: 13, dlc: true,  apps: 'panel' },
-  { sub: 'DOWNLIGHT',            tier: 'PRO+', name: 'Spectra',           maxW: '30W',  skus: 3,  dlc: true,  apps: 'downlight' },
+  { sub: 'WRAPAROUND',           tier: 'PRO',  name: 'Waymark',           maxW: '35W',  skus: 4,  dlc: true,  apps: 'wraparound' },
 ] as const).slice().sort((a: any, b: any) => {
+  /* Fix 7: sub A→Z, then tier ECO→PRO→PRO+, then name A→Z */
+  const sd = a.sub.localeCompare(b.sub);
+  if (sd !== 0) return sd;
   const td = (_TIER_ORDER[a.tier] ?? 99) - (_TIER_ORDER[b.tier] ?? 99);
   return td !== 0 ? td : a.name.localeCompare(b.name);
 });
 ---
 <BaseLayout
   title="planoARCH Indoor Collection — Archipelago Lighting Group"
-  description="Commercial indoor lighting for offices, retail, and healthcare. 17 active families, 132 active SKUs."
+  description="Commercial indoor lighting for offices, retail, and healthcare. 15 active families, 125 active SKUs."
   bodyClass="page-collection page-planoarch"
 >
 
-  <!-- §1 BREADCRUMB — Fix 7: luxo-canonical bg (#f5f5f3 light, not dark) -->
+  <!-- §1 BREADCRUMB -->
   <div class="breadcrumb-band">
     <a href="/">Home</a>
     <span class="bc-sep">›</span>
@@ -55,28 +55,31 @@ const families = ([
     <span class="bc-current">plano<BrandMark prefix="" suffix="RCH" /></span>
   </div>
 
-  <!-- §2 HERO — Fix 1: no hero-photo-placeholder; Fix 7: #1a1f2e bg matching luxo -->
+  <!-- §2 HERO -->
   <section class="hero-band" id="sec-hero">
     <div class="hero-top">
       <div class="hero-eyebrow">INDOOR · COLLECTION</div>
       <h1 class="hero-wordmark">PLANO<BrandMark prefix="" suffix="RCH" /></h1>
-      <p class="hero-desc">Commercial indoor lighting for offices, retail, and healthcare. 17 active families, 132 active SKUs.</p>
+      <!-- Fix 1 (v2.5.3): Updated counts 15 families / 125 SKUs -->
+      <p class="hero-desc">Commercial indoor lighting for offices, retail, and healthcare. 15 active families, 125 active SKUs.</p>
       <div class="hero-pills">
         <span class="hero-pill">DLC PREMIUM</span>
         <span class="hero-pill">TAA AVAILABLE</span>
         <span class="hero-pill">5 US WAREHOUSES</span>
         <span class="hero-pill">3-DAY DELIVERY</span>
+        <!-- Fix 10 (v2.5.3): "8 SUB-CATEGORIES" → "8 APPLICATIONS" -->
         <span class="hero-pill">8 APPLICATIONS</span>
       </div>
     </div>
   </section>
 
-  <!-- §3 STAT STRIP — Fix 3: flex + dividers matching luxo .stat-strip pattern -->
+  <!-- §3 STAT STRIP -->
   <section class="stat-strip" id="sec-stats">
     <div class="stat-strip-inner">
-      <div class="stat-col"><span class="stat-num">17</span><span class="stat-lbl">Fixture Families</span></div>
+      <!-- Fix 1 (v2.5.3): 17→15, 132→125 -->
+      <div class="stat-col"><span class="stat-num">15</span><span class="stat-lbl">Fixture Families</span></div>
       <div class="stat-divider"></div>
-      <div class="stat-col"><span class="stat-num">132</span><span class="stat-lbl">Active SKUs</span></div>
+      <div class="stat-col"><span class="stat-num">125</span><span class="stat-lbl">Active SKUs</span></div>
       <div class="stat-divider"></div>
       <div class="stat-col"><span class="stat-num">8</span><span class="stat-lbl">Sub-categories</span></div>
       <div class="stat-divider"></div>
@@ -84,14 +87,16 @@ const families = ([
     </div>
   </section>
 
-  <!-- §4 BROWSE BY SUB-CATEGORY — Fix 4: tiles sorted A→Z -->
+  <!-- §4 BROWSE BY SUB-CATEGORY
+       Fix 4 (v2.5.3): White bg + light tiles (matching luxo canonical). Headline removed.
+       Fix 5 (v2.5.3): Tiles in alphabetical order; updated SKU counts. -->
   <section class="page-section sec-browse" id="sec-apps">
     <div class="section-inner">
       <div class="sec-eyebrow">Browse by sub-category</div>
-      <h2 class="sec-title">Eight indoor sub-categories.</h2>
+      <!-- Fix 4 (v2.5.3): "Eight indoor sub-categories." headline REMOVED -->
       <div class="app-grid">
 
-        <!-- A → Z order: Architectural Linear, Downlight, Panel, Retrofit Panel, Retrofit Troffer, Track Light, Troffer, Wraparound -->
+        <!-- 1. Architectural Linear (11 SKUs) -->
         <button class="app-tile" data-app="architectural-linear" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="2" y="11" width="20" height="2" rx="1"/>
@@ -100,15 +105,18 @@ const families = ([
           <span class="app-count">11 SKUs</span>
         </button>
 
+        <!-- 2. Downlight (41 SKUs) -->
         <button class="app-tile" data-app="downlight" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <circle cx="12" cy="8" r="4"/>
             <path d="M 8 12 L 6 20 M 16 12 L 18 20"/>
           </svg>
           <span class="app-label">Downlight</span>
-          <span class="app-count">42 SKUs</span>
+          <!-- Fix 5 (v2.5.3): 42→41 (Stellar removed) -->
+          <span class="app-count">41 SKUs</span>
         </button>
 
+        <!-- 3. Panel (20 SKUs) -->
         <button class="app-tile" data-app="panel" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="3" y="9" width="18" height="6" rx="0.5"/>
@@ -117,6 +125,7 @@ const families = ([
           <span class="app-count">20 SKUs</span>
         </button>
 
+        <!-- 4. Retrofit Panel (12 SKUs) -->
         <button class="app-tile" data-app="retrofit-panel" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="3" y="11" width="14" height="4" rx="0.5"/>
@@ -126,6 +135,7 @@ const families = ([
           <span class="app-count">12 SKUs</span>
         </button>
 
+        <!-- 5. Retrofit Troffer (12 SKUs) -->
         <button class="app-tile" data-app="retrofit-troffer" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="3" y="9" width="14" height="8" rx="1"/>
@@ -136,6 +146,7 @@ const families = ([
           <span class="app-count">12 SKUs</span>
         </button>
 
+        <!-- 6. Track Light (4 SKUs) -->
         <button class="app-tile" data-app="track-light" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <line x1="3" y1="8" x2="21" y2="8"/>
@@ -147,6 +158,7 @@ const families = ([
           <span class="app-count">4 SKUs</span>
         </button>
 
+        <!-- 7. Troffer (21 SKUs) -->
         <button class="app-tile" data-app="troffer" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="3" y="6" width="18" height="12" rx="1"/>
@@ -154,9 +166,11 @@ const families = ([
             <line x1="3" y1="14" x2="21" y2="14"/>
           </svg>
           <span class="app-label">Troffer</span>
-          <span class="app-count">27 SKUs</span>
+          <!-- Fix 5 (v2.5.3): 27→21 (selectⒶRCH removed) -->
+          <span class="app-count">21 SKUs</span>
         </button>
 
+        <!-- 8. Wraparound (4 SKUs) -->
         <button class="app-tile" data-app="wraparound" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <rect x="4" y="8" width="16" height="8" rx="3"/>
@@ -169,12 +183,13 @@ const families = ([
     </div>
   </section>
 
-  <!-- §5 RED STAT BANNER — Fix 5: flex + dividers matching luxo .red-banner-inner -->
+  <!-- §5 RED STAT BANNER -->
   <section class="red-banner" id="sec-red-banner">
     <div class="red-banner-inner">
-      <div class="rb-col"><span class="rb-num">17</span><span class="rb-lbl">Families</span></div>
+      <!-- Fix 1 (v2.5.3): 17→15, 132→125 -->
+      <div class="rb-col"><span class="rb-num">15</span><span class="rb-lbl">Families</span></div>
       <div class="rb-div"></div>
-      <div class="rb-col"><span class="rb-num">132</span><span class="rb-lbl">Active SKUs</span></div>
+      <div class="rb-col"><span class="rb-num">125</span><span class="rb-lbl">Active SKUs</span></div>
       <div class="rb-div"></div>
       <div class="rb-col"><span class="rb-num">8</span><span class="rb-lbl">Sub-categories</span></div>
       <div class="rb-div"></div>
@@ -186,22 +201,23 @@ const families = ([
     </div>
   </section>
 
-  <!-- §6 FEATURED FAMILIES -->
+  <!-- §6 FEATURED FAMILIES — black bg canonical (matching luxo) -->
   <section class="page-section sec-featured" id="sec-featured">
     <div class="section-inner">
       <div class="sec-eyebrow">Featured families</div>
-      <h2 class="sec-title">Five families worth specifying first.</h2>
+      <h2 class="sec-title">Five flagship families for the commercial interior.</h2>
       <p class="sec-sub">The most-specified plano<BrandMark prefix="" suffix="RCH" /> families across downlight, linear, troffer, panel, and track.</p>
       <div class="featured-grid">
 
         <!-- Card 1: Astra PRO+ Downlight -->
         <div class="feat-card">
-          <div class="feat-img-wrap">
-            <div class="fam-img-placeholder"></div>
+          <div class="feat-card-top">
+            <span class="feat-sub-tag">DOWNLIGHT</span>
+            <!-- Fix 8 (v2.5.3): tier badge always visible — no hover-conditional opacity -->
             <span class="tier-badge pro-plus">PRO+</span>
           </div>
+          <div class="fam-img-placeholder feat-placeholder"></div>
           <div class="feat-card-body">
-            <span class="feat-sub">DOWNLIGHT</span>
             <h3 class="feat-name">Astra</h3>
             <div class="feat-meta">
               <span class="feat-maxw">18W max</span>
@@ -214,12 +230,12 @@ const families = ([
 
         <!-- Card 2: Luna PRO+ Architectural Linear -->
         <div class="feat-card">
-          <div class="feat-img-wrap">
-            <div class="fam-img-placeholder"></div>
+          <div class="feat-card-top">
+            <span class="feat-sub-tag">ARCHITECTURAL LINEAR</span>
             <span class="tier-badge pro-plus">PRO+</span>
           </div>
+          <div class="fam-img-placeholder feat-placeholder"></div>
           <div class="feat-card-body">
-            <span class="feat-sub">ARCHITECTURAL LINEAR</span>
             <h3 class="feat-name">Luna</h3>
             <div class="feat-meta">
               <span class="feat-maxw">50W max</span>
@@ -232,12 +248,12 @@ const families = ([
 
         <!-- Card 3: Luxmark PRO+ Troffer -->
         <div class="feat-card">
-          <div class="feat-img-wrap">
-            <div class="fam-img-placeholder"></div>
+          <div class="feat-card-top">
+            <span class="feat-sub-tag">TROFFER</span>
             <span class="tier-badge pro-plus">PRO+</span>
           </div>
+          <div class="fam-img-placeholder feat-placeholder"></div>
           <div class="feat-card-body">
-            <span class="feat-sub">TROFFER</span>
             <h3 class="feat-name">Luxmark</h3>
             <div class="feat-meta">
               <span class="feat-maxw">35W max</span>
@@ -250,12 +266,12 @@ const families = ([
 
         <!-- Card 4: proⒶRCH-III PRO+ Panel -->
         <div class="feat-card">
-          <div class="feat-img-wrap">
-            <div class="fam-img-placeholder"></div>
+          <div class="feat-card-top">
+            <span class="feat-sub-tag">PANEL</span>
             <span class="tier-badge pro-plus">PRO+</span>
           </div>
+          <div class="fam-img-placeholder feat-placeholder"></div>
           <div class="feat-card-body">
-            <span class="feat-sub">PANEL</span>
             <h3 class="feat-name"><BrandMark prefix="pro" suffix="RCH-III" /></h3>
             <div class="feat-meta">
               <span class="feat-maxw">30W max</span>
@@ -268,12 +284,12 @@ const families = ([
 
         <!-- Card 5: Trackstar ECO Track Light -->
         <div class="feat-card">
-          <div class="feat-img-wrap">
-            <div class="fam-img-placeholder"></div>
+          <div class="feat-card-top">
+            <span class="feat-sub-tag">TRACK LIGHT</span>
             <span class="tier-badge eco">ECO</span>
           </div>
+          <div class="fam-img-placeholder feat-placeholder"></div>
           <div class="feat-card-body">
-            <span class="feat-sub">TRACK LIGHT</span>
             <h3 class="feat-name">Trackstar</h3>
             <div class="feat-meta">
               <span class="feat-maxw">20W max</span>
@@ -287,113 +303,129 @@ const families = ([
     </div>
   </section>
 
-  <!-- §7 ALL FAMILIES -->
+  <!-- §7 ALL FAMILIES
+       Fix 3 (v2.5.3): White outer bg + "ALL FAMILIES" eyebrow + headline + "FILTER BY" header.
+       Fix 7 (v2.5.3): Sort by sub-category A→Z, then ECO→PRO→PRO+, then A→Z. -->
   <section class="page-section sec-all" id="sec-all-families">
-    <div class="section-inner families-layout">
+    <div class="section-inner section-inner--wide">
+      <!-- Fix 3 (v2.5.3): Added eyebrow + headline matching luxo canonical -->
+      <div class="sec-eyebrow">All families</div>
+      <h2 class="sec-title sec-title-dark">15 families. One indoor portfolio.</h2>
+      <div class="families-layout">
 
-      <!-- LEFT: Filter rail -->
-      <aside class="filter-rail">
-        <div class="filter-group">
-          <h3 class="filter-group-title">Sub-category</h3>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="architectural-linear"> Architectural Linear <span class="filter-count">(2)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="downlight"> Downlight <span class="filter-count">(5)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="panel"> Panel <span class="filter-count">(2)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-panel"> Retrofit Panel <span class="filter-count">(1)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-troffer"> Retrofit Troffer <span class="filter-count">(1)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="track-light"> Track Light <span class="filter-count">(1)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="troffer"> Troffer <span class="filter-count">(4)</span></label>
-          <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="wraparound"> Wraparound <span class="filter-count">(1)</span></label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">Echelon</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> ECO <span class="filter-count">(6)</span></label>
-          <label class="filter-opt"><input type="checkbox" disabled> PRO <span class="filter-count">(6)</span></label>
-          <label class="filter-opt"><input type="checkbox" disabled> PRO+ <span class="filter-count">(5)</span></label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">Max Wattage</h3>
-          <div class="filter-range-wrap">
-            <input type="range" min="10" max="60" value="60" disabled class="filter-range" />
-            <div class="filter-range-labels"><span>10W</span><span>60W</span></div>
+        <!-- LEFT: Filter rail — Fix 3: added FILTER BY header matching luxo -->
+        <aside class="filter-rail">
+          <div class="filter-header">
+            <span class="filter-title">FILTER BY</span>
+            <button class="filter-reset-btn" id="reset-filter">Reset all</button>
           </div>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">CCT</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> 2700K</label>
-          <label class="filter-opt"><input type="checkbox" disabled> 3000K</label>
-          <label class="filter-opt"><input type="checkbox" disabled> 3500K</label>
-          <label class="filter-opt"><input type="checkbox" disabled> 4000K</label>
-          <label class="filter-opt"><input type="checkbox" disabled> 5000K</label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">Voltage</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> 120-277V</label>
-          <label class="filter-opt"><input type="checkbox" disabled> 120V Only</label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">DLC</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> DLC Premium</label>
-          <label class="filter-opt"><input type="checkbox" disabled> DLC Standard</label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">TAA Compliant</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> TAA Compliant</label>
-        </div>
-        <div class="filter-group">
-          <h3 class="filter-group-title">Mount Type</h3>
-          <label class="filter-opt"><input type="checkbox" disabled> Recessed</label>
-          <label class="filter-opt"><input type="checkbox" disabled> Surface</label>
-          <label class="filter-opt"><input type="checkbox" disabled> Suspended</label>
-          <label class="filter-opt"><input type="checkbox" disabled> Track</label>
-        </div>
-        <button class="filter-reset" id="reset-filter">Reset all</button>
-      </aside>
 
-      <!-- RIGHT: Grid -->
-      <div class="af-grid-col">
-        <div class="grid-header">
-          <span class="grid-count" id="grid-count">Showing 17 families</span>
-          <div class="sort-wrap">
-            <select class="sort-select" disabled>
-              <option>Sort: ECO → PRO+</option>
-              <option>Wattage Low to High</option>
-              <option>Wattage High to Low</option>
-              <option>A to Z</option>
-            </select>
+          <div class="filter-group">
+            <h3 class="filter-group-title">Sub-category</h3>
+            <!-- Fix 7: family counts per sub-category from canonical card order -->
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="architectural-linear"> Architectural Linear <span class="filter-count">(2)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="downlight"> Downlight <span class="filter-count">(4)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="panel"> Panel <span class="filter-count">(2)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-panel"> Retrofit Panel <span class="filter-count">(1)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="retrofit-troffer"> Retrofit Troffer <span class="filter-count">(1)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="track-light"> Track Light <span class="filter-count">(1)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="troffer"> Troffer <span class="filter-count">(3)</span></label>
+            <label class="filter-opt"><input type="checkbox" class="app-filter-cb" name="filter-subcategory" value="wraparound"> Wraparound <span class="filter-count">(1)</span></label>
           </div>
-        </div>
-        <div class="all-fam-grid" id="all-fam-grid">
-          {families.map((f: any) => (
-            <div class="af-card" data-subcategory={f.apps}>
-              <div class="af-card-top">
-                <span class="fam-sub-tag">{f.sub.split(' · ')[0]}</span>
-                <span class={`tier-badge ${f.tier === 'PRO+' ? 'pro-plus' : f.tier.toLowerCase()}`}>{f.tier}</span>
-              </div>
-              <div class="fam-img-placeholder af-placeholder"></div>
-              <div class="af-card-bottom">
-                <div>
-                  <span class="af-sub">{f.sub}</span>
-                  <h3 class="af-name">{f.name.includes('Ⓐ') ? <Fragment set:html={f.name.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>')} /> : f.name}</h3>
-                  <div class="af-meta">
-                    <span class="af-maxw">{f.maxW}</span>
-                    <span class="af-skus">{f.skus} SKUs</span>
-                    {f.dlc && <span class="af-dlc dlc-pill">DLC</span>}
-                  </div>
-                </div>
-                <a href="#" class="af-cta">VIEW →</a>
-              </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">Echelon</h3>
+            <!-- Fix 7: ECO=5, PRO=5, PRO+=5 -->
+            <label class="filter-opt"><input type="checkbox" disabled> ECO <span class="filter-count">(5)</span></label>
+            <label class="filter-opt"><input type="checkbox" disabled> PRO <span class="filter-count">(5)</span></label>
+            <label class="filter-opt"><input type="checkbox" disabled> PRO+ <span class="filter-count">(5)</span></label>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">Max Wattage</h3>
+            <div class="filter-range-wrap">
+              <input type="range" min="10" max="60" value="60" disabled class="filter-range" />
+              <div class="filter-range-labels"><span>10W</span><span>60W</span></div>
             </div>
-          ))}
-        </div>
-        <div class="af-no-results" id="no-results" style="display:none">
-          <p>No families match the selected filters. <button class="reset-inline" id="reset-inline">Reset filters</button></p>
-        </div>
-      </div>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">CCT</h3>
+            <label class="filter-opt"><input type="checkbox" disabled> 2700K</label>
+            <label class="filter-opt"><input type="checkbox" disabled> 3000K</label>
+            <label class="filter-opt"><input type="checkbox" disabled> 3500K</label>
+            <label class="filter-opt"><input type="checkbox" disabled> 4000K</label>
+            <label class="filter-opt"><input type="checkbox" disabled> 5000K</label>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">Voltage</h3>
+            <label class="filter-opt"><input type="checkbox" disabled> 120-277V</label>
+            <label class="filter-opt"><input type="checkbox" disabled> 120V Only</label>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">DLC</h3>
+            <label class="filter-opt"><input type="checkbox" disabled> DLC Premium</label>
+            <label class="filter-opt"><input type="checkbox" disabled> DLC Standard</label>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">TAA Compliant</h3>
+            <label class="filter-opt"><input type="checkbox" disabled> TAA Compliant</label>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group-title">Mount Type</h3>
+            <label class="filter-opt"><input type="checkbox" disabled> Recessed</label>
+            <label class="filter-opt"><input type="checkbox" disabled> Surface</label>
+            <label class="filter-opt"><input type="checkbox" disabled> Suspended</label>
+            <label class="filter-opt"><input type="checkbox" disabled> Track</label>
+          </div>
+        </aside>
 
+        <!-- RIGHT: Grid -->
+        <div class="af-grid-col">
+          <div class="grid-header">
+            <!-- Fix 1 (v2.5.3): 17→15 -->
+            <span class="grid-count" id="grid-count">Showing 15 families</span>
+            <div class="sort-wrap">
+              <!-- Fix 7 (v2.5.3): Sort label updated -->
+              <select class="sort-select" disabled>
+                <option>Sort: Application → ECO→PRO+</option>
+                <option>Wattage Low to High</option>
+                <option>Wattage High to Low</option>
+                <option>A to Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="all-fam-grid" id="all-fam-grid">
+            {families.map((f: any) => (
+              <div class="af-card" data-subcategory={f.apps}>
+                <div class="af-card-top">
+                  <span class="fam-sub-tag">{f.sub.split(' · ')[0]}</span>
+                  <!-- Fix 8 (v2.5.3): tier badge always visible — class-based, no hover-conditional opacity -->
+                  <span class={`tier-badge ${f.tier === 'PRO+' ? 'pro-plus' : f.tier.toLowerCase()}`}>{f.tier}</span>
+                </div>
+                <div class="fam-img-placeholder af-placeholder"></div>
+                <div class="af-card-bottom">
+                  <div>
+                    <span class="af-sub">{f.sub}</span>
+                    <h3 class="af-name">{f.name.includes('Ⓐ') ? <Fragment set:html={f.name.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>')} /> : f.name}</h3>
+                    <div class="af-meta">
+                      <span class="af-maxw">{f.maxW}</span>
+                      <span class="af-skus">{f.skus} SKUs</span>
+                      {f.dlc && <span class="af-dlc dlc-pill">DLC</span>}
+                    </div>
+                  </div>
+                  <a href="#" class="af-cta">VIEW →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="af-no-results" id="no-results" style="display:none">
+            <p>No families match the selected filters. <button class="reset-inline" id="reset-inline">Reset filters</button></p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- §8 LEGACY — Fix 7: bg matches luxo (#f5f5f3 light) -->
+  <!-- §8 LEGACY -->
   <section class="page-section sec-legacy" id="sec-legacy">
     <div class="section-inner">
       <div class="sec-eyebrow">Legacy · Coming soon</div>
@@ -406,7 +438,7 @@ const families = ([
     </div>
   </section>
 
-  <!-- §9 GET STARTED — Fix 7: bg matches luxo (#f5f5f3 light) -->
+  <!-- §9 GET STARTED -->
   <section class="page-section sec-get-started" id="sec-get-started">
     <div class="section-inner">
       <div class="sec-eyebrow">Get started</div>
@@ -437,41 +469,52 @@ const families = ([
     </div>
   </section>
 
-  <!-- §10 RELATED COLLECTIONS — Fix 6: headline matches luxo canonical copy; Fix 7: bg matches luxo -->
+  <!-- §10 RELATED COLLECTIONS
+       Fix 11 (v2.5.3): luxoarch live link; lampar/city/tubul Coming soon (disabled). -->
   <section class="page-section sec-related" id="sec-related">
     <div class="section-inner">
       <div class="sec-eyebrow">Related collections</div>
       <h2 class="sec-title">Explore the rest of the ALG portfolio.</h2>
       <div class="related-grid">
+
+        <!-- Card 1: luxoARCH — LIVE -->
         <div class="related-card">
           <div class="related-eyebrow">OUTDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="luxo" suffix="RCH" /></div>
-          <p class="related-desc">Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs.</p>
+          <!-- Fix 1 (v2.5.3): Updated luxo counts in description -->
+          <p class="related-desc">Outdoor lighting for the commercial perimeter. 22 active families, 142 active SKUs.</p>
           <a href="/collections/luxoarch" class="related-link">View →</a>
         </div>
-        <div class="related-card">
+
+        <!-- Card 2: lamparARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">INDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="lampar" suffix="RCH" /></div>
           <p class="related-desc">Industrial linear high-bay and low-bay luminaires. Built for warehouse and manufacturing.</p>
-          <a href="#" class="related-link">Coming soon →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
-        <div class="related-card">
+
+        <!-- Card 3: cityARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">OUTDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="city" suffix="RCH" /></div>
           <p class="related-desc">Street and roadway luminaires for municipal and utility applications.</p>
-          <a href="#" class="related-link">Coming soon →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
-        <div class="related-card">
+
+        <!-- Card 4: tubulARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">LAMP · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="tubul" suffix="RCH" /></div>
           <p class="related-desc">T8/T5/PL/HID retrofit lamps. Drop-in replacements for legacy fluorescent.</p>
-          <a href="#" class="related-link">Coming soon →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Fix 2: Shared CollectionAnchorNav component (replaces bespoke side-anchor-nav) -->
+  <!-- Shared CollectionAnchorNav component -->
   <CollectionAnchorNav sections={[
     { id: 'sec-hero',         label: 'Overview' },
     { id: 'sec-stats',        label: 'Quick stats' },
@@ -486,7 +529,7 @@ const families = ([
 </BaseLayout>
 
 <style>
-  /* ── CSS VARIABLES (Fix 7: luxo-canonical palette) ─────────────────── */
+  /* ── CSS VARIABLES ─────────────────────────────────────────────────── */
   :root {
     --dark:       #0c0d12;
     --dark2:      #14161e;
@@ -502,7 +545,7 @@ const families = ([
     --transition: 0.2s ease;
   }
 
-  /* ── BREADCRUMB (Fix 7: light bg matching luxo) ─────────────────────── */
+  /* ── BREADCRUMB ─────────────────────────────────────────────────────── */
   .breadcrumb-band {
     padding: 12px 28px;
     font-family: 'JetBrains Mono', monospace;
@@ -521,7 +564,7 @@ const families = ([
   .bc-sep { color: var(--ink4, #c8ccd3); }
   .bc-current { color: var(--ink, #111418); }
 
-  /* ── §2 HERO (Fix 1: text-only, no placeholder; Fix 7: #1a1f2e bg) ─── */
+  /* ── §2 HERO ────────────────────────────────────────────────────────── */
   .hero-band {
     background: #1a1f2e;
     color: #fff;
@@ -587,7 +630,7 @@ const families = ([
     background: rgba(255,255,255,0.04);
   }
 
-  /* ── §3 STAT STRIP (Fix 3: flex + dividers matching luxo) ──────────── */
+  /* ── §3 STAT STRIP ──────────────────────────────────────────────────── */
   .stat-strip {
     background: var(--dark, #0c0d12);
     display: flex;
@@ -636,12 +679,16 @@ const families = ([
     text-align: center;
   }
 
-  /* ── §4 BROWSE (Fix 7: dark2 bg) ───────────────────────────────────── */
+  /* ── SHARED SECTION TOKENS ──────────────────────────────────────────── */
   .page-section { padding: 80px 0; }
   .section-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 28px;
+  }
+  /* Fix 3 (v2.5.3): wide container matching luxo */
+  .section-inner--wide {
+    max-width: 1400px;
   }
   .sec-eyebrow {
     display: flex;
@@ -675,53 +722,71 @@ const families = ([
     line-height: 1.6;
     margin: 0 0 36px;
   }
-  .sec-browse { background: var(--dark2, #14161e); }
-  .sec-browse .sec-title { color: #fff; }
-  .sec-browse .sec-sub { color: rgba(255,255,255,0.55); }
+
+  /* ── §4 BROWSE — Fix 4 (v2.5.3): white bg + light tiles matching luxo ─ */
+  /* Before: dark2 bg, dark tiles, dark text/icons */
+  /* After: white/off-white bg, light grey tiles, dark text + neutral grey icons */
+  .sec-browse {
+    background: var(--bg2, #f5f5f3);
+  }
+  .sec-browse .sec-eyebrow { color: var(--brand, #F32740); }
+  .sec-browse .sec-eyebrow::before { background: var(--brand, #F32740); }
+  /* Fix 4: sec-title and sec-sub removed (no headline in browse section) */
   .app-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
+  /* Fix 4 (v2.5.3): Light tile style matching luxo */
   .app-tile {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #f8f8f6;
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 8px;
-    padding: 24px 16px;
+    padding: 28px 20px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    transition: border-color var(--transition), background var(--transition);
+    transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
     text-align: center;
+    color: inherit;
   }
-  .app-tile:hover { border-color: var(--brand, #F32740); }
+  .app-tile:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+    border-color: var(--brand, #F32740);
+  }
   .app-tile[aria-pressed="true"] {
     border-color: var(--brand, #F32740);
-    background: rgba(243,39,64,0.08);
+    background: #fff0f2;
+    box-shadow: 0 0 0 2px var(--brand, #F32740);
   }
   .app-tile[aria-pressed="true"] svg { stroke: var(--brand, #F32740); }
   .app-tile[aria-pressed="true"] .app-label { color: var(--brand, #F32740); }
+  /* Fix 4: Dark neutral grey icons on light bg */
   .app-tile svg {
     width: 32px;
     height: 32px;
-    stroke: rgba(255,255,255,0.45);
+    stroke: #8a8f99;
     transition: stroke var(--transition);
   }
   .app-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.80);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    font-weight: 700;
     line-height: 1.2;
   }
   .app-count {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: rgba(255,255,255,0.35);
+    color: var(--ink3, #8a8f99);
   }
 
-  /* ── §5 RED BANNER (Fix 5: flex + dividers matching luxo) ──────────── */
+  /* ── §5 RED BANNER ──────────────────────────────────────────────────── */
   .red-banner {
     background: var(--brand, #F32740);
   }
@@ -765,8 +830,10 @@ const families = ([
     text-align: center;
   }
 
-  /* ── §6 FEATURED FAMILIES ───────────────────────────────────────────── */
+  /* ── §6 FEATURED FAMILIES — black bg canonical ──────────────────────── */
   .sec-featured { background: var(--dark, #0c0d12); }
+  .sec-featured .sec-eyebrow { color: var(--brand, #F32740); }
+  .sec-featured .sec-eyebrow::before { background: var(--brand, #F32740); }
   .sec-featured .sec-title { color: #fff; }
   .sec-featured .sec-sub { color: rgba(255,255,255,0.55); }
   .featured-grid {
@@ -787,19 +854,24 @@ const families = ([
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   }
-  .feat-img-wrap {
-    position: relative;
-    height: 160px;
-  }
-  .fam-img-placeholder {
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.04);
+  /* Fix 8 (v2.5.3): feat-card-top flex row — sub-tag left, tier-badge right, always visible */
+  .feat-card-top {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 14px 0;
+    gap: 8px;
   }
-  /* Fix 1 (v2.5.2): Align tier-badge CSS to luxo canonical — flex-shrink:0, no position:absolute */
+  .feat-sub-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+    flex: 1;
+  }
+  /* Fix 8 (v2.5.3): tier-badge always visible — no opacity:0 / hover-conditional */
   .tier-badge {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
@@ -811,18 +883,22 @@ const families = ([
     border-radius: 2px;
     white-space: nowrap;
     flex-shrink: 0;
+    /* Static visibility — no opacity:0 here */
   }
   .tier-badge.eco     { background: rgba(255,255,255,0.10); color: #fff; border: none; }
   .tier-badge.pro     { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
   .tier-badge.pro-plus { background: #F32740; color: #fff; border: none; }
-  .feat-card-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-  .feat-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.40);
+  .fam-img-placeholder {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  .feat-placeholder {
+    height: 160px;
+  }
+  .feat-card-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .feat-name {
     font-family: 'Sora', sans-serif;
     font-size: 16px;
@@ -861,19 +937,22 @@ const families = ([
   }
   .feat-cta:hover { text-decoration: underline; }
 
-  /* ── §7 ALL FAMILIES ────────────────────────────────────────────────── */
-  .sec-all { background: var(--dark2, #14161e); }
-  .sec-all .sec-title { color: #fff; }
+  /* ── §7 ALL FAMILIES — Fix 3 (v2.5.3): white outer bg matching luxo ─── */
+  /* Before: dark2 bg, no eyebrow/headline, no filter-header */
+  /* After: white/off-white bg, eyebrow + headline, filter-rail has FILTER BY header */
+  .sec-all { background: var(--bg2, #f5f5f3); }
+  .sec-title-dark { color: var(--ink, #111418); }
   .families-layout {
     display: flex;
     gap: 32px;
     align-items: flex-start;
   }
+  /* Fix 3 (v2.5.3): filter-rail updated to white bg matching luxo */
   .filter-rail {
-    width: 220px;
+    width: 240px;
     flex-shrink: 0;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
     border-radius: 6px;
     padding: 20px;
     position: sticky;
@@ -881,76 +960,90 @@ const families = ([
     max-height: calc(100vh - 160px);
     overflow-y: auto;
   }
-  .filter-group { margin-bottom: 18px; }
-  .filter-group:last-of-type { margin-bottom: 0; }
+  /* Fix 3 (v2.5.3): filter-header matching luxo canonical */
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .filter-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    font-weight: 700;
+  }
+  .filter-reset-btn {
+    font-size: 11px;
+    color: var(--brand, #F32740);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+  }
+  .filter-reset-btn:hover { text-decoration: underline; }
+  .filter-group { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .filter-group:last-of-type { border-bottom: none; margin-bottom: 0; }
   .filter-group-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.40);
-    margin: 0 0 8px;
+    color: var(--ink2, #3a3f47);
+    margin: 0 0 10px;
   }
   .filter-opt {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.70);
+    font-size: 12px;
+    color: var(--ink2, #3a3f47);
     margin-bottom: 5px;
     cursor: pointer;
   }
   .filter-opt input[type="checkbox"] { accent-color: var(--brand, #F32740); cursor: pointer; }
   .filter-opt input[disabled] { opacity: 0.35; cursor: not-allowed; }
-  .filter-count { color: rgba(255,255,255,0.30); font-size: 11px; }
+  .filter-count { color: var(--ink3, #8a8f99); font-size: 11px; margin-left: auto; }
   .filter-range-wrap { padding: 4px 0; }
   .filter-range { width: 100%; accent-color: var(--brand, #F32740); opacity: 0.35; cursor: not-allowed; }
-  .filter-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 4px; }
-  .filter-reset {
-    width: 100%;
-    margin-top: 14px;
-    padding: 7px;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 4px;
-    color: rgba(255,255,255,0.45);
-    font-size: 12px;
-    cursor: pointer;
-    transition: border-color var(--transition), color var(--transition);
-  }
-  .filter-reset:hover { border-color: var(--brand, #F32740); color: var(--brand, #F32740); }
+  .filter-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink3, #8a8f99); margin-top: 4px; }
   .af-grid-col { flex: 1; min-width: 0; }
   .grid-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
   }
   .grid-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.40);
-    letter-spacing: 0.06em;
+    font-size: 13px;
+    color: var(--ink2, #3a3f47);
   }
   .sort-wrap select {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.10);
-    color: rgba(255,255,255,0.40);
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--ink2, #3a3f47);
     font-size: 12px;
     padding: 5px 10px;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: not-allowed;
-    opacity: 0.6;
   }
   .all-fam-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
   }
+  /* Fix 3 (v2.5.3): af-card dark on white bg — kept dark for contrast */
   .af-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #0d111a;
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 6px;
     overflow: hidden;
     display: flex;
@@ -962,7 +1055,7 @@ const families = ([
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   }
   .af-card.hidden { display: none; }
-  /* Fix 1 (v2.5.2): fam-sub-tag in af-card-top matches luxo canonical */
+  /* Fix 8 (v2.5.3): af-card-top flex row — always visible tier badge */
   .fam-sub-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
@@ -972,7 +1065,6 @@ const families = ([
     line-height: 1.4;
     flex: 1;
   }
-  /* Fix 1 (v2.5.2): af-card-top matches luxo — space-between so sub-tag left, tier-badge right */
   .af-card-top {
     display: flex;
     justify-content: space-between;
@@ -1030,10 +1122,10 @@ const families = ([
     flex-shrink: 0;
   }
   .af-cta:hover { text-decoration: underline; }
-  .af-no-results { padding: 40px; text-align: center; color: rgba(255,255,255,0.40); font-size: 14px; }
+  .af-no-results { padding: 40px; text-align: center; color: var(--ink3, #8a8f99); font-size: 14px; }
   .reset-inline { background: none; border: none; color: var(--brand, #F32740); cursor: pointer; font-size: 14px; text-decoration: underline; }
 
-  /* ── §8 LEGACY (Fix 7: light bg matching luxo) ──────────────────────── */
+  /* ── §8 LEGACY ──────────────────────────────────────────────────────── */
   .sec-legacy { background: var(--bg2, #f5f5f3); }
   .sec-legacy .sec-eyebrow { color: var(--brand, #F32740); }
   .sec-legacy .sec-eyebrow::before { background: var(--brand, #F32740); }
@@ -1066,7 +1158,7 @@ const families = ([
   }
   .legacy-cta:hover { text-decoration: underline; }
 
-  /* ── §9 GET STARTED (Fix 7: light bg matching luxo) ────────────────── */
+  /* ── §9 GET STARTED ─────────────────────────────────────────────────── */
   .sec-get-started { background: var(--bg3, #eceae4); }
   .sec-get-started .sec-eyebrow { color: var(--brand, #F32740); }
   .sec-get-started .sec-eyebrow::before { background: var(--brand, #F32740); }
@@ -1114,7 +1206,7 @@ const families = ([
   }
   .cta-link:hover { text-decoration: underline; }
 
-  /* ── §10 RELATED COLLECTIONS (Fix 7: light bg matching luxo) ───────── */
+  /* ── §10 RELATED COLLECTIONS ────────────────────────────────────────── */
   .sec-related { background: var(--bg2, #f5f5f3); }
   .sec-related .sec-eyebrow { color: var(--brand, #F32740); }
   .sec-related .sec-eyebrow::before { background: var(--brand, #F32740); }
@@ -1136,6 +1228,15 @@ const families = ([
   .related-card:hover {
     box-shadow: 0 6px 24px rgba(0,0,0,0.08);
     transform: translateY(-2px);
+  }
+  /* Fix 11 (v2.5.3): Coming soon card treatment */
+  .related-card--disabled {
+    opacity: 0.85;
+    cursor: default;
+  }
+  .related-card--disabled:hover {
+    box-shadow: none;
+    transform: none;
   }
   .related-eyebrow {
     font-family: 'JetBrains Mono', monospace;
@@ -1165,6 +1266,13 @@ const families = ([
     text-decoration: none;
   }
   .related-link:hover { text-decoration: underline; }
+  /* Fix 11 (v2.5.3): Disabled "Coming soon" CTA */
+  .related-link-disabled {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink3, #8a8f99);
+    cursor: default;
+  }
 
   /* ── RESPONSIVE ─────────────────────────────────────────────────────── */
   @media (max-width: 1399px) {
@@ -1232,8 +1340,9 @@ const families = ([
         if (show) visible++;
       });
       if (countEl) {
+        /* Fix 1 (v2.5.3): 17→15 */
         countEl.textContent = tokens.length === 0
-          ? 'Showing 17 families'
+          ? 'Showing 15 families'
           : 'Showing ' + visible + ' famil' + (visible === 1 ? 'y' : 'ies');
       }
       if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';

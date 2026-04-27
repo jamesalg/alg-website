@@ -2,55 +2,64 @@
 /**
  * collections/luxoarch.astro
  *
- * luxoⒶRCH Collection Page — v2.4.0
- * Outdoor lighting collection: 23 families, 269 SKUs, 8 applications.
+ * luxoⒶRCH Collection Page — v2.5.3
+ * Outdoor lighting collection: 22 families, 142 SKUs, 8 applications.
  *
  * Uses BaseLayout (canonical Header + Footer via shared partials).
  * All Ⓐ via <BrandMark> component.
  * Page-specific styles inline in <style> block, scoped.
+ *
+ * v2.5.3 changes:
+ * Fix 1: Removed Rosetta-III and Zion-II; updated counts to 22/142.
+ * Fix 2: §6 Featured Families now uses black bg matching plano canonical.
+ * Fix 6: §4 Application tiles in alphabetical order; updated SKU counts.
+ * Fix 7: Sort by sub-category A→Z, then ECO→PRO→PRO+, then A→Z within tier.
+ *         Updated filter rail counts. Sort label updated.
+ * Fix 9: luxoarch already migrated to CollectionAnchorNav (v2.5.2) — confirmed.
+ * Fix 11: Related Collections — planoarch is live link; lampar/city/tubul are Coming soon.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BrandMark from '../../components/BrandMark.astro';
-import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro'; // Fix 2 (v2.5.2)
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
 
-/* Fix 3 (v2.4.2): canonical application tokens added to each family.
- * Tokens match checkbox values exactly (kebab-case). Liberty has two tokens. */
-// Fix 1 (v2.4.3): Sort ECO → PRO → PRO+, then A→Z within tier (build-time, generic pattern)
+/* Fix 7 (v2.5.3): Sort by sub-category A→Z, then ECO→PRO→PRO+, then A→Z within tier. */
 const _TIER_ORDER: Record<string, number> = { 'ECO': 0, 'PRO': 1, 'PRO+': 2 };
 const families = ([
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Illuminator',   maxW: '800W',  skus: 11, dlc: true,  apps: 'sports-lighting' },
-  { sub: 'AREA LIGHT',      tier: 'PRO',  name: 'Liberty',       maxW: '450W',  skus: 25, dlc: true,  apps: 'area-light wall-pack' },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-II',   maxW: '1200W', skus: 10, dlc: true,  apps: 'sports-lighting' },
-  { sub: 'STRING LIGHT',    tier: 'ECO',  name: 'LSL Series',    maxW: 'n/a',   skus: 20, dlc: false, apps: 'string-light' },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO+', name: 'Beacon-I',      maxW: '1200W', skus: 3,  dlc: true,  apps: 'sports-lighting' },
-  { sub: 'FLOOD LIGHT',     tier: 'PRO+', name: 'Zion-II',       maxW: '300W',  skus: 16, dlc: true,  apps: 'flood-light' },
-  { sub: 'WALL PACK · ADJUSTABLE', tier: 'ECO', name: 'Anaheim', maxW: '80W',   skus: 10, dlc: true,  apps: 'wall-pack' },
-  { sub: 'WALL PACK · FULL CUTOFF', tier: 'PRO', name: 'Nightwatch', maxW: '100W', skus: 10, dlc: true, apps: 'wall-pack' },
+  /* Fix 1 (v2.5.3): Rosetta-III and Zion-II removed. 22 families remain. */
+  /* Fix 7 canonical order: sub A→Z, tier ECO→PRO→PRO+, name A→Z */
   { sub: 'AREA LIGHT',      tier: 'ECO',  name: 'Heritage',      maxW: '300W',  skus: 4,  dlc: true,  apps: 'area-light' },
-  { sub: 'AREA LIGHT',      tier: 'PRO+', name: 'Rosetta-III',   maxW: '300W',  skus: 8,  dlc: true,  apps: 'area-light' },
-  { sub: 'FLOOD LIGHT',     tier: 'ECO',  name: 'Everest',       maxW: '150W',  skus: 8,  dlc: true,  apps: 'flood-light' },
-  { sub: 'WALL PACK · CLASSIC', tier: 'ECO', name: 'Guardian',   maxW: '120W',  skus: 4,  dlc: true,  apps: 'wall-pack' },
-  { sub: 'WALL PACK · CLASSIC', tier: 'PRO', name: 'Sentinel',   maxW: '120W',  skus: 5,  dlc: true,  apps: 'wall-pack' },
-  { sub: 'WALL PACK · FULL CUTOFF', tier: 'ECO', name: 'Watchtower', maxW: '120W', skus: 5, dlc: true, apps: 'wall-pack' },
+  { sub: 'AREA LIGHT',      tier: 'PRO',  name: 'Liberty',       maxW: '450W',  skus: 25, dlc: true,  apps: 'area-light wall-pack' },
+  { sub: 'CANOPY',          tier: 'ECO',  name: 'Navigator',     maxW: '60W',   skus: 3,  dlc: true,  apps: 'canopy' },
   { sub: 'CANOPY',          tier: 'PRO',  name: 'Pathfinder',    maxW: '110W',  skus: 4,  dlc: true,  apps: 'canopy' },
   { sub: 'CYLINDER',        tier: 'PRO',  name: 'Aura',          maxW: '45W',   skus: 4,  dlc: false, apps: 'cylinder' },
-  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-I',    maxW: '1200W', skus: 2,  dlc: true,  apps: 'sports-lighting' },
-  { sub: 'WALL PACK · ARCHITECTURAL SLIM', tier: 'ECO', name: 'Shield', maxW: '120W', skus: 4, dlc: true, apps: 'wall-pack' },
   { sub: 'DOCK LIGHT',      tier: 'PRO',  name: 'Canadarm',      maxW: '60W',   skus: 2,  dlc: false, apps: 'dock-light' },
-  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Wedge-I',   maxW: '20W',   skus: 4,  dlc: true,  apps: 'wall-pack' },
-  { sub: 'WALL PACK · ADJUSTABLE', tier: 'PRO', name: 'Atlanta', maxW: '120W',  skus: 2,  dlc: true,  apps: 'wall-pack' },
-  { sub: 'WALL PACK · ENTRYWAY', tier: 'ECO', name: 'Ramparts',  maxW: '20W',   skus: 2,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'FLOOD LIGHT',     tier: 'ECO',  name: 'Everest',       maxW: '150W',  skus: 8,  dlc: true,  apps: 'flood-light' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Illuminator',   maxW: '800W',  skus: 11, dlc: true,  apps: 'sports-lighting' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-I',    maxW: '1200W', skus: 2,  dlc: true,  apps: 'sports-lighting' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-II',   maxW: '1200W', skus: 10, dlc: true,  apps: 'sports-lighting' },
   { sub: 'SPORTS LIGHTING', tier: 'PRO',  name: 'Radiator-III',  maxW: '480W',  skus: 1,  dlc: true,  apps: 'sports-lighting' },
+  { sub: 'SPORTS LIGHTING', tier: 'PRO+', name: 'Beacon-I',      maxW: '1200W', skus: 3,  dlc: true,  apps: 'sports-lighting' },
+  { sub: 'STRING LIGHT',    tier: 'ECO',  name: 'LSL Series',    maxW: 'n/a',   skus: 19, dlc: false, apps: 'string-light' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Anaheim',       maxW: '80W',   skus: 10, dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Guardian',      maxW: '120W',  skus: 4,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Ramparts',      maxW: '20W',   skus: 2,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Shield',        maxW: '120W',  skus: 4,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Watchtower',    maxW: '120W',  skus: 5,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'ECO',  name: 'Wedge-I',       maxW: '20W',   skus: 4,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'PRO',  name: 'Atlanta',       maxW: '120W',  skus: 2,  dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'PRO',  name: 'Nightwatch',    maxW: '100W',  skus: 10, dlc: true,  apps: 'wall-pack' },
+  { sub: 'WALL PACK',       tier: 'PRO',  name: 'Sentinel',      maxW: '120W',  skus: 5,  dlc: true,  apps: 'wall-pack' },
 ] as const).slice().sort((a: any, b: any) => {
+  /* Fix 7: sub A→Z, then tier ECO→PRO→PRO+, then name A→Z */
+  const sd = a.sub.localeCompare(b.sub);
+  if (sd !== 0) return sd;
   const td = (_TIER_ORDER[a.tier] ?? 99) - (_TIER_ORDER[b.tier] ?? 99);
   return td !== 0 ? td : a.name.localeCompare(b.name);
 });
-
-const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107', 'ECO': '#5B8DEF' };
 ---
 <BaseLayout
   title="luxoARCH Outdoor Collection — Archipelago Lighting Group"
-  description="Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs, ECO through PRO+."
+  description="Outdoor lighting for the commercial perimeter. 22 active families, 142 active SKUs."
   bodyClass="page-luxoarch"
 >
   <!-- ================================================================
@@ -74,7 +83,8 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
       <div class="hero-eyebrow">OUTDOOR · COLLECTION</div>
       <h1 class="hero-wordmark">LUXO<BrandMark prefix="" suffix="RCH" />
       </h1>
-      <p class="hero-desc">Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs.</p>
+      <!-- Fix 1 (v2.5.3): Updated counts 22 families / 142 SKUs -->
+      <p class="hero-desc">Outdoor lighting for the commercial perimeter. 22 active families, 142 active SKUs.</p>
       <div class="hero-pills">
         <span class="hero-pill">DLC PREMIUM</span>
         <span class="hero-pill">TAA AVAILABLE</span>
@@ -83,7 +93,6 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         <span class="hero-pill">8 APPLICATIONS</span>
       </div>
     </div>
-    <!-- Fix 3 (v2.4.1): hero-image-strip removed; re-add in v2.4.x with hero-luxo.jpg -->
   </section>
 
   <!-- ================================================================
@@ -91,12 +100,14 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
        ================================================================ -->
   <section class="stat-strip" id="sec-stats">
     <div class="stat-col">
-      <div class="stat-num">23</div>
+      <!-- Fix 1 (v2.5.3): 23→22 -->
+      <div class="stat-num">22</div>
       <div class="stat-label">Fixture Families</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-col">
-      <div class="stat-num">269</div>
+      <!-- Fix 1 (v2.5.3): 269→142 -->
+      <div class="stat-num">142</div>
       <div class="stat-label">Active SKUs</div>
     </div>
     <div class="stat-divider"></div>
@@ -112,75 +123,26 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
   </section>
 
   <!-- ================================================================
-       §4 BROWSE BY APPLICATION — 8 SVG-icon tiles
+       §4 BROWSE BY APPLICATION — 8 SVG-icon tiles (Fix 6: alphabetical, updated SKU counts)
        ================================================================ -->
   <section class="page-section" id="sec-apps">
     <div class="section-inner">
       <div class="sec-eyebrow">Browse by application</div>
       <div class="app-grid">
 
-        <!-- Sports Lighting -->
-        <div class="app-tile" data-app="Sports Lighting">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="14" r="10" stroke="#8a8f99" stroke-width="1.5"/>
-            <line x1="14" y1="4" x2="14" y2="24" stroke="#8a8f99" stroke-width="1.2"/>
-            <line x1="4" y1="14" x2="24" y2="14" stroke="#8a8f99" stroke-width="1.2"/>
-            <circle cx="14" cy="14" r="3" stroke="#8a8f99" stroke-width="1.2"/>
-          </svg>
-          <div class="app-name">Sports Lighting</div>
-          <div class="app-sku">61 SKUs</div>
-        </div>
-        <!-- Area Light -->
+        <!-- 1. Area Light (29 SKUs) -->
         <div class="app-tile" data-app="Area Light">
-          <!-- Fix 4 (v2.4.2): parking-lot pole with arm + fixture -->
           <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="3" x2="12" y2="18"/>
             <line x1="12" y1="5" x2="19" y2="5"/>
             <rect x="17" y="5" width="4" height="3"/>
           </svg>
           <div class="app-name">Area Light</div>
-          <div class="app-sku">90 SKUs</div>
+          <div class="app-sku">29 SKUs</div>
         </div>
 
-        <!-- Wall Pack -->
-        <div class="app-tile" data-app="Wall Pack">
-          <!-- Fix 4 (v2.4.2): vertical wall edge + protruding fixture -->
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-            <line x1="6" y1="3" x2="6" y2="21"/>
-            <rect x="6" y="9" width="12" height="6"/>
-            <line x1="9" y1="15" x2="9" y2="18"/>
-            <line x1="15" y1="15" x2="15" y2="18"/>
-          </svg>
-          <div class="app-name">Wall Pack</div>
-          <div class="app-sku">52 SKUs</div>
-        </div>
-
-        <!-- Flood Light -->
-        <div class="app-tile" data-app="Flood Light">
-          <!-- Fix 4 (v2.4.2): rect fixture at top + inverted triangle beam -->
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
-            <rect x="9" y="3" width="6" height="3"/>
-            <path d="M 6 18 L 12 6 L 18 18 Z"/>
-          </svg>
-          <div class="app-name">Flood Light</div>
-          <div class="app-sku">24 SKUs</div>
-        </div>
-
-        <!-- String Light -->
-        <div class="app-tile" data-app="String Light">
-          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 8 Q7 4 10 8 Q13 12 16 8 Q19 4 22 8 Q25 12 28 8" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
-            <circle cx="7" cy="8" r="2" stroke="#8a8f99" stroke-width="1.2"/>
-            <circle cx="14" cy="10" r="2" stroke="#8a8f99" stroke-width="1.2"/>
-            <circle cx="21" cy="8" r="2" stroke="#8a8f99" stroke-width="1.2"/>
-          </svg>
-          <div class="app-name">String Light</div>
-          <div class="app-sku">20 SKUs</div>
-        </div>
-
-        <!-- Canopy -->
+        <!-- 2. Canopy (7 SKUs) -->
         <div class="app-tile" data-app="Canopy">
-          <!-- Fix 4 (v2.4.2): inverted-U dome + hanging luminaire -->
           <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
             <path d="M 3 8 Q 12 3 21 8"/>
             <line x1="3" y1="8" x2="3" y2="11"/>
@@ -191,9 +153,8 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="app-sku">7 SKUs</div>
         </div>
 
-        <!-- Cylinder -->
+        <!-- 3. Cylinder (4 SKUs) -->
         <div class="app-tile" data-app="Cylinder">
-          <!-- Fix 4 (v2.4.2): vertical pill/capsule + downlight beam -->
           <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
             <rect x="9" y="3" width="6" height="14" rx="3"/>
             <line x1="10" y1="20" x2="14" y2="20"/>
@@ -202,16 +163,61 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="app-sku">4 SKUs</div>
         </div>
 
-        <!-- Dock Light -->
+        <!-- 4. Dock Light (2 SKUs) -->
         <div class="app-tile" data-app="Dock Light">
-          <!-- Fix 4 (v2.4.2): lamp head + articulating arm -->
           <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
             <circle cx="18" cy="8" r="3"/>
             <line x1="15" y1="10" x2="6" y2="20"/>
             <circle cx="6" cy="20" r="1.5"/>
           </svg>
           <div class="app-name">Dock Light</div>
-          <div class="app-sku">4 SKUs</div>
+          <div class="app-sku">2 SKUs</div>
+        </div>
+
+        <!-- 5. Flood Light (8 SKUs) -->
+        <div class="app-tile" data-app="Flood Light">
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" y="3" width="6" height="3"/>
+            <path d="M 6 18 L 12 6 L 18 18 Z"/>
+          </svg>
+          <div class="app-name">Flood Light</div>
+          <div class="app-sku">8 SKUs</div>
+        </div>
+
+        <!-- 6. Sports Lighting (27 SKUs) -->
+        <div class="app-tile" data-app="Sports Lighting">
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="10" stroke="#8a8f99" stroke-width="1.5"/>
+            <line x1="14" y1="4" x2="14" y2="24" stroke="#8a8f99" stroke-width="1.2"/>
+            <line x1="4" y1="14" x2="24" y2="14" stroke="#8a8f99" stroke-width="1.2"/>
+            <circle cx="14" cy="14" r="3" stroke="#8a8f99" stroke-width="1.2"/>
+          </svg>
+          <div class="app-name">Sports Lighting</div>
+          <div class="app-sku">27 SKUs</div>
+        </div>
+
+        <!-- 7. String Light (19 SKUs) -->
+        <div class="app-tile" data-app="String Light">
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 8 Q7 4 10 8 Q13 12 16 8 Q19 4 22 8 Q25 12 28 8" stroke="#8a8f99" stroke-width="1.5" fill="none"/>
+            <circle cx="7" cy="8" r="2" stroke="#8a8f99" stroke-width="1.2"/>
+            <circle cx="14" cy="10" r="2" stroke="#8a8f99" stroke-width="1.2"/>
+            <circle cx="21" cy="8" r="2" stroke="#8a8f99" stroke-width="1.2"/>
+          </svg>
+          <div class="app-name">String Light</div>
+          <div class="app-sku">19 SKUs</div>
+        </div>
+
+        <!-- 8. Wall Pack (46 SKUs) -->
+        <div class="app-tile" data-app="Wall Pack">
+          <svg class="app-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8a8f99" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <line x1="6" y1="3" x2="6" y2="21"/>
+            <rect x="6" y="9" width="12" height="6"/>
+            <line x1="9" y1="15" x2="9" y2="18"/>
+            <line x1="15" y1="15" x2="15" y2="18"/>
+          </svg>
+          <div class="app-name">Wall Pack</div>
+          <div class="app-sku">46 SKUs</div>
         </div>
 
       </div>
@@ -223,9 +229,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
        ================================================================ -->
   <section class="red-banner" id="sec-red-banner">
     <div class="red-banner-inner">
-      <div class="rb-col"><div class="rb-num">23</div><div class="rb-label">Families</div></div>
+      <!-- Fix 1 (v2.5.3): 23→22, 269→142 -->
+      <div class="rb-col"><div class="rb-num">22</div><div class="rb-label">Families</div></div>
       <div class="rb-div"></div>
-      <div class="rb-col"><div class="rb-num">269</div><div class="rb-label">Active SKUs</div></div>
+      <div class="rb-col"><div class="rb-num">142</div><div class="rb-label">Active SKUs</div></div>
       <div class="rb-div"></div>
       <div class="rb-col"><div class="rb-num">8</div><div class="rb-label">Applications</div></div>
       <div class="rb-div"></div>
@@ -239,15 +246,17 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
   <!-- ================================================================
        §6 FEATURED FAMILIES — 5 dark cards
+       Fix 2 (v2.5.3): Section bg changed to black (#0c0d12) matching plano canonical.
+       Headline + subhead now white text. Eyebrow stays brand red.
        ================================================================ -->
-  <section class="page-section" id="sec-featured">
+  <section class="page-section sec-featured-dark" id="sec-featured">
     <div class="section-inner">
       <div class="sec-eyebrow">Featured families</div>
-      <h2 class="sec-title">Five flagship families for the commercial perimeter.</h2>
-      <p class="sec-sub">The most-specified <BrandMark prefix="luxo" suffix="RCH" /> families across stadium, parking, wall, and flood applications.</p>
+      <h2 class="sec-title sec-title-white">Five flagship families for the commercial perimeter.</h2>
+      <p class="sec-sub sec-sub-white">The most-specified <BrandMark prefix="luxo" suffix="RCH" /> families across stadium, parking, wall, and flood applications.</p>
       <div class="featured-grid">
 
-        <!-- Card 1: Aura — grey block placeholder (Fix 1 v2.4.2) -->
+        <!-- Card 1: Aura — grey block placeholder -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">CYLINDER</span>
@@ -258,13 +267,12 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
             <div class="fam-info">
               <div class="fam-name">Aura</div>
               <div class="fam-meta">45W max · 4 SKUs</div>
-              <span class="dlc-pill">DLC</span>
             </div>
             <a href="#" class="fam-view">VIEW →</a>
           </div>
         </div>
 
-        <!-- Card 2: Illuminator — line drawing (Fix 1 v2.4.2) -->
+        <!-- Card 2: Illuminator — line drawing -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">SPORTS LIGHTING</span>
@@ -283,7 +291,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           </div>
         </div>
 
-        <!-- Card 3: Liberty — line drawing (Fix 1 v2.4.2, SKU 24→25) -->
+        <!-- Card 3: Liberty — line drawing -->
         <div class="fam-card">
           <div class="fam-card-top">
             <span class="fam-sub-tag">AREA LIGHT</span>
@@ -302,10 +310,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           </div>
         </div>
 
-        <!-- Card 4: Nightwatch — grey block placeholder (Fix 1 v2.4.2) -->
+        <!-- Card 4: Nightwatch -->
         <div class="fam-card">
           <div class="fam-card-top">
-            <span class="fam-sub-tag">WALL PACK · FULL CUTOFF</span>
+            <span class="fam-sub-tag">WALL PACK</span>
             <span class="tier-badge tier-pro">PRO</span>
           </div>
           <div class="fam-img-placeholder">Nightwatch</div>
@@ -319,10 +327,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           </div>
         </div>
 
-        <!-- Card 5: Sentinel — grey block placeholder (Fix 1 v2.4.2) -->
+        <!-- Card 5: Sentinel -->
         <div class="fam-card">
           <div class="fam-card-top">
-            <span class="fam-sub-tag">WALL PACK · CLASSIC</span>
+            <span class="fam-sub-tag">WALL PACK</span>
             <span class="tier-badge tier-pro">PRO</span>
           </div>
           <div class="fam-img-placeholder">Sentinel</div>
@@ -341,15 +349,17 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
   </section>
 
   <!-- ================================================================
-       §7 ALL FAMILIES — filter rail + 23-card grid
+       §7 ALL FAMILIES — filter rail + 22-card grid
+       Fix 1 (v2.5.3): 23→22 families. Filter counts updated.
+       Fix 7 (v2.5.3): Sort by sub-category A→Z, then ECO→PRO→PRO+, then A→Z.
        ================================================================ -->
   <section class="page-section bg-tint" id="sec-all-families">
     <div class="section-inner section-inner--wide">
       <div class="sec-eyebrow">All families</div>
-      <h2 class="sec-title">23 families. One outdoor portfolio.</h2>
+      <h2 class="sec-title">22 families. One outdoor portfolio.</h2>
       <div class="families-layout">
 
-        <!-- Filter rail (decorative in v2.4.0) -->
+        <!-- Filter rail -->
         <aside class="filter-rail">
           <div class="filter-header">
             <span class="filter-title">FILTER BY</span>
@@ -359,24 +369,25 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
           <div class="filter-group">
             <div class="filter-group-label">Application <span class="fg-arrow">▲</span></div>
             <div class="filter-options">
-              <!-- Fix 3 (v2.4.2): canonical kebab-case tokens, name=filter-application, corrected counts -->
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="sports-lighting" /> Sports Lighting <span class="fg-count">(5)</span></label>
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="area-light" /> Area Light <span class="fg-count">(4)</span></label>
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="wall-pack" /> Wall Pack <span class="fg-count">(11)</span></label>
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="flood-light" /> Flood Light <span class="fg-count">(2)</span></label>
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="string-light" /> String Light <span class="fg-count">(1)</span></label>
-              <label class="filter-opt"><input type="checkbox" name="filter-application" value="canopy" /> Canopy <span class="fg-count">(1)</span></label>
+              <!-- Fix 7: family counts per sub-category from canonical card order -->
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="area-light" /> Area Light <span class="fg-count">(2)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="canopy" /> Canopy <span class="fg-count">(2)</span></label>
               <label class="filter-opt"><input type="checkbox" name="filter-application" value="cylinder" /> Cylinder <span class="fg-count">(1)</span></label>
               <label class="filter-opt"><input type="checkbox" name="filter-application" value="dock-light" /> Dock Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="flood-light" /> Flood Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="sports-lighting" /> Sports Lighting <span class="fg-count">(5)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="string-light" /> String Light <span class="fg-count">(1)</span></label>
+              <label class="filter-opt"><input type="checkbox" name="filter-application" value="wall-pack" /> Wall Pack <span class="fg-count">(9)</span></label>
             </div>
           </div>
 
           <div class="filter-group">
             <div class="filter-group-label">Echelon <span class="fg-arrow">▲</span></div>
             <div class="filter-options">
-              <label class="filter-opt"><input type="checkbox" disabled /> ECO <span class="fg-count">(12)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> PRO <span class="fg-count">(9)</span></label>
-              <label class="filter-opt"><input type="checkbox" disabled /> PRO+ <span class="fg-count">(3)</span></label>
+              <!-- Fix 7: ECO=10, PRO=11, PRO+=1 -->
+              <label class="filter-opt"><input type="checkbox" disabled /> ECO <span class="fg-count">(10)</span></label>
+              <label class="filter-opt"><input type="checkbox" disabled /> PRO <span class="fg-count">(11)</span></label>
+              <label class="filter-opt"><input type="checkbox" disabled /> PRO+ <span class="fg-count">(1)</span></label>
             </div>
           </div>
 
@@ -442,10 +453,12 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
         <!-- Grid column -->
         <div class="families-grid-col">
           <div class="grid-header">
-            <span class="grid-count">Showing 23 families</span>
+            <!-- Fix 1 (v2.5.3): 23→22 -->
+            <span class="grid-count">Showing 22 families</span>
             <div class="sort-wrap">
+              <!-- Fix 7 (v2.5.3): Sort label updated -->
               <select class="sort-select" disabled>
-                <option>Sort: ECO → PRO+</option>
+                <option>Sort: Application → ECO→PRO+</option>
                 <option>Wattage Low to High</option>
                 <option>Wattage High to Low</option>
                 <option>A to Z</option>
@@ -527,36 +540,46 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 
   <!-- ================================================================
        §10 RELATED COLLECTIONS — 4 cards
+       Fix 11 (v2.5.3): planoarch is live link; lampar/city/tubul are Coming soon (disabled).
        ================================================================ -->
   <section class="page-section" id="sec-related">
     <div class="section-inner">
       <div class="sec-eyebrow">Related collections</div>
       <h2 class="sec-title">Explore the rest of the ALG portfolio.</h2>
       <div class="related-grid">
+
+        <!-- Card 1: planoARCH — LIVE -->
         <div class="related-card">
           <div class="related-eyebrow">INDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="plano" suffix="RCH" /></div>
           <p class="related-desc">Commercial indoor flat panels and troffers. DLC Premium across the portfolio.</p>
-          <a href="#" class="related-link">View →</a>
+          <a href="/collections/planoarch" class="related-link">View →</a>
         </div>
-        <div class="related-card">
+
+        <!-- Card 2: lamparARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">INDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="lampar" suffix="RCH" /></div>
           <p class="related-desc">Industrial linear high-bay and low-bay luminaires. Built for warehouse and manufacturing.</p>
-          <a href="#" class="related-link">View →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
-        <div class="related-card">
+
+        <!-- Card 3: cityARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">OUTDOOR · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="city" suffix="RCH" /></div>
           <p class="related-desc">Street and roadway luminaires for municipal and utility applications.</p>
-          <a href="#" class="related-link">View →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
-        <div class="related-card">
+
+        <!-- Card 4: tubulARCH — Coming soon -->
+        <div class="related-card related-card--disabled">
           <div class="related-eyebrow">LAMP · COLLECTION</div>
           <div class="related-name"><BrandMark prefix="tubul" suffix="RCH" /></div>
           <p class="related-desc">T8/T5/PL/HID retrofit lamps. Drop-in replacements for legacy fluorescent.</p>
-          <a href="#" class="related-link">View →</a>
+          <span class="related-link-disabled">Coming soon</span>
         </div>
+
       </div>
     </div>
   </section>
@@ -605,7 +628,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     color: #fff;
   }
   .hero-top {
-    padding: 72px 28px 80px; /* Fix 3 (v2.4.1): bottom padding ~80px below pill row */
+    padding: 72px 28px 80px;
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -630,7 +653,6 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     flex-wrap: wrap;
     gap: 0;
   }
-  /* The BrandMark Ⓐ inside the wordmark inherits the wordmark font size */
   .hero-wordmark :global(.brand-mark) {
     font-size: inherit;
     font-weight: inherit;
@@ -648,7 +670,6 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     max-width: 560px;
     margin-bottom: 32px;
   }
-  /* Fix 5 (v2.4.1): hero-desc single line at desktop */
   @media (min-width: 1200px) {
     .hero-desc { white-space: nowrap; max-width: none; }
   }
@@ -668,8 +689,6 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     padding: 5px 10px;
     white-space: nowrap;
   }
-  /* Fix 3 (v2.4.1): hero-image-strip removed — hero ends ~80px below pill row */
-  /* .hero-image-strip removed; re-add in v2.4.x when hero-luxo.jpg is provided */
 
   /* ── §3 STAT STRIP ──────────────────────────────────────────────── */
   .stat-strip {
@@ -756,12 +775,22 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     max-width: 640px;
     margin-bottom: 48px;
   }
-  /* Fix 5 (v2.4.1): Featured Families subhead single line at desktop */
-  #sec-featured .sec-sub {
+
+  /* ── §6 FEATURED FAMILIES — Fix 2 (v2.5.3): black bg canonical ─── */
+  /* Before: .page-section (white bg), dark text headline */
+  /* After: .sec-featured-dark (#0c0d12 bg), white text headline + subhead */
+  .sec-featured-dark {
+    background: var(--dark, #0c0d12);
+  }
+  .sec-title-white {
+    color: #fff !important;
+  }
+  .sec-sub-white {
+    color: rgba(255,255,255,0.65) !important;
     max-width: none;
   }
   @media (min-width: 1200px) {
-    #sec-featured .sec-sub { white-space: nowrap; }
+    .sec-sub-white { white-space: nowrap; }
   }
 
   /* ── §4 APPLICATION TILES ───────────────────────────────────────── */
@@ -780,7 +809,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     align-items: center;
     text-align: center;
     transition: box-shadow var(--transition), transform var(--transition);
-    cursor: default;
+    cursor: pointer;
   }
   .app-tile:hover {
     box-shadow: 0 6px 24px rgba(0,0,0,0.10);
@@ -841,7 +870,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     color: rgba(255,255,255,0.80);
   }
 
-  /* ── §6 FEATURED FAMILIES ───────────────────────────────────────── */
+  /* ── §6 FEATURED FAMILIES CARDS ────────────────────────────────── */
   .featured-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -854,6 +883,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     display: flex;
     flex-direction: column;
     transition: transform var(--transition), box-shadow var(--transition);
+    border: 1px solid rgba(255,255,255,0.06);
   }
   .fam-card:hover {
     transform: translateY(-2px);
@@ -887,7 +917,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     white-space: nowrap;
     flex-shrink: 0;
   }
-  /* Fix 2 (v2.4.1): Tier badge visual treatments */
+  /* Tier badge visual treatments — always visible (Fix 8 canonical) */
   .tier-eco     { background: rgba(255,255,255,0.10); color: #fff; border: none; }
   .tier-pro     { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
   .tier-proplus { background: #F32740; color: #fff; border: none; }
@@ -1025,10 +1055,10 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     gap: 8px;
     font-size: 12px;
     color: var(--ink2, #3a3f47);
-    cursor: pointer; /* Fix 4 (v2.4.1): interactive */
+    cursor: pointer;
   }
   .filter-opt input { cursor: pointer; }
-  /* Fix 4 (v2.4.1): app tile active state */
+  /* App tile active state */
   .app-tile.is-active {
     border-color: var(--brand, #F32740);
     background: #fff0f2;
@@ -1041,8 +1071,6 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     stroke: var(--brand, #F32740);
   }
   .app-tile.is-active .app-name { color: var(--brand, #F32740); }
-  /* Fix 4 (v2.4.1): app tile cursor */
-  .app-tile { cursor: pointer; }
   .fg-count { color: var(--ink3, #8a8f99); margin-left: auto; }
   .range-placeholder { padding: 4px 0; }
   .range-track {
@@ -1216,6 +1244,15 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     box-shadow: 0 6px 24px rgba(0,0,0,0.08);
     transform: translateY(-2px);
   }
+  /* Fix 11 (v2.5.3): Coming soon card treatment */
+  .related-card--disabled {
+    opacity: 0.85;
+    cursor: default;
+  }
+  .related-card--disabled:hover {
+    box-shadow: none;
+    transform: none;
+  }
   .related-eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
@@ -1244,6 +1281,13 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     text-decoration: none;
   }
   .related-link:hover { text-decoration: underline; }
+  /* Fix 11 (v2.5.3): Disabled "Coming soon" CTA — grey, no arrow, non-interactive */
+  .related-link-disabled {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink3, #8a8f99);
+    cursor: default;
+  }
 
   /* ── RESPONSIVE ─────────────────────────────────────────────────── */
   @media (max-width: 1399px) {
@@ -1277,12 +1321,11 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     .rb-div { display: none; }
     .legacy-box { padding: 24px 20px; }
   }
-  /* Fix 3 (v2.4.2): hidden family-cards */
+  /* Hidden family-cards */
   .family-card[style*="display: none"] { display: none !important; }
-  /* Fix 2 (v2.5.2): Bespoke anchor nav CSS removed — now handled by CollectionAnchorNav component */
 </style>
 
-<!-- Fix 2 (v2.5.2): Replaced bespoke anchor nav with shared CollectionAnchorNav component -->
+<!-- Fix 9 (v2.5.2, confirmed v2.5.3): Shared CollectionAnchorNav component -->
 <CollectionAnchorNav sections={[
   { id: 'sec-hero',         label: 'Overview' },
   { id: 'sec-stats',        label: 'Quick stats' },
@@ -1295,30 +1338,31 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
 ]} />
 
 <script>
-  /* Fix 3 (v2.4.2) - Application filter (canonical kebab-case tokens).
+  /* Application filter (canonical kebab-case tokens).
    * Checkbox name=filter-application, value=kebab-case token.
    * Each .family-card has data-application with space-separated tokens.
    * OR logic: card visible if any checked token is in its token list. */
   function applyApplicationFilter() {
     var checked = Array.from(document.querySelectorAll('input[name="filter-application"]:checked'))
-      .map(function (cb) { return cb.value; });
+      .map(function (cb) { return (cb as HTMLInputElement).value; });
     var cards = document.querySelectorAll('.family-card[data-application]');
     var visibleCount = 0;
     cards.forEach(function (card) {
-      var apps = card.dataset.application.split(/\s+/);
+      var apps = (card as HTMLElement).dataset.application!.split(/\s+/);
       var visible = checked.length === 0 || checked.some(function (c) { return apps.indexOf(c) !== -1; });
-      card.style.display = visible ? '' : 'none';
+      (card as HTMLElement).style.display = visible ? '' : 'none';
       if (visible) visibleCount++;
     });
     var countEl = document.querySelector('.grid-count');
     if (countEl) {
-      countEl.textContent = visibleCount === 23
-        ? 'Showing 23 families'
+      /* Fix 1 (v2.5.3): 23→22 */
+      countEl.textContent = visibleCount === 22
+        ? 'Showing 22 families'
         : 'Showing ' + visibleCount + ' families';
     }
     /* Sync app tile active state */
     document.querySelectorAll('.app-tile[data-app]').forEach(function (tile) {
-      var token = tile.dataset.app
+      var token = (tile as HTMLElement).dataset.app!
         .toLowerCase()
         .replace(/\s+/g, '-');
       tile.classList.toggle('is-active', checked.indexOf(token) !== -1);
@@ -1334,7 +1378,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     resetBtn.addEventListener('click', function (e) {
       e.preventDefault();
       document.querySelectorAll('input[name="filter-application"]:checked').forEach(function (cb) {
-        cb.checked = false;
+        (cb as HTMLInputElement).checked = false;
       });
       applyApplicationFilter();
     });
@@ -1343,14 +1387,12 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
   /* App tile click: set matching checkbox + apply + scroll */
   document.querySelectorAll('.app-tile[data-app]').forEach(function (tile) {
     tile.addEventListener('click', function () {
-      var token = tile.dataset.app.toLowerCase().replace(/\s+/g, '-');
-      var cb = document.querySelector('input[name="filter-application"][value="' + token + '"]');
+      var token = (tile as HTMLElement).dataset.app!.toLowerCase().replace(/\s+/g, '-');
+      var cb = document.querySelector('input[name="filter-application"][value="' + token + '"]') as HTMLInputElement | null;
       if (cb) { cb.checked = !cb.checked; }
       applyApplicationFilter();
       var sec = document.getElementById('sec-all-families');
       if (sec) { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
-
-  /* Fix 2 (v2.5.2): Bespoke anchor nav JS removed — now handled by CollectionAnchorNav component */
 </script>
