@@ -466,14 +466,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
     <div class="c-retail-grid-eyebrow">National Big-Box Retailers</div>
     <div class="c-retail-grid">
-      <div class="c-retail-tile"><img src="/retailers/batteries-plus.svg" alt="Batteries Plus" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/canadian-tire.svg" alt="Canadian Tire" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/costco.svg" alt="Costco" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/fred-meyer.svg" alt="Fred Meyer" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/batteries-plus.jpg" alt="Batteries Plus" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/canadian-tire.jpeg" alt="Canadian Tire" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/costco.png" alt="Costco" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/fred-meyer.png" alt="Fred Meyer" class="c-retail-logo" /></div>
       <div class="c-retail-tile"><img src="/retailers/kroger.svg" alt="Kroger" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/lowes.svg" alt="Lowe's" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/the-home-depot.svg" alt="The Home Depot" class="c-retail-logo" /></div>
-      <div class="c-retail-tile"><img src="/retailers/tractor-supply-co.svg" alt="Tractor Supply Co." class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/lowes.png" alt="Lowe's" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/the-home-depot.png" alt="The Home Depot" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/tractor-supply-co.png" alt="Tractor Supply Co." class="c-retail-logo" /></div>
       <div class="c-retail-tile"><img src="/retailers/walmart.svg" alt="Walmart" class="c-retail-logo" /></div>
     </div>
   </div>
@@ -1262,6 +1262,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   text-transform: uppercase;
   font-weight: 600;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.c-retail-grid-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--brand);
 }
 .c-retail-grid {
   display: grid;
