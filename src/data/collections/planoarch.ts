@@ -7,6 +7,7 @@
 const planoarchData = {
   slug: 'planoarch',
   parentVertical: 'Indoor',
+  parentSubVertical: 'Commercial',
   name: 'planoⒶRCH',
   titleAscii: 'PLANOARCH',
   headlineLine: 'PLANO<span class="aa">Ⓐ</span>RCH',

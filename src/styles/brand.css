@@ -45,6 +45,10 @@
      All collection sections use this via .collection-content. */
   --collection-content-width: 1280px;
   --collection-content-padding-x: 32px;
+
+  /* B3 (v2.5.4): Section background alternation tokens */
+  --section-bg-default: #ffffff;
+  --section-bg-alt:     #f4f4f6;
 }
 
 /* The .aa class — wraps Ⓐ in brand red, slightly larger optical size.
