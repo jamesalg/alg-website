@@ -174,9 +174,14 @@ const verticals = [
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
                   {slide.brandMark === 'proarch'
-                    ? <h2 class="display-product" style={slide.seriesNameGradient
-                        ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
-                        : `color: ${slide.seriesNameColor ?? '#fff'};`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
+                    ? <h2 class="display-product display-product--proarch">
+                        {/* A1 fix (v2.5.6): gradient on text parts, brand-red on Ⓐ — never transparent on .aa span */}
+                        <span class="dp-text" style={slide.seriesNameGradient
+                          ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
+                          : `color: ${slide.seriesNameColor ?? '#fff'};`}>pro</span><span class="aa" style="color: var(--brand-red, #E3353C); -webkit-text-fill-color: var(--brand-red, #E3353C);">Ⓐ</span><span class="dp-text" style={slide.seriesNameGradient
+                          ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
+                          : `color: ${slide.seriesNameColor ?? '#fff'};`}>RCH-III</span>
+                      </h2>
                     : <h2 class="display-product" style={slide.seriesNameGradient
                         ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
                         : `color: ${slide.seriesNameColor ?? '#fff'};`}>{slide.name}</h2>
@@ -826,6 +831,18 @@ const verticals = [
     font-weight: 700;
     letter-spacing: -0.025em;
     /* C1 (v2.5.4): per-slide color via inline style — no gradient clip needed */
+  }
+  /* A1 (v2.5.6): proarch split-gradient — dp-text spans carry gradient, .aa span carries brand-red */
+  .display-product--proarch {
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .display-product--proarch .dp-text {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
   }
   /* C2 (v2.5.4): Liberty line drawing −20% — only this slide */
   .product-render.liberty-render {
