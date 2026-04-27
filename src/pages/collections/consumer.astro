@@ -1,0 +1,1429 @@
+---
+/**
+ * consumer.astro — Consumer & Retail Capabilities Overview
+ * v2.5.6 Track C
+ *
+ * Bespoke statement page. NOT a product collection page.
+ * Does NOT use CollectionPageLayout.
+ * Exempt from Group H structural lock (H.1 only checks pages that use CollectionPageLayout).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Consumer & Retail — Archipelago Lighting Group"
+  description="Six categories. Six aisles. One catalog. Archipelago's residential and retail capabilities for large retail buyers and OEM partners."
+  bodyClass="page-consumer"
+>
+
+<!-- ============================================================
+     BREADCRUMB
+     ============================================================ -->
+<nav class="bc-wrap" aria-label="Breadcrumb">
+  <div class="bc-inner">
+    <a href="/">HOME</a>
+    <span class="bc-sep">›</span>
+    <span>PRODUCTS</span>
+    <span class="bc-sep">›</span>
+    <span>RESIDENTIAL</span>
+    <span class="bc-sep">›</span>
+    <span class="bc-current">Consumer &amp; Retail</span>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="c-hero">
+  <div class="c-hero-inner">
+    <div class="c-hero-eyebrow">Consumer &amp; Retail · Capabilities Overview</div>
+    <h1 class="c-hero-h1">Six categories. <span class="c-accent">Six aisles.</span><br>One catalog.</h1>
+    <p class="c-hero-sub">From the garage to the garden, from the campsite to the cocktail party — Archipelago's residential and retail capabilities, organized the way your shoppers actually browse.</p>
+    <div class="c-hero-meta">
+      <span><strong>6</strong> categories</span>
+      <span class="c-meta-dot">·</span>
+      <span><strong>5</strong> retail brands</span>
+      <span class="c-meta-dot">·</span>
+      <span><strong>2</strong> decades supplying shelves</span>
+    </div>
+    <div class="c-hero-ctas">
+      <a href="/support/catalog-request" class="c-btn-primary">Browse the Full Catalog</a>
+      <a href="/support/capability-deck" class="c-btn-secondary">Request Capability Deck</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SUB-TAGLINE
+     ============================================================ -->
+<div class="c-sub-tagline">
+  <div class="c-sub-tagline-inner">
+    House brand, co-brand, or OEM — built to match your planogram, your packaging standards, and your replenishment rhythm.
+  </div>
+</div>
+
+<!-- ============================================================
+     STICKY AISLE NAV
+     ============================================================ -->
+<div class="c-subnav-wrap" id="c-subnav">
+  <div class="c-subnav">
+    <a href="#home" class="c-subnav-item active" data-aisle="home">
+      <span class="c-subnav-num">01</span>
+      <span class="c-subnav-label">Home</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+    <a href="#garden" class="c-subnav-item" data-aisle="garden">
+      <span class="c-subnav-num">02</span>
+      <span class="c-subnav-label">Garden</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+    <a href="#work" class="c-subnav-item" data-aisle="work">
+      <span class="c-subnav-num">03</span>
+      <span class="c-subnav-label">Work</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+    <a href="#auto" class="c-subnav-item" data-aisle="auto">
+      <span class="c-subnav-num">04</span>
+      <span class="c-subnav-label">Auto</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+    <a href="#camping" class="c-subnav-item" data-aisle="camping">
+      <span class="c-subnav-num">05</span>
+      <span class="c-subnav-label">Camping</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+    <a href="#party" class="c-subnav-item" data-aisle="party">
+      <span class="c-subnav-num">06</span>
+      <span class="c-subnav-label">Party</span>
+      <span class="c-subnav-dot"></span>
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     NEW & EXPANDING CALLOUT
+     ============================================================ -->
+<section class="c-callout">
+  <div class="c-callout-inner">
+    <div class="c-callout-eyebrow">New &amp; Expanding in 2026</div>
+    <ul class="c-callout-list">
+      <li>Deeper "work + trade overlap": more magnetic, portable, and job-site SKUs built for repeat use</li>
+      <li>Expanded outdoor durability: higher IP-rated options and improved weather sealing across more families</li>
+      <li>More "spec-first" consumer products: real lumens, real runtimes, real materials — not seasonal throwaways</li>
+      <li>Broader private-label readiness: more packaging formats and faster line refresh support</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     CAPABILITY PROOF
+     ============================================================ -->
+<section class="c-cap">
+  <div class="c-cap-inner">
+    <div class="c-section-eyebrow">Capability Proof</div>
+    <h2 class="c-cap-h2">We build residential and retail lighting like a commercial supplier: engineered, compliant, and ready to ship.</h2>
+    <div class="c-cap-grid">
+      <div class="c-cap-card">
+        <div class="c-cap-card-num">01</div>
+        <h3 class="c-cap-card-title">Compliance &amp; quality discipline</h3>
+        <ul class="c-cap-card-list">
+          <li>Safety-listed SKUs across core categories (UL/ETL where applicable)</li>
+          <li>Outdoor-rated constructions available across multiple families (IP-rated options)</li>
+          <li>Warranty-backed programs built for retail reality (not one-season products)</li>
+        </ul>
+      </div>
+      <div class="c-cap-card">
+        <div class="c-cap-card-num">02</div>
+        <h3 class="c-cap-card-title">Supply chain + replenishment readiness</h3>
+        <ul class="c-cap-card-list">
+          <li>Stocked in US warehouses for fast replenishment and in-season continuity</li>
+          <li>Retail-ready packaging support: multi-pack, PDQ shipper, and shelf-ready formats</li>
+          <li>OEM/white-label experience supplying national retailers for two decades</li>
+        </ul>
+      </div>
+      <div class="c-cap-card">
+        <div class="c-cap-card-num">03</div>
+        <h3 class="c-cap-card-title">Category architecture (how you win shelf space)</h3>
+        <ul class="c-cap-card-list">
+          <li>Families designed to merchandise cleanly: good/better/best ladders, feature callouts, and SKU rationalization</li>
+          <li>"Aisle logic" that matches shopper intent, not internal part numbering</li>
+        </ul>
+      </div>
+    </div>
+    <div class="c-cap-ctas">
+      <a href="/find-a-distributor" class="c-btn-primary">Find a Retailer</a>
+      <a href="/support/line-review" class="c-btn-secondary">Request a Line Review</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 01 — HOME
+     ============================================================ -->
+<section class="c-seg c-seg--home" id="home">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: var(--c-home);">
+      <span class="c-seg-label-line" style="background: var(--c-home);"></span>
+      Section 01 · Home
+      <span class="c-seg-num">01 / 06</span>
+    </div>
+    <h2 class="c-seg-title">The catchall aisle — and the broadest reach.</h2>
+    <p class="c-seg-lead">Garage lights, security floods, pathway markers, shop fixtures — everyday lighting that lives in every American home and the home-improvement aisle that supplies it.</p>
+    <p class="c-seg-body">Built for the homeowner who knows what they need. Built for the retailer who needs SKUs that move. Impulse-friendly shop lights. Photocell-controlled security floods. Pathway lighting that borrows control know-how from commercial.</p>
+    <div class="c-expanding">
+      <div class="c-expanding-label">What's expanding</div>
+      <ul>
+        <li>More "grab-and-go" garage and utility formats</li>
+        <li>More outdoor-ready options with upgraded durability</li>
+        <li>Cleaner SKU architecture for easier resets and replenishment</li>
+      </ul>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=home" class="c-btn-primary">Browse Home Catalog</a>
+      <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M50 200 L50 130 L200 50 L350 130 L350 200 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+      <path d="M50 130 L200 50 L350 130" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      <rect x="80" y="140" width="100" height="60" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+      <line x1="80" y1="160" x2="180" y2="160" stroke="rgba(255,255,255,0.25)"/>
+      <line x1="80" y1="180" x2="180" y2="180" stroke="rgba(255,255,255,0.25)"/>
+      <rect x="240" y="150" width="40" height="50" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+      <rect x="200" y="155" width="28" height="28" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)"/>
+      <rect x="295" y="155" width="28" height="28" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)"/>
+      <circle cx="110" cy="125" r="6" fill="#f0a932"/>
+      <path d="M110,125 L70,200 L150,200 Z" fill="rgba(240,169,50,0.18)"/>
+      <circle cx="260" cy="135" r="6" fill="#f0a932"/>
+      <path d="M260,135 L235,200 L285,200 Z" fill="rgba(240,169,50,0.15)"/>
+      <circle cx="310" cy="125" r="6" fill="#f0a932"/>
+      <path d="M310,125 L290,200 L330,200 Z" fill="rgba(240,169,50,0.15)"/>
+      <circle cx="80" cy="240" r="3" fill="#f0a932"/>
+      <circle cx="120" cy="245" r="3" fill="#f0a932"/>
+      <circle cx="160" cy="248" r="3" fill="#f0a932"/>
+      <circle cx="200" cy="250" r="3" fill="#f0a932"/>
+      <circle cx="240" cy="248" r="3" fill="#f0a932"/>
+      <rect x="0" y="260" width="400" height="40" fill="rgba(0,0,0,0.2)"/>
+      <text x="200" y="290" text-anchor="middle" fill="#9ec57a" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">SECURITY · LANDSCAPE · GARAGE</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 02 — GARDEN
+     ============================================================ -->
+<section class="c-seg c-seg--garden c-seg--rev" id="garden">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: #9eddb5;">
+      <span class="c-seg-label-line" style="background: #9eddb5;"></span>
+      Section 02 · Garden &amp; Horticultural
+      <span class="c-seg-num">02 / 06</span>
+    </div>
+    <h2 class="c-seg-title">Grow lights for the serious gardener.</h2>
+    <p class="c-seg-lead">PolyGrow horticultural fixtures. Outdoor garden ambient lighting. Pathway and accent for the landscape that gets curated, not just maintained.</p>
+    <p class="c-seg-body">The serious home gardener needs lighting the big-box generic LED aisle doesn't carry. PAR-tuned spectrum options, full-spectrum vegetative, and bloom-stage fixtures — plus outdoor accent / pathway for customers who care how the garden looks at night.</p>
+    <div class="c-expanding">
+      <div class="c-expanding-label">What's expanding</div>
+      <ul>
+        <li>Deeper horticultural spectrum options and form factors</li>
+        <li>More outdoor-rated garden lighting that holds up season after season</li>
+      </ul>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=garden" class="c-btn-primary">Browse Garden Catalog</a>
+      <a href="/collections/polygrow" class="c-btn-secondary">Explore PolyGrow</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="200" cy="80" rx="120" ry="50" fill="rgba(158,221,181,0.12)" stroke="rgba(158,221,181,0.4)" stroke-width="1.5"/>
+      <line x1="200" y1="80" x2="200" y2="260" stroke="rgba(158,221,181,0.5)" stroke-width="2"/>
+      <ellipse cx="140" cy="130" rx="60" ry="30" fill="rgba(158,221,181,0.1)" stroke="rgba(158,221,181,0.3)" stroke-width="1.5"/>
+      <ellipse cx="260" cy="150" rx="60" ry="30" fill="rgba(158,221,181,0.1)" stroke="rgba(158,221,181,0.3)" stroke-width="1.5"/>
+      <ellipse cx="170" cy="190" rx="50" ry="25" fill="rgba(158,221,181,0.08)" stroke="rgba(158,221,181,0.25)" stroke-width="1.5"/>
+      <rect x="185" y="250" width="30" height="30" fill="rgba(158,221,181,0.15)" stroke="rgba(158,221,181,0.3)" stroke-width="1.5"/>
+      <circle cx="200" cy="40" r="20" fill="rgba(240,169,50,0.3)" stroke="#f0a932" stroke-width="1.5"/>
+      <line x1="200" y1="20" x2="200" y2="10" stroke="#f0a932" stroke-width="1.5"/>
+      <line x1="214" y1="26" x2="221" y2="19" stroke="#f0a932" stroke-width="1.5"/>
+      <line x1="220" y1="40" x2="230" y2="40" stroke="#f0a932" stroke-width="1.5"/>
+      <text x="200" y="290" text-anchor="middle" fill="#9eddb5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">POLYGROW · PATHWAY · ACCENT</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 03 — WORK
+     ============================================================ -->
+<section class="c-seg c-seg--work" id="work">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: var(--c-work);">
+      <span class="c-seg-label-line" style="background: var(--c-work);"></span>
+      Section 03 · Work
+      <span class="c-seg-num">03 / 06</span>
+    </div>
+    <h2 class="c-seg-title">Job-site lighting that takes a hit.</h2>
+    <p class="c-seg-lead">Portable work lights. Magnetic shop lights. Temporary job-site fixtures. The lighting that goes in the back of the truck and comes home with paint on it.</p>
+    <p class="c-seg-body">Built for the contractor who's tired of renting job-site lighting and decided to buy once. Drop-resistant housings. Magnetic mounts. Corded options for the trades that wire as they go.</p>
+    <div class="c-expanding">
+      <div class="c-expanding-label">What's expanding</div>
+      <ul>
+        <li>More contractor-grade durability features across the line</li>
+        <li>More mounting versatility (magnetic, hook, clip, stand-ready)</li>
+      </ul>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=work" class="c-btn-primary">Browse Work Catalog</a>
+      <a href="/support/for-contractors" class="c-btn-secondary">For Contractors</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="120" y="80" width="160" height="100" rx="8" fill="rgba(201,168,118,0.15)" stroke="rgba(201,168,118,0.5)" stroke-width="2"/>
+      <rect x="140" y="100" width="120" height="60" rx="4" fill="rgba(201,168,118,0.1)" stroke="rgba(201,168,118,0.3)" stroke-width="1.5"/>
+      <circle cx="200" cy="130" r="25" fill="rgba(240,169,50,0.25)" stroke="#f0a932" stroke-width="1.5"/>
+      <circle cx="200" cy="130" r="15" fill="rgba(240,169,50,0.4)"/>
+      <line x1="200" y1="180" x2="200" y2="220" stroke="rgba(201,168,118,0.5)" stroke-width="3"/>
+      <rect x="170" y="220" width="60" height="20" rx="4" fill="rgba(201,168,118,0.2)" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
+      <circle cx="150" cy="250" r="12" fill="none" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
+      <circle cx="250" cy="250" r="12" fill="none" stroke="rgba(201,168,118,0.4)" stroke-width="1.5"/>
+      <text x="200" y="290" text-anchor="middle" fill="#c9a876" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">PORTABLE · MAGNETIC · CORDED</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 04 — AUTO
+     ============================================================ -->
+<section class="c-seg c-seg--auto c-seg--rev" id="auto">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: #7aa6ff;">
+      <span class="c-seg-label-line" style="background: #7aa6ff;"></span>
+      Section 04 · Auto &amp; Utility
+      <span class="c-seg-num">04 / 06</span>
+    </div>
+    <h2 class="c-seg-title">Trouble lights for the trouble-shooter.</h2>
+    <p class="c-seg-lead">Inspection lighting. Mobile mechanic essentials. Truck-bed work lights — the aisle that lives next to the OBD-II scanner.</p>
+    <p class="c-seg-body">Dropped-from-the-hood-prop tested. Magnetic mounts that stick to fenders. Hooks that hang anywhere. Cords long enough to reach the rear differential. New section, real products — starting with our 75-watt trouble light.</p>
+    <!-- Featured product: CTL75-M -->
+    <div class="c-fp">
+      <div class="c-fp-thumb" aria-hidden="true">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+          <circle cx="30" cy="20" r="14" fill="none" stroke="#7aa6ff" stroke-width="1.5"/>
+          <circle cx="30" cy="20" r="8" fill="rgba(122,166,255,0.3)"/>
+          <line x1="30" y1="34" x2="30" y2="50" stroke="#7aa6ff" stroke-width="2"/>
+          <rect x="20" y="50" width="20" height="6" rx="2" fill="rgba(122,166,255,0.3)" stroke="#7aa6ff" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="c-fp-info">
+        <div class="c-fp-eyebrow">Featured Product · Auto</div>
+        <div class="c-fp-name">CTL75-M Trouble Light</div>
+        <div class="c-fp-spec">75W max · Black + galvanized · Hook + magnetic · 25 ft cord</div>
+      </div>
+      <a href="/support/sample-request?sku=CTL75-M" class="c-fp-cta">View Product</a>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=auto" class="c-btn-primary">Browse Auto Catalog</a>
+      <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="200" cy="200" rx="140" ry="50" fill="rgba(122,166,255,0.08)" stroke="rgba(122,166,255,0.2)" stroke-width="1"/>
+      <rect x="80" y="120" width="240" height="80" rx="12" fill="rgba(122,166,255,0.08)" stroke="rgba(122,166,255,0.3)" stroke-width="1.5"/>
+      <rect x="100" y="140" width="60" height="40" rx="4" fill="rgba(122,166,255,0.12)" stroke="rgba(122,166,255,0.25)" stroke-width="1"/>
+      <rect x="240" y="140" width="60" height="40" rx="4" fill="rgba(122,166,255,0.12)" stroke="rgba(122,166,255,0.25)" stroke-width="1"/>
+      <circle cx="130" cy="200" r="20" fill="none" stroke="rgba(122,166,255,0.4)" stroke-width="2"/>
+      <circle cx="270" cy="200" r="20" fill="none" stroke="rgba(122,166,255,0.4)" stroke-width="2"/>
+      <circle cx="200" cy="100" r="18" fill="rgba(240,220,180,0.3)" stroke="#f0dca0" stroke-width="1.5"/>
+      <path d="M200,100 L160,200 L240,200 Z" fill="rgba(240,220,180,0.1)"/>
+      <text x="200" y="275" text-anchor="middle" fill="#7aa6ff" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">INSPECTION · MAGNETIC · TROUBLE</text>
+    </svg>
+    <!-- Headlight beam effect -->
+    <div class="c-auto-beam" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 05 — CAMPING
+     ============================================================ -->
+<section class="c-seg c-seg--camping" id="camping">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: #7adbb5;">
+      <span class="c-seg-label-line" style="background: #7adbb5;"></span>
+      Section 05 · Camping &amp; Outdoor Recreation
+      <span class="c-seg-num">05 / 06</span>
+    </div>
+    <h2 class="c-seg-title">Solar work lights off the grid.</h2>
+    <p class="c-seg-lead">USB-solar charged. Real output. Real runtime. Compact form factors that earn a spot in the gear bin.</p>
+    <p class="c-seg-body">Built for overlanders who care about specs more than packaging claims: real lumens, USB-C charging, solar topping during daylight, and mounts that work on tents and rigs.</p>
+    <!-- Featured product: SWL-1000 -->
+    <div class="c-fp c-fp--camping">
+      <div class="c-fp-thumb" aria-hidden="true">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+          <circle cx="30" cy="25" r="12" fill="none" stroke="#7adbb5" stroke-width="1.5"/>
+          <circle cx="30" cy="25" r="6" fill="rgba(122,219,181,0.4)"/>
+          <path d="M22,10 L30,5 L38,10" fill="none" stroke="#f0a932" stroke-width="1.5"/>
+          <line x1="30" y1="37" x2="30" y2="50" stroke="#7adbb5" stroke-width="1.5"/>
+          <rect x="22" y="50" width="16" height="6" rx="2" fill="rgba(122,219,181,0.2)" stroke="#7adbb5" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="c-fp-info">
+        <div class="c-fp-eyebrow">Featured Product · Camping</div>
+        <div class="c-fp-name">SWL-1000 Solar Work Light</div>
+        <div class="c-fp-spec">1000 lumen · USB-solar charging · 8 hr runtime · IPX5</div>
+      </div>
+      <a href="/support/sample-request?sku=SWL-1000" class="c-fp-cta">View Product</a>
+    </div>
+    <div class="c-expanding">
+      <div class="c-expanding-label">What's expanding</div>
+      <ul>
+        <li>Deeper horticultural spectrum options and form factors</li>
+        <li>More outdoor-rated options built for repeat seasons</li>
+      </ul>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=camping" class="c-btn-primary">Browse Camping Catalog</a>
+      <a href="/find-a-distributor" class="c-btn-secondary">Find a Retailer</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <!-- Stars -->
+    <div class="c-camp-stars" aria-hidden="true">
+      {[...Array(18)].map((_, i) => (
+        <div class="c-star" style={`top:${Math.floor(Math.sin(i*7.3)*40+50)}%;left:${Math.floor(Math.cos(i*5.1)*40+50)}%;opacity:${0.4+Math.abs(Math.sin(i*2.7))*0.6};`}></div>
+      ))}
+    </div>
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M60 260 L200 80 L340 260 Z" fill="rgba(122,219,181,0.08)" stroke="rgba(122,219,181,0.3)" stroke-width="1.5"/>
+      <path d="M100 260 L200 120 L300 260 Z" fill="rgba(122,219,181,0.06)" stroke="rgba(122,219,181,0.2)" stroke-width="1"/>
+      <circle cx="200" cy="60" r="18" fill="rgba(240,169,50,0.3)" stroke="#f0a932" stroke-width="1.5"/>
+      <path d="M200,60 L160,260 L240,260 Z" fill="rgba(240,169,50,0.06)"/>
+      <rect x="160" y="240" width="80" height="20" rx="3" fill="rgba(122,219,181,0.15)" stroke="rgba(122,219,181,0.3)" stroke-width="1"/>
+      <text x="200" y="290" text-anchor="middle" fill="#7adbb5" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">SOLAR · USB-C · IPX5</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     AISLE 06 — PARTY
+     ============================================================ -->
+<section class="c-seg c-seg--party c-seg--rev" id="party">
+  <div class="c-seg-content">
+    <div class="c-seg-label" style="color: #dba9d4;">
+      <span class="c-seg-label-line" style="background: #dba9d4;"></span>
+      Section 06 · Party &amp; Decorative
+      <span class="c-seg-num">06 / 06</span>
+    </div>
+    <h2 class="c-seg-title">String lights for the long evening.</h2>
+    <p class="c-seg-lead">LED festoon. Bistro string lights. Café-style decorative that survives more than one season.</p>
+    <p class="c-seg-body">The category is dominated by single-use seasonal junk. We make the version that survives backyard parties, winter holidays, and the wedding season. Commercial-grade shells in residential SKU sizes. Outdoor cord constructions. Shatter-resistant materials.</p>
+    <div class="c-expanding">
+      <div class="c-expanding-label">What's expanding</div>
+      <ul>
+        <li>More outdoor-rated decorative options built for repeat seasons</li>
+        <li>More "commercial-grade feel" in retail-friendly SKUs</li>
+      </ul>
+    </div>
+    <div class="c-seg-ctas">
+      <a href="/support/catalog-request?aisle=party" class="c-btn-primary">Browse Party Catalog</a>
+      <a href="/collections/string-lights" class="c-btn-secondary">Explore String Lights</a>
+    </div>
+  </div>
+  <div class="c-seg-visual">
+    <!-- String light dots -->
+    <div class="c-party-string" aria-hidden="true">
+      {[...Array(12)].map((_, i) => (
+        <div class="c-party-light" style={`top:${20+Math.floor(Math.sin(i*0.8)*15)}%;left:${(i*8)+4}%;`}></div>
+      ))}
+    </div>
+    <svg class="c-seg-illust" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M40,60 Q100,100 160,60 Q220,20 280,60 Q340,100 380,60" fill="none" stroke="rgba(219,169,212,0.4)" stroke-width="1.5"/>
+      <path d="M40,100 Q100,140 160,100 Q220,60 280,100 Q340,140 380,100" fill="none" stroke="rgba(219,169,212,0.3)" stroke-width="1.5"/>
+      {[40,100,160,220,280,340].map(x => (
+        <ellipse cx={x} cy={80} rx="8" ry="12" fill="rgba(240,169,50,0.6)" stroke="#f0a932" stroke-width="1"/>
+      ))}
+      {[70,130,190,250,310,370].map(x => (
+        <ellipse cx={x} cy={120} rx="8" ry="12" fill="rgba(219,169,212,0.6)" stroke="#dba9d4" stroke-width="1"/>
+      ))}
+      <text x="200" y="290" text-anchor="middle" fill="#dba9d4" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">FESTOON · BISTRO · OUTDOOR CORD</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================
+     RETAIL PARTNERS
+     ============================================================ -->
+<section class="c-retail">
+  <div class="c-retail-inner">
+    <div class="c-section-eyebrow">Retail Partners &amp; Brand Relationships</div>
+    <h2 class="c-retail-h2">Nine retailers. Two decades.</h2>
+    <p class="c-retail-sub">We don't sell directly to consumers — we put product on the shelves of the people who do. Two decades of OEM and white-label experience supplying America's largest home and garden retailers.</p>
+    <div class="c-retail-stats">
+      <div class="c-retail-stat"><span class="c-retail-stat-val">9</span><span class="c-retail-stat-lbl">National retail accounts</span></div>
+      <div class="c-retail-stat"><span class="c-retail-stat-val">20+</span><span class="c-retail-stat-lbl">Years supplying shelves</span></div>
+      <div class="c-retail-stat"><span class="c-retail-stat-val">12M+</span><span class="c-retail-stat-lbl">Units shipped</span></div>
+      <div class="c-retail-stat"><span class="c-retail-stat-val">5</span><span class="c-retail-stat-lbl">US warehouses</span></div>
+    </div>
+    <div class="c-retail-grid-eyebrow">National Big-Box Retailers</div>
+    <div class="c-retail-grid">
+      <div class="c-retail-tile">Batteries Plus</div>
+      <div class="c-retail-tile">Canadian Tire</div>
+      <div class="c-retail-tile">Costco</div>
+      <div class="c-retail-tile">Fred Meyer</div>
+      <div class="c-retail-tile">Kroger</div>
+      <div class="c-retail-tile">Lowe's</div>
+      <div class="c-retail-tile">The Home Depot</div>
+      <div class="c-retail-tile">Tractor Supply Co.</div>
+      <div class="c-retail-tile">Walmart</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OEM CTA
+     ============================================================ -->
+<section class="c-oem">
+  <div class="c-oem-inner">
+    <div class="c-oem-eyebrow">For Retail Buyers &amp; OEM Partners</div>
+    <h2 class="c-oem-h2">Some shelves are still open.</h2>
+    <p class="c-oem-sub">If you're evaluating ALG for your shelves, or you need an OEM partner who can build in volume and ship from US warehouses — we should talk.</p>
+    <div class="c-oem-features">
+      <div class="c-oem-feat">
+        <div class="c-oem-feat-num">01</div>
+        <h3 class="c-oem-feat-title">Line reviews &amp; category resets</h3>
+        <p class="c-oem-feat-body">We'll map assortment to your aisle strategy.</p>
+      </div>
+      <div class="c-oem-feat">
+        <div class="c-oem-feat-num">02</div>
+        <h3 class="c-oem-feat-title">House brand / private label</h3>
+        <p class="c-oem-feat-body">Packaging, spec targets, compliance, and margin ladders.</p>
+      </div>
+      <div class="c-oem-feat">
+        <div class="c-oem-feat-num">03</div>
+        <h3 class="c-oem-feat-title">In-season replenishment</h3>
+        <p class="c-oem-feat-body">Domestic inventory strategy + fast ship readiness.</p>
+      </div>
+    </div>
+    <div class="c-oem-ctas">
+      <a href="/support/capability-deck" class="c-btn-primary">Request Capability Deck</a>
+      <a href="/support/schedule-call" class="c-btn-secondary c-btn-secondary--light">Schedule a Call</a>
+      <a href="/support/sample-request" class="c-btn-secondary c-btn-secondary--light">Sample Request</a>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  --c-home: #5a7a3a;
+  --c-garden: #3a8a5e;
+  --c-work: #c9a876;
+  --c-auto: #3a4866;
+  --c-camping: #2d5235;
+  --c-party: #a84a8e;
+  --brand: #E3353C;
+  --brand-dk: #B22930;
+  --ink: #111418;
+  --ink2: #3a3f47;
+  --ink3: #8a8f99;
+  --ink4: #c8ccd3;
+  --bg: #ffffff;
+  --bg2: #f5f5f3;
+  --bg3: #eceae4;
+  --dark: #0c0d12;
+  --dark2: #14161e;
+}
+
+/* ============================================================
+   BREADCRUMB
+   ============================================================ */
+.bc-wrap {
+  background: var(--bg2);
+  padding: 104px 28px 16px;
+  border-bottom: 1px solid var(--ink4);
+}
+.bc-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink3);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.bc-inner a {
+  color: var(--ink2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.bc-inner a:hover { color: var(--brand); }
+.bc-sep { color: var(--ink4); }
+.bc-current { color: var(--ink); font-weight: 600; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.c-hero {
+  background: linear-gradient(160deg, #0c0d12 0%, #1a1d28 55%, #0c0d12 100%);
+  color: #fff;
+  padding: 72px 28px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.c-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 50%, rgba(168,74,142,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(240,169,50,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 82% 50%, rgba(15,174,124,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+.c-hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.c-hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.c-hero-eyebrow::before, .c-hero-eyebrow::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--brand);
+}
+.c-hero-h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(40px, 5.5vw, 68px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2.5px;
+  margin-bottom: 20px;
+}
+.c-accent { color: var(--brand); }
+.c-hero-sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #c8ccd3;
+  margin: 0 auto 28px;
+  max-width: 720px;
+  font-weight: 300;
+}
+.c-hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+.c-hero-meta strong { color: #fff; font-weight: 600; }
+.c-meta-dot { opacity: 0.4; }
+.c-hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.c-btn-primary {
+  background: var(--brand);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.15s;
+  display: inline-block;
+}
+.c-btn-primary:hover { background: var(--brand-dk); }
+.c-btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  padding: 11px 18px;
+  border: 1px solid var(--ink4);
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.15s;
+  display: inline-block;
+}
+.c-btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
+.c-btn-secondary--light {
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.3);
+}
+.c-btn-secondary--light:hover { border-color: #fff; color: #fff; }
+
+/* ============================================================
+   SUB-TAGLINE
+   ============================================================ */
+.c-sub-tagline {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--ink4);
+  padding: 20px 28px;
+}
+.c-sub-tagline-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--ink2);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   STICKY AISLE NAV
+   ============================================================ */
+.c-subnav-wrap {
+  position: sticky;
+  top: 90px;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--ink4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.c-subnav {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+.c-subnav-item {
+  padding: 14px 12px;
+  text-align: center;
+  border-right: 1px solid var(--ink4);
+  text-decoration: none;
+  color: var(--ink2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.c-subnav-item:last-child { border-right: 0; }
+.c-subnav-item:hover { background: var(--bg2); color: var(--brand); }
+.c-subnav-item.active { background: var(--bg2); color: var(--brand); }
+.c-subnav-num {
+  font-size: 9px;
+  color: var(--ink3);
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.c-subnav-item.active .c-subnav-num { color: var(--brand); }
+.c-subnav-label { font-size: 11px; }
+.c-subnav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink4);
+  margin-top: 4px;
+  transition: all 0.18s;
+}
+.c-subnav-item.active .c-subnav-dot { background: var(--brand); transform: scale(1.4); }
+
+/* ============================================================
+   NEW & EXPANDING CALLOUT
+   ============================================================ */
+.c-callout {
+  background: var(--bg2);
+  padding: 40px 28px;
+  border-bottom: 1px solid var(--ink4);
+}
+.c-callout-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.c-callout-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--brand);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.c-callout-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px 32px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.c-callout-list li {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.5;
+  padding-left: 16px;
+  position: relative;
+}
+.c-callout-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--brand);
+  font-size: 12px;
+}
+
+/* ============================================================
+   CAPABILITY PROOF
+   ============================================================ */
+.c-cap {
+  background: #fff;
+  padding: 80px 28px;
+}
+.c-cap-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.c-section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.c-section-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--brand);
+}
+.c-cap-h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  max-width: 820px;
+  margin-bottom: 48px;
+}
+.c-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 40px;
+}
+.c-cap-card {
+  padding: 28px 24px;
+  background: var(--bg2);
+  border-radius: 6px;
+  border: 1px solid var(--ink4);
+}
+.c-cap-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.c-cap-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.c-cap-card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.c-cap-card-list li {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.55;
+  padding-left: 14px;
+  position: relative;
+}
+.c-cap-card-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--brand);
+  font-weight: 700;
+}
+.c-cap-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   AISLE SEGMENTS
+   ============================================================ */
+.c-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 560px;
+  overflow: hidden;
+  position: relative;
+}
+.c-seg--rev { direction: rtl; }
+.c-seg--rev > * { direction: ltr; }
+
+/* Segment backgrounds */
+.c-seg--home { background: linear-gradient(135deg, #f5f3ed 0%, #e8e3d4 100%); }
+.c-seg--garden { background: linear-gradient(135deg, #1c3320 0%, #2d5235 100%); }
+.c-seg--work { background: linear-gradient(135deg, #1a1d28 0%, #0c0d12 100%); }
+.c-seg--auto { background: linear-gradient(135deg, #1f2940 0%, #0a1224 100%); }
+.c-seg--camping { background: linear-gradient(135deg, #0a1810 0%, #1c2820 100%); }
+.c-seg--party { background: linear-gradient(135deg, #2a1a30 0%, #3a1c40 100%); }
+
+.c-seg-content {
+  padding: 72px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.c-seg-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Segment visual backgrounds */
+.c-seg--home .c-seg-visual { background: linear-gradient(135deg, #5a7a3a 0%, #3d5524 100%); }
+.c-seg--garden .c-seg-visual { background: linear-gradient(180deg, #0a1f12 0%, #1c3320 100%); }
+.c-seg--work .c-seg-visual { background: linear-gradient(135deg, #3a3225 0%, #1a1410 100%); }
+.c-seg--auto .c-seg-visual { background: linear-gradient(135deg, #3a4866 0%, #1f2940 100%); }
+.c-seg--camping .c-seg-visual { background: linear-gradient(180deg, #0a1f12 0%, #1c3320 60%, #3a5535 100%); }
+.c-seg--party .c-seg-visual { background: linear-gradient(180deg, #1c0a20 0%, #3a1c40 100%); }
+
+.c-seg-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.c-seg-label-line {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+}
+.c-seg-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink3);
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-left: auto;
+}
+.c-seg--garden .c-seg-num,
+.c-seg--work .c-seg-num,
+.c-seg--auto .c-seg-num,
+.c-seg--camping .c-seg-num,
+.c-seg--party .c-seg-num { color: rgba(255,255,255,0.4); }
+
+.c-seg-title {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -1.5px;
+  margin-bottom: 18px;
+  color: var(--ink);
+}
+.c-seg--garden .c-seg-title,
+.c-seg--work .c-seg-title,
+.c-seg--auto .c-seg-title,
+.c-seg--camping .c-seg-title,
+.c-seg--party .c-seg-title { color: #fff; }
+
+.c-seg-lead {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink2);
+  margin-bottom: 16px;
+  max-width: 520px;
+  font-weight: 300;
+}
+.c-seg--garden .c-seg-lead,
+.c-seg--work .c-seg-lead,
+.c-seg--auto .c-seg-lead,
+.c-seg--camping .c-seg-lead,
+.c-seg--party .c-seg-lead { color: #c8ccd3; }
+
+.c-seg-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink2);
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+.c-seg--garden .c-seg-body,
+.c-seg--work .c-seg-body,
+.c-seg--auto .c-seg-body,
+.c-seg--camping .c-seg-body,
+.c-seg--party .c-seg-body { color: #c8ccd3; }
+
+.c-expanding {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: rgba(0,0,0,0.04);
+  border-left: 2px solid var(--brand);
+  border-radius: 0 4px 4px 0;
+}
+.c-seg--garden .c-expanding,
+.c-seg--work .c-expanding,
+.c-seg--auto .c-expanding,
+.c-seg--camping .c-expanding,
+.c-seg--party .c-expanding { background: rgba(255,255,255,0.05); }
+
+.c-expanding-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--brand);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.c-expanding ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.c-expanding li {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+.c-seg--garden .c-expanding li,
+.c-seg--work .c-expanding li,
+.c-seg--auto .c-expanding li,
+.c-seg--camping .c-expanding li,
+.c-seg--party .c-expanding li { color: #c8ccd3; }
+.c-expanding li::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.c-seg-ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.c-seg--garden .c-btn-secondary,
+.c-seg--work .c-btn-secondary,
+.c-seg--auto .c-btn-secondary,
+.c-seg--camping .c-btn-secondary,
+.c-seg--party .c-btn-secondary {
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.3);
+}
+.c-seg--garden .c-btn-secondary:hover,
+.c-seg--work .c-btn-secondary:hover,
+.c-seg--auto .c-btn-secondary:hover,
+.c-seg--camping .c-btn-secondary:hover,
+.c-seg--party .c-btn-secondary:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.c-seg-illust {
+  width: 72%;
+  max-width: 400px;
+  filter: drop-shadow(0 12px 40px rgba(0,0,0,0.3));
+}
+
+/* ============================================================
+   FEATURED PRODUCT CARD
+   ============================================================ */
+.c-fp {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.c-fp-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  background: rgba(122,166,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.c-fp--camping .c-fp-thumb { background: rgba(122,219,181,0.1); }
+.c-fp-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.c-fp-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--brand);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.c-fp-name { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.2px; }
+.c-fp-spec { font-size: 11px; color: #a8b3cc; }
+.c-fp-cta {
+  background: var(--brand);
+  color: #fff;
+  padding: 7px 12px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.c-fp-cta:hover { background: var(--brand-dk); }
+
+/* ============================================================
+   DECORATIVE EFFECTS
+   ============================================================ */
+.c-auto-beam {
+  position: absolute;
+  width: 200px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(255,255,200,0.2) 0%, transparent 70%);
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.c-camp-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  pointer-events: none;
+}
+.c-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,255,255,0.8);
+}
+.c-party-string {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.c-party-light {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0a932;
+  box-shadow: 0 0 12px rgba(240,169,50,0.6);
+}
+
+/* ============================================================
+   RETAIL PARTNERS
+   ============================================================ */
+.c-retail {
+  background: #fff;
+  padding: 90px 28px;
+}
+.c-retail-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.c-retail-h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.c-retail-sub {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink2);
+  margin-bottom: 40px;
+  max-width: 680px;
+  font-weight: 300;
+}
+.c-retail-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-bottom: 48px;
+  border-top: 1px solid var(--ink4);
+  border-left: 1px solid var(--ink4);
+}
+.c-retail-stat {
+  padding: 20px 24px;
+  border-right: 1px solid var(--ink4);
+  border-bottom: 1px solid var(--ink4);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.c-retail-stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.c-retail-stat-lbl {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink2);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.c-retail-grid-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--brand);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.c-retail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.c-retail-tile {
+  background: #fff;
+  border: 1px solid var(--ink4);
+  border-radius: 6px;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.3px;
+  text-align: center;
+  min-height: 80px;
+}
+
+/* ============================================================
+   OEM CTA
+   ============================================================ */
+.c-oem {
+  background: linear-gradient(135deg, #0c0d12 0%, #1a1d28 100%);
+  color: #fff;
+  padding: 90px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.c-oem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(227,53,60,0.10) 0%, transparent 40%),
+    radial-gradient(circle at 75% 70%, rgba(240,169,50,0.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+.c-oem-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.c-oem-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.c-oem-eyebrow::before, .c-oem-eyebrow::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--brand);
+}
+.c-oem-h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+.c-oem-sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #c8ccd3;
+  margin: 0 auto 40px;
+  max-width: 680px;
+  font-weight: 300;
+}
+.c-oem-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.c-oem-feat { text-align: left; padding: 0 12px; }
+.c-oem-feat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.c-oem-feat-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.c-oem-feat-body { font-size: 13px; line-height: 1.55; color: #a8b3cc; }
+.c-oem-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 960px) {
+  .c-seg { grid-template-columns: 1fr; min-height: auto; }
+  .c-seg--rev { direction: ltr; }
+  .c-seg-content { padding: 48px 28px; }
+  .c-seg-visual { min-height: 260px; padding: 28px; }
+  .c-cap-grid { grid-template-columns: 1fr; gap: 20px; }
+  .c-subnav { grid-template-columns: repeat(3, 1fr); }
+  .c-subnav-item:nth-child(3n) { border-right: 0; }
+  .c-retail-stats { grid-template-columns: 1fr 1fr; }
+  .c-retail-grid { grid-template-columns: 1fr 1fr; }
+  .c-oem-features { grid-template-columns: 1fr; gap: 20px; }
+  .c-fp { grid-template-columns: 1fr; text-align: center; }
+  .c-fp-thumb { margin: 0 auto; }
+}
+@media (max-width: 600px) {
+  .c-hero-h1 { letter-spacing: -1.5px; }
+  .c-retail-stats { grid-template-columns: 1fr; }
+  .c-retail-grid { grid-template-columns: 1fr; }
+  .c-subnav { grid-template-columns: repeat(2, 1fr); }
+  .c-subnav-item:nth-child(2n) { border-right: 0; }
+  .c-subnav-item:nth-child(3n) { border-right: 1px solid var(--ink4); }
+}
+</style>
+
+<script>
+// Sticky aisle nav: highlight active section on scroll
+(function() {
+  const items = document.querySelectorAll('.c-subnav-item');
+  const sections = ['home','garden','work','auto','camping','party'].map(id => document.getElementById(id)).filter(Boolean);
+  if (!sections.length) return;
+
+  function updateActive() {
+    const scrollY = window.scrollY + 160;
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= scrollY) active = s;
+    }
+    items.forEach(item => {
+      item.classList.toggle('active', item.dataset.aisle === active.id);
+    });
+  }
+
+  window.addEventListener('scroll', updateActive, { passive: true });
+  updateActive();
+})();
+</script>
