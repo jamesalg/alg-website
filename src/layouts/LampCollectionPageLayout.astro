@@ -1,0 +1,566 @@
+---
+/**
+ * LampCollectionPageLayout.astro
+ *
+ * v2.7.0 — Bucket B lamp collection layout.
+ * Fork of CollectionPageLayout, reduced to 5 sections:
+ *   1. Hero (dark, brand mark)
+ *   2. Family Grid (shape cards — "applications" for lamps = shape grid)
+ *   3. Legacy (Clearance SKUs, optional)
+ *   4. Get Started
+ *   5. Related Collections
+ *
+ * Omitted vs CollectionPageLayout:
+ *   - Stat Strip (numerics don't apply when shape IS the family)
+ *   - Red Banner stats row
+ *   - Featured Families (consolidated into Family Grid)
+ *   - All Families filter (replaced by shape grid)
+ *
+ * Per-collection aesthetic theming via data.aesthetic:
+ *   'vintage'   → Deep navy + brass + amber filament + scrollwork watermark
+ *   'nostalgic' → Dark + neon teal/magenta + cyber-grid watermark
+ *   'utility'   → Clean dark + ALG red + no watermark
+ */
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  collection: {
+    slug: string;
+    name: string;
+    titleAscii: string;
+    parentVertical: 'Indoor';
+    parentSubVertical: string;
+    headlineLine: string;
+    description: string;
+    pillRow: string[];
+    aesthetic: 'vintage' | 'nostalgic' | 'utility';
+    families: {
+      slug: string;
+      name: string;
+      tagline: string;
+      heroImage: string;
+      echelon?: 'ECO' | 'PRO' | 'PRO+';
+      skuCount: number;
+      comingSoon?: boolean;
+    }[];
+    legacyFamilies?: {
+      slug: string;
+      name: string;
+      tagline: string;
+      heroImage: string;
+      skuCount: number;
+    }[];
+    getStarted: {
+      layoutCopy: string;
+      sampleCopy: string;
+      distributorCopy: string;
+      repCopy: string;
+    };
+    relatedCollections: {
+      slug: string;
+      name: string;
+      vertical: string;
+      description: string;
+      status: 'live' | 'coming-soon';
+    }[];
+  };
+}
+
+const { collection: c } = Astro.props;
+
+const themes = {
+  vintage: {
+    '--lamp-bg': '#0c0d12',
+    '--lamp-fg': '#f5e9d2',
+    '--lamp-accent': '#c9a45c',
+    '--lamp-accent-2': '#ff8c2a',
+    '--lamp-filament': '#ff8c2a',
+    '--lamp-watermark-url': "url('/lamps/scrollwork-vintage.svg')",
+    '--lamp-card-bg': 'rgba(201,164,92,0.07)',
+    '--lamp-card-border': 'rgba(201,164,92,0.18)',
+    '--lamp-eyebrow-color': '#c9a45c',
+  },
+  nostalgic: {
+    '--lamp-bg': '#0a0d18',
+    '--lamp-fg': '#e8eef8',
+    '--lamp-accent': '#00d4ff',
+    '--lamp-accent-2': '#ff2dd0',
+    '--lamp-filament': '#ffaa44',
+    '--lamp-watermark-url': "url('/lamps/cybergrid-nostalgic.svg')",
+    '--lamp-card-bg': 'rgba(0,212,255,0.06)',
+    '--lamp-card-border': 'rgba(0,212,255,0.15)',
+    '--lamp-eyebrow-color': '#00d4ff',
+  },
+  utility: {
+    '--lamp-bg': '#1a1d24',
+    '--lamp-fg': '#ffffff',
+    '--lamp-accent': '#F32740',
+    '--lamp-accent-2': '#F32740',
+    '--lamp-filament': '#F32740',
+    '--lamp-watermark-url': 'none',
+    '--lamp-card-bg': 'rgba(243,39,64,0.06)',
+    '--lamp-card-border': 'rgba(243,39,64,0.15)',
+    '--lamp-eyebrow-color': '#F32740',
+  },
+};
+
+const theme = themes[c.aesthetic];
+const verticalUpper = c.parentVertical.toUpperCase();
+const subVerticalUpper = c.parentSubVertical.toUpperCase();
+---
+<BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
+  <style is:global define:vars={theme}>
+    .lamp-page { background: var(--lamp-bg); color: var(--lamp-fg); }
+    .lamp-section { padding: 72px 0; }
+    .lamp-content {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: 32px;
+      width: 100%;
+    }
+    /* Breadcrumb */
+    .lamp-breadcrumb {
+      padding: 10px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #666;
+      background: var(--bg2, #f5f5f3);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lamp-breadcrumb a { color: #666; text-decoration: none; }
+    .lamp-breadcrumb a:hover { color: var(--color-alg-red, #F32740); }
+    .lamp-bc-sep { color: #c8ccd3; }
+    .lamp-bc-plain { color: #666; }
+    .lamp-bc-current { color: #000; font-weight: 600; }
+    .lamp-bc-current :global(.aa) { color: var(--color-alg-red, #F32740); }
+    /* Hero */
+    .lamp-hero {
+      background: var(--lamp-bg);
+      background-image: var(--lamp-watermark-url);
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: 480px 480px;
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .lamp-hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--lamp-eyebrow-color);
+      margin-bottom: 24px;
+    }
+    .lamp-hero-wordmark {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(64px, 9vw, 112px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--lamp-fg);
+      margin: 0 0 28px;
+      text-transform: none;
+    }
+    .lamp-hero-wordmark :global(.aa) { color: var(--lamp-accent); }
+    .lamp-hero-desc {
+      font-size: 1rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.65);
+      max-width: 860px;
+      margin-bottom: 32px;
+    }
+    .lamp-hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lamp-hero-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lamp-fg);
+      border: 1px solid var(--lamp-accent);
+      border-radius: 2px;
+      padding: 6px 14px;
+      white-space: nowrap;
+    }
+    /* Family Grid */
+    .lamp-families-section {
+      background: var(--lamp-bg);
+      padding: 64px 0 80px;
+    }
+    .lamp-section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lamp-eyebrow-color);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lamp-section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 64px;
+      height: 1.5px;
+      background: var(--lamp-accent);
+      flex-shrink: 0;
+    }
+    .lamp-section-headline {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--lamp-fg);
+      margin: 0 0 40px;
+    }
+    .lamp-family-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .lamp-family-card {
+      background: var(--lamp-card-bg);
+      border: 1px solid var(--lamp-card-border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--lamp-fg);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .lamp-family-card:hover:not(.lamp-family-card--soon) {
+      border-color: var(--lamp-accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .lamp-family-card--soon {
+      opacity: 0.45;
+      pointer-events: none;
+      cursor: default;
+    }
+    .lamp-family-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: contain;
+      background: rgba(255,255,255,0.04);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lamp-family-card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: rgba(255,255,255,0.04);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lamp-family-card-img-placeholder svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.2;
+    }
+    .lamp-family-card-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--lamp-fg);
+    }
+    .lamp-family-card-tagline {
+      font-size: 12px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.55);
+    }
+    .lamp-family-card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      margin-top: auto;
+    }
+    .lamp-family-card-soon-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #444;
+      border-radius: 2px;
+      padding: 3px 8px;
+      display: inline-block;
+      width: fit-content;
+    }
+    /* Legacy section */
+    .lamp-legacy-section {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 56px 0;
+    }
+    .lamp-legacy-headline {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 700;
+      color: var(--lamp-fg);
+      margin: 0 0 8px;
+    }
+    .lamp-legacy-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+    /* Get Started */
+    .lamp-getstarted-section {
+      background: var(--lamp-bg);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 72px 0;
+    }
+    .lamp-gs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .lamp-gs-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 28px 22px;
+    }
+    .lamp-gs-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      margin-bottom: 10px;
+    }
+    .lamp-gs-card-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+    }
+    /* Related */
+    .lamp-related-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 72px 0;
+    }
+    .lamp-related-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .lamp-related-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lamp-related-card--soon { opacity: 0.5; pointer-events: none; }
+    .lamp-related-vertical {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+    }
+    .lamp-related-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--lamp-fg);
+      letter-spacing: -0.02em;
+    }
+    .lamp-related-name :global(.aa) { color: var(--lamp-accent); }
+    .lamp-related-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+      flex: 1;
+      margin: 0;
+    }
+    .lamp-related-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .lamp-related-soon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+    }
+    @media (max-width: 1023px) {
+      .lamp-gs-grid { grid-template-columns: repeat(2, 1fr); }
+      .lamp-related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 599px) {
+      .lamp-family-grid { grid-template-columns: repeat(2, 1fr); }
+      .lamp-gs-grid { grid-template-columns: 1fr; }
+      .lamp-related-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="lamp-page">
+    <!-- §1 BREADCRUMB -->
+    <div class="lamp-breadcrumb">
+      <a href="/">HOME</a>
+      <span class="lamp-bc-sep">›</span>
+      <a href="/collections">PRODUCTS</a>
+      <span class="lamp-bc-sep">›</span>
+      <a href="/collections/indoor">INDOOR</a>
+      <span class="lamp-bc-sep">›</span>
+      <span class="lamp-bc-plain">{subVerticalUpper}</span>
+      <span class="lamp-bc-sep">›</span>
+      <span class="lamp-bc-current" set:html={c.headlineLine}></span>
+    </div>
+
+    <!-- §2 HERO -->
+    <section class="lamp-hero" id="hero">
+      <div class="lamp-content">
+        <div class="lamp-hero-eyebrow">{verticalUpper} · {subVerticalUpper} COLLECTION</div>
+        <h1 class="lamp-hero-wordmark" set:html={c.headlineLine}></h1>
+        <p class="lamp-hero-desc">{c.description}</p>
+        <div class="lamp-hero-pills">
+          {c.pillRow.map(pill => <span class="lamp-hero-pill">{pill}</span>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- §3 FAMILY GRID -->
+    <section class="lamp-families-section" id="families">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Shapes &amp; Families</div>
+        <h2 class="lamp-section-headline">Browse by shape.</h2>
+        <div class="lamp-family-grid">
+          {c.families.map(fam => (
+            fam.comingSoon ? (
+              <div class="lamp-family-card lamp-family-card--soon" data-coming-soon="true">
+                <div class="lamp-family-card-img-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+                  </svg>
+                </div>
+                <div class="lamp-family-card-name">{fam.name}</div>
+                <div class="lamp-family-card-tagline">{fam.tagline}</div>
+                <span class="lamp-family-card-soon-badge">Coming soon</span>
+              </div>
+            ) : (
+              <a href={`/collections/${c.slug}/${fam.slug}`} class="lamp-family-card">
+                {fam.heroImage ? (
+                  <img src={fam.heroImage} alt={fam.name} class="lamp-family-card-img" loading="lazy"/>
+                ) : (
+                  <div class="lamp-family-card-img-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
+                      <circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                  </div>
+                )}
+                <div class="lamp-family-card-name">{fam.name}</div>
+                <div class="lamp-family-card-tagline">{fam.tagline}</div>
+                <div class="lamp-family-card-meta">{fam.skuCount} SKU{fam.skuCount !== 1 ? 's' : ''} →</div>
+              </a>
+            )
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- §4 LEGACY (optional) -->
+    {c.legacyFamilies && c.legacyFamilies.length > 0 && (
+      <section class="lamp-legacy-section" id="legacy">
+        <div class="lamp-content">
+          <div class="lamp-section-eyebrow">Legacy &amp; Clearance</div>
+          <h2 class="lamp-legacy-headline">Discontinued &amp; clearance families.</h2>
+          <p class="lamp-legacy-body">These families have been discontinued or are in clearance status. Limited stock may be available — contact your rep or distributor.</p>
+          <div class="lamp-family-grid">
+            {c.legacyFamilies.map(fam => (
+              <div class="lamp-family-card lamp-family-card--soon">
+                <div class="lamp-family-card-img-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/>
+                  </svg>
+                </div>
+                <div class="lamp-family-card-name">{fam.name}</div>
+                <div class="lamp-family-card-tagline">{fam.tagline}</div>
+                <span class="lamp-family-card-soon-badge">Clearance</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- §5 GET STARTED -->
+    <section class="lamp-getstarted-section" id="get-started">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Get Started</div>
+        <h2 class="lamp-section-headline">Ready to specify?</h2>
+        <div class="lamp-gs-grid">
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Layout</div>
+            <p class="lamp-gs-card-body" set:html={c.getStarted.layoutCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Sample</div>
+            <p class="lamp-gs-card-body" set:html={c.getStarted.sampleCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Distributor</div>
+            <p class="lamp-gs-card-body" set:html={c.getStarted.distributorCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Rep</div>
+            <p class="lamp-gs-card-body" set:html={c.getStarted.repCopy}></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §6 RELATED COLLECTIONS -->
+    <section class="lamp-related-section" id="related">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Related Collections</div>
+        <h2 class="lamp-section-headline">Explore the full portfolio.</h2>
+        <div class="lamp-related-grid">
+          {c.relatedCollections.map(col => (
+            <div class={`lamp-related-card ${col.status === 'coming-soon' ? 'lamp-related-card--soon' : ''}`}>
+              <div class="lamp-related-vertical">{col.vertical.toUpperCase()}</div>
+              <div class="lamp-related-name" set:html={col.name}></div>
+              <p class="lamp-related-desc" set:html={col.description}></p>
+              {col.status === 'live'
+                ? <a href={`/collections/${col.slug}`} class="lamp-related-cta">View →</a>
+                : <span class="lamp-related-soon">Coming soon</span>
+              }
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

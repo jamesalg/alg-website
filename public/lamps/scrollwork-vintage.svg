@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <!-- Placeholder vintage scrollwork — Rooster Creative to deliver final art -->
+  <g opacity="0.06" stroke="#c9a45c" stroke-width="1">
+    <circle cx="200" cy="200" r="180"/>
+    <circle cx="200" cy="200" r="140"/>
+    <circle cx="200" cy="200" r="100"/>
+    <path d="M200 20 C240 60 280 80 360 80 C280 80 260 120 200 200 C140 120 120 80 40 80 C120 80 160 60 200 20Z" fill="#c9a45c" opacity="0.08"/>
+    <path d="M200 380 C240 340 280 320 360 320 C280 320 260 280 200 200 C140 280 120 320 40 320 C120 320 160 340 200 380Z" fill="#c9a45c" opacity="0.08"/>
+    <line x1="20" y1="200" x2="380" y2="200"/>
+    <line x1="200" y1="20" x2="200" y2="380"/>
+    <path d="M60 60 Q200 100 340 60" stroke-width="0.5"/>
+    <path d="M60 340 Q200 300 340 340" stroke-width="0.5"/>
+  </g>
+</svg>
