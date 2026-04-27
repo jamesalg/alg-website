@@ -40,7 +40,7 @@ const families = ([
 ---
 <BaseLayout
   title="planoARCH Indoor Collection — Archipelago Lighting Group"
-  description="Commercial indoor lighting for offices, retail, healthcare, education, and hospitality. 17 active families, 132 active SKUs, ECO through PRO+."
+  description="Commercial indoor lighting for offices, retail, and healthcare. 17 active families, 132 active SKUs."
   bodyClass="page-collection page-planoarch"
 >
 
@@ -60,13 +60,13 @@ const families = ([
     <div class="hero-top">
       <div class="hero-eyebrow">INDOOR · COLLECTION</div>
       <h1 class="hero-wordmark">PLANO<BrandMark prefix="" suffix="RCH" /></h1>
-      <p class="hero-desc">Commercial indoor lighting for offices, retail, healthcare, education, and hospitality. 17 active families, 132 active SKUs, ECO through PRO+.</p>
+      <p class="hero-desc">Commercial indoor lighting for offices, retail, and healthcare. 17 active families, 132 active SKUs.</p>
       <div class="hero-pills">
         <span class="hero-pill">DLC PREMIUM</span>
         <span class="hero-pill">TAA AVAILABLE</span>
         <span class="hero-pill">5 US WAREHOUSES</span>
         <span class="hero-pill">3-DAY DELIVERY</span>
-        <span class="hero-pill">8 SUB-CATEGORIES</span>
+        <span class="hero-pill">8 APPLICATIONS</span>
       </div>
     </div>
   </section>
@@ -366,7 +366,8 @@ const families = ([
           {families.map((f: any) => (
             <div class="af-card" data-subcategory={f.apps}>
               <div class="af-card-top">
-                <span class="tier-badge" style={`background:${f.tier === 'PRO+' ? '#F32740' : f.tier === 'PRO' ? '#fff' : 'rgba(255,255,255,0.10)'}; color:${f.tier === 'PRO+' ? '#fff' : f.tier === 'PRO' ? '#F32740' : '#fff'}; border:${f.tier === 'PRO' ? '1.5px solid #F32740' : 'none'}`}>{f.tier}</span>
+                <span class="fam-sub-tag">{f.sub.split(' · ')[0]}</span>
+                <span class={`tier-badge ${f.tier === 'PRO+' ? 'pro-plus' : f.tier.toLowerCase()}`}>{f.tier}</span>
               </div>
               <div class="fam-img-placeholder af-placeholder"></div>
               <div class="af-card-bottom">
@@ -474,12 +475,12 @@ const families = ([
   <CollectionAnchorNav sections={[
     { id: 'sec-hero',         label: 'Overview' },
     { id: 'sec-stats',        label: 'Quick stats' },
-    { id: 'sec-apps',         label: 'Browse by sub-category' },
-    { id: 'sec-featured',     label: 'Featured families' },
+    { id: 'sec-apps',         label: 'Applications' },
+    { id: 'sec-featured',     label: 'Featured' },
     { id: 'sec-all-families', label: 'All families' },
     { id: 'sec-legacy',       label: 'Legacy' },
     { id: 'sec-get-started',  label: 'Get started' },
-    { id: 'sec-related',      label: 'Related collections' },
+    { id: 'sec-related',      label: 'Related' },
   ]} />
 
 </BaseLayout>
@@ -798,21 +799,22 @@ const families = ([
     align-items: center;
     justify-content: center;
   }
+  /* Fix 1 (v2.5.2): Align tier-badge CSS to luxo canonical — flex-shrink:0, no position:absolute */
   .tier-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.10em;
     text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 3px;
+    color: #fff;
+    padding: 3px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .tier-badge.eco  { background: rgba(255,255,255,0.10); color: #fff; }
-  .tier-badge.pro  { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
-  .tier-badge.pro-plus { background: #F32740; color: #fff; }
+  .tier-badge.eco     { background: rgba(255,255,255,0.10); color: #fff; border: none; }
+  .tier-badge.pro     { background: #fff; color: #F32740; border: 1.5px solid #F32740; }
+  .tier-badge.pro-plus { background: #F32740; color: #fff; border: none; }
   .feat-card-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .feat-sub {
     font-family: 'JetBrains Mono', monospace;
@@ -960,10 +962,23 @@ const families = ([
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
   }
   .af-card.hidden { display: none; }
+  /* Fix 1 (v2.5.2): fam-sub-tag in af-card-top matches luxo canonical */
+  .fam-sub-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.4;
+    flex: 1;
+  }
+  /* Fix 1 (v2.5.2): af-card-top matches luxo — space-between so sub-tag left, tier-badge right */
   .af-card-top {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: flex-start;
     padding: 10px 10px 0;
+    gap: 6px;
   }
   .fam-img-placeholder.af-placeholder {
     height: 140px;
