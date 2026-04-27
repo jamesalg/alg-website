@@ -8,8 +8,8 @@ const candelabraData = {
   name: 'Candelabra',
   collectionSlug: 'vintage-decor',
   collectionName: 'Vintage Décor',
-  collectionTitleAscii: 'Vintage Decor',
-  collectionHeadlineLine: 'Vintage Décor',
+  collectionTitleAscii: 'VINT<span class="aa">Ⓐ</span>GE',
+  collectionHeadlineLine: 'Décor | vint<span class="aa">Ⓐ</span>GE',
   collectionAesthetic: 'vintage' as const,
   tagline: 'CA10 vintage candelabra lamps in amber finish.',
   description: 'CA10 vintage candelabra lamps in amber finish.',
@@ -29,68 +29,17 @@ const candelabraData = {
 };
 
 export const siblingFamilies = [
-    {
-      slug: 'edison', vertical: 'General',
-      name: 'Edison',
-      tagline: 'ST19 Edison lamps in clear, amber, and smoked finishes.',
-      skuCount: 14,
-    },
-    {
-      slug: 'globe', vertical: 'General',
-      name: 'Globe',
-      tagline: 'G25 and G40 globe lamps in amber and smoked finishes.',
-      skuCount: 11,
-    },
-    {
-      slug: 'radio', vertical: 'General',
-      name: 'Radio',
-      tagline: 'T10 and T14 radio-style tubular lamps.',
-      skuCount: 7,
-    },
-    {
-      slug: 'tubular', vertical: 'General',
-      name: 'Tubular',
-      tagline: 'T9 tubular lamps in clear and amber finishes.',
-      skuCount: 12,
-    },
-    {
-      slug: 'victorian', vertical: 'General',
-      name: 'Victorian',
-      tagline: 'Victorian A19 lamps in smoked, amber, and squirrel-cage styles.',
-      skuCount: 9,
-    }
-  ];
+  { slug: 'edison', name: 'Edison', skuCount: 2, tagline: '' },
+  { slug: 'globe', name: 'Globe', skuCount: 2, tagline: '' },
+  { slug: 'radio', name: 'Radio', skuCount: 2, tagline: '' },
+  { slug: 'tubular', name: 'Tubular', skuCount: 2, tagline: '' },
+  { slug: 'victorian', name: 'Victorian', skuCount: 2, tagline: '' },
+];
 
 export const relatedCollections = [
-    {
-      slug: 'nostalgic-decor',
-      name: 'Nostalgic Décor',
-      vertical: 'Lamps',
-      description: 'Classic filament-style LED lamps with warm amber glow.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'tubulararch',
-      name: 'tubul<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Lamps',
-      description: 'LED lamp retrofits for T5, T8, PL, PLL, and U6 fixtures.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'utility-signature',
-      name: 'Utility sign<span class="aa">Ⓐ</span>TURE',
-      vertical: 'Lamps',
-      description: 'Utility LED lamps for everyday replacement.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'planoarch',
-      name: 'plano<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Indoor',
-      description: 'Commercial indoor lighting for offices, retail, and healthcare.',
-      status: 'live' as const,
-    }
-  ];
+  { slug: 'luxoarch', vertical: 'Commercial', name: 'luxoⒶRCH', description: 'Commercial-grade LED luminaires.', status: 'live' as const },
+  { slug: 'planoarch', vertical: 'Commercial', name: 'planoⒶRCH', description: 'Flat-panel LED for commercial spaces.', status: 'live' as const },
+];
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a lamp recommendation for each row.',

@@ -19,7 +19,7 @@ const tubulararchData = {
       name: 'T5',
       tagline: 'T5HE and T5HO fluorescent lamp replacements.',
       heroImage: '',
-      skuCount: 27,
+      skuCount: 33,
       comingSoon: false,
     },
     {

@@ -8,7 +8,7 @@ const pllData = {
   name: 'PLL',
   collectionSlug: 'tubulararch',
   collectionName: 'tubul<span class="aa">Ⓐ</span>RCH',
-  collectionTitleAscii: 'tubulARCH',
+  collectionTitleAscii: 'TUBUL<span class="aa">Ⓐ</span>RCH',
   collectionHeadlineLine: 'tubul<span class="aa">Ⓐ</span>RCH',
   collectionAesthetic: 'utility' as const,
   tagline: 'Biax PLL lamp replacements for 2G11 base fixtures.',
@@ -29,62 +29,16 @@ const pllData = {
 };
 
 export const siblingFamilies = [
-    {
-      slug: 't5', vertical: 'General',
-      name: 'T5',
-      tagline: 'T5HE and T5HO fluorescent lamp replacements.',
-      skuCount: 27,
-    },
-    {
-      slug: 't8', vertical: 'General',
-      name: 'T8',
-      tagline: 'The most common fluorescent retrofit. 2FT, 4FT, and 8FT.',
-      skuCount: 100,
-    },
-    {
-      slug: 'pl', vertical: 'General',
-      name: 'PL',
-      tagline: 'Compact fluorescent PL lamp replacements.',
-      skuCount: 6,
-    },
-    {
-      slug: 'u6', vertical: 'General',
-      name: 'U6',
-      tagline: 'U-bend T8 lamp replacements for 2×2 troffer fixtures.',
-      skuCount: 5,
-    }
-  ];
+  { slug: 'pl', name: 'Pl', skuCount: 3, tagline: '' },
+  { slug: 't5', name: 'T5', skuCount: 3, tagline: '' },
+  { slug: 't8', name: 'T8', skuCount: 3, tagline: '' },
+  { slug: 'u6', name: 'U6', skuCount: 3, tagline: '' },
+];
 
 export const relatedCollections = [
-    {
-      slug: 'luxoarch',
-      name: 'luxo<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Outdoor',
-      description: 'Outdoor lighting for the commercial perimeter.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'planoarch',
-      name: 'plano<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Indoor',
-      description: 'Commercial indoor lighting for offices, retail, and healthcare.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'nostalgic-decor',
-      name: 'Nostalgic Décor',
-      vertical: 'Lamps',
-      description: 'Classic filament-style LED lamps.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'vintage-decor',
-      name: 'Vintage Décor',
-      vertical: 'Lamps',
-      description: 'Old-world filament lamps with modern efficiency.',
-      status: 'live' as const,
-    }
-  ];
+  { slug: 'luxoarch', vertical: 'Commercial', name: 'luxoⒶRCH', description: 'Commercial-grade LED luminaires.', status: 'live' as const },
+  { slug: 'planoarch', vertical: 'Commercial', name: 'planoⒶRCH', description: 'Flat-panel LED for commercial spaces.', status: 'live' as const },
+];
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a retrofit recommendation with UL type and wattage for each row.',

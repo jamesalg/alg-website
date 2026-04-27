@@ -19,7 +19,7 @@ const nostalgicDecorData = {
       name: 'A15',
       tagline: 'Small-format A15 shape with vintage frosted finish, ideal for accent and vanity fixtures.',
       heroImage: '',
-      skuCount: 12,
+      skuCount: 25,
       comingSoon: false,
     },
     {
@@ -27,7 +27,7 @@ const nostalgicDecorData = {
       name: 'A19',
       tagline: 'Standard A19 shape with warm nostalgic finish for residential and hospitality applications.',
       heroImage: '',
-      skuCount: 27,
+      skuCount: 14,
       comingSoon: false,
     },
     {
@@ -47,7 +47,7 @@ const nostalgicDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'globe-g16-5', vertical: 'General',
+      slug: 'g16-5', vertical: 'General',
       name: 'Globe G16.5',
       tagline: 'G16.5 small globe lamps for bathroom vanity strips.',
       heroImage: '',
@@ -55,7 +55,7 @@ const nostalgicDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'globe-g25', vertical: 'General',
+      slug: 'g25', vertical: 'General',
       name: 'Globe G25',
       tagline: 'G25 medium globe lamps for vanity and decorative pendants.',
       heroImage: '',

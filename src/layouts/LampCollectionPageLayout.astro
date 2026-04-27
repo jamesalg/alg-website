@@ -1,25 +1,8 @@
 ---
 /**
- * LampCollectionPageLayout.astro
- *
- * v2.7.0 — Bucket B lamp collection layout.
- * Fork of CollectionPageLayout, reduced to 5 sections:
- *   1. Hero (dark, brand mark)
- *   2. Family Grid (shape cards — "applications" for lamps = shape grid)
- *   3. Legacy (Clearance SKUs, optional)
- *   4. Get Started
- *   5. Related Collections
- *
- * Omitted vs CollectionPageLayout:
- *   - Stat Strip (numerics don't apply when shape IS the family)
- *   - Red Banner stats row
- *   - Featured Families (consolidated into Family Grid)
- *   - All Families filter (replaced by shape grid)
- *
- * Per-collection aesthetic theming via data.aesthetic:
- *   'vintage'   → Deep navy + brass + amber filament + scrollwork watermark
- *   'nostalgic' → Dark + neon teal/magenta + cyber-grid watermark
- *   'utility'   → Clean dark + ALG red + no watermark
+ * LampCollectionPageLayout.astro — v2.7.2
+ * Rebuilt from mockup design language: Georgia serif, sister-card grid,
+ * define:vars (no is:global), camelCase token names matching LampFamilyDetailPageLayout.
  */
 import BaseLayout from './BaseLayout.astro';
 
@@ -68,499 +51,587 @@ export interface Props {
 
 const { collection: c } = Astro.props;
 
-const themes = {
+const themes: Record<string, Record<string, string>> = {
   vintage: {
-    '--lamp-bg': '#0c0d12',
-    '--lamp-fg': '#f5e9d2',
-    '--lamp-accent': '#c9a45c',
-    '--lamp-accent-2': '#ff8c2a',
-    '--lamp-filament': '#ff8c2a',
-    '--lamp-watermark-url': "url('/lamps/scrollwork-vintage.svg')",
-    '--lamp-card-bg': 'rgba(201,164,92,0.07)',
-    '--lamp-card-border': 'rgba(201,164,92,0.18)',
-    '--lamp-eyebrow-color': '#c9a45c',
+    lampBg: '#0c0d12',
+    lampBgSoft: '#16171d',
+    lampFg: '#f5e9d2',
+    lampFgMuted: '#a8a094',
+    lampFgDim: '#6b6760',
+    lampAccent: '#c9a45c',
+    lampBorder: 'rgba(245,233,210,0.12)',
+    lampWatermarkUrl: "url('/lamps/scrollwork-vintage.svg')",
+    lampBandBg: 'linear-gradient(135deg,#0c0d12 0%,#1a1610 50%,#0c0d12 100%)',
+    lampBandTextShadow: '0 0 40px rgba(201,164,92,0.3)',
+    lampHoverShadow: '0 8px 32px rgba(201,164,92,0.15)',
+    lampCtaPrimary: '#F32740',
+    lampCtaPrimaryHover: '#d61f37',
   },
   nostalgic: {
-    '--lamp-bg': '#0a0d18',
-    '--lamp-fg': '#e8eef8',
-    '--lamp-accent': '#00d4ff',
-    '--lamp-accent-2': '#ff2dd0',
-    '--lamp-filament': '#ffaa44',
-    '--lamp-watermark-url': "url('/lamps/cybergrid-nostalgic.svg')",
-    '--lamp-card-bg': 'rgba(0,212,255,0.06)',
-    '--lamp-card-border': 'rgba(0,212,255,0.15)',
-    '--lamp-eyebrow-color': '#00d4ff',
+    lampBg: '#0a0d18',
+    lampBgSoft: '#11142a',
+    lampFg: '#e8eef8',
+    lampFgMuted: '#8a92ad',
+    lampFgDim: '#525a78',
+    lampAccent: '#00d4ff',
+    lampBorder: 'rgba(232,238,248,0.10)',
+    lampWatermarkUrl: "url('/lamps/cybergrid-nostalgic.svg')",
+    lampBandBg: 'linear-gradient(135deg,#0a0d18 0%,#0d1030 50%,#0a0d18 100%)',
+    lampBandTextShadow: '0 0 60px rgba(0,212,255,0.4),0 0 120px rgba(255,45,208,0.2)',
+    lampHoverShadow: '0 8px 32px rgba(0,212,255,0.15)',
+    lampCtaPrimary: '#F32740',
+    lampCtaPrimaryHover: '#d61f37',
   },
   utility: {
-    '--lamp-bg': '#1a1d24',
-    '--lamp-fg': '#ffffff',
-    '--lamp-accent': '#F32740',
-    '--lamp-accent-2': '#F32740',
-    '--lamp-filament': '#F32740',
-    '--lamp-watermark-url': 'none',
-    '--lamp-card-bg': 'rgba(243,39,64,0.06)',
-    '--lamp-card-border': 'rgba(243,39,64,0.15)',
-    '--lamp-eyebrow-color': '#F32740',
+    lampBg: '#1a1d24',
+    lampBgSoft: '#22262e',
+    lampFg: '#ffffff',
+    lampFgMuted: '#a8b0bc',
+    lampFgDim: '#6a7280',
+    lampAccent: '#F32740',
+    lampBorder: 'rgba(255,255,255,0.08)',
+    lampWatermarkUrl: 'none',
+    lampBandBg: 'linear-gradient(135deg,#1a1d24 0%,#22262e 50%,#1a1d24 100%)',
+    lampBandTextShadow: 'none',
+    lampHoverShadow: '0 8px 32px rgba(243,39,64,0.15)',
+    lampCtaPrimary: '#F32740',
+    lampCtaPrimaryHover: '#d61f37',
   },
 };
 
-const theme = themes[c.aesthetic];
-const verticalUpper = c.parentVertical.toUpperCase();
-const subVerticalUpper = c.parentSubVertical.toUpperCase();
+const t = themes[c.aesthetic] ?? themes.utility;
+
+const collBandSub =
+  c.slug === 'nostalgic-decor' ? 'DECOR LAMPS' :
+  c.slug === 'vintage-decor' ? 'DECOR LAMPS' :
+  c.slug === 'tubulararch' ? 'LINEAR FLUORESCENT' :
+  c.slug === 'utility-signature' ? 'UTILITY LAMPS' :
+  'LAMPS';
 ---
 <BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
-  <style is:global define:vars={theme}>
-    .lamp-page { background: var(--lamp-bg); color: var(--lamp-fg); }
-    .lamp-section { padding: 72px 0; }
-    .lamp-content {
-      max-width: 1280px;
-      margin-inline: auto;
-      padding-inline: 32px;
-      width: 100%;
-    }
-    /* Breadcrumb */
-    .lamp-breadcrumb {
-      padding: 10px 32px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      font-weight: 500;
-      text-transform: uppercase;
-      color: #666;
-      background: var(--bg2, #f5f5f3);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .lamp-breadcrumb a { color: #666; text-decoration: none; }
-    .lamp-breadcrumb a:hover { color: var(--color-alg-red, #F32740); }
-    .lamp-bc-sep { color: #c8ccd3; }
-    .lamp-bc-plain { color: #666; }
-    .lamp-bc-current { color: #000; font-weight: 600; }
-    .lamp-bc-current :global(.aa) { color: var(--color-alg-red, #F32740); }
-    /* Hero */
-    .lamp-hero {
-      background: var(--lamp-bg);
-      background-image: var(--lamp-watermark-url);
-      background-repeat: no-repeat;
-      background-position: center right;
-      background-size: 480px 480px;
-      padding: 80px 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .lamp-hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--lamp-eyebrow-color);
-      margin-bottom: 24px;
-    }
-    .lamp-hero-wordmark {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(64px, 9vw, 112px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 0.95;
-      color: var(--lamp-fg);
-      margin: 0 0 28px;
-      text-transform: none;
-    }
-    .lamp-hero-wordmark :global(.aa) { color: var(--lamp-accent); }
-    .lamp-hero-desc {
-      font-size: 1rem;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.65);
-      max-width: 860px;
-      margin-bottom: 32px;
-    }
-    .lamp-hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .lamp-hero-pill {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--lamp-fg);
-      border: 1px solid var(--lamp-accent);
-      border-radius: 2px;
-      padding: 6px 14px;
-      white-space: nowrap;
-    }
-    /* Family Grid */
-    .lamp-families-section {
-      background: var(--lamp-bg);
-      padding: 64px 0 80px;
-    }
-    .lamp-section-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--lamp-eyebrow-color);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .lamp-section-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 64px;
-      height: 1.5px;
-      background: var(--lamp-accent);
-      flex-shrink: 0;
-    }
-    .lamp-section-headline {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(22px, 2.8vw, 32px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--lamp-fg);
-      margin: 0 0 40px;
-    }
-    .lamp-family-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .lamp-family-card {
-      background: var(--lamp-card-bg);
-      border: 1px solid var(--lamp-card-border);
-      border-radius: 8px;
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--lamp-fg);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .lamp-family-card:hover:not(.lamp-family-card--soon) {
-      border-color: var(--lamp-accent);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .lamp-family-card--soon {
-      opacity: 0.45;
-      pointer-events: none;
-      cursor: default;
-    }
-    .lamp-family-card-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: contain;
-      background: rgba(255,255,255,0.04);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .lamp-family-card-img-placeholder {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: rgba(255,255,255,0.04);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .lamp-family-card-img-placeholder svg {
-      width: 48px;
-      height: 48px;
-      opacity: 0.2;
-    }
-    .lamp-family-card-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--lamp-fg);
-    }
-    .lamp-family-card-tagline {
-      font-size: 12px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.55);
-    }
-    .lamp-family-card-meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--lamp-accent);
-      margin-top: auto;
-    }
-    .lamp-family-card-soon-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #888;
-      border: 1px solid #444;
-      border-radius: 2px;
-      padding: 3px 8px;
-      display: inline-block;
-      width: fit-content;
-    }
-    /* Legacy section */
-    .lamp-legacy-section {
-      background: rgba(255,255,255,0.03);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 56px 0;
-    }
-    .lamp-legacy-headline {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(18px, 2vw, 24px);
-      font-weight: 700;
-      color: var(--lamp-fg);
-      margin: 0 0 8px;
-    }
-    .lamp-legacy-body {
-      font-size: 14px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.55);
-      max-width: 640px;
-      margin-bottom: 32px;
-    }
-    /* Get Started */
-    .lamp-getstarted-section {
-      background: var(--lamp-bg);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 72px 0;
-    }
-    .lamp-gs-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .lamp-gs-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 28px 22px;
-    }
-    .lamp-gs-card-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--lamp-accent);
-      margin-bottom: 10px;
-    }
-    .lamp-gs-card-body {
-      font-size: 13px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.65);
-    }
-    /* Related */
-    .lamp-related-section {
-      background: rgba(255,255,255,0.02);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 72px 0;
-    }
-    .lamp-related-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .lamp-related-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 28px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .lamp-related-card--soon { opacity: 0.5; pointer-events: none; }
-    .lamp-related-vertical {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--lamp-accent);
-    }
-    .lamp-related-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--lamp-fg);
-      letter-spacing: -0.02em;
-    }
-    .lamp-related-name :global(.aa) { color: var(--lamp-accent); }
-    .lamp-related-desc {
-      font-size: 13px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.55);
-      flex: 1;
-      margin: 0;
-    }
-    .lamp-related-cta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--lamp-accent);
-      text-decoration: none;
-      margin-top: 4px;
-    }
-    .lamp-related-soon {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #666;
-    }
-    @media (max-width: 1023px) {
-      .lamp-gs-grid { grid-template-columns: repeat(2, 1fr); }
-      .lamp-related-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 599px) {
-      .lamp-family-grid { grid-template-columns: repeat(2, 1fr); }
-      .lamp-gs-grid { grid-template-columns: 1fr; }
-      .lamp-related-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<style define:vars={t}>
+  .breadcrumb-band {
+    background: #fff;
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #666;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 500;
+  }
+  .breadcrumb-band a { color: #666; text-decoration: none; }
+  .breadcrumb-band a:hover { color: #F32740; }
+  .breadcrumb-band .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb-band .bc-current { color: #000; }
+  .lamp-page {
+    background: var(--lampBg);
+    color: var(--lampFg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+  .lamp-page :global(.aa) { color: var(--lampAccent); }
+  .lamp-subcrumb {
+    padding: 16px 40px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lampFgMuted);
+    border-bottom: 1px solid var(--lampBorder);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .lamp-subcrumb a { color: var(--lampFgMuted); text-decoration: none; }
+  .lamp-subcrumb a:hover { color: var(--lampAccent); }
+  .lamp-subcrumb .sc-sep { margin: 0 4px; color: var(--lampFgDim); }
+  .lamp-subcrumb .current { color: var(--lampFg); font-weight: 600; }
+  .collection-mark {
+    position: absolute;
+    top: 16px;
+    right: 40px;
+    text-align: right;
+    z-index: 2;
+  }
+  .collection-mark__label {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lampFgDim);
+    margin-bottom: 4px;
+  }
+  .collection-mark__name {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--lampAccent);
+  }
+  .lamp-hero {
+    padding: 80px 40px 72px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .lamp-hero__eyebrow {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .lamp-hero__eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--lampAccent);
+    flex-shrink: 0;
+  }
+  .lamp-hero__headline {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: clamp(48px,7vw,96px);
+    font-weight: normal;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--lampFg);
+    margin: 0 0 28px;
+    text-shadow: var(--lampBandTextShadow);
+  }
+  .lamp-hero__desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--lampFgMuted);
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
+  .lamp-hero__pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lamp-hero__pill {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lampFg);
+    border: 1px solid var(--lampBorder);
+    border-radius: 2px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+  .collection-band {
+    background: var(--lampBandBg);
+    border-top: 1px solid var(--lampBorder);
+    border-bottom: 1px solid var(--lampBorder);
+    padding: 56px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .collection-band__bg {
+    position: absolute;
+    inset: 0;
+    background-image: var(--lampWatermarkUrl);
+    background-size: 600px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+  .collection-band > * { position: relative; z-index: 1; }
+  .collection-band__lockup {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: clamp(32px,5vw,64px);
+    font-style: italic;
+    color: var(--lampFg);
+    letter-spacing: -0.01em;
+    text-shadow: var(--lampBandTextShadow);
+    margin-bottom: 8px;
+  }
+  .collection-band__sub {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lampFgDim);
+  }
+  .family-grid-section {
+    background: var(--lampBgSoft);
+    padding: 80px 40px 100px;
+    border-top: 1px solid var(--lampBorder);
+  }
+  .family-grid-section__eyebrow {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .family-grid-section__eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 64px;
+    height: 1.5px;
+    background: var(--lampAccent);
+    flex-shrink: 0;
+  }
+  .family-grid-section__headline {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: clamp(22px,2.8vw,32px);
+    font-style: italic;
+    color: var(--lampFg);
+    margin: 0 0 40px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .family-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+  }
+  .sister-card {
+    background: var(--lampBg);
+    border: 1px solid var(--lampBorder);
+    padding: 28px 24px;
+    text-decoration: none;
+    color: var(--lampFg);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1/1;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .sister-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--lampWatermarkUrl);
+    background-size: 200% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .sister-card:hover:not(.sister-card--soon) {
+    border-color: var(--lampAccent);
+    transform: translateY(-2px);
+    box-shadow: var(--lampHoverShadow);
+  }
+  .sister-card--soon { opacity: 0.4; pointer-events: none; cursor: default; }
+  .sister-card__name {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: 28px;
+    color: var(--lampFg);
+    position: relative;
+    line-height: 1.1;
+  }
+  .sister-card__tagline {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--lampFgMuted);
+    position: relative;
+    margin-top: 8px;
+  }
+  .sister-card__sku-count {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    color: var(--lampFgMuted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .sister-card__arrow { color: var(--lampAccent); margin-left: 4px; }
+  .sister-card__soon-badge {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    border: 1px solid #444;
+    border-radius: 2px;
+    padding: 3px 8px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+  .get-started {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    text-align: center;
+  }
+  .get-started__eyebrow {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .get-started__eyebrow::before,
+  .get-started__eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--lampAccent);
+    flex-shrink: 0;
+  }
+  .get-started__headline {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: clamp(20px,2.5vw,28px);
+    font-style: italic;
+    color: var(--lampFg);
+    margin: 0 0 40px;
+  }
+  .get-started__grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+    text-align: left;
+  }
+  .get-started__card {
+    background: var(--lampBgSoft);
+    border: 1px solid var(--lampBorder);
+    padding: 24px;
+    border-radius: 4px;
+  }
+  .get-started__card-label {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 10px;
+  }
+  .get-started__card-copy { font-size: 13px; line-height: 1.55; color: var(--lampFgMuted); }
+  .get-started__cta {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lampCtaPrimary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--lampCtaPrimary);
+    padding-bottom: 2px;
+  }
+  .get-started__cta:hover { color: var(--lampCtaPrimaryHover); border-color: var(--lampCtaPrimaryHover); }
+  .related-collections {
+    background: var(--lampBgSoft);
+    border-top: 1px solid var(--lampBorder);
+    padding: 64px 40px 80px;
+  }
+  .related-collections__inner { max-width: 1280px; margin: 0 auto; }
+  .related-collections__eyebrow {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .related-collections__eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 64px;
+    height: 1.5px;
+    background: var(--lampAccent);
+    flex-shrink: 0;
+  }
+  .related-collections__headline {
+    font-family: Georgia,'Times New Roman',serif;
+    font-size: clamp(20px,2.5vw,28px);
+    font-style: italic;
+    color: var(--lampFg);
+    margin: 0 0 32px;
+  }
+  .related-collections__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .related-card {
+    background: var(--lampBg);
+    border: 1px solid var(--lampBorder);
+    padding: 24px;
+    text-decoration: none;
+    color: var(--lampFg);
+    transition: border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .related-card:hover { border-color: var(--lampAccent); }
+  .related-card__vertical {
+    font-family: 'JetBrains Mono','Courier New',monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lampFgDim);
+  }
+  .related-card__name { font-family: Georgia,'Times New Roman',serif; font-size: 18px; font-style: italic; color: var(--lampFg); }
+  .related-card__desc { font-size: 12px; line-height: 1.5; color: var(--lampFgMuted); }
+  .related-card__arrow { font-size: 12px; color: var(--lampAccent); margin-top: auto; }
+  @media (max-width: 1024px) {
+    .family-grid { grid-template-columns: repeat(3,1fr); }
+    .get-started__grid { grid-template-columns: repeat(2,1fr); }
+    .related-collections__grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 768px) {
+    .lamp-hero { padding: 48px 24px 40px; }
+    .family-grid-section { padding: 48px 24px 64px; }
+    .family-grid { grid-template-columns: repeat(2,1fr); }
+    .get-started { padding: 48px 24px; }
+    .get-started__grid { grid-template-columns: 1fr; }
+    .related-collections { padding: 40px 24px 56px; }
+    .related-collections__grid { grid-template-columns: 1fr; }
+    .breadcrumb-band { padding: 12px 20px; }
+    .lamp-subcrumb { padding: 12px 24px; }
+    .collection-mark { display: none; }
+    .collection-band { padding: 40px 24px; }
+  }
+  @media (max-width: 480px) {
+    .family-grid { grid-template-columns: 1fr 1fr; }
+    .sister-card { padding: 20px 16px; }
+    .sister-card__name { font-size: 22px; }
+  }
+</style>
 
-  <div class="lamp-page">
-    <!-- §1 BREADCRUMB -->
-    <div class="lamp-breadcrumb">
-      <a href="/">HOME</a>
-      <span class="lamp-bc-sep">›</span>
-      <a href="/collections">PRODUCTS</a>
-      <span class="lamp-bc-sep">›</span>
-      <a href="/collections/indoor">INDOOR</a>
-      <span class="lamp-bc-sep">›</span>
-      <span class="lamp-bc-plain">{subVerticalUpper}</span>
-      <span class="lamp-bc-sep">›</span>
-      <span class="lamp-bc-current" set:html={c.headlineLine}></span>
-    </div>
+<nav class="breadcrumb-band" aria-label="Breadcrumb">
+  <a href="/">HOME</a>
+  <span class="bc-sep">&#x203A;</span>
+  <a href="/collections/">PRODUCTS</a>
+  <span class="bc-sep">&#x203A;</span>
+  <a href="/collections/">{c.parentSubVertical.toUpperCase()}</a>
+  <span class="bc-sep">&#x203A;</span>
+  <span class="bc-current" set:html={c.titleAscii}></span>
+</nav>
 
-    <!-- §2 HERO -->
-    <section class="lamp-hero" id="hero">
-      <div class="lamp-content">
-        <div class="lamp-hero-eyebrow">{verticalUpper} · {subVerticalUpper} COLLECTION</div>
-        <h1 class="lamp-hero-wordmark" set:html={c.headlineLine}></h1>
-        <p class="lamp-hero-desc">{c.description}</p>
-        <div class="lamp-hero-pills">
-          {c.pillRow.map(pill => <span class="lamp-hero-pill">{pill}</span>)}
-        </div>
-      </div>
-    </section>
+<div class="lamp-page">
+  <nav class="lamp-subcrumb" aria-label="Collection navigation">
+    <a href="/collections/">Collections</a>
+    <span class="sc-sep">&#x203A;</span>
+    <span class="current" set:html={c.headlineLine}></span>
+  </nav>
 
-    <!-- §3 FAMILY GRID -->
-    <section class="lamp-families-section" id="families">
-      <div class="lamp-content">
-        <div class="lamp-section-eyebrow">Shapes &amp; Families</div>
-        <h2 class="lamp-section-headline">Browse by shape.</h2>
-        <div class="lamp-family-grid">
-          {c.families.map(fam => (
-            fam.comingSoon ? (
-              <div class="lamp-family-card lamp-family-card--soon" data-coming-soon="true">
-                <div class="lamp-family-card-img-placeholder">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
-                  </svg>
-                </div>
-                <div class="lamp-family-card-name">{fam.name}</div>
-                <div class="lamp-family-card-tagline">{fam.tagline}</div>
-                <span class="lamp-family-card-soon-badge">Coming soon</span>
-              </div>
-            ) : (
-              <a href={`/collections/${c.slug}/${fam.slug}`} class="lamp-family-card">
-                {fam.heroImage ? (
-                  <img src={fam.heroImage} alt={fam.name} class="lamp-family-card-img" loading="lazy"/>
-                ) : (
-                  <div class="lamp-family-card-img-placeholder">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                      <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
-                      <circle cx="12" cy="9" r="2.5"/>
-                    </svg>
-                  </div>
-                )}
-                <div class="lamp-family-card-name">{fam.name}</div>
-                <div class="lamp-family-card-tagline">{fam.tagline}</div>
-                <div class="lamp-family-card-meta">{fam.skuCount} SKU{fam.skuCount !== 1 ? 's' : ''} →</div>
-              </a>
-            )
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- §4 LEGACY (optional) -->
-    {c.legacyFamilies && c.legacyFamilies.length > 0 && (
-      <section class="lamp-legacy-section" id="legacy">
-        <div class="lamp-content">
-          <div class="lamp-section-eyebrow">Legacy &amp; Clearance</div>
-          <h2 class="lamp-legacy-headline">Discontinued &amp; clearance families.</h2>
-          <p class="lamp-legacy-body">These families have been discontinued or are in clearance status. Limited stock may be available — contact your rep or distributor.</p>
-          <div class="lamp-family-grid">
-            {c.legacyFamilies.map(fam => (
-              <div class="lamp-family-card lamp-family-card--soon">
-                <div class="lamp-family-card-img-placeholder">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9l6 6M15 9l-6 6"/>
-                  </svg>
-                </div>
-                <div class="lamp-family-card-name">{fam.name}</div>
-                <div class="lamp-family-card-tagline">{fam.tagline}</div>
-                <span class="lamp-family-card-soon-badge">Clearance</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- §5 GET STARTED -->
-    <section class="lamp-getstarted-section" id="get-started">
-      <div class="lamp-content">
-        <div class="lamp-section-eyebrow">Get Started</div>
-        <h2 class="lamp-section-headline">Ready to specify?</h2>
-        <div class="lamp-gs-grid">
-          <div class="lamp-gs-card">
-            <div class="lamp-gs-card-label">Layout</div>
-            <p class="lamp-gs-card-body" set:html={c.getStarted.layoutCopy}></p>
-          </div>
-          <div class="lamp-gs-card">
-            <div class="lamp-gs-card-label">Sample</div>
-            <p class="lamp-gs-card-body" set:html={c.getStarted.sampleCopy}></p>
-          </div>
-          <div class="lamp-gs-card">
-            <div class="lamp-gs-card-label">Distributor</div>
-            <p class="lamp-gs-card-body" set:html={c.getStarted.distributorCopy}></p>
-          </div>
-          <div class="lamp-gs-card">
-            <div class="lamp-gs-card-label">Rep</div>
-            <p class="lamp-gs-card-body" set:html={c.getStarted.repCopy}></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- §6 RELATED COLLECTIONS -->
-    <section class="lamp-related-section" id="related">
-      <div class="lamp-content">
-        <div class="lamp-section-eyebrow">Related Collections</div>
-        <h2 class="lamp-section-headline">Explore the full portfolio.</h2>
-        <div class="lamp-related-grid">
-          {c.relatedCollections.map(col => (
-            <div class={`lamp-related-card ${col.status === 'coming-soon' ? 'lamp-related-card--soon' : ''}`}>
-              <div class="lamp-related-vertical">{col.vertical.toUpperCase()}</div>
-              <div class="lamp-related-name" set:html={col.name}></div>
-              <p class="lamp-related-desc" set:html={col.description}></p>
-              {col.status === 'live'
-                ? <a href={`/collections/${col.slug}`} class="lamp-related-cta">View →</a>
-                : <span class="lamp-related-soon">Coming soon</span>
-              }
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+  <div class="collection-mark" aria-hidden="true">
+    <div class="collection-mark__label">Collection</div>
+    <div class="collection-mark__name" set:html={c.headlineLine}></div>
   </div>
+
+  <section class="lamp-hero" aria-labelledby="lamp-hero-headline">
+    <div class="lamp-hero__eyebrow">{c.parentSubVertical.toUpperCase()}</div>
+    <h1 class="lamp-hero__headline" id="lamp-hero-headline" set:html={c.headlineLine}></h1>
+    <p class="lamp-hero__desc">{c.description}</p>
+    {c.pillRow && c.pillRow.length > 0 && (
+      <div class="lamp-hero__pills">
+        {c.pillRow.map((pill: string) => (
+          <span class="lamp-hero__pill">{pill}</span>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <div class="collection-band" aria-hidden="true">
+    <div class="collection-band__bg"></div>
+    <div class="collection-band__lockup" set:html={c.headlineLine}></div>
+    <div class="collection-band__sub">{collBandSub}</div>
+  </div>
+
+  <section class="family-grid-section" aria-labelledby="family-grid-headline">
+    <div class="family-grid-section__eyebrow">Shape Families</div>
+    <h2 class="family-grid-section__headline" id="family-grid-headline">Select a family to explore SKUs</h2>
+    <div class="family-grid">
+      {c.families.map((fam: any) => (
+        fam.comingSoon
+          ? (
+            <div class="sister-card sister-card--soon" aria-label={`${fam.name} — coming soon`}>
+              <div class="sister-card__name">{fam.name}</div>
+              <div>
+                <div class="sister-card__sku-count">Coming soon</div>
+                <span class="sister-card__soon-badge">Coming Soon</span>
+              </div>
+            </div>
+          )
+          : (
+            <a href={`/collections/${c.slug}/${fam.slug}/`} class="sister-card">
+              <div class="sister-card__name">{fam.name}</div>
+              {fam.tagline && <div class="sister-card__tagline">{fam.tagline}</div>}
+              <div class="sister-card__sku-count">
+                {fam.skuCount} SKUs <span class="sister-card__arrow">&#x2192;</span>
+              </div>
+            </a>
+          )
+      ))}
+    </div>
+  </section>
+
+  <section class="get-started" aria-labelledby="get-started-headline">
+    <div class="get-started__eyebrow">Get Started</div>
+    <h2 class="get-started__headline" id="get-started-headline">Ready to specify?</h2>
+    <div class="get-started__grid">
+      <div class="get-started__card">
+        <div class="get-started__card-label">Request a Sample</div>
+        <p class="get-started__card-copy" set:html={c.getStarted.sampleCopy}></p>
+        <a href="/contact/" class="get-started__cta">Request Sample &#x2192;</a>
+      </div>
+      <div class="get-started__card">
+        <div class="get-started__card-label">Find a Distributor</div>
+        <p class="get-started__card-copy" set:html={c.getStarted.distributorCopy}></p>
+        <a href="/contact/" class="get-started__cta">Find Distributor &#x2192;</a>
+      </div>
+      <div class="get-started__card">
+        <div class="get-started__card-label">Find a Rep</div>
+        <p class="get-started__card-copy" set:html={c.getStarted.repCopy}></p>
+        <a href="/contact/" class="get-started__cta">Find Rep &#x2192;</a>
+      </div>
+      <div class="get-started__card">
+        <div class="get-started__card-label">Planogram Layout</div>
+        <p class="get-started__card-copy" set:html={c.getStarted.layoutCopy}></p>
+        <a href="/contact/" class="get-started__cta">Download Layout &#x2192;</a>
+      </div>
+    </div>
+  </section>
+
+  {c.relatedCollections && c.relatedCollections.length > 0 && (
+    <section class="related-collections" aria-labelledby="related-headline">
+      <div class="related-collections__inner">
+        <div class="related-collections__eyebrow">Related Collections</div>
+        <h2 class="related-collections__headline" id="related-headline">Explore more from Archipelago</h2>
+        <div class="related-collections__grid">
+          {c.relatedCollections.map((rc: any) => (
+            <a href={`/collections/${rc.slug}/`} class="related-card">
+              <div class="related-card__vertical">{rc.vertical}</div>
+              <div class="related-card__name" set:html={rc.name}></div>
+              <p class="related-card__desc">{rc.description}</p>
+              <div class="related-card__arrow">&#x2192;</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</div>
 </BaseLayout>

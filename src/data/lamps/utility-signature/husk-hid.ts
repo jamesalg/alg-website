@@ -1,18 +1,18 @@
 /**
- * BR Flood family detail data
+ * HID Retrofit family detail data
  * Collection: utility-signature
- * v2.7.0
+ * v2.7.2 — comingSoon set to false; husk-hid has live SKUs in sku-index.json
  */
-const br_lampData = {
-  slug: 'br-lamp',
-  name: 'BR Flood',
+const hid_retrofitData = {
+  slug: 'husk-hid',
+  name: 'HID Retrofit',
   collectionSlug: 'utility-signature',
   collectionName: 'Utility sign<span class="aa">Ⓐ</span>TURE',
   collectionTitleAscii: 'UTILITY SIGN<span class="aa">Ⓐ</span>TURE',
   collectionHeadlineLine: 'Utility sign<span class="aa">Ⓐ</span>TURE',
   collectionAesthetic: 'utility' as const,
-  tagline: 'BR40 flood lamps for recessed and track lighting.',
-  description: 'BR40 flood lamps for recessed and track lighting.',
+  tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
+  description: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
   heroImage: '',
   echelon: undefined,
   keySpecs: {
@@ -24,14 +24,14 @@ const br_lampData = {
   certifications: ['UL Listed', 'FCC'],
   datasheetUrl: undefined,
   installGuideUrl: undefined,
-  comingSoon: true,
+  comingSoon: false,
   isTubularArch: false,
 };
 
 export const siblingFamilies = [
-  { slug: 'a-lamp', name: 'A-Lamp', skuCount: 5, tagline: '' },
-  { slug: 'husk-hid', name: 'Hid Retrofit', skuCount: 5, tagline: '' },
-  { slug: 'par-lamp', name: 'PAR-Lamp', skuCount: 5, tagline: '' },
+  { slug: 'a-lamp', name: 'A-Lamp', skuCount: 7, tagline: '' },
+  { slug: 'br-lamp', name: 'BR-Lamp', skuCount: 7, tagline: '' },
+  { slug: 'par-lamp', name: 'PAR-Lamp', skuCount: 7, tagline: '' },
 ];
 
 export const relatedCollections = [
@@ -46,4 +46,4 @@ export const getStarted = {
   repCopy: 'Connect with a local sales rep for specification support and pricing.',
 };
 
-export default br_lampData;
+export default hid_retrofitData;

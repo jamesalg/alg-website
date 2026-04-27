@@ -8,8 +8,8 @@ const a19Data = {
   name: 'A19',
   collectionSlug: 'nostalgic-decor',
   collectionName: 'Nostalgic Décor',
-  collectionTitleAscii: 'Nostalgic Decor',
-  collectionHeadlineLine: 'Nostalgic Décor',
+  collectionTitleAscii: 'NOST<span class="aa">Ⓐ</span>LGIC',
+  collectionHeadlineLine: 'Décor | nost<span class="aa">Ⓐ</span>LGIC',
   collectionAesthetic: 'nostalgic' as const,
   tagline: 'Standard A19 shape with warm nostalgic finish for residential and hospitality applications.',
   description: 'Standard A19 shape with warm nostalgic finish for residential and hospitality applications.',
@@ -31,20 +31,19 @@ const a19Data = {
 export default a19Data;
 
 export const siblingFamilies = [
-  { slug: 'a15', vertical: 'General', name: 'A15' },
-  { slug: 'a19', vertical: 'General', name: 'A19' },
-  { slug: 'b10', vertical: 'General', name: 'B10' },
-  { slug: 'ca10', vertical: 'General', name: 'CA10' },
-  { slug: 'candle-blunt-tip', vertical: 'General', name: 'Candle Blunt-Tip' },
-  { slug: 'candle-flame-tip', vertical: 'General', name: 'Candle Flame-Tip' },
-  { slug: 'globe-g16-5', vertical: 'General', name: 'Globe G16.5' },
-  { slug: 'globe-g25', vertical: 'General', name: 'Globe G25' },
-  { slug: 's14', vertical: 'General', name: 'S14' },
+  { slug: 'a15', name: 'A15', skuCount: 14, tagline: '' },
+  { slug: 'b10', name: 'B10', skuCount: 14, tagline: '' },
+  { slug: 'ca10', name: 'CA10', skuCount: 14, tagline: '' },
+  { slug: 'candle-blunt-tip', name: 'Candle Blunt-Tip', skuCount: 14, tagline: '' },
+  { slug: 'candle-flame-tip', name: 'Candle Flame-Tip', skuCount: 14, tagline: '' },
+  { slug: 'g16-5', name: 'Globe G16.5', skuCount: 14, tagline: '' },
+  { slug: 'g25', name: 'Globe G25', skuCount: 14, tagline: '' },
+  { slug: 's14', name: 'S14', skuCount: 14, tagline: '' },
 ];
 
 export const relatedCollections = [
-  { slug: 'vintage-decor', vertical: 'Decorative', name: 'Vintage Décor', href: '/collections/vintage-decor/' },
-  { slug: 'consumer', vertical: 'Consumer', name: 'Consumer & Retail', href: '/collections/consumer/' },
+  { slug: 'luxoarch', vertical: 'Commercial', name: 'luxoⒶRCH', description: 'Commercial-grade LED luminaires.', status: 'live' as const },
+  { slug: 'planoarch', vertical: 'Commercial', name: 'planoⒶRCH', description: 'Flat-panel LED for commercial spaces.', status: 'live' as const },
 ];
 
 export const getStarted = {

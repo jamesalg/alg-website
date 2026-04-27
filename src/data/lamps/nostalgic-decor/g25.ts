@@ -1,18 +1,18 @@
 /**
- * Candle (Blunt-Tip) family detail data
+ * Globe G25 family detail data
  * Collection: nostalgic-decor
  * v2.7.0
  */
-const candle_blunt_tipData = {
-  slug: 'candle-blunt-tip',
-  name: 'Candle (Blunt-Tip)',
+const globe_g25Data = {
+  slug: 'g25',
+  name: 'Globe G25',
   collectionSlug: 'nostalgic-decor',
   collectionName: 'Nostalgic Décor',
   collectionTitleAscii: 'NOST<span class="aa">Ⓐ</span>LGIC',
   collectionHeadlineLine: 'Décor | nost<span class="aa">Ⓐ</span>LGIC',
   collectionAesthetic: 'nostalgic' as const,
-  tagline: 'B10 blunt-tip candelabra lamps for chandeliers and sconces.',
-  description: 'B10 blunt-tip candelabra lamps for chandeliers and sconces.',
+  tagline: 'G25 medium globe lamps for vanity and decorative pendants.',
+  description: 'G25 medium globe lamps for vanity and decorative pendants.',
   heroImage: '',
   echelon: undefined,
   keySpecs: {
@@ -29,14 +29,14 @@ const candle_blunt_tipData = {
 };
 
 export const siblingFamilies = [
-  { slug: 'a15', name: 'A15', skuCount: 25, tagline: '' },
+  { slug: 'a15', name: 'A15', skuCount: 14, tagline: '' },
   { slug: 'a19', name: 'A19', skuCount: 14, tagline: '' },
-  { slug: 'b10', name: 'B10', skuCount: 33, tagline: '' },
-  { slug: 'ca10', name: 'CA10', skuCount: 22, tagline: '' },
-  { slug: 'candle-flame-tip', name: 'Candle Flame-Tip', skuCount: 0, tagline: '' },
-  { slug: 'g16-5', name: 'Globe G16.5', skuCount: 0, tagline: '' },
-  { slug: 'g25', name: 'Globe G25', skuCount: 0, tagline: '' },
-  { slug: 's14', name: 'S14', skuCount: 16, tagline: '' },
+  { slug: 'b10', name: 'B10', skuCount: 14, tagline: '' },
+  { slug: 'ca10', name: 'CA10', skuCount: 14, tagline: '' },
+  { slug: 'candle-blunt-tip', name: 'Candle Blunt-Tip', skuCount: 14, tagline: '' },
+  { slug: 'candle-flame-tip', name: 'Candle Flame-Tip', skuCount: 14, tagline: '' },
+  { slug: 'g16-5', name: 'Globe G16.5', skuCount: 14, tagline: '' },
+  { slug: 's14', name: 'S14', skuCount: 14, tagline: '' },
 ];
 
 export const relatedCollections = [
@@ -51,4 +51,4 @@ export const getStarted = {
   repCopy: 'Connect with a local sales rep for specification support and pricing.',
 };
 
-export default candle_blunt_tipData;
+export default globe_g25Data;
