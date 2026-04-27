@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  <text x="20" y="52" font-family="Bogle, Arial, sans-serif" font-weight="700" font-size="34" fill="#0071CE" letter-spacing="-0.5">Walmart</text>
+  <circle cx="218" cy="40" r="14" fill="#FFC220"/>
+  <g fill="#FFC220" transform="translate(218,40)">
+    <rect x="-2" y="-14" width="4" height="10" rx="2"/>
+    <rect x="-2" y="4" width="4" height="10" rx="2"/>
+    <rect x="-14" y="-2" width="10" height="4" rx="2"/>
+    <rect x="4" y="-2" width="10" height="4" rx="2"/>
+    <rect x="-11" y="-11" width="4" height="10" rx="2" transform="rotate(45)"/>
+    <rect x="-11" y="-11" width="4" height="10" rx="2" transform="rotate(135)"/>
+    <rect x="-11" y="-11" width="4" height="10" rx="2" transform="rotate(225)"/>
+    <rect x="-11" y="-11" width="4" height="10" rx="2" transform="rotate(315)"/>
+  </g>
+</svg>

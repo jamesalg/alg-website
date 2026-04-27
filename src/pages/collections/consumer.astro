@@ -43,7 +43,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <span class="c-meta-dot">·</span>
       <span><strong>5</strong> retail brands</span>
       <span class="c-meta-dot">·</span>
-      <span><strong>2</strong> decades supplying shelves</span>
+      <span><strong>30+</strong> years supplying shelves</span>
     </div>
     <div class="c-hero-ctas">
       <a href="/support/catalog-request" class="c-btn-primary">Browse the Full Catalog</a>
@@ -137,7 +137,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <ul class="c-cap-card-list">
           <li>Stocked in US warehouses for fast replenishment and in-season continuity</li>
           <li>Retail-ready packaging support: multi-pack, PDQ shipper, and shelf-ready formats</li>
-          <li>OEM/white-label experience supplying national retailers for two decades</li>
+          <li>OEM/white-label experience supplying national retailers for three decades</li>
         </ul>
       </div>
       <div class="c-cap-card">
@@ -456,25 +456,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <section class="c-retail">
   <div class="c-retail-inner">
     <div class="c-section-eyebrow">Retail Partners &amp; Brand Relationships</div>
-    <h2 class="c-retail-h2">Nine retailers. Two decades.</h2>
-    <p class="c-retail-sub">We don't sell directly to consumers — we put product on the shelves of the people who do. Two decades of OEM and white-label experience supplying America's largest home and garden retailers.</p>
+    <h2 class="c-retail-h2">Nine retailers. Three decades.</h2>
+    <p class="c-retail-sub">We don't sell directly to consumers — we put product on the shelves of the people who do. Three decades of OEM and white-label experience supplying America's largest home and garden retailers.</p>
     <div class="c-retail-stats">
       <div class="c-retail-stat"><span class="c-retail-stat-val">9</span><span class="c-retail-stat-lbl">National retail accounts</span></div>
-      <div class="c-retail-stat"><span class="c-retail-stat-val">20+</span><span class="c-retail-stat-lbl">Years supplying shelves</span></div>
-      <div class="c-retail-stat"><span class="c-retail-stat-val">12M+</span><span class="c-retail-stat-lbl">Units shipped</span></div>
+      <div class="c-retail-stat"><span class="c-retail-stat-val">30+</span><span class="c-retail-stat-lbl">Years supplying shelves</span></div>
+      <div class="c-retail-stat"><span class="c-retail-stat-val">85M+</span><span class="c-retail-stat-lbl">Units shipped</span></div>
       <div class="c-retail-stat"><span class="c-retail-stat-val">5</span><span class="c-retail-stat-lbl">US warehouses</span></div>
     </div>
     <div class="c-retail-grid-eyebrow">National Big-Box Retailers</div>
     <div class="c-retail-grid">
-      <div class="c-retail-tile">Batteries Plus</div>
-      <div class="c-retail-tile">Canadian Tire</div>
-      <div class="c-retail-tile">Costco</div>
-      <div class="c-retail-tile">Fred Meyer</div>
-      <div class="c-retail-tile">Kroger</div>
-      <div class="c-retail-tile">Lowe's</div>
-      <div class="c-retail-tile">The Home Depot</div>
-      <div class="c-retail-tile">Tractor Supply Co.</div>
-      <div class="c-retail-tile">Walmart</div>
+      <div class="c-retail-tile"><img src="/retailers/batteries-plus.svg" alt="Batteries Plus" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/canadian-tire.svg" alt="Canadian Tire" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/costco.svg" alt="Costco" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/fred-meyer.svg" alt="Fred Meyer" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/kroger.svg" alt="Kroger" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/lowes.svg" alt="Lowe's" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/the-home-depot.svg" alt="The Home Depot" class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/tractor-supply-co.svg" alt="Tractor Supply Co." class="c-retail-logo" /></div>
+      <div class="c-retail-tile"><img src="/retailers/walmart.svg" alt="Walmart" class="c-retail-logo" /></div>
     </div>
   </div>
 </section>
@@ -1270,19 +1270,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 }
 .c-retail-tile {
   background: #fff;
-  border: 1px solid var(--ink4);
+  border: 1px solid #e5e5e5;
   border-radius: 6px;
-  padding: 28px 24px;
+  padding: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.3px;
-  text-align: center;
-  min-height: 80px;
+  min-height: 100px;
+  aspect-ratio: 3 / 1;
+}
+.c-retail-logo {
+  max-height: 56px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* ============================================================
