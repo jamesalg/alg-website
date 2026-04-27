@@ -71,7 +71,6 @@ const heroSlides = [
     // D (v2.5.5): multi-color gradient sampled from hero-outdoor-area.jpg
     // Hues: warm sunset orange → rose-mauve horizon → deep sky blue → cool steel blue
     seriesNameGradient: 'linear-gradient(95deg, #f0a050 0%, #e87880 28%, #9878c0 55%, #6a8cb2 80%, #4890d0 100%)',
-    lineDrawingClass: 'liberty-render', // C2: -20% size
     desc: null,
     lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
     stats: [
@@ -761,13 +760,16 @@ const verticals = [
   .slot-desc { min-height: 72px; margin-bottom: 26px; }
   .slot-stats { min-height: 80px; margin-bottom: 26px; }
   .slot-cta { min-height: 48px; }
-  /* Fix 3: Product render slot — anchored bottom-LEFT per golden template */
+  /* A3 (v2.5.9): Canonical containment box — line drawing stays below CTA row at all desktop widths */
   .slot-product-img {
     position: absolute;
     bottom: 0;
     left: 24px;
-    width: 70%;
-    height: 440px;
+    /* clamp: min 280px, prefer 38% viewport width, max 560px */
+    width: clamp(280px, 38%, 560px);
+    /* clamp: min 200px, prefer 28vh, max 380px — hard cap prevents overflow at 4K */
+    height: clamp(200px, 28vh, 380px);
+    overflow: hidden; /* hard backstop: drawing cannot escape container */
     pointer-events: none;
     z-index: 0;
   }
@@ -779,9 +781,11 @@ const verticals = [
     justify-content: flex-start;
   }
   .product-render {
-    max-width: 100%;
-    max-height: 440px;
-    object-fit: contain;
+    max-width: 100%;    /* never wider than container */
+    max-height: 100%;   /* never taller than container — key fix */
+    width: auto;
+    height: auto;
+    object-fit: contain;        /* preserves aspect ratio, fits inside box */
     object-position: bottom left;
     opacity: 0.70;
     filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
@@ -844,10 +848,7 @@ const verticals = [
     letter-spacing: inherit;
     line-height: inherit;
   }
-  /* C2 (v2.5.4): Liberty line drawing −20% — only this slide */
-  .product-render.liberty-render {
-    max-height: 352px; /* 440px × 0.80 = 352px */
-  }
+  /* A5 (v2.5.9): Liberty -20% per-slide hack removed — container clamp() handles all slides uniformly */
 
   .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
 
