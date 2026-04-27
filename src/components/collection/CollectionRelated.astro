@@ -1,0 +1,145 @@
+---
+/**
+ * CollectionRelated.astro
+ * §9 Related Collections — 4 cards.
+ * Live cards get "View →" link; coming-soon cards get disabled grey text.
+ */
+export interface Props {
+  relatedCollections: {
+    slug: string;
+    name: string;
+    vertical: string;
+    description: string;
+    status: 'live' | 'coming-soon';
+  }[];
+}
+const { relatedCollections } = Astro.props;
+---
+<section class="collection-section collection-section--related" id="related">
+  <div class="collection-content">
+    <div class="rel-eyebrow">Related Collections</div>
+    <h2 class="rel-headline">Explore the full portfolio.</h2>
+    <div class="rel-grid">
+      {relatedCollections.map(col => (
+        <div class={`rel-card ${col.status === 'coming-soon' ? 'rel-card--soon' : ''}`}>
+          <div class="rel-vertical">{col.vertical.toUpperCase()}</div>
+          <div class="rel-name" set:html={col.name}></div>
+          <p class="rel-desc">{col.description}</p>
+          {col.status === 'live'
+            ? <a href={`/collections/${col.slug}`} class="rel-cta">View →</a>
+            : <span class="rel-soon">Coming soon</span>
+          }
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-section--related {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+  .rel-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 16px;
+  }
+  .rel-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .rel-headline {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink, #111418);
+    margin: 0 0 40px;
+  }
+  .rel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .rel-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.2s ease;
+  }
+  .rel-card:hover:not(.rel-card--soon) {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+  }
+  .rel-card--soon {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .rel-vertical {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+  }
+  .rel-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink, #111418);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .rel-name :global(.aa) { color: var(--color-alg-red, #F32740); }
+  .rel-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink2, #444444);
+    flex: 1;
+    margin: 0;
+  }
+  .rel-cta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .rel-cta:hover { text-decoration: underline; }
+  .rel-soon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-top: 4px;
+    display: inline-block;
+    cursor: default;
+  }
+  @media (max-width: 1023px) { .rel-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 599px)  { .rel-grid { grid-template-columns: 1fr; } }
+</style>

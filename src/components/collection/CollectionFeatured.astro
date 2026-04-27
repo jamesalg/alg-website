@@ -1,0 +1,227 @@
+---
+/**
+ * CollectionFeatured.astro
+ * §5 Featured Families — 5 square-aspect cards on dark bg.
+ * C3: Square aspect (1/1.05) — plano canonical.
+ * Background: #0c0d12 (black).
+ */
+export interface Props {
+  collectionName: string;
+  collectionSlug: string;
+  featured: {
+    family: string;
+    subCategory: string;
+    displayEchelon: 'ECO' | 'PRO' | 'PRO+';
+    maxWattage: number | null;
+    skuCount: number;
+    dlc: boolean;
+    lineDrawing: string | null;
+  }[];
+}
+const { collectionName, collectionSlug, featured } = Astro.props;
+---
+<section class="collection-section collection-section--featured" id="highlights">
+  <div class="collection-content">
+    <div class="feat-eyebrow">Featured Families</div>
+    <div class="feat-header">
+      <h2 class="feat-headline">Five flagship families from the {collectionName.replace(/Ⓐ/g, '')} collection.</h2>
+    </div>
+    <div class="feat-grid">
+      {featured.map(f => (
+        <div class={`feat-card tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}`}>
+          <!-- Top strip: sub-category + tier badge -->
+          <div class="feat-top">
+            <span class="feat-subcat">{f.subCategory.toUpperCase()}</span>
+            <span class={`feat-tier tier-badge tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}`}>{f.displayEchelon}</span>
+          </div>
+          <!-- Image area -->
+          <div class="feat-img">
+            {f.lineDrawing
+              ? <img src={f.lineDrawing} alt={`${f.family} line drawing`} loading="lazy" />
+              : <span class="feat-watermark">{f.family}</span>
+            }
+          </div>
+          <!-- Bottom strip -->
+          <div class="feat-bottom">
+            <div class="feat-name">{f.family}</div>
+            <div class="feat-meta">
+              {f.maxWattage && <span class="feat-watt">{f.maxWattage}W max</span>}
+              <span class="feat-skus">{f.skuCount} SKUs</span>
+              {f.dlc && <span class="feat-dlc-badge">DLC</span>}
+            </div>
+            <a href={`/collections/${collectionSlug}/${f.family.toLowerCase().replace(/\s+/g,'-')}`} class="feat-view">VIEW →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-section--featured {
+    background: #0c0d12;
+    padding: 80px 0;
+  }
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+  .feat-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 20px;
+  }
+  .feat-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .feat-headline {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 0 0 40px;
+    max-width: 640px;
+  }
+  /* C3: 5-col grid, square-aspect cards */
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .feat-card {
+    background: #0a0e1a;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    aspect-ratio: 1 / 1.05;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .feat-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  /* Top strip */
+  .feat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    min-height: 36px;
+    flex-shrink: 0;
+  }
+  .feat-subcat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  /* Tier badges — always visible */
+  .tier-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .tier-eco   { background: #1a2a1a; color: #4caf50; border: 1px solid rgba(76,175,80,0.4); }
+  .tier-pro   { background: #1a1a2a; color: #7c9fff; border: 1px solid rgba(124,159,255,0.4); }
+  .tier-pro-plus { background: #2a1a2a; color: #e879f9; border: 1px solid rgba(232,121,249,0.4); }
+  /* Image area — fills remaining space */
+  .feat-img {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px;
+  }
+  .feat-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: brightness(0.85);
+  }
+  .feat-watermark {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(14px, 2vw, 20px);
+    font-weight: 800;
+    color: rgba(255,255,255,0.08);
+    text-align: center;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    word-break: break-word;
+    padding: 0 8px;
+  }
+  /* Bottom strip */
+  .feat-bottom {
+    padding: 10px 12px 14px;
+    flex-shrink: 0;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .feat-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .feat-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .feat-watt, .feat-skus {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+  }
+  .feat-dlc-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: rgba(243,39,64,0.15);
+    color: var(--color-alg-red, #F32740);
+    border: 1px solid rgba(243,39,64,0.35);
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+  .feat-view {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    margin-top: 2px;
+    display: inline-block;
+  }
+  .feat-view:hover { text-decoration: underline; }
+  @media (max-width: 1199px) { .feat-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 767px)  { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>

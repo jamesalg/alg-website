@@ -1,0 +1,113 @@
+---
+/**
+ * CollectionApplications.astro
+ * §4 BROWSE BY APPLICATION — tile grid.
+ * C2: Title is always "BROWSE BY APPLICATION" (canonical).
+ * Tiles are light-bg (luxo canonical).
+ */
+export interface Props {
+  applications: { name: string; slug: string; skuCount: number; icon: string }[];
+}
+const { applications } = Astro.props;
+---
+<section class="collection-section collection-section--applications" id="applications">
+  <div class="collection-content">
+    <!-- C2: Canonical eyebrow — always "BROWSE BY APPLICATION" -->
+    <div class="sec-eyebrow">Browse by application</div>
+    <div class="app-grid">
+      {applications.map(app => (
+        <button class="app-tile" data-app={app.slug} aria-pressed="false">
+          <span class="app-icon" set:html={app.icon}></span>
+          <span class="app-label">{app.name}</span>
+          <span class="app-count">{app.skuCount} SKUs</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-section--applications {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+  }
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+  .sec-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 28px;
+  }
+  .sec-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  /* Light tiles (luxo canonical) */
+  .app-tile {
+    background: #f8f8f6;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 28px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+    color: inherit;
+  }
+  .app-tile:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+    border-color: var(--color-alg-red, #F32740);
+  }
+  .app-tile[aria-pressed="true"] {
+    border-color: var(--color-alg-red, #F32740);
+    background: #fff0f2;
+    box-shadow: 0 0 0 2px var(--color-alg-red, #F32740);
+  }
+  .app-tile[aria-pressed="true"] :global(svg) { stroke: var(--color-alg-red, #F32740); }
+  .app-tile[aria-pressed="true"] .app-label { color: var(--color-alg-red, #F32740); }
+  .app-icon :global(svg) {
+    width: 32px;
+    height: 32px;
+    stroke: #8a8f99;
+    transition: stroke 0.2s ease;
+  }
+  .app-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .app-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #8a8f99;
+  }
+  @media (max-width: 1199px) { .app-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 767px)  { .app-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * CollectionPageLayout.astro
+ *
+ * Shared layout for all collection pages.
+ * Collection pages MUST contain only:
+ *   import layout from '...CollectionPageLayout.astro';
+ *   import data from '...data/collections/{slug}.ts';
+ *   <CollectionPageLayout collection={data} />
+ *
+ * Props interface (TypeScript):
+ * {
+ *   collection: {
+ *     slug: 'luxoarch' | 'planoarch' | string,
+ *     parentVertical: string,
+ *     name: string,
+ *     titleAscii: string,
+ *     headlineLine: string,
+ *     description: string,
+ *     pillRow: string[],
+ *     statStrip: { value: string, label: string }[],
+ *     redBanner: { value: string, label: string }[],
+ *     applications: { name: string, slug: string, skuCount: number, icon: string }[],
+ *     featured: { family: string, subCategory: string, displayEchelon: 'ECO'|'PRO'|'PRO+', maxWattage: number|null, skuCount: number, dlc: boolean, lineDrawing: string|null }[],
+ *     familiesHeadline: string,
+ *     familiesSubhead: string,
+ *     legacy: { headline: string, body: string, notifyLink: string },
+ *     getStarted: { layoutCopy: string, sampleCopy: string, distributorCopy: string, repCopy: string },
+ *     relatedCollections: { slug: string, name: string, vertical: string, description: string, status: 'live'|'coming-soon' }[]
+ *   }
+ * }
+ */
+import BaseLayout from './BaseLayout.astro';
+import CollectionHero from '../components/collection/CollectionHero.astro';
+import CollectionStatStrip from '../components/collection/CollectionStatStrip.astro';
+import CollectionApplications from '../components/collection/CollectionApplications.astro';
+import CollectionRedBanner from '../components/collection/CollectionRedBanner.astro';
+import CollectionFeatured from '../components/collection/CollectionFeatured.astro';
+import CollectionAllFamilies from '../components/collection/CollectionAllFamilies.astro';
+import CollectionLegacy from '../components/collection/CollectionLegacy.astro';
+import CollectionGetStarted from '../components/collection/CollectionGetStarted.astro';
+import CollectionRelated from '../components/collection/CollectionRelated.astro';
+import CollectionAnchorNav from '../components/CollectionAnchorNav.astro';
+
+export interface Props {
+  collection: {
+    slug: string;
+    parentVertical: string;
+    name: string;
+    titleAscii: string;
+    headlineLine: string;
+    description: string;
+    pillRow: string[];
+    statStrip: { value: string; label: string }[];
+    redBanner: { value: string; label: string }[];
+    applications: { name: string; slug: string; skuCount: number; icon: string }[];
+    featured: {
+      family: string;
+      subCategory: string;
+      displayEchelon: 'ECO' | 'PRO' | 'PRO+';
+      maxWattage: number | null;
+      skuCount: number;
+      dlc: boolean;
+      lineDrawing: string | null;
+    }[];
+    familiesHeadline: string;
+    familiesSubhead: string;
+    legacy: { headline: string; body: string; notifyLink: string };
+    getStarted: { layoutCopy: string; sampleCopy: string; distributorCopy: string; repCopy: string };
+    relatedCollections: {
+      slug: string;
+      name: string;
+      vertical: string;
+      description: string;
+      status: 'live' | 'coming-soon';
+    }[];
+  };
+}
+
+const { collection: c } = Astro.props;
+
+const anchorSections = [
+  { id: 'hero',        label: 'Overview'    },
+  { id: 'stats',       label: 'Quick stats' },
+  { id: 'applications',label: 'Applications'},
+  { id: 'highlights',  label: 'Featured'    },
+  { id: 'families',    label: 'All families'},
+  { id: 'legacy',      label: 'Legacy'      },
+  { id: 'get-started', label: 'Get started' },
+  { id: 'related',     label: 'Related'     },
+];
+---
+<BaseLayout title={`${c.titleAscii} | Archipelago Lighting Group`} description={c.description}>
+  <!-- §1+2 Hero (breadcrumb + hero) -->
+  <CollectionHero
+    slug={c.slug}
+    parentVertical={c.parentVertical}
+    headlineLine={c.headlineLine}
+    description={c.description}
+    pillRow={c.pillRow}
+  />
+
+  <!-- §3 Quick stats -->
+  <CollectionStatStrip statStrip={c.statStrip} />
+
+  <!-- §4 Browse by application -->
+  <CollectionApplications applications={c.applications} />
+
+  <!-- §5 Red banner -->
+  <CollectionRedBanner redBanner={c.redBanner} />
+
+  <!-- §6 Featured families -->
+  <CollectionFeatured
+    collectionName={c.name}
+    collectionSlug={c.slug}
+    featured={c.featured}
+  />
+
+  <!-- §7 All families -->
+  <CollectionAllFamilies
+    collectionSlug={c.slug}
+    familiesHeadline={c.familiesHeadline}
+    familiesSubhead={c.familiesSubhead}
+  />
+
+  <!-- §8 Legacy -->
+  <CollectionLegacy legacy={c.legacy} />
+
+  <!-- §9 Get started -->
+  <CollectionGetStarted getStarted={c.getStarted} />
+
+  <!-- §10 Related -->
+  <CollectionRelated relatedCollections={c.relatedCollections} />
+
+  <!-- Sticky anchor nav -->
+  <CollectionAnchorNav sections={anchorSections} />
+</BaseLayout>

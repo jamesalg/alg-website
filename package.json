@@ -19,6 +19,7 @@
     "node": ">=20.0.0"
   },
   "devDependencies": {
-    "jsdom": "^29.0.2"
+    "jsdom": "^29.0.2",
+    "xlsx": "^0.18.5"
   }
 }

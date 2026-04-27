@@ -1,0 +1,74 @@
+---
+/**
+ * CollectionRedBanner.astro
+ * Full-width red stat strip — 6 cells.
+ */
+export interface Props {
+  redBanner: { value: string; label: string }[];
+}
+const { redBanner } = Astro.props;
+---
+<section class="collection-section collection-section--red-banner">
+  <div class="rb-inner">
+    {redBanner.map((cell, i) => (
+      <>
+        <div class="rb-col">
+          <span class="rb-num">{cell.value}</span>
+          <span class="rb-lbl">{cell.label}</span>
+        </div>
+        {i < redBanner.length - 1 && <div class="rb-div"></div>}
+      </>
+    ))}
+  </div>
+</section>
+
+<style>
+  .collection-section--red-banner {
+    background: var(--color-alg-red, #F32740);
+  }
+  .rb-inner {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    display: flex;
+    align-items: stretch;
+  }
+  .rb-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 20px;
+    gap: 6px;
+  }
+  .rb-div {
+    width: 1px;
+    background: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 20px 0;
+  }
+  .rb-num {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .rb-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+  }
+  @media (max-width: 767px) {
+    .rb-inner { flex-wrap: wrap; }
+    .rb-col { min-width: 33%; padding: 24px 12px; }
+    .rb-div { display: none; }
+    .rb-num { font-size: 28px; }
+  }
+</style>
