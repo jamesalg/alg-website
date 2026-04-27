@@ -18,16 +18,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <!-- ============================================================
      BREADCRUMB
      ============================================================ -->
-<nav class="bc-wrap" aria-label="Breadcrumb">
-  <div class="bc-inner">
-    <a href="/">HOME</a>
-    <span class="bc-sep">›</span>
-    <span>PRODUCTS</span>
-    <span class="bc-sep">›</span>
-    <span>RESIDENTIAL</span>
-    <span class="bc-sep">›</span>
-    <span class="bc-current">Consumer &amp; Retail</span>
-  </div>
+<nav class="breadcrumb-band" aria-label="Breadcrumb">
+  <a href="/">HOME</a>
+  <span class="bc-sep">›</span>
+  <a href="/collections">PRODUCTS</a>
+  <span class="bc-sep">›</span>
+  <span>RESIDENTIAL</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current">Consumer &amp; Retail</span>
 </nav>
 
 <!-- ============================================================
@@ -47,7 +45,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
     <div class="c-hero-ctas">
       <a href="/support/catalog-request" class="c-btn-primary">Browse the Full Catalog</a>
-      <a href="/support/capability-deck" class="c-btn-secondary">Request Capability Deck</a>
+      <a href="/support/capability-deck" class="c-btn-secondary c-btn-secondary--light">Request Capability Deck</a>
     </div>
   </div>
 </section>
@@ -541,32 +539,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 /* ============================================================
    BREADCRUMB
    ============================================================ */
-.bc-wrap {
-  background: var(--bg2);
-  padding: 104px 28px 16px;
-  border-bottom: 1px solid var(--ink4);
-}
-.bc-inner {
-  max-width: 1280px;
-  margin: 0 auto;
+/* Track A v2.5.11: canonical breadcrumb-band — matches planoarch/luxoarch */
+.breadcrumb-band {
+  background: var(--bg2, #f5f5f3);
+  padding: 10px 28px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: var(--ink3);
+  color: #666;
   letter-spacing: 0.08em;
   font-weight: 500;
   text-transform: uppercase;
 }
-.bc-inner a {
-  color: var(--ink2);
+.breadcrumb-band a {
+  color: #666;
   text-decoration: none;
   transition: color 0.15s;
 }
-.bc-inner a:hover { color: var(--brand); }
+.breadcrumb-band a:hover { color: var(--brand); }
 .bc-sep { color: var(--ink4); }
-.bc-current { color: var(--ink); font-weight: 600; }
+.bc-current { color: #000; font-weight: 600; }
 
 /* ============================================================
    HERO
@@ -1288,12 +1284,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   min-height: 100px;
   aspect-ratio: 3 / 1;
 }
+/* Track C v2.5.11: uniform logo sizing for SVG and raster */
 .c-retail-logo {
   max-height: 56px;
+  max-width: 80%;
   width: auto;
-  max-width: 100%;
+  height: auto;
   object-fit: contain;
   display: block;
+  margin: auto;
 }
 
 /* ============================================================
