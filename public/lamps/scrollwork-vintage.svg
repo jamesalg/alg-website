@@ -1,14 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
-  <!-- Placeholder vintage scrollwork — Rooster Creative to deliver final art -->
-  <g opacity="0.06" stroke="#c9a45c" stroke-width="1">
-    <circle cx="200" cy="200" r="180"/>
-    <circle cx="200" cy="200" r="140"/>
-    <circle cx="200" cy="200" r="100"/>
-    <path d="M200 20 C240 60 280 80 360 80 C280 80 260 120 200 200 C140 120 120 80 40 80 C120 80 160 60 200 20Z" fill="#c9a45c" opacity="0.08"/>
-    <path d="M200 380 C240 340 280 320 360 320 C280 320 260 280 200 200 C140 280 120 320 40 320 C120 320 160 340 200 380Z" fill="#c9a45c" opacity="0.08"/>
-    <line x1="20" y1="200" x2="380" y2="200"/>
-    <line x1="200" y1="20" x2="200" y2="380"/>
-    <path d="M60 60 Q200 100 340 60" stroke-width="0.5"/>
-    <path d="M60 340 Q200 300 340 340" stroke-width="0.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <defs>
+    <style>
+      .scroll-major  { fill: none; stroke: #8a8378; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.62; }
+      .scroll-minor  { fill: none; stroke: #756e63; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.48; }
+      .scroll-thin   { fill: none; stroke: #5e574c; stroke-width: 0.7; stroke-linecap: round; stroke-linejoin: round; opacity: 0.40; }
+      .leaf-major    { fill: #8a8378; opacity: 0.42; }
+      .leaf-minor    { fill: #756e63; opacity: 0.32; }
+      .berry         { fill: #8a8378; opacity: 0.35; }
+    </style>
+  </defs>
+
+  <g transform="translate(40,140) scale(1.05)">
+    <path class="scroll-major" d="M 5 180 C 80 130, 170 95, 280 90 C 380 88, 450 110, 480 165 C 500 215, 480 270, 430 295 C 380 315, 330 305, 310 270 C 295 240, 310 215, 340 215 C 365 215, 380 235, 370 255" />
+    <path class="scroll-minor" d="M 360 250 C 380 265, 405 265, 415 245 C 425 225, 410 210, 395 215" />
+    <path class="scroll-major" d="M 5 200 C -10 245, -10 295, 35 325 C 80 350, 130 340, 145 305 C 155 280, 145 260, 120 260 C 100 263, 95 280, 110 290" />
+    <path class="scroll-minor" d="M 230 95 C 250 70, 280 55, 320 55 C 365 55, 395 78, 395 115 C 395 145, 370 165, 340 158 C 320 152, 315 135, 330 125" />
+    <path class="scroll-thin" d="M 145 110 C 160 80, 195 65, 220 78" />
+    <path class="scroll-thin" d="M 410 130 C 440 130, 460 150, 455 175 C 450 195, 430 200, 420 188" />
+    <path class="scroll-thin" d="M 200 120 C 215 105, 235 100, 250 110" />
+    <path class="scroll-thin" d="M 280 105 C 295 92, 315 90, 325 100" />
+    <ellipse class="leaf-major" cx="270" cy="80" rx="26" ry="10" transform="rotate(-25 270 80)"/>
+    <ellipse class="leaf-major" cx="385" cy="80" rx="20" ry="8" transform="rotate(-8 385 80)"/>
+    <ellipse class="leaf-minor" cx="445" cy="125" rx="16" ry="6" transform="rotate(35 445 125)"/>
+    <ellipse class="leaf-minor" cx="465" cy="200" rx="14" ry="6" transform="rotate(78 465 200)"/>
+    <ellipse class="leaf-major" cx="50" cy="195" rx="22" ry="9" transform="rotate(-10 50 195)"/>
+    <ellipse class="leaf-minor" cx="155" cy="295" rx="14" ry="6" transform="rotate(45 155 295)"/>
+    <ellipse class="leaf-minor" cx="125" cy="100" rx="12" ry="5" transform="rotate(-50 125 100)"/>
+    <circle class="berry" cx="385" cy="245" r="3.5"/>
+    <circle class="berry" cx="395" cy="252" r="2.8"/>
+    <circle class="berry" cx="380" cy="252" r="2.8"/>
+  </g>
+
+  <g transform="translate(1160,140) scale(-1.05,1.05)">
+    <path class="scroll-major" d="M 5 180 C 80 130, 170 95, 280 90 C 380 88, 450 110, 480 165 C 500 215, 480 270, 430 295 C 380 315, 330 305, 310 270 C 295 240, 310 215, 340 215 C 365 215, 380 235, 370 255" />
+    <path class="scroll-minor" d="M 360 250 C 380 265, 405 265, 415 245 C 425 225, 410 210, 395 215" />
+    <path class="scroll-major" d="M 5 200 C -10 245, -10 295, 35 325 C 80 350, 130 340, 145 305 C 155 280, 145 260, 120 260 C 100 263, 95 280, 110 290" />
+    <path class="scroll-minor" d="M 230 95 C 250 70, 280 55, 320 55 C 365 55, 395 78, 395 115 C 395 145, 370 165, 340 158 C 320 152, 315 135, 330 125" />
+    <path class="scroll-thin" d="M 145 110 C 160 80, 195 65, 220 78" />
+    <path class="scroll-thin" d="M 410 130 C 440 130, 460 150, 455 175 C 450 195, 430 200, 420 188" />
+    <path class="scroll-thin" d="M 200 120 C 215 105, 235 100, 250 110" />
+    <path class="scroll-thin" d="M 280 105 C 295 92, 315 90, 325 100" />
+    <ellipse class="leaf-major" cx="270" cy="80" rx="26" ry="10" transform="rotate(-25 270 80)"/>
+    <ellipse class="leaf-major" cx="385" cy="80" rx="20" ry="8" transform="rotate(-8 385 80)"/>
+    <ellipse class="leaf-minor" cx="445" cy="125" rx="16" ry="6" transform="rotate(35 445 125)"/>
+    <ellipse class="leaf-minor" cx="465" cy="200" rx="14" ry="6" transform="rotate(78 465 200)"/>
+    <ellipse class="leaf-major" cx="50" cy="195" rx="22" ry="9" transform="rotate(-10 50 195)"/>
+    <ellipse class="leaf-minor" cx="155" cy="295" rx="14" ry="6" transform="rotate(45 155 295)"/>
+    <ellipse class="leaf-minor" cx="125" cy="100" rx="12" ry="5" transform="rotate(-50 125 100)"/>
+    <circle class="berry" cx="385" cy="245" r="3.5"/>
+    <circle class="berry" cx="395" cy="252" r="2.8"/>
+    <circle class="berry" cx="380" cy="252" r="2.8"/>
+  </g>
+
+  <g transform="translate(600,55)">
+    <path class="scroll-thin" d="M -210 0 C -150 -25, -90 -32, -30 -22 C -10 -25, 10 -25, 30 -22 C 90 -32, 150 -25, 210 0" />
+    <path class="scroll-thin" d="M -120 -25 C -100 -50, -65 -62, -35 -52" />
+    <path class="scroll-thin" d="M  120 -25 C  100 -50,  65 -62,  35 -52" />
+    <path class="scroll-thin" d="M -50 -42 C -40 -55, -25 -58, -10 -52" />
+    <path class="scroll-thin" d="M  50 -42 C  40 -55,  25 -58,  10 -52" />
+    <ellipse class="leaf-minor" cx="-35" cy="-55" rx="11" ry="4" transform="rotate(20 -35 -55)"/>
+    <ellipse class="leaf-minor" cx="35" cy="-55" rx="11" ry="4" transform="rotate(-20 35 -55)"/>
+    <circle class="berry" cx="0" cy="-22" r="3"/>
+  </g>
+
+  <g transform="translate(600,615)">
+    <path class="scroll-thin" d="M -210 0 C -150 25, -90 32, -30 22 C -10 25, 10 25, 30 22 C 90 32, 150 25, 210 0" />
+    <path class="scroll-thin" d="M -120 25 C -100 50, -65 62, -35 52" />
+    <path class="scroll-thin" d="M  120 25 C  100 50,  65 62,  35 52" />
+    <ellipse class="leaf-minor" cx="-35" cy="55" rx="11" ry="4" transform="rotate(-20 -35 55)"/>
+    <ellipse class="leaf-minor" cx="35" cy="55" rx="11" ry="4" transform="rotate(20 35 55)"/>
   </g>
 </svg>

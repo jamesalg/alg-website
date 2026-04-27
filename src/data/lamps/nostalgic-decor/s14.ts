@@ -8,8 +8,8 @@ const s14Data = {
   name: 'S14',
   collectionSlug: 'nostalgic-decor',
   collectionName: 'Nostalgic Décor',
-  collectionTitleAscii: 'Nostalgic Decor',
-  collectionHeadlineLine: 'Nostalgic Décor',
+  collectionTitleAscii: 'NOST<span class="aa">Ⓐ</span>LGIC',
+  collectionHeadlineLine: 'Décor | nost<span class="aa">Ⓐ</span>LGIC',
   collectionAesthetic: 'nostalgic' as const,
   tagline: 'S14 string lamp replacements for commercial string light installations.',
   description: 'S14 string lamp replacements for commercial string light installations.',
@@ -29,47 +29,20 @@ const s14Data = {
 };
 
 export const siblingFamilies = [
-  { slug: 'a15', vertical: 'General', name: 'A15' },
-  { slug: 'a19', vertical: 'General', name: 'A19' },
-  { slug: 'b10', vertical: 'General', name: 'B10' },
-  { slug: 'ca10', vertical: 'General', name: 'CA10' },
-  { slug: 'candle-blunt-tip', vertical: 'General', name: 'Candle Blunt-Tip' },
-  { slug: 'candle-flame-tip', vertical: 'General', name: 'Candle Flame-Tip' },
-  { slug: 'globe-g16-5', vertical: 'General', name: 'Globe G16.5' },
-  { slug: 'globe-g25', vertical: 'General', name: 'Globe G25' },
-  { slug: 's14', vertical: 'General', name: 'S14' },
+  { slug: 'a15', name: 'A15', skuCount: 16, tagline: '' },
+  { slug: 'a19', name: 'A19', skuCount: 16, tagline: '' },
+  { slug: 'b10', name: 'B10', skuCount: 16, tagline: '' },
+  { slug: 'ca10', name: 'CA10', skuCount: 16, tagline: '' },
+  { slug: 'candle-blunt-tip', name: 'Candle Blunt-Tip', skuCount: 16, tagline: '' },
+  { slug: 'candle-flame-tip', name: 'Candle Flame-Tip', skuCount: 16, tagline: '' },
+  { slug: 'g16-5', name: 'Globe G16.5', skuCount: 16, tagline: '' },
+  { slug: 'g25', name: 'Globe G25', skuCount: 16, tagline: '' },
 ];
 
 export const relatedCollections = [
-    {
-      slug: 'vintage-decor',
-      name: 'Vintage Décor',
-      vertical: 'Lamps',
-      description: 'Old-world filament lamps with modern efficiency.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'tubulararch',
-      name: 'tubul<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Lamps',
-      description: 'LED lamp retrofits for T5, T8, PL, PLL, and U6 fixtures.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'utility-signature',
-      name: 'Utility sign<span class="aa">Ⓐ</span>TURE',
-      vertical: 'Lamps',
-      description: 'Utility LED lamps for everyday replacement.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'planoarch',
-      name: 'plano<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Indoor',
-      description: 'Commercial indoor lighting for offices, retail, and healthcare.',
-      status: 'live' as const,
-    }
-  ];
+  { slug: 'luxoarch', vertical: 'Commercial', name: 'luxoⒶRCH', description: 'Commercial-grade LED luminaires.', status: 'live' as const },
+  { slug: 'planoarch', vertical: 'Commercial', name: 'planoⒶRCH', description: 'Flat-panel LED for commercial spaces.', status: 'live' as const },
+];
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a lamp recommendation for each row.',

@@ -19,7 +19,7 @@ const utilitySignatureData = {
       name: 'A-Lamp',
       tagline: 'A19 utility LED lamps for everyday commercial replacement.',
       heroImage: '',
-      skuCount: 4,
+      skuCount: 6,
       comingSoon: false,
     },
     {
@@ -27,7 +27,7 @@ const utilitySignatureData = {
       name: 'BR Flood',
       tagline: 'BR40 flood lamps for recessed and track lighting.',
       heroImage: '',
-      skuCount: 7,
+      skuCount: 5,
       comingSoon: false,
     },
     {
@@ -39,7 +39,7 @@ const utilitySignatureData = {
       comingSoon: false,
     },
     {
-      slug: 'hid-retrofit', vertical: 'General',
+      slug: 'husk-hid', vertical: 'General',
       name: 'HID Retrofit',
       tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
       heroImage: '',

@@ -74,3 +74,16 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Date | Branch | Paths | Reason |
 |---|---|---|---|
 | 2026-04-27 | reopen/v2.5.3-collection-template | Header.astro, brand.css, CollectionPageLayout.astro, all collection/* components, luxoarch.ts, planoarch.ts, scripts/build-sku-index.mjs, verify.mjs | Collection template canonicalization + global header fixes + filter wiring |
+
+## v2.7.2 — locked 2026-04-27
+
+| Component | Path(s) | Lock reason |
+|---|---|---|
+| Lamp family detail layout | `src/layouts/LampFamilyDetailPageLayout.astro` | Canonical layout for all Bucket B lamp family detail pages; theme-token system (vintage/nostalgic/utility) |
+| Lamp collection layout | `src/layouts/LampCollectionPageLayout.astro` | Canonical layout for all Bucket B lamp collection pages; sister-card family grid |
+
+### Reopens against v2.7.2
+
+| Date | Branch | Paths | Reason |
+|---|---|---|---|
+| 2026-04-27 | iter/v2.7.2-bucket-b-visual-rebuild | `scripts/verify.mjs` | Additive-only: removed branch exemption from Group G, added Groups O and P |

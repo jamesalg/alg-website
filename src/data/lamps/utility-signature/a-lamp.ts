@@ -8,7 +8,7 @@ const a_lampData = {
   name: 'A-Lamp',
   collectionSlug: 'utility-signature',
   collectionName: 'Utility sign<span class="aa">Ⓐ</span>TURE',
-  collectionTitleAscii: 'Utility signATURE',
+  collectionTitleAscii: 'UTILITY SIGN<span class="aa">Ⓐ</span>TURE',
   collectionHeadlineLine: 'Utility sign<span class="aa">Ⓐ</span>TURE',
   collectionAesthetic: 'utility' as const,
   tagline: 'A19 utility LED lamps for everyday commercial replacement.',
@@ -29,56 +29,15 @@ const a_lampData = {
 };
 
 export const siblingFamilies = [
-    {
-      slug: 'br-lamp', vertical: 'General',
-      name: 'BR Flood',
-      tagline: 'BR40 flood lamps for recessed and track lighting.',
-      skuCount: 7,
-    },
-    {
-      slug: 'par-lamp', vertical: 'General',
-      name: 'PAR Reflector',
-      tagline: 'PAR38 reflector lamps for outdoor and commercial applications.',
-      skuCount: 2,
-    },
-    {
-      slug: 'hid-retrofit', vertical: 'General',
-      name: 'HID Retrofit',
-      tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
-      skuCount: 0,
-    }
-  ];
+  { slug: 'br-lamp', name: 'BR-Lamp', skuCount: 6, tagline: '' },
+  { slug: 'husk-hid', name: 'Hid Retrofit', skuCount: 6, tagline: '' },
+  { slug: 'par-lamp', name: 'PAR-Lamp', skuCount: 6, tagline: '' },
+];
 
 export const relatedCollections = [
-    {
-      slug: 'nostalgic-decor',
-      name: 'Nostalgic Décor',
-      vertical: 'Lamps',
-      description: 'Classic filament-style LED lamps with warm amber glow.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'vintage-decor',
-      name: 'Vintage Décor',
-      vertical: 'Lamps',
-      description: 'Old-world filament lamps with modern efficiency.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'tubulararch',
-      name: 'tubul<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Lamps',
-      description: 'LED lamp retrofits for T5, T8, PL, PLL, and U6 fixtures.',
-      status: 'live' as const,
-    },
-    {
-      slug: 'planoarch',
-      name: 'plano<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Indoor',
-      description: 'Commercial indoor lighting for offices, retail, and healthcare.',
-      status: 'live' as const,
-    }
-  ];
+  { slug: 'luxoarch', vertical: 'Commercial', name: 'luxoⒶRCH', description: 'Commercial-grade LED luminaires.', status: 'live' as const },
+  { slug: 'planoarch', vertical: 'Commercial', name: 'planoⒶRCH', description: 'Flat-panel LED for commercial spaces.', status: 'live' as const },
+];
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a utility lamp recommendation for each row.',
