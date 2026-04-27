@@ -15,7 +15,7 @@ const vintageDecorData = {
   pillRow: ['Edison · Victorian · Globe · Radio · Tubular · Candle', '2200K Warm Amber', 'Dimmable', 'Old-World Charm'],
   families: [
     {
-      slug: 'candelabra',
+      slug: 'candelabra', vertical: 'General',
       name: 'Candelabra',
       tagline: 'CA10 vintage candelabra lamps in amber finish.',
       heroImage: '',
@@ -23,7 +23,7 @@ const vintageDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'edison',
+      slug: 'edison', vertical: 'General',
       name: 'Edison',
       tagline: 'ST19 Edison lamps in clear, amber, and smoked finishes.',
       heroImage: '',
@@ -31,7 +31,7 @@ const vintageDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'globe',
+      slug: 'globe', vertical: 'General',
       name: 'Globe',
       tagline: 'G25 and G40 globe lamps in amber and smoked finishes.',
       heroImage: '',
@@ -39,7 +39,7 @@ const vintageDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'radio',
+      slug: 'radio', vertical: 'General',
       name: 'Radio',
       tagline: 'T10 and T14 radio-style tubular lamps.',
       heroImage: '',
@@ -47,7 +47,7 @@ const vintageDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'tubular',
+      slug: 'tubular', vertical: 'General',
       name: 'Tubular',
       tagline: 'T9 tubular lamps in clear and amber finishes.',
       heroImage: '',
@@ -55,7 +55,7 @@ const vintageDecorData = {
       comingSoon: false,
     },
     {
-      slug: 'victorian',
+      slug: 'victorian', vertical: 'General',
       name: 'Victorian',
       tagline: 'Victorian A19 lamps in smoked, amber, and squirrel-cage styles.',
       heroImage: '',

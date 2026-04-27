@@ -29,43 +29,16 @@ const s14Data = {
 };
 
 export const siblingFamilies = [
-    {
-      slug: 'a-lamp',
-      name: 'A-Lamp',
-      tagline: 'Classic A19 and A21 shapes with nostalgic frosted or silver-tip finish.',
-      skuCount: 39,
-    },
-    {
-      slug: 'candle-blunt-tip',
-      name: 'Candle (Blunt-Tip)',
-      tagline: 'B10 blunt-tip candelabra lamps for chandeliers and sconces.',
-      skuCount: 33,
-    },
-    {
-      slug: 'candle-flame-tip',
-      name: 'Candle (Flame-Tip)',
-      tagline: 'CA10 flame-tip candelabra lamps for decorative fixtures.',
-      skuCount: 22,
-    },
-    {
-      slug: 'globe',
-      name: 'Globe',
-      tagline: 'G40 globe lamps for vanity and pendant applications.',
-      skuCount: 3,
-    },
-    {
-      slug: 'globe-g16-5',
-      name: 'Globe G16.5',
-      tagline: 'G16.5 small globe lamps for bathroom vanity strips.',
-      skuCount: 23,
-    },
-    {
-      slug: 'globe-g25',
-      name: 'Globe G25',
-      tagline: 'G25 medium globe lamps for vanity and decorative pendants.',
-      skuCount: 11,
-    }
-  ];
+  { slug: 'a15', vertical: 'General', name: 'A15' },
+  { slug: 'a19', vertical: 'General', name: 'A19' },
+  { slug: 'b10', vertical: 'General', name: 'B10' },
+  { slug: 'ca10', vertical: 'General', name: 'CA10' },
+  { slug: 'candle-blunt-tip', vertical: 'General', name: 'Candle Blunt-Tip' },
+  { slug: 'candle-flame-tip', vertical: 'General', name: 'Candle Flame-Tip' },
+  { slug: 'globe-g16-5', vertical: 'General', name: 'Globe G16.5' },
+  { slug: 'globe-g25', vertical: 'General', name: 'Globe G25' },
+  { slug: 's14', vertical: 'General', name: 'S14' },
+];
 
 export const relatedCollections = [
     {

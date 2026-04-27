@@ -24,25 +24,25 @@ const a_lampData = {
   certifications: ['UL Listed', 'FCC'],
   datasheetUrl: undefined,
   installGuideUrl: undefined,
-  comingSoon: false,
+  comingSoon: true,
   isTubularArch: false,
 };
 
 export const siblingFamilies = [
     {
-      slug: 'br-lamp',
+      slug: 'br-lamp', vertical: 'General',
       name: 'BR Flood',
       tagline: 'BR40 flood lamps for recessed and track lighting.',
       skuCount: 7,
     },
     {
-      slug: 'par-lamp',
+      slug: 'par-lamp', vertical: 'General',
       name: 'PAR Reflector',
       tagline: 'PAR38 reflector lamps for outdoor and commercial applications.',
       skuCount: 2,
     },
     {
-      slug: 'hid-retrofit',
+      slug: 'hid-retrofit', vertical: 'General',
       name: 'HID Retrofit',
       tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
       skuCount: 0,

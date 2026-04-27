@@ -15,7 +15,7 @@ const utilitySignatureData = {
   pillRow: ['A-Lamp · BR · PAR · HID', 'Utility Replacement', 'Commercial Maintenance', 'Broad Coverage'],
   families: [
     {
-      slug: 'a-lamp',
+      slug: 'a-lamp', vertical: 'General',
       name: 'A-Lamp',
       tagline: 'A19 utility LED lamps for everyday commercial replacement.',
       heroImage: '',
@@ -23,7 +23,7 @@ const utilitySignatureData = {
       comingSoon: false,
     },
     {
-      slug: 'br-lamp',
+      slug: 'br-lamp', vertical: 'General',
       name: 'BR Flood',
       tagline: 'BR40 flood lamps for recessed and track lighting.',
       heroImage: '',
@@ -31,7 +31,7 @@ const utilitySignatureData = {
       comingSoon: false,
     },
     {
-      slug: 'par-lamp',
+      slug: 'par-lamp', vertical: 'General',
       name: 'PAR Reflector',
       tagline: 'PAR38 reflector lamps for outdoor and commercial applications.',
       heroImage: '',
@@ -39,7 +39,7 @@ const utilitySignatureData = {
       comingSoon: false,
     },
     {
-      slug: 'hid-retrofit',
+      slug: 'hid-retrofit', vertical: 'General',
       name: 'HID Retrofit',
       tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
       heroImage: '',
@@ -49,7 +49,7 @@ const utilitySignatureData = {
   ],
   legacyFamilies: [
     {
-      slug: 'husk-series',
+      slug: 'husk-series', vertical: 'General',
       name: 'Husk Series',
       tagline: 'Discontinued wattage-selectable HID retrofit lamps.',
       heroImage: '',

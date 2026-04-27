@@ -30,25 +30,25 @@ const plData = {
 
 export const siblingFamilies = [
     {
-      slug: 't5',
+      slug: 't5', vertical: 'General',
       name: 'T5',
       tagline: 'T5HE and T5HO fluorescent lamp replacements.',
       skuCount: 27,
     },
     {
-      slug: 't8',
+      slug: 't8', vertical: 'General',
       name: 'T8',
       tagline: 'The most common fluorescent retrofit. 2FT, 4FT, and 8FT.',
       skuCount: 100,
     },
     {
-      slug: 'pll',
+      slug: 'pll', vertical: 'General',
       name: 'PLL',
       tagline: 'Biax PLL lamp replacements for 2G11 base fixtures.',
       skuCount: 3,
     },
     {
-      slug: 'u6',
+      slug: 'u6', vertical: 'General',
       name: 'U6',
       tagline: 'U-bend T8 lamp replacements for 2×2 troffer fixtures.',
       skuCount: 5,
