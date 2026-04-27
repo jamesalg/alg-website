@@ -1070,13 +1070,8 @@
     function switchMain(mainKey){
       mainItems.forEach(el => el.classList.toggle('active', el.dataset.main === mainKey));
       catGroups.forEach(g => g.classList.toggle('active', g.dataset.catGroup === mainKey));
-      // B6: For Lamps, do NOT auto-activate first category — APPLICATION column stays empty
-      // until user hovers a specific CATEGORY entry.
-      if (mainKey === 'lamps') {
-        catItems.forEach(el => el.classList.remove('active'));
-        appGroups.forEach(g => g.classList.remove('active'));
-        return;
-      }
+      // B2 (v2.5.8): Auto-activate first category for ALL main items (including Lamps),
+      // mirroring the Indoor/Outdoor default-show pattern. Lamps defaults to lamps-tubul apps.
       const firstCat = menu.querySelector(`.mm-cat-group[data-cat-group="${mainKey}"] .mm-cat-item`);
       if (firstCat){ activateCat(firstCat, true); }
     }
