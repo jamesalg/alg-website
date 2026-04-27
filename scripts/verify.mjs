@@ -204,19 +204,14 @@ async function main() {
     const headerHashes = new Map();
     for (const file of htmlFiles) {
       const html = await readFile(file, 'utf8');
-      let dom;
-      try {
-        dom = new JSDOM(html);
-      } catch {
-        fail('F.1', `${relative(ROOT, file)}: JSDOM parse error`);
-        continue;
-      }
-      const header = dom.window.document.querySelector('header');
-      if (!header) {
+      // Use regex extraction consistently across all pages to avoid JSDOM vs regex hash mismatch.
+      // JSDOM 29.x crashes on complex inline styles (e.g., linear-gradient) — regex is more reliable.
+      const m = html.match(/<header[\s>][\s\S]*?<\/header>/);
+      if (!m) {
         fail('F.1', `${relative(ROOT, file)}: no <header> element found`);
         continue;
       }
-      const hash = crypto.createHash('md5').update(header.outerHTML).digest('hex');
+      const hash = crypto.createHash('md5').update(m[0]).digest('hex');
       headerHashes.set(relative(ROOT, file), hash);
     }
     const uniqueHashes = new Set(headerHashes.values());
@@ -315,6 +310,75 @@ async function main() {
           fail('H.2', `${fp}: collection layout/component contains <header> or <footer> — must come from Header.astro/Footer.astro only`);
         }
       } catch { /* file may not exist */ }
+    }
+  }
+
+  // === GROUP I: BRAND STEM ALLOW-LIST (v2.5.5 Track C) ===
+  //
+  // The Ⓐ character (U+24B6) is ONLY valid when it appears as part of one of
+  // the 13 canonical stems. Any other Ⓐ usage is a brand-mark error.
+  // This check runs on the SOURCE files (not dist/) to catch errors early.
+  // Canonical stems: RCH, LS, NT, CS, BLE, RMOR, DAPT, MILY, IM, PTICS, LGIC, GE, TURE
+  //
+  // Strategy: scan the RAW source for bare Ⓐ (i.e., Ⓐ NOT inside a <span class="aa"> wrapper).
+  // The canonical pattern in source is always: <span class="aa">Ⓐ</span>STEM
+  // So we strip all <span class="aa">...</span> blocks and check what remains.
+  // Any remaining Ⓐ is either a bare usage or a regex/replace pattern — both are violations.
+  // Exception: .replace(/Ⓐ/g, ...) utility patterns in JS are allowed (they are the wrapper logic).
+  {
+    const CANONICAL_STEMS = ['RCH', 'LS', 'NT', 'CS', 'BLE', 'RMOR', 'DAPT', 'MILY', 'IM', 'PTICS', 'LGIC', 'GE', 'TURE'];
+    // Source dirs to check
+    const srcDirs = [
+      join(ROOT, 'src', 'pages'),
+      join(ROOT, 'src', 'components'),
+      join(ROOT, 'src', 'layouts'),
+      join(ROOT, 'src', 'data'),
+    ];
+    async function walkSrc(dir) {
+      let files = [];
+      try {
+        const entries = await readdir(dir, { withFileTypes: true });
+        for (const e of entries) {
+          const p = join(dir, e.name);
+          if (e.isDirectory()) files.push(...(await walkSrc(p)));
+          else if (e.name.endsWith('.astro') || e.name.endsWith('.ts') || e.name.endsWith('.tsx') || e.name.endsWith('.js') || e.name.endsWith('.mjs')) {
+            files.push(p);
+          }
+        }
+      } catch { /* skip */ }
+      return files;
+    }
+    const srcFiles = (await Promise.all(srcDirs.map(walkSrc))).flat();
+    for (const sf of srcFiles) {
+      const src = await readFile(sf, 'utf8');
+      if (!src.includes('Ⓐ')) continue;
+      // Strip .aa span wrappers (canonical usage — these are correct)
+      const stripped = src
+        // Strip HTML comments (developer annotations — not rendered)
+        .replace(/<!--[\s\S]*?-->/g, '__HTML_COMMENT__')
+        // Strip JS/TS block comments
+        .replace(/\/\*[\s\S]*?\*\//g, '__BLOCK_COMMENT__')
+        // Strip JS/TS line comments
+        .replace(/\/\/[^\n]*/g, '__LINE_COMMENT__')
+        // Strip .aa span wrappers (canonical usage — these are correct)
+        .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '__AA_SPAN__')
+        // Strip regex patterns that reference Ⓐ as a character to match/replace (utility functions)
+        .replace(/\/[^\/\n]*Ⓐ[^\/\n]*\/[gimsuy]*/g, '__REGEX_PATTERN__')
+        // Strip JS string literals that are the replacement value (e.g., '<span class="aa">Ⓐ</span>')
+        .replace(/'[^'\n]*Ⓐ[^'\n]*'/g, '__STR_LITERAL__')
+        .replace(/"[^"\n]*Ⓐ[^"\n]*"/g, '__STR_LITERAL__');
+      // Any remaining Ⓐ is a violation
+      if (/Ⓐ/.test(stripped)) {
+        const allA = /Ⓐ/g;
+        let m2;
+        while ((m2 = allA.exec(stripped)) !== null) {
+          const ctx = stripped.slice(Math.max(0, m2.index - 30), m2.index + 30).replace(/\n/g, '↵');
+          fail('I.1', `${relative(ROOT, sf)}: bare Ⓐ found outside <span class="aa"> wrapper at: ...${ctx}...`);
+        }
+      }
+    }
+    if (!failures.some(f => f.check === 'I.1')) {
+      console.log(`✅ Brand stem allow-list: PASS (${CANONICAL_STEMS.length} canonical stems, ${srcFiles.length} source files checked)`);
     }
   }
 

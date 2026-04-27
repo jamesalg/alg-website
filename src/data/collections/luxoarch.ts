@@ -10,7 +10,7 @@ const luxoarchData = {
   parentSubVertical: 'Commercial',
   name: 'luxoⒶRCH',
   titleAscii: 'LUXOARCH',
-  headlineLine: 'LUXO<span class="aa">Ⓐ</span>RCH',
+  headlineLine: 'luxo<span class="aa">Ⓐ</span>RCH',
   description: 'Outdoor lighting for the commercial perimeter. 22 active families, 142 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '8 APPLICATIONS'],
   statStrip: [

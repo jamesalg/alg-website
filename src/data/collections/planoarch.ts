@@ -10,7 +10,7 @@ const planoarchData = {
   parentSubVertical: 'Commercial',
   name: 'planoⒶRCH',
   titleAscii: 'PLANOARCH',
-  headlineLine: 'PLANO<span class="aa">Ⓐ</span>RCH',
+  headlineLine: 'plano<span class="aa">Ⓐ</span>RCH',
   description: 'Commercial indoor lighting for offices, retail, and healthcare. 15 active families, 125 active SKUs.',
   pillRow: ['DLC PREMIUM', 'TAA AVAILABLE', '5 US WAREHOUSES', '3-DAY DELIVERY', '8 APPLICATIONS'],
   statStrip: [
