@@ -11,6 +11,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BrandMark from '../../components/BrandMark.astro';
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro'; // Fix 2 (v2.5.2)
 
 /* Fix 3 (v2.4.2): canonical application tokens added to each family.
  * Tokens match checkbox values exactly (kebab-case). Liberty has two tokens. */
@@ -73,7 +74,7 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
       <div class="hero-eyebrow">OUTDOOR · COLLECTION</div>
       <h1 class="hero-wordmark">LUXO<BrandMark prefix="" suffix="RCH" />
       </h1>
-      <p class="hero-desc">Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs, ECO through PRO+.</p>
+      <p class="hero-desc">Outdoor lighting for the commercial perimeter. 23 active families, 269 active SKUs.</p>
       <div class="hero-pills">
         <span class="hero-pill">DLC PREMIUM</span>
         <span class="hero-pill">TAA AVAILABLE</span>
@@ -1278,71 +1279,20 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
   }
   /* Fix 3 (v2.4.2): hidden family-cards */
   .family-card[style*="display: none"] { display: none !important; }
-  /* Fix 5 (v2.4.2): sticky right-rail anchor nav */
-  .anchor-nav {
-    position: fixed;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 900;
-  }
-  @media (max-width: 1023px) { .anchor-nav { display: none; } }
-  .anchor-dot-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  .anchor-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.28);
-    cursor: pointer;
-    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-    flex-shrink: 0;
-  }
-  .anchor-dot.active {
-    width: 10px;
-    height: 10px;
-    background: var(--brand, #F32740);
-  }
-  .anchor-dot-wrap:hover .anchor-dot {
-    background: var(--brand, #F32740);
-  }
-  .anchor-label {
-    position: absolute;
-    right: 18px;
-    white-space: nowrap;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #fff;
-    background: rgba(0,0,0,0.72);
-    padding: 3px 8px;
-    border-radius: 3px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-  .anchor-dot-wrap:hover .anchor-label { opacity: 1; }
+  /* Fix 2 (v2.5.2): Bespoke anchor nav CSS removed — now handled by CollectionAnchorNav component */
 </style>
 
-<!-- Fix 5 (v2.4.2): sticky right-rail anchor nav -->
-<nav class="anchor-nav" aria-label="Page sections">
-  <div class="anchor-dot-wrap"><span class="anchor-label">Overview</span><div class="anchor-dot" data-target="sec-hero"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Quick stats</span><div class="anchor-dot" data-target="sec-stats"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Browse by application</span><div class="anchor-dot" data-target="sec-apps"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Featured families</span><div class="anchor-dot" data-target="sec-featured"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">All families</span><div class="anchor-dot" data-target="sec-all-families"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Legacy</span><div class="anchor-dot" data-target="sec-legacy"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Get started</span><div class="anchor-dot" data-target="sec-get-started"></div></div>
-  <div class="anchor-dot-wrap"><span class="anchor-label">Related collections</span><div class="anchor-dot" data-target="sec-related"></div></div>
-</nav>
+<!-- Fix 2 (v2.5.2): Replaced bespoke anchor nav with shared CollectionAnchorNav component -->
+<CollectionAnchorNav sections={[
+  { id: 'sec-hero',         label: 'Overview' },
+  { id: 'sec-stats',        label: 'Quick stats' },
+  { id: 'sec-apps',         label: 'Applications' },
+  { id: 'sec-featured',     label: 'Featured' },
+  { id: 'sec-all-families', label: 'All families' },
+  { id: 'sec-legacy',       label: 'Legacy' },
+  { id: 'sec-get-started',  label: 'Get started' },
+  { id: 'sec-related',      label: 'Related' },
+]} />
 
 <script>
   /* Fix 3 (v2.4.2) - Application filter (canonical kebab-case tokens).
@@ -1402,32 +1352,5 @@ const tierColor: Record<string, string> = { 'PRO': '#F32740', 'PRO+': '#FFC107',
     });
   });
 
-  /* Fix 5 (v2.4.2) - Sticky right-rail anchor nav.
-   * Dots scroll to sections; active dot tracks viewport via IntersectionObserver. */
-  (function () {
-    var dots = document.querySelectorAll('.anchor-dot[data-target]');
-
-    dots.forEach(function (dot) {
-      dot.addEventListener('click', function () {
-        var sec = document.getElementById(dot.dataset.target);
-        if (sec) { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      });
-    });
-
-    var sections = document.querySelectorAll('section[id]');
-    if (!sections.length) return;
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          dots.forEach(function (d) {
-            d.classList.toggle('active', d.dataset.target === id);
-          });
-        }
-      });
-    }, { threshold: 0.3, rootMargin: '-20% 0% -20% 0%' });
-
-    sections.forEach(function (s) { observer.observe(s); });
-  })();
+  /* Fix 2 (v2.5.2): Bespoke anchor nav JS removed — now handled by CollectionAnchorNav component */
 </script>
