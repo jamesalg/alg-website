@@ -46,6 +46,7 @@ export interface Props {
   collection: {
     slug: string;
     parentVertical: string;
+    parentSubVertical: string;
     name: string;
     titleAscii: string;
     headlineLine: string;
@@ -95,6 +96,7 @@ const anchorSections = [
   <CollectionHero
     slug={c.slug}
     parentVertical={c.parentVertical}
+    parentSubVertical={c.parentSubVertical}
     headlineLine={c.headlineLine}
     description={c.description}
     pillRow={c.pillRow}

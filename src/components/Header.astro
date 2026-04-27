@@ -27,7 +27,7 @@
   <a href="/find-a-rep">Find a Rep</a>
   <a href="/support/sample-request">Sample Request</a>
   <a href="/contact">Contact</a>
-  <span class="signin" id="signinTrigger">
+  <button class="signin" id="signinTrigger" type="button" aria-expanded="false" aria-haspopup="true">
     Sign In
     <div class="signin-dropdown" id="signinDropdown">
       <a href="https://aura.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
@@ -39,7 +39,7 @@
         <span>ALG Shop →</span>
       </a>
     </div>
-  </span>
+  </button>
 </div>
 
 <!-- PERSISTENT SITE NAV -->
@@ -559,6 +559,10 @@
     margin-left:24px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
     cursor:pointer;display:inline-flex;align-items:center;gap:6px;
     user-select:none;
+    /* button reset */
+    border:none;color:#fff;font-family:inherit;font-size:inherit;
+    min-height:44px;min-width:44px;
+    -webkit-tap-highlight-color:rgba(0,0,0,0.1);
   }
   .utility-bar .signin::after{content:'▾';font-size:9px;}
   .signin-dropdown{
@@ -606,7 +610,7 @@
     padding:0 28px;
   }
   .site-nav .logo-wrap{display:flex;align-items:center;}
-  .site-nav .logo-wrap img{height:26px;width:auto;display:block;}
+  .site-nav .logo-wrap img{height:36px;width:auto;display:block;}
   .site-nav ul.main-nav{display:flex;list-style:none;gap:32px;margin:0;padding:0;}
   .site-nav ul.main-nav > li{position:relative;padding:18px 0;}
   .site-nav ul.main-nav > li > a{
@@ -1153,30 +1157,39 @@
   }
 
   /* =============================================================
-     A1 (v2.5.3): MOBILE SIGN IN — click-toggle disclosure
+     A1 (v2.5.4): MOBILE SIGN IN — click-toggle disclosure
+     Now a <button> for reliable tap events on all devices.
+     Desktop: hover CSS still works (hover:hover media query).
+     Mobile: click/touchend toggles .signin--open class.
      ============================================================= */
   const signinTrigger = document.getElementById('signinTrigger');
   if (signinTrigger) {
+    function closeSignin() {
+      signinTrigger.classList.remove('signin--open');
+      signinTrigger.setAttribute('aria-expanded', 'false');
+    }
+    function openSignin() {
+      signinTrigger.classList.add('signin--open');
+      signinTrigger.setAttribute('aria-expanded', 'true');
+    }
+    // Click handler — fires on both mouse and touch
     signinTrigger.addEventListener('click', function(e) {
-      // Only intercept on touch/mobile (no fine pointer)
-      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
       e.stopPropagation();
-      const isOpen = signinTrigger.classList.toggle('signin--open');
-      signinTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      const isOpen = signinTrigger.classList.contains('signin--open');
+      if (isOpen) { closeSignin(); } else { openSignin(); }
     });
-    // Close on outside click
+    // Prevent dropdown link clicks from bubbling to document close handler
+    const dropdown = document.getElementById('signinDropdown');
+    if (dropdown) {
+      dropdown.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+    // Close on outside click / touch
     document.addEventListener('click', function(e) {
-      if (!signinTrigger.contains(e.target)) {
-        signinTrigger.classList.remove('signin--open');
-        signinTrigger.setAttribute('aria-expanded', 'false');
-      }
+      if (!signinTrigger.contains(e.target)) { closeSignin(); }
     });
     // Close on Escape
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        signinTrigger.classList.remove('signin--open');
-        signinTrigger.setAttribute('aria-expanded', 'false');
-      }
+      if (e.key === 'Escape') { closeSignin(); }
     });
   }
 

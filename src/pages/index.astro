@@ -27,6 +27,7 @@ const heroSlides = [
     eyebrow: 'Featured · Sports Lighting · LSPL',
     name: 'Illuminator',
     gradClass: 'grad-slide0',
+    seriesNameColor: '#a8c8e8', // C1: stadium blue-white — matches sports lighting field bg
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
     lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
     stats: [
@@ -43,6 +44,7 @@ const heroSlides = [
     eyebrow: 'Featured · High-Bay · LLHB',
     name: 'Titan-II',
     gradClass: 'grad-slide1',
+    seriesNameColor: '#f0c070', // C1: warm amber — matches warehouse/industrial warm tone
     desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
     lineDrawing: '/images/heroes/line-drawings/line-titan.png',
     stats: [
@@ -59,6 +61,8 @@ const heroSlides = [
     eyebrow: 'Featured · Area Lighting · LSBX',
     name: 'Liberty',
     gradClass: 'grad-slide2',
+    seriesNameColor: '#c9a876', // C1: warm amber-gold — matches outdoor area lighting dusk hue
+    lineDrawingClass: 'liberty-render', // C2: -20% size
     desc: null,
     lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
     stats: [
@@ -75,6 +79,7 @@ const heroSlides = [
     eyebrow: 'Featured · Back-Lit Panel · LBLP',
     name: null,
     gradClass: 'grad-slide3',
+    seriesNameColor: '#e8d8b0', // C1: warm office white — matches back-lit panel warm CCT
     desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
     lineDrawing: '/images/heroes/line-drawings/line-panel.png',
     stats: [
@@ -157,8 +162,8 @@ const verticals = [
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
                   {slide.brandMark === 'proarch'
-                    ? <h2 class={`display-product ${slide.gradClass}`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
-                    : <h2 class={`display-product ${slide.gradClass}`}>{slide.name}</h2>
+                    ? <h2 class="display-product" style={`color: ${slide.seriesNameColor ?? '#fff'};`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
+                    : <h2 class="display-product" style={`color: ${slide.seriesNameColor ?? '#fff'};`}>{slide.name}</h2>
                   }
                 </div>
               ))}
@@ -201,7 +206,7 @@ const verticals = [
             <div class="slot slot-product-img">
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
-                  <img src={slide.lineDrawing} alt={`${slide.name ?? 'Product'} line drawing`} class="product-render" loading="eager" />
+                  <img src={slide.lineDrawing} alt={`${slide.name ?? 'Product'} line drawing`} class={`product-render${slide.lineDrawingClass ? ' ' + slide.lineDrawingClass : ''}`} loading="eager" />
                 </div>
               ))}
             </div>
@@ -804,14 +809,12 @@ const verticals = [
     line-height: 1;
     font-weight: 700;
     letter-spacing: -0.025em;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    /* C1 (v2.5.4): per-slide color via inline style — no gradient clip needed */
   }
-  .grad-slide0 { background-image: linear-gradient(135deg, #f0a932 0%, #F32740 100%); }
-  .grad-slide1 { background-image: linear-gradient(135deg, #e8ecf0 0%, #f0a932 100%); }
-  .grad-slide2 { background-image: linear-gradient(135deg, #fff8eb 0%, #c9a876 100%); }
-  .grad-slide3 { background-image: linear-gradient(135deg, #ffffff 0%, #a8c4d8 100%); }
+  /* C2 (v2.5.4): Liberty line drawing −20% — only this slide */
+  .product-render.liberty-render {
+    max-height: 352px; /* 440px × 0.80 = 352px */
+  }
 
   .slot-desc p { font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.85); }
 

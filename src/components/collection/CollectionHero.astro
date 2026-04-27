@@ -2,24 +2,33 @@
 /**
  * CollectionHero.astro
  * §1 Breadcrumb + §2 Hero section for collection pages.
- * C1: Hero pills use red-bordered style (luxo canonical).
+ * B1 (v2.5.4): Eyebrow = {VERTICAL} · {SUBVERTICAL} COLLECTION
+ * B2 (v2.5.4): Breadcrumb = HOME › PRODUCTS › {VERTICAL} › COMMERCIAL › {NAME}
+ * C1 (v2.5.3): Hero pills use red-bordered style (luxo canonical).
  */
 export interface Props {
   slug: string;
   parentVertical: string;
+  parentSubVertical: string;
   headlineLine: string;
   description: string;
   pillRow: string[];
 }
-const { slug, parentVertical, headlineLine, description, pillRow } = Astro.props;
+const { slug, parentVertical, parentSubVertical, headlineLine, description, pillRow } = Astro.props;
+
+// B2: Canonical breadcrumb — all uppercase, COMMERCIAL is plain text (no route)
+const verticalUpper = parentVertical.toUpperCase();
+const verticalSlug  = parentVertical.toLowerCase();
 ---
-<!-- §1 BREADCRUMB -->
+<!-- §1 BREADCRUMB — B2 canonical: HOME › PRODUCTS › {VERTICAL} › COMMERCIAL › {NAME} -->
 <div class="breadcrumb-band">
-  <a href="/">Home</a>
+  <a href="/">HOME</a>
   <span class="bc-sep">›</span>
-  <a href="/collections">Products</a>
+  <a href="/collections">PRODUCTS</a>
   <span class="bc-sep">›</span>
-  <a href={`/collections/${parentVertical.toLowerCase()}`}>{parentVertical}</a>
+  <a href={`/collections/${verticalSlug}`}>{verticalUpper}</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-plain">{parentSubVertical.toUpperCase()}</span>
   <span class="bc-sep">›</span>
   <span class="bc-current" set:html={headlineLine}></span>
 </div>
@@ -27,7 +36,8 @@ const { slug, parentVertical, headlineLine, description, pillRow } = Astro.props
 <!-- §2 HERO -->
 <section class="collection-section collection-section--hero" id="hero">
   <div class="collection-content">
-    <div class="hero-eyebrow">{parentVertical.toUpperCase()} · COLLECTION</div>
+    <!-- B1: {VERTICAL} · {SUBVERTICAL} COLLECTION -->
+    <div class="hero-eyebrow">{verticalUpper} · {parentSubVertical.toUpperCase()} COLLECTION</div>
     <h1 class="hero-wordmark" set:html={headlineLine}></h1>
     <p class="hero-desc">{description}</p>
     <!-- C1: Red-bordered pills (luxo canonical) -->
@@ -38,23 +48,29 @@ const { slug, parentVertical, headlineLine, description, pillRow } = Astro.props
 </section>
 
 <style>
+  /* B2: Canonical breadcrumb typography — 0.75rem / 12px, weight 500, 0.08em spacing */
   .breadcrumb-band {
-    padding: 12px var(--collection-content-padding-x, 32px);
+    padding: 10px var(--collection-content-padding-x, 32px);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.10em;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
     text-transform: uppercase;
-    color: var(--ink3, #8a8f99);
+    color: #666;
     background: var(--bg2, #f5f5f3);
     border-bottom: 1px solid rgba(0,0,0,0.06);
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
-  .breadcrumb-band a { color: var(--ink3, #8a8f99); text-decoration: none; }
+  .breadcrumb-band a { color: #666; text-decoration: none; }
   .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
-  .bc-sep { color: var(--ink4, #c8ccd3); }
-  .bc-current { color: var(--ink, #111418); }
+  .bc-sep { color: #c8ccd3; }
+  .bc-plain { color: #666; }
+  /* B2: Final segment — full opacity, Ⓐ in red via .aa */
+  .bc-current { color: #000; font-weight: 600; }
+  .bc-current :global(.aa) { color: var(--color-alg-red, #F32740); }
 
   .collection-section--hero {
     background: #1a1f2e;

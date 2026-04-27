@@ -7,6 +7,7 @@
 const luxoarchData = {
   slug: 'luxoarch',
   parentVertical: 'Outdoor',
+  parentSubVertical: 'Commercial',
   name: 'luxoⒶRCH',
   titleAscii: 'LUXOARCH',
   headlineLine: 'LUXO<span class="aa">Ⓐ</span>RCH',
