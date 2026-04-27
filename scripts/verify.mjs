@@ -282,7 +282,8 @@ async function main() {
     } catch { /* dir may not exist */ }
 
     // Bespoke pages (v2.5.6+): pages that intentionally do NOT use CollectionPageLayout
-    const BESPOKE_PAGES = new Set(['consumer']);
+    // v2.7.0: lamp collection pages use LampCollectionPageLayout — add to bespoke set
+    const BESPOKE_PAGES = new Set(['consumer', 'tubulararch', 'nostalgic-decor', 'vintage-decor', 'utility-signature']);
     for (const fname of colFiles) {
       const slug = fname.replace('.astro', '');
       if (BESPOKE_PAGES.has(slug)) {

@@ -1,0 +1,910 @@
+---
+/**
+ * LampFamilyDetailPageLayout.astro
+ *
+ * v2.7.0 — Bucket B lamp family detail page layout.
+ * Route: /collections/{collection-slug}/{family-slug}
+ *
+ * Section structure:
+ *   1. Hero — family image, name, badge, tagline, key specs, CTAs, certifications
+ *   2. Collection Brand Hero — full-width band (optional, if brandHeroImage set)
+ *   3. Product Dimensions — line drawings (optional, if dimensionDrawings populated)
+ *   4. Specifications table — per-SKU spec rows from sku-index.json
+ *   5. UL Capability Toggle — tubulⒶRCH only (data-ul-toggle)
+ *   6. Compatible Dimmers — optional cross-reference table
+ *   7. Cross-sell strip — sister families
+ *   8. Get Started + Related Collections
+ */
+import BaseLayout from './BaseLayout.astro';
+import skuIndex from '../data/sku-index.json';
+
+export interface Props {
+  family: {
+    slug: string;
+    name: string;
+    collectionSlug: string;
+    collectionName: string;
+    collectionTitleAscii: string;
+    collectionHeadlineLine: string;
+    collectionAesthetic: 'vintage' | 'nostalgic' | 'utility';
+    tagline: string;
+    description: string;
+    heroImage?: string;
+    brandHeroImage?: string;
+    echelon?: 'ECO' | 'PRO' | 'PRO+';
+    keySpecs: { inputWatts: string; lumens: string; lmPerW: string; cri: string };
+    certifications: string[];
+    dimensionDrawings?: { svgPath: string; caption: string }[];
+    compatibleDimmers?: { brand: string; models: string[] }[];
+    datasheetUrl?: string;
+    installGuideUrl?: string;
+    comingSoon?: boolean;
+    isTubularArch?: boolean;
+  };
+  siblingFamilies: {
+    slug: string;
+    name: string;
+    tagline: string;
+    skuCount: number;
+  }[];
+  relatedCollections: {
+    slug: string;
+    name: string;
+    vertical: string;
+    description: string;
+    status: 'live' | 'coming-soon';
+  }[];
+  getStarted: {
+    layoutCopy: string;
+    sampleCopy: string;
+    distributorCopy: string;
+    repCopy: string;
+  };
+}
+
+const { family: f, siblingFamilies, relatedCollections, getStarted } = Astro.props;
+
+// Pull SKUs for this family from sku-index.json
+const collectionData = (skuIndex as any).collections?.[f.collectionSlug];
+const familySkus = collectionData?.skus?.filter((s: any) =>
+  s.family === f.name || s.family === f.slug
+) ?? [];
+
+const themes = {
+  vintage: {
+    '--lamp-bg': '#0c0d12',
+    '--lamp-fg': '#f5e9d2',
+    '--lamp-accent': '#c9a45c',
+    '--lamp-accent-2': '#ff8c2a',
+    '--lamp-watermark-url': "url('/lamps/scrollwork-vintage.svg')",
+    '--lamp-card-bg': 'rgba(201,164,92,0.07)',
+    '--lamp-card-border': 'rgba(201,164,92,0.18)',
+    '--lamp-eyebrow-color': '#c9a45c',
+  },
+  nostalgic: {
+    '--lamp-bg': '#0a0d18',
+    '--lamp-fg': '#e8eef8',
+    '--lamp-accent': '#00d4ff',
+    '--lamp-accent-2': '#ff2dd0',
+    '--lamp-watermark-url': "url('/lamps/cybergrid-nostalgic.svg')",
+    '--lamp-card-bg': 'rgba(0,212,255,0.06)',
+    '--lamp-card-border': 'rgba(0,212,255,0.15)',
+    '--lamp-eyebrow-color': '#00d4ff',
+  },
+  utility: {
+    '--lamp-bg': '#1a1d24',
+    '--lamp-fg': '#ffffff',
+    '--lamp-accent': '#F32740',
+    '--lamp-accent-2': '#F32740',
+    '--lamp-watermark-url': 'none',
+    '--lamp-card-bg': 'rgba(243,39,64,0.06)',
+    '--lamp-card-border': 'rgba(243,39,64,0.15)',
+    '--lamp-eyebrow-color': '#F32740',
+  },
+};
+
+const theme = themes[f.collectionAesthetic];
+const pageTitle = `${f.name} | ${f.collectionTitleAscii} | Archipelago Lighting Group`;
+---
+<BaseLayout title={pageTitle} description={f.description}>
+  <style is:global define:vars={theme}>
+    .lamp-detail-page { background: var(--lamp-bg); color: var(--lamp-fg); }
+    .lamp-content {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: 32px;
+      width: 100%;
+    }
+    /* Breadcrumb */
+    .lamp-breadcrumb {
+      padding: 10px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #666;
+      background: var(--bg2, #f5f5f3);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lamp-breadcrumb a { color: #666; text-decoration: none; }
+    .lamp-breadcrumb a:hover { color: var(--color-alg-red, #F32740); }
+    .lamp-bc-sep { color: #c8ccd3; }
+    .lamp-bc-plain { color: #666; }
+    .lamp-bc-current { color: #000; font-weight: 600; }
+    /* Hero */
+    .lamp-detail-hero {
+      background: var(--lamp-bg);
+      background-image: var(--lamp-watermark-url);
+      background-repeat: no-repeat;
+      background-position: top right;
+      background-size: 520px 520px;
+      padding: 72px 0 80px;
+    }
+    .lamp-detail-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .lamp-detail-hero-left {}
+    .lamp-detail-hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lamp-detail-hero-img {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .lamp-detail-hero-img-placeholder {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lamp-detail-hero-img-placeholder svg {
+      width: 80px;
+      height: 80px;
+      opacity: 0.15;
+    }
+    .lamp-detail-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lamp-eyebrow-color);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lamp-detail-name {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--lamp-fg);
+      margin: 0 0 16px;
+    }
+    .lamp-detail-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .lamp-detail-badge--eco { background: rgba(0,200,120,0.15); color: #00c878; border: 1px solid rgba(0,200,120,0.3); }
+    .lamp-detail-badge--pro { background: rgba(243,39,64,0.12); color: #F32740; border: 1px solid rgba(243,39,64,0.3); }
+    .lamp-detail-badge--proplus { background: rgba(201,164,92,0.12); color: #c9a45c; border: 1px solid rgba(201,164,92,0.3); }
+    .lamp-detail-badge--soon { background: rgba(150,150,150,0.12); color: #888; border: 1px solid rgba(150,150,150,0.3); }
+    .lamp-detail-tagline {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .lamp-detail-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin-bottom: 28px;
+    }
+    /* Key specs strip */
+    .lamp-key-specs {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .lamp-key-spec {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .lamp-key-spec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .lamp-key-spec-value {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--lamp-fg);
+    }
+    /* CTAs */
+    .lamp-detail-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .lamp-cta-primary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      background: var(--lamp-accent);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .lamp-cta-secondary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--lamp-fg);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 3px;
+      padding: 12px 24px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .lamp-cta-secondary--disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: default;
+    }
+    .lamp-cta-secondary-sub {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+      display: block;
+      margin-top: 2px;
+    }
+    /* Certifications */
+    .lamp-certifications {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lamp-cert-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 2px;
+      padding: 4px 8px;
+    }
+    /* Brand Hero Band */
+    .lamp-brand-hero {
+      width: 100%;
+      min-height: 200px;
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .lamp-brand-hero img { width: 100%; max-height: 320px; object-fit: cover; }
+    /* Dimensions */
+    .lamp-dimensions-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 64px 0;
+    }
+    .lamp-dimensions-grid {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .lamp-dimension-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .lamp-dimension-item img {
+      max-width: 200px;
+      filter: invert(1) opacity(0.7);
+    }
+    .lamp-dimension-caption {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    /* Specs table */
+    .lamp-specs-section {
+      background: var(--lamp-bg);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 64px 0;
+    }
+    .lamp-section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lamp-eyebrow-color);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lamp-section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 48px;
+      height: 1.5px;
+      background: var(--lamp-accent);
+      flex-shrink: 0;
+    }
+    .lamp-section-headline {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--lamp-fg);
+      margin: 0 0 32px;
+    }
+    /* UL Toggle (tubulⒶRCH only) */
+    .lamp-ul-toggle {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .lamp-ul-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--lamp-accent);
+      color: var(--lamp-accent);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lamp-ul-pill.active {
+      background: var(--lamp-accent);
+      color: var(--lamp-bg);
+    }
+    .lamp-specs-table-wrap { overflow-x: auto; }
+    .lamp-specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .lamp-specs-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .lamp-specs-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.75);
+      vertical-align: top;
+    }
+    .lamp-specs-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .lamp-specs-empty {
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+      padding: 32px 0;
+      font-style: italic;
+    }
+    /* Dimmers */
+    .lamp-dimmers-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 56px 0;
+    }
+    .lamp-dimmers-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .lamp-dimmers-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    .lamp-dimmers-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.7);
+      vertical-align: top;
+    }
+    /* Cross-sell */
+    .lamp-crosssell-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 56px 0;
+    }
+    .lamp-crosssell-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .lamp-crosssell-card {
+      background: var(--lamp-card-bg);
+      border: 1px solid var(--lamp-card-border);
+      border-radius: 6px;
+      padding: 20px 18px;
+      text-decoration: none;
+      color: var(--lamp-fg);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.2s;
+    }
+    .lamp-crosssell-card:hover { border-color: var(--lamp-accent); }
+    .lamp-crosssell-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--lamp-fg);
+    }
+    .lamp-crosssell-tagline {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+    }
+    .lamp-crosssell-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      margin-top: auto;
+    }
+    /* Get Started */
+    .lamp-getstarted-section {
+      background: var(--lamp-bg);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 72px 0;
+    }
+    .lamp-gs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .lamp-gs-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 28px 22px;
+    }
+    .lamp-gs-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      margin-bottom: 10px;
+    }
+    .lamp-gs-card-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+    }
+    /* Related */
+    .lamp-related-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 72px 0;
+    }
+    .lamp-related-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .lamp-related-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lamp-related-card--soon { opacity: 0.5; pointer-events: none; }
+    .lamp-related-vertical {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+    }
+    .lamp-related-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--lamp-fg);
+      letter-spacing: -0.02em;
+    }
+    .lamp-related-name :global(.aa) { color: var(--lamp-accent); }
+    .lamp-related-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+      flex: 1;
+      margin: 0;
+    }
+    .lamp-related-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lamp-accent);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .lamp-related-soon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+    }
+    @media (max-width: 1023px) {
+      .lamp-detail-hero-inner { grid-template-columns: 1fr; }
+      .lamp-detail-hero-right { order: -1; }
+      .lamp-gs-grid { grid-template-columns: repeat(2, 1fr); }
+      .lamp-related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 599px) {
+      .lamp-gs-grid { grid-template-columns: 1fr; }
+      .lamp-related-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="lamp-detail-page">
+    <!-- BREADCRUMB -->
+    <div class="lamp-breadcrumb">
+      <a href="/">HOME</a>
+      <span class="lamp-bc-sep">›</span>
+      <a href="/collections">PRODUCTS</a>
+      <span class="lamp-bc-sep">›</span>
+      <a href="/collections/indoor">INDOOR</a>
+      <span class="lamp-bc-sep">›</span>
+      <a href={`/collections/${f.collectionSlug}`} set:html={f.collectionHeadlineLine}></a>
+      <span class="lamp-bc-sep">›</span>
+      <span class="lamp-bc-current">{f.name.toUpperCase()}</span>
+    </div>
+
+    <!-- §1 HERO -->
+    <section class="lamp-detail-hero" id="hero">
+      <div class="lamp-content">
+        <div class="lamp-detail-hero-inner">
+          <div class="lamp-detail-hero-left">
+            <div class="lamp-detail-eyebrow" set:html={f.collectionHeadlineLine}></div>
+            <h1 class="lamp-detail-name">{f.name}</h1>
+            {f.comingSoon ? (
+              <span class="lamp-detail-badge lamp-detail-badge--soon">Coming soon</span>
+            ) : f.echelon === 'ECO' ? (
+              <span class="lamp-detail-badge lamp-detail-badge--eco">ECO</span>
+            ) : f.echelon === 'PRO' ? (
+              <span class="lamp-detail-badge lamp-detail-badge--pro">PRO</span>
+            ) : f.echelon === 'PRO+' ? (
+              <span class="lamp-detail-badge lamp-detail-badge--proplus">PRO+</span>
+            ) : null}
+            <p class="lamp-detail-tagline">{f.tagline}</p>
+            <p class="lamp-detail-desc">{f.description}</p>
+            <!-- Key specs strip -->
+            {!f.comingSoon && (
+              <div class="lamp-key-specs">
+                <div class="lamp-key-spec">
+                  <span class="lamp-key-spec-label">Input Watts</span>
+                  <span class="lamp-key-spec-value">{f.keySpecs.inputWatts}</span>
+                </div>
+                <div class="lamp-key-spec">
+                  <span class="lamp-key-spec-label">Lumens</span>
+                  <span class="lamp-key-spec-value">{f.keySpecs.lumens}</span>
+                </div>
+                <div class="lamp-key-spec">
+                  <span class="lamp-key-spec-label">lm/W</span>
+                  <span class="lamp-key-spec-value">{f.keySpecs.lmPerW}</span>
+                </div>
+                <div class="lamp-key-spec">
+                  <span class="lamp-key-spec-label">CRI</span>
+                  <span class="lamp-key-spec-value">{f.keySpecs.cri}</span>
+                </div>
+              </div>
+            )}
+            <!-- CTAs -->
+            <div class="lamp-detail-ctas">
+              <a href="/contact" class="lamp-cta-primary">Pricing &amp; Availability</a>
+              {f.datasheetUrl ? (
+                <a href={f.datasheetUrl} class="lamp-cta-secondary" target="_blank" rel="noopener">Documentation Download</a>
+              ) : (
+                <span class="lamp-cta-secondary lamp-cta-secondary--disabled">
+                  Documentation Download
+                  <span class="lamp-cta-secondary-sub">Coming soon</span>
+                </span>
+              )}
+            </div>
+            <!-- Certifications -->
+            {f.certifications.length > 0 && (
+              <div class="lamp-certifications">
+                {f.certifications.map(cert => (
+                  <span class="lamp-cert-badge">{cert}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div class="lamp-detail-hero-right">
+            {f.heroImage ? (
+              <img src={f.heroImage} alt={f.name} class="lamp-detail-hero-img" loading="eager"/>
+            ) : (
+              <div class="lamp-detail-hero-img-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                  <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §2 BRAND HERO BAND (optional) -->
+    {f.brandHeroImage && (
+      <div class="lamp-brand-hero">
+        <img src={f.brandHeroImage} alt={`${f.collectionName} brand`} loading="lazy"/>
+      </div>
+    )}
+
+    <!-- §3 PRODUCT DIMENSIONS (optional) -->
+    {f.dimensionDrawings && f.dimensionDrawings.length > 0 && (
+      <section class="lamp-dimensions-section">
+        <div class="lamp-content">
+          <div class="lamp-section-eyebrow">Product Dimensions</div>
+          <h2 class="lamp-section-headline">Dimensional drawings.</h2>
+          <div class="lamp-dimensions-grid">
+            {f.dimensionDrawings.map(d => (
+              <div class="lamp-dimension-item">
+                <img src={d.svgPath} alt={d.caption} loading="lazy"/>
+                <span class="lamp-dimension-caption">{d.caption}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- §4 + §5 SPECIFICATIONS TABLE -->
+    <section class="lamp-specs-section" id="specifications">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Specifications</div>
+        <h2 class="lamp-section-headline">
+          {f.comingSoon ? 'SKUs coming soon.' : 'Full SKU specifications.'}
+        </h2>
+
+        {/* B4: UL toggle — tubulⒶRCH only */}
+        {f.isTubularArch && !f.comingSoon && (
+          <div class="lamp-ul-toggle" data-ul-toggle="true">
+            <button class="lamp-ul-pill active" data-ul-type="UL-A">UL-A (ballast-compatible)</button>
+            <button class="lamp-ul-pill active" data-ul-type="UL-A+B">UL-A+B (hybrid)</button>
+            <button class="lamp-ul-pill active" data-ul-type="UL-B">UL-B (ballast-bypass)</button>
+          </div>
+        )}
+
+        {f.comingSoon ? (
+          <p class="lamp-specs-empty">SKU specifications are coming soon. Check back after the next product update.</p>
+        ) : familySkus.length === 0 ? (
+          <p class="lamp-specs-empty">No active SKUs found for this family in the current product index.</p>
+        ) : (
+          <div class="lamp-specs-table-wrap">
+            <table class="lamp-specs-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Wattage</th>
+                  <th>CCT</th>
+                  <th>Voltage</th>
+                  <th>Mount</th>
+                  <th>DLC</th>
+                  <th>TAA</th>
+                </tr>
+              </thead>
+              <tbody>
+                {familySkus.map((sku: any) => (
+                  <tr data-ul-types={sku.mount_types?.join(',') ?? ''}>
+                    <td>{sku.sku}</td>
+                    <td>{sku.wattages?.join(' / ') ?? '—'}</td>
+                    <td>{sku.ccts?.join(' / ') ?? '—'}</td>
+                    <td>{sku.voltage || '—'}</td>
+                    <td>{sku.mount_types?.join(', ') ?? '—'}</td>
+                    <td>{sku.dlc ? sku.dlc : '—'}</td>
+                    <td>{sku.taa ? '✓' : '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- §6 COMPATIBLE DIMMERS (optional) -->
+    {f.compatibleDimmers && f.compatibleDimmers.length > 0 && (
+      <section class="lamp-dimmers-section">
+        <div class="lamp-content">
+          <div class="lamp-section-eyebrow">Compatible Dimmers</div>
+          <h2 class="lamp-section-headline">Dimmer compatibility.</h2>
+          <div style="overflow-x: auto;">
+            <table class="lamp-dimmers-table">
+              <thead>
+                <tr>
+                  {f.compatibleDimmers.map(d => <th>{d.brand}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {f.compatibleDimmers.map(d => (
+                    <td>{d.models.join(', ')}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- §7 CROSS-SELL STRIP -->
+    {siblingFamilies.length > 0 && (
+      <section class="lamp-crosssell-section">
+        <div class="lamp-content">
+          <div class="lamp-section-eyebrow">Don't Miss These</div>
+          <h2 class="lamp-section-headline">More from this collection.</h2>
+          <div class="lamp-crosssell-grid">
+            {siblingFamilies.slice(0, 4).map(sib => (
+              <a href={`/collections/${f.collectionSlug}/${sib.slug}`} class="lamp-crosssell-card">
+                <div class="lamp-crosssell-name">{sib.name}</div>
+                <div class="lamp-crosssell-tagline">{sib.tagline}</div>
+                <div class="lamp-crosssell-meta">{sib.skuCount} SKUs →</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- §8 GET STARTED -->
+    <section class="lamp-getstarted-section" id="get-started">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Get Started</div>
+        <h2 class="lamp-section-headline">Ready to specify?</h2>
+        <div class="lamp-gs-grid">
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Layout</div>
+            <p class="lamp-gs-card-body" set:html={getStarted.layoutCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Sample</div>
+            <p class="lamp-gs-card-body" set:html={getStarted.sampleCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Distributor</div>
+            <p class="lamp-gs-card-body" set:html={getStarted.distributorCopy}></p>
+          </div>
+          <div class="lamp-gs-card">
+            <div class="lamp-gs-card-label">Rep</div>
+            <p class="lamp-gs-card-body" set:html={getStarted.repCopy}></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- §9 RELATED COLLECTIONS -->
+    <section class="lamp-related-section" id="related">
+      <div class="lamp-content">
+        <div class="lamp-section-eyebrow">Related Collections</div>
+        <h2 class="lamp-section-headline">Explore the full portfolio.</h2>
+        <div class="lamp-related-grid">
+          {relatedCollections.map(col => (
+            <div class={`lamp-related-card ${col.status === 'coming-soon' ? 'lamp-related-card--soon' : ''}`}>
+              <div class="lamp-related-vertical">{col.vertical.toUpperCase()}</div>
+              <div class="lamp-related-name" set:html={col.name}></div>
+              <p class="lamp-related-desc">{col.description}</p>
+              {col.status === 'live'
+                ? <a href={`/collections/${col.slug}`} class="lamp-related-cta">View →</a>
+                : <span class="lamp-related-soon">Coming soon</span>
+              }
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- UL toggle script (tubulⒶRCH only) -->
+  {f.isTubularArch && (
+    <script>
+      const toggle = document.querySelector('[data-ul-toggle]');
+      if (toggle) {
+        const pills = toggle.querySelectorAll('.lamp-ul-pill');
+        const rows = document.querySelectorAll('.lamp-specs-table tbody tr');
+        function updateTable() {
+          const active = new Set([...pills].filter(p => p.classList.contains('active')).map(p => p.dataset.ulType));
+          rows.forEach(row => {
+            const types = (row.dataset.ulTypes || '').split(',').map(s => s.trim()).filter(Boolean);
+            if (types.length === 0) { row.style.display = ''; return; }
+            const visible = types.some(t => active.has(t));
+            (row as HTMLElement).style.display = visible ? '' : 'none';
+          });
+        }
+        pills.forEach(pill => {
+          pill.addEventListener('click', () => {
+            pill.classList.toggle('active');
+            updateTable();
+          });
+        });
+      }
+    </script>
+  )}
+</BaseLayout>
