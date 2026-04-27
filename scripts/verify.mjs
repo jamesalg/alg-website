@@ -76,9 +76,16 @@ async function main() {
     // strip data-* attribute values (JS communication channels, not rendered body content),
     // then strip HTML comments, then look for any remaining Ⓐ.
     const stripped = html
+      // Strip script tag content (JSON data blobs, inline JS — not rendered body)
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      // Strip style tag content
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      // Strip .aa spans (they are the canonical wrapper — their content is allowed)
       .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
+      // Strip data-* attribute values (JS communication channels, not rendered body)
       .replace(/data-[a-z-]+="[^"]*"/g, '')
       .replace(/data-[a-z-]+='[^']*'/g, '')
+      // Strip HTML comments
       .replace(/<!--[\s\S]*?-->/g, '');
     if (/Ⓐ/.test(stripped)) {
       fail('B.1', `${rel}: naked Ⓐ found outside .aa span`);
@@ -261,6 +268,53 @@ async function main() {
       }
     } catch (e) {
       console.warn('⚠ Lock check skipped:', e.message);
+    }
+  }
+
+  // === GROUP H: COLLECTION PAGE STRUCTURAL LOCK (B5, v2.5.3) ===
+  //
+  // Each file matching src/pages/collections/{slug}.astro must contain ONLY:
+  //   frontmatter + <CollectionPageLayout collection={...} />
+  // No section markup is allowed directly in collection pages.
+  {
+    const { readFile: rf, readdir: rd } = await import('node:fs/promises');
+    const { join: pj } = await import('node:path');
+    const colDir = pj(ROOT, 'src', 'pages', 'collections');
+    let colFiles = [];
+    try {
+      const entries = await rd(colDir, { withFileTypes: true });
+      colFiles = entries.filter(e => e.isFile() && e.name.endsWith('.astro')).map(e => e.name);
+    } catch { /* dir may not exist */ }
+
+    for (const fname of colFiles) {
+      const slug = fname.replace('.astro', '');
+      const src = await rf(pj(colDir, fname), 'utf8');
+      // Strip frontmatter (--- ... ---)
+      const body = src.replace(/^---[\s\S]*?---\s*/m, '').trim();
+      // Body must match exactly: <CollectionPageLayout collection={identifier} />
+      const LOCK_RE = /^<CollectionPageLayout\s+collection=\{[a-zA-Z_][a-zA-Z0-9_]*\}\s*\/>$/;
+      if (!LOCK_RE.test(body)) {
+        fail('H.1', `Collection page ${slug} contains markup outside the canonical layout. Body must be exactly: <CollectionPageLayout collection={data} />`);
+      } else {
+        console.log(`✅ Collection-page structural lock: PASS for ${slug}`);
+      }
+    }
+
+    // Also verify layout + section components don't contain <header or <footer
+    const layoutPath = pj(ROOT, 'src', 'layouts', 'CollectionPageLayout.astro');
+    const compDir = pj(ROOT, 'src', 'components', 'collection');
+    const filesToCheck = [layoutPath];
+    try {
+      const compEntries = await rd(compDir, { withFileTypes: true });
+      compEntries.filter(e => e.isFile() && e.name.endsWith('.astro')).forEach(e => filesToCheck.push(pj(compDir, e.name)));
+    } catch { /* dir may not exist */ }
+    for (const fp of filesToCheck) {
+      try {
+        const content = await rf(fp, 'utf8');
+        if (/<header[\s>]/i.test(content) || /<footer[\s>]/i.test(content)) {
+          fail('H.2', `${fp}: collection layout/component contains <header> or <footer> — must come from Header.astro/Footer.astro only`);
+        }
+      } catch { /* file may not exist */ }
     }
   }
 

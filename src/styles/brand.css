@@ -39,6 +39,12 @@
   /* Sizing scale */
   --container-max: 1280px;
   --container-pad: clamp(16px, 4vw, 32px);
+
+  /* B4 (v2.5.3): Canonical collection content width
+     Calibrated to luxo #families section inner container width.
+     All collection sections use this via .collection-content. */
+  --collection-content-width: 1280px;
+  --collection-content-padding-x: 32px;
 }
 
 /* The .aa class — wraps Ⓐ in brand red, slightly larger optical size.

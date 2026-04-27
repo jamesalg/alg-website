@@ -1,0 +1,126 @@
+---
+/**
+ * CollectionHero.astro
+ * §1 Breadcrumb + §2 Hero section for collection pages.
+ * C1: Hero pills use red-bordered style (luxo canonical).
+ */
+export interface Props {
+  slug: string;
+  parentVertical: string;
+  headlineLine: string;
+  description: string;
+  pillRow: string[];
+}
+const { slug, parentVertical, headlineLine, description, pillRow } = Astro.props;
+---
+<!-- §1 BREADCRUMB -->
+<div class="breadcrumb-band">
+  <a href="/">Home</a>
+  <span class="bc-sep">›</span>
+  <a href="/collections">Products</a>
+  <span class="bc-sep">›</span>
+  <a href={`/collections/${parentVertical.toLowerCase()}`}>{parentVertical}</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-current" set:html={headlineLine}></span>
+</div>
+
+<!-- §2 HERO -->
+<section class="collection-section collection-section--hero" id="hero">
+  <div class="collection-content">
+    <div class="hero-eyebrow">{parentVertical.toUpperCase()} · COLLECTION</div>
+    <h1 class="hero-wordmark" set:html={headlineLine}></h1>
+    <p class="hero-desc">{description}</p>
+    <!-- C1: Red-bordered pills (luxo canonical) -->
+    <div class="hero-pills">
+      {pillRow.map(pill => <span class="hero-pill">{pill}</span>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .breadcrumb-band {
+    padding: 12px var(--collection-content-padding-x, 32px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink3, #8a8f99);
+    background: var(--bg2, #f5f5f3);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumb-band a { color: var(--ink3, #8a8f99); text-decoration: none; }
+  .breadcrumb-band a:hover { color: var(--color-alg-red, #F32740); }
+  .bc-sep { color: var(--ink4, #c8ccd3); }
+  .bc-current { color: var(--ink, #111418); }
+
+  .collection-section--hero {
+    background: #1a1f2e;
+    color: #fff;
+  }
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+  .collection-section--hero .collection-content {
+    padding-top: 72px;
+    padding-bottom: 80px;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 24px;
+  }
+  .hero-wordmark {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(72px, 10vw, 128px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: #fff;
+    margin: 0 0 28px;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .hero-wordmark :global(.aa) {
+    color: var(--color-alg-red, #F32740);
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.70);
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  /* C1: Red-bordered pills (luxo canonical) */
+  .hero-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid var(--color-alg-red, #F32740);
+    border-radius: 2px;
+    padding: 6px 14px;
+    white-space: nowrap;
+  }
+  @media (max-width: 767px) {
+    .hero-wordmark { font-size: clamp(52px, 14vw, 72px); }
+  }
+</style>

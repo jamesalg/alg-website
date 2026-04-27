@@ -1,0 +1,742 @@
+---
+/**
+ * CollectionAllFamilies.astro
+ * §6 All Families — sidebar filter + family grid.
+ * D4: Facets are data-driven from sku-index.json.
+ * D5: Filter match logic wired via client JS.
+ * D6: Sort dropdown.
+ * C4: Sidebar first filter heading = "APPLICATION" (canonical).
+ */
+import skuIndex from '../../data/sku-index.json';
+
+export interface Props {
+  collectionSlug: string;
+  familiesHeadline: string;
+  familiesSubhead: string;
+}
+const { collectionSlug, familiesHeadline, familiesSubhead } = Astro.props;
+
+const colData = skuIndex.collections[collectionSlug as keyof typeof skuIndex.collections];
+const families = colData?.families ?? [];
+const skus = colData?.skus ?? [];
+
+// Compute facet options from data
+const allSubCats = [...new Set(families.map(f => f.sub_category))].sort();
+const allEchelons = [...new Set(families.map(f => f.display_echelon))].sort((a,b)=>{
+  const o:Record<string,number> = {ECO:0,PRO:1,'PRO+':2};
+  return (o[a]??9)-(o[b]??9);
+});
+const allCcts = [...new Set(skus.flatMap(s => s.ccts))].sort();
+const allVoltages = [...new Set(skus.map(s => s.voltage).filter(Boolean))].sort();
+const allDlc = [...new Set(skus.map(s => s.dlc).filter(Boolean))].sort() as string[];
+const allMounts = [...new Set(skus.flatMap(s => s.mount_types))].sort();
+const hasTaa = skus.some(s => s.taa);
+
+const minWatt = Math.min(...families.map(f => f.max_wattage).filter(n=>n>0));
+const maxWatt = Math.max(...families.map(f => f.max_wattage).filter(n=>n>0));
+
+// Helper: wrap Ⓐ in .aa spans for safe rendering
+function wrapAa(str: string): string {
+  return str.replace(/Ⓐ/g, '<span class="aa">Ⓐ</span>');
+}
+
+// Count helpers (family-level)
+function subCatCount(sub: string) { return families.filter(f=>f.sub_category===sub).length; }
+function echelonCount(e: string)  { return families.filter(f=>f.display_echelon===e).length; }
+function cctCount(cct: string)    { return families.filter(f=>skus.some(s=>s.family===f.family&&s.ccts.includes(cct))).length; }
+function voltCount(v: string)     { return families.filter(f=>skus.some(s=>s.family===f.family&&s.voltage===v)).length; }
+function dlcCount(d: string)      { return families.filter(f=>skus.some(s=>s.family===f.family&&s.dlc===d)).length; }
+function mountCount(m: string)    { return families.filter(f=>skus.some(s=>s.family===f.family&&s.mount_types.includes(m))).length; }
+function taaCount()               { return families.filter(f=>skus.some(s=>s.family===f.family&&s.taa)).length; }
+
+// Serialize families for client JS
+const familiesJson = JSON.stringify(families);
+const skusJson = JSON.stringify(skus);
+---
+
+<section class="collection-section collection-section--families" id="families">
+  <div class="collection-content">
+    <div class="fam-eyebrow">All Families</div>
+    <h2 class="fam-headline">{familiesHeadline}</h2>
+
+    <div class="fam-layout">
+      <!-- SIDEBAR FILTER -->
+      <aside class="fam-sidebar">
+        <div class="filter-header">
+          <span class="filter-title">FILTER BY</span>
+          <button class="filter-reset" id="filterReset">Reset all</button>
+        </div>
+
+        <!-- C4: APPLICATION (canonical, not "SUB-CATEGORY") -->
+        <div class="filter-group" data-group="application">
+          <button class="fg-toggle" aria-expanded="true">APPLICATION <span class="fg-arrow">▲</span></button>
+          <div class="fg-body">
+            {allSubCats.map(sub => (
+              <label class="fg-item">
+                <input type="checkbox" data-facet="application" value={sub} />
+                <span class="fg-name">{sub}</span>
+                <span class="fg-count" data-count-application={sub}>({subCatCount(sub)})</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="filter-group" data-group="echelon">
+          <button class="fg-toggle" aria-expanded="true">ECHELON <span class="fg-arrow">▲</span></button>
+          <div class="fg-body">
+            {allEchelons.map(e => (
+              <label class="fg-item">
+                <input type="checkbox" data-facet="echelon" value={e} />
+                <span class="fg-name">{e}</span>
+                <span class="fg-count" data-count-echelon={e}>({echelonCount(e)})</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="filter-group" data-group="wattage">
+          <button class="fg-toggle" aria-expanded="true">MAX WATTAGE <span class="fg-arrow">▲</span></button>
+          <div class="fg-body">
+            <div class="watt-range-row">
+              <span class="watt-label" id="wattMin">{minWatt}W</span>
+              <span class="watt-label" id="wattMax">{maxWatt}W</span>
+            </div>
+            <input
+              type="range"
+              id="wattSlider"
+              class="watt-slider"
+              min={minWatt}
+              max={maxWatt}
+              step="10"
+              value={maxWatt}
+              data-min={minWatt}
+              data-max={maxWatt}
+            />
+          </div>
+        </div>
+
+        {allCcts.length > 0 && (
+          <div class="filter-group" data-group="cct">
+            <button class="fg-toggle" aria-expanded="true">CCT <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              {allCcts.map(cct => (
+                <label class="fg-item">
+                  <input type="checkbox" data-facet="cct" value={cct} />
+                  <span class="fg-name">{cct}</span>
+                  <span class="fg-count" data-count-cct={cct}>({cctCount(cct)})</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {allVoltages.length > 0 && (
+          <div class="filter-group" data-group="voltage">
+            <button class="fg-toggle" aria-expanded="true">VOLTAGE <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              {allVoltages.map(v => (
+                <label class="fg-item">
+                  <input type="checkbox" data-facet="voltage" value={v} />
+                  <span class="fg-name">{v}</span>
+                  <span class="fg-count" data-count-voltage={v}>({voltCount(v)})</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {allDlc.length > 0 && (
+          <div class="filter-group" data-group="dlc">
+            <button class="fg-toggle" aria-expanded="true">DLC <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              {allDlc.map(d => (
+                <label class="fg-item">
+                  <input type="checkbox" data-facet="dlc" value={d} />
+                  <span class="fg-name">DLC {d}</span>
+                  <span class="fg-count" data-count-dlc={d}>({dlcCount(d)})</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {hasTaa && (
+          <div class="filter-group" data-group="taa">
+            <button class="fg-toggle" aria-expanded="true">TAA COMPLIANT <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              <label class="fg-item">
+                <input type="checkbox" data-facet="taa" value="true" />
+                <span class="fg-name">TAA Compliant</span>
+                <span class="fg-count" data-count-taa="true">({taaCount()})</span>
+              </label>
+            </div>
+          </div>
+        )}
+
+        {allMounts.length > 0 && (
+          <div class="filter-group" data-group="mount">
+            <button class="fg-toggle" aria-expanded="true">MOUNT TYPE <span class="fg-arrow">▲</span></button>
+            <div class="fg-body">
+              {allMounts.map(m => (
+                <label class="fg-item">
+                  <input type="checkbox" data-facet="mount" value={m} />
+                  <span class="fg-name">{m}</span>
+                  <span class="fg-count" data-count-mount={m}>({mountCount(m)})</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
+
+      <!-- FAMILY GRID -->
+      <div class="fam-main">
+        <div class="fam-toolbar">
+          <span class="fam-count-label" id="famCountLabel">Showing {families.length} families</span>
+          <select class="fam-sort" id="famSort">
+            <option value="app-tier">Sort: Application → ECO→PRO+</option>
+            <option value="watt-asc">Wattage Low to High</option>
+            <option value="watt-desc">Wattage High to Low</option>
+            <option value="az">A to Z</option>
+          </select>
+        </div>
+
+        <div class="fam-grid" id="famGrid">
+          {families.map(fam => {
+            const famSkus = skus.filter(s => s.family === fam.family);
+            return (
+              <div
+                class="fam-card"
+                data-family={fam.family}
+                data-sub={fam.sub_category}
+                data-echelon={fam.display_echelon}
+                data-maxwatt={fam.max_wattage}
+                data-skus={JSON.stringify(famSkus)}
+              >
+                <div class="fc-top">
+                  <span class="fc-subcat">{fam.sub_category.toUpperCase()}</span>
+                  <span class={`fc-tier tier-badge tier-${fam.display_echelon.replace('+','-plus').toLowerCase()}`}>{fam.display_echelon}</span>
+                </div>
+                <div class="fc-img">
+                  <span class="fc-watermark" set:html={wrapAa(fam.family)}></span>
+                </div>
+                <div class="fc-bottom">
+                  <div class="fc-name" set:html={wrapAa(fam.family)}></div>
+                  <div class="fc-meta">
+                    {fam.max_wattage > 0 && <span class="fc-watt">{fam.max_wattage}W max</span>}
+                    <span class="fc-skucount">· {fam.sku_count} SKUs</span>
+                    {fam.dlc && <span class="fc-dlc">DLC</span>}
+                  </div>
+                  <a href={`/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p class="fam-no-results" id="famNoResults" style="display:none;">No families match the current filters. <button id="famNoResultsReset">Reset all</button></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ familiesJson, skusJson, maxWatt }}>
+  (() => {
+    const families = JSON.parse(familiesJson);
+    const skus = JSON.parse(skusJson);
+
+    const grid = document.getElementById('famGrid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.fam-card')) : [];
+    const countLabel = document.getElementById('famCountLabel');
+    const noResults = document.getElementById('famNoResults');
+    const sortSel = document.getElementById('famSort');
+    const wattSlider = document.getElementById('wattSlider');
+    const wattMaxLabel = document.getElementById('wattMax');
+    const resetBtn = document.getElementById('filterReset');
+    const noResultsReset = document.getElementById('famNoResultsReset');
+
+    // Facet state
+    const active = {
+      application: new Set(),
+      echelon: new Set(),
+      cct: new Set(),
+      voltage: new Set(),
+      dlc: new Set(),
+      mount: new Set(),
+      taa: false,
+      maxWatt: maxWatt,
+    };
+
+    function getCardSkus(card) {
+      try { return JSON.parse(card.dataset.skus || '[]'); } catch { return []; }
+    }
+
+    function familyMatches(card) {
+      const sub = card.dataset.sub;
+      const echelon = card.dataset.echelon;
+      const mw = parseInt(card.dataset.maxwatt || '0', 10);
+      const famSkus = getCardSkus(card);
+
+      if (active.application.size > 0 && !active.application.has(sub)) return false;
+      if (active.echelon.size > 0 && !active.echelon.has(echelon)) return false;
+      if (mw > active.maxWatt) return false;
+
+      // SKU-level facets: at least one SKU must match all active SKU facets
+      const skuFacetsActive = active.cct.size > 0 || active.voltage.size > 0 ||
+                              active.dlc.size > 0 || active.mount.size > 0 || active.taa;
+      if (skuFacetsActive) {
+        const matchingSku = famSkus.find(s => {
+          if (active.cct.size > 0 && !s.ccts.some(c => active.cct.has(c))) return false;
+          if (active.voltage.size > 0 && !active.voltage.has(s.voltage)) return false;
+          if (active.dlc.size > 0 && !active.dlc.has(s.dlc)) return false;
+          if (active.mount.size > 0 && !s.mount_types.some(m => active.mount.has(m))) return false;
+          if (active.taa && !s.taa) return false;
+          return true;
+        });
+        if (!matchingSku) return false;
+      }
+      return true;
+    }
+
+    function applySort(visibleCards) {
+      const sortVal = sortSel ? sortSel.value : 'app-tier';
+      const TIER = { ECO: 0, PRO: 1, 'PRO+': 2 };
+      return [...visibleCards].sort((a, b) => {
+        if (sortVal === 'app-tier') {
+          const sd = a.dataset.sub.localeCompare(b.dataset.sub);
+          if (sd !== 0) return sd;
+          const td = (TIER[a.dataset.echelon] ?? 9) - (TIER[b.dataset.echelon] ?? 9);
+          if (td !== 0) return td;
+          return a.dataset.family.localeCompare(b.dataset.family);
+        }
+        if (sortVal === 'watt-asc') return parseInt(a.dataset.maxwatt||'0') - parseInt(b.dataset.maxwatt||'0');
+        if (sortVal === 'watt-desc') return parseInt(b.dataset.maxwatt||'0') - parseInt(a.dataset.maxwatt||'0');
+        if (sortVal === 'az') return a.dataset.family.localeCompare(b.dataset.family);
+        return 0;
+      });
+    }
+
+    function updateCounts() {
+      // Update facet counts based on currently visible families (excluding the group being counted)
+      // For simplicity: recount based on all families that would match if that facet group were cleared
+      const groups = ['application','echelon','cct','voltage','dlc','mount','taa'];
+      groups.forEach(group => {
+        const inputs = document.querySelectorAll(`[data-facet="${group}"]`);
+        inputs.forEach(inp => {
+          const val = inp.value;
+          // Count families visible if this facet were the only one in its group active
+          let count = 0;
+          cards.forEach(card => {
+            const famSkus = getCardSkus(card);
+            // Temporarily ignore this group, check all others
+            const savedGroup = active[group];
+            if (group === 'taa') active.taa = false; else active[group] = new Set();
+            const baseMatch = familyMatches(card);
+            active[group] = savedGroup;
+
+            if (!baseMatch) return;
+            // Now check if this specific value matches
+            if (group === 'application' && card.dataset.sub === val) count++;
+            else if (group === 'echelon' && card.dataset.echelon === val) count++;
+            else if (group === 'cct' && famSkus.some(s => s.ccts.includes(val))) count++;
+            else if (group === 'voltage' && famSkus.some(s => s.voltage === val)) count++;
+            else if (group === 'dlc' && famSkus.some(s => s.dlc === val)) count++;
+            else if (group === 'mount' && famSkus.some(s => s.mount_types.includes(val))) count++;
+            else if (group === 'taa' && val === 'true' && famSkus.some(s => s.taa)) count++;
+          });
+          const countEl = inp.closest('.fg-item')?.querySelector('[data-count-' + group + ']') ||
+                          inp.closest('.fg-item')?.querySelector('.fg-count');
+          if (countEl) countEl.textContent = `(${count})`;
+        });
+      });
+    }
+
+    function render() {
+      const visible = [];
+      const hidden = [];
+      cards.forEach(card => {
+        if (familyMatches(card)) visible.push(card); else hidden.push(card);
+      });
+
+      const sorted = applySort(visible);
+      // Re-append in sort order
+      sorted.forEach(c => grid && grid.appendChild(c));
+      hidden.forEach(c => { c.style.display = 'none'; });
+      sorted.forEach(c => { c.style.display = ''; });
+
+      if (countLabel) countLabel.textContent = `Showing ${visible.length} ${visible.length === 1 ? 'family' : 'families'}`;
+      if (noResults) noResults.style.display = visible.length === 0 ? '' : 'none';
+
+      updateCounts();
+    }
+
+    // Checkbox listeners
+    document.querySelectorAll('[data-facet]').forEach(inp => {
+      inp.addEventListener('change', () => {
+        const facet = inp.dataset.facet;
+        const val = inp.value;
+        if (facet === 'taa') {
+          active.taa = inp.checked;
+        } else if (active[facet]) {
+          if (inp.checked) active[facet].add(val); else active[facet].delete(val);
+        }
+        render();
+      });
+    });
+
+    // Wattage slider
+    if (wattSlider) {
+      wattSlider.addEventListener('input', () => {
+        active.maxWatt = parseInt(wattSlider.value, 10);
+        if (wattMaxLabel) wattMaxLabel.textContent = wattSlider.value + 'W';
+        render();
+      });
+    }
+
+    // Sort
+    if (sortSel) sortSel.addEventListener('change', render);
+
+    // Reset
+    function resetAll() {
+      active.application.clear(); active.echelon.clear(); active.cct.clear();
+      active.voltage.clear(); active.dlc.clear(); active.mount.clear();
+      active.taa = false;
+      active.maxWatt = maxWatt;
+      document.querySelectorAll('[data-facet]').forEach(inp => { inp.checked = false; });
+      if (wattSlider) { wattSlider.value = maxWatt; }
+      if (wattMaxLabel) wattMaxLabel.textContent = maxWatt + 'W';
+      render();
+    }
+    if (resetBtn) resetBtn.addEventListener('click', resetAll);
+    if (noResultsReset) noResultsReset.addEventListener('click', resetAll);
+
+    // Collapsible filter groups
+    document.querySelectorAll('.fg-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        const body = btn.nextElementSibling;
+        if (body) body.style.display = expanded ? 'none' : '';
+        const arrow = btn.querySelector('.fg-arrow');
+        if (arrow) arrow.textContent = expanded ? '▼' : '▲';
+      });
+    });
+
+    // Application tile integration (from CollectionApplications)
+    document.querySelectorAll('[data-app]').forEach(tile => {
+      tile.addEventListener('click', () => {
+        const app = tile.dataset.app;
+        // Find matching sub_category from families
+        const matchSub = families.find(f => f.sub_category.toLowerCase().replace(/\s+/g,'-') === app)?.sub_category;
+        if (!matchSub) return;
+        // Toggle
+        if (active.application.has(matchSub)) {
+          active.application.delete(matchSub);
+          tile.setAttribute('aria-pressed','false');
+          const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
+          if (cb) cb.checked = false;
+        } else {
+          active.application.add(matchSub);
+          tile.setAttribute('aria-pressed','true');
+          const cb = document.querySelector(`[data-facet="application"][value="${matchSub}"]`);
+          if (cb) cb.checked = true;
+        }
+        // Scroll to families section
+        document.getElementById('families')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        render();
+      });
+    });
+
+    render();
+  })();
+</script>
+
+<style>
+  .collection-section--families {
+    background: var(--bg2, #f5f5f3);
+    padding: 80px 0;
+  }
+  .collection-content {
+    max-width: var(--collection-content-width, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--collection-content-padding-x, 32px);
+    width: 100%;
+  }
+  .fam-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    margin-bottom: 16px;
+  }
+  .fam-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 84px;
+    height: 1.5px;
+    background: var(--color-alg-red, #F32740);
+    flex-shrink: 0;
+  }
+  .fam-headline {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--ink, #111418);
+    margin: 0 0 40px;
+  }
+  .fam-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  /* SIDEBAR */
+  .fam-sidebar {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: 100px;
+  }
+  .filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .filter-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+  }
+  .filter-reset {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .filter-reset:hover { text-decoration: underline; }
+  .filter-group {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 12px 0;
+  }
+  .filter-group:last-child { border-bottom: none; }
+  .fg-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #111418);
+    padding: 4px 0;
+    margin-bottom: 8px;
+  }
+  .fg-arrow { font-size: 8px; color: #8a8f99; }
+  .fg-body { display: flex; flex-direction: column; gap: 6px; }
+  .fg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink, #111418);
+  }
+  .fg-item input[type="checkbox"] { accent-color: var(--color-alg-red, #F32740); }
+  .fg-name { flex: 1; font-size: 12px; }
+  .fg-count { font-size: 11px; color: #8a8f99; }
+  /* Wattage slider */
+  .watt-range-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .watt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #8a8f99;
+  }
+  .watt-slider {
+    width: 100%;
+    accent-color: var(--color-alg-red, #F32740);
+  }
+  /* TOOLBAR */
+  .fam-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .fam-count-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #8a8f99;
+  }
+  .fam-sort {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 6px 10px;
+    background: #fff;
+    color: var(--ink, #111418);
+    cursor: pointer;
+  }
+  /* FAMILY GRID */
+  .fam-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .fam-card {
+    background: #0a0e1a;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .fam-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+  }
+  .fc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px 8px;
+  }
+  .fc-subcat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.40);
+  }
+  /* Tier badges — always visible (Fix 8) */
+  .tier-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .tier-eco   { background: #1a2a1a; color: #4caf50; border: 1px solid rgba(76,175,80,0.4); }
+  .tier-pro   { background: #1a1a2a; color: #7c9fff; border: 1px solid rgba(124,159,255,0.4); }
+  .tier-pro-plus { background: #2a1a2a; color: #e879f9; border: 1px solid rgba(232,121,249,0.4); }
+  .fc-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .fc-watermark {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.07);
+    text-align: center;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    word-break: break-word;
+    padding: 0 8px;
+  }
+  .fc-bottom {
+    padding: 10px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .fc-name {
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .fc-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .fc-watt, .fc-skucount {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.40);
+  }
+  .fc-dlc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: rgba(243,39,64,0.15);
+    color: var(--color-alg-red, #F32740);
+    border: 1px solid rgba(243,39,64,0.35);
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+  .fc-view {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-alg-red, #F32740);
+    text-decoration: none;
+    margin-top: 2px;
+    display: inline-block;
+  }
+  .fc-view:hover { text-decoration: underline; }
+  .fam-no-results {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #8a8f99;
+    padding: 40px 0;
+    text-align: center;
+  }
+  .fam-no-results button {
+    background: none;
+    border: none;
+    color: var(--color-alg-red, #F32740);
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+  }
+  @media (max-width: 1199px) {
+    .fam-layout { grid-template-columns: 240px 1fr; }
+    .fam-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 767px) {
+    .fam-layout { grid-template-columns: 1fr; }
+    .fam-sidebar { position: static; }
+    .fam-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

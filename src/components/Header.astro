@@ -573,7 +573,12 @@
     overflow:hidden;
     z-index:200;
   }
-  .utility-bar .signin:hover .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  /* A1 (v2.5.3): Desktop hover behavior preserved */
+  @media (hover: hover) and (pointer: fine) {
+    .utility-bar .signin:hover .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+  /* A1 (v2.5.3): Mobile click-toggle — JS adds .signin--open class */
+  .utility-bar .signin.signin--open .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
   .signin-dropdown a{
     display:block;padding:14px 16px;text-align:left;text-transform:none;
     letter-spacing:0;margin:0;font-size:13px;color:var(--ink);font-weight:400;
@@ -626,6 +631,7 @@
     border:1px solid rgba(0,0,0,0.08);
     box-shadow:0 12px 40px rgba(0,0,0,0.12);
     padding:24px 28px;
+    /* A2 (v2.5.3): no outer white wrapper — inner panels handle their own bg */
     min-width:520px;
     display:grid;grid-template-columns:1fr 1fr;gap:28px;
     opacity:0;visibility:hidden;transform:translateY(6px);
@@ -644,6 +650,9 @@
     right:2.5vw;
     max-width:none;min-width:0;
     padding:0;
+    /* A2 (v2.5.3): Remove outer white border — panels are flush */
+    background:transparent;
+    border:none;
     display:grid;
     grid-template-columns:220px 260px 300px 1fr;
     gap:0;
@@ -831,6 +840,9 @@
   .megamenu.solutions{
     position:fixed;top:90px;left:2.5vw;right:2.5vw;
     max-width:none;min-width:0;padding:0;
+    /* A2 (v2.5.3): Remove outer white border */
+    background:transparent;
+    border:none;
     display:grid;grid-template-columns:220px 320px 1fr;
     gap:0;max-height:calc(100vh - 110px);overflow:hidden;
     box-shadow:0 24px 80px rgba(0,0,0,0.18);
@@ -1138,6 +1150,34 @@
       el.addEventListener('mouseleave', () => clearTimeout(solTimer));
     });
     solLi.addEventListener('mouseleave', () => clearTimeout(solTimer));
+  }
+
+  /* =============================================================
+     A1 (v2.5.3): MOBILE SIGN IN — click-toggle disclosure
+     ============================================================= */
+  const signinTrigger = document.getElementById('signinTrigger');
+  if (signinTrigger) {
+    signinTrigger.addEventListener('click', function(e) {
+      // Only intercept on touch/mobile (no fine pointer)
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      e.stopPropagation();
+      const isOpen = signinTrigger.classList.toggle('signin--open');
+      signinTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      if (!signinTrigger.contains(e.target)) {
+        signinTrigger.classList.remove('signin--open');
+        signinTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        signinTrigger.classList.remove('signin--open');
+        signinTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
   /* =============================================================
