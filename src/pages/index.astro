@@ -27,7 +27,10 @@ const heroSlides = [
     eyebrow: 'Featured · Sports Lighting · LSPL',
     name: 'Illuminator',
     gradClass: 'grad-slide0',
-    seriesNameColor: '#a8c8e8', // C1: stadium blue-white — matches sports lighting field bg
+    seriesNameColor: '#a8c8e8', // C1: stadium blue-white — matches sports lighting field bg (kept for fallback)
+    // D (v2.5.5): multi-color gradient sampled from hero-illuminator-stadium.jpg
+    // Hues: cool slate sky → bright stadium-light white → warm amber spill → lit-field green
+    seriesNameGradient: 'linear-gradient(95deg, #7b9ec8 0%, #c8dff0 28%, #f5f0e8 55%, #d4e8a0 80%, #a8c870 100%)',
     desc: 'Precision sports lighter. Up to 116,000 lumens. 150 lm/W. DLC Premium listed for broadcast-grade venues.',
     lineDrawing: '/images/heroes/line-drawings/line-illuminator.png',
     stats: [
@@ -44,7 +47,10 @@ const heroSlides = [
     eyebrow: 'Featured · High-Bay · LLHB',
     name: 'Titan-II',
     gradClass: 'grad-slide1',
-    seriesNameColor: '#f0c070', // C1: warm amber — matches warehouse/industrial warm tone
+    seriesNameColor: '#f0c070', // C1: warm amber — matches warehouse/industrial warm tone (kept for fallback)
+    // D (v2.5.5): multi-color gradient sampled from hero-warehouse-highbay.jpg
+    // Hues: steel blue-grey ceiling → warm industrial amber → orange forklift accent
+    seriesNameGradient: 'linear-gradient(95deg, #98b0c8 0%, #c8b890 35%, #f0c070 65%, #e87830 100%)',
     desc: 'Linear high-bay for warehouses and industrial interiors. Up to 155W. 3-step WATTselect (85/130/155W). DLC Premium, built-in 6kVA surge.',
     lineDrawing: '/images/heroes/line-drawings/line-titan.png',
     stats: [
@@ -61,7 +67,10 @@ const heroSlides = [
     eyebrow: 'Featured · Area Lighting · LSBX',
     name: 'Liberty',
     gradClass: 'grad-slide2',
-    seriesNameColor: '#c9a876', // C1: warm amber-gold — matches outdoor area lighting dusk hue
+    seriesNameColor: '#c9a876', // C1: warm amber-gold — matches outdoor area lighting dusk hue (kept for fallback)
+    // D (v2.5.5): multi-color gradient sampled from hero-outdoor-area.jpg
+    // Hues: warm sunset orange → rose-mauve horizon → deep sky blue → cool steel blue
+    seriesNameGradient: 'linear-gradient(95deg, #f0a050 0%, #e87880 28%, #9878c0 55%, #6a8cb2 80%, #4890d0 100%)',
     lineDrawingClass: 'liberty-render', // C2: -20% size
     desc: null,
     lineDrawing: '/images/heroes/line-drawings/line-liberty.png',
@@ -79,7 +88,10 @@ const heroSlides = [
     eyebrow: 'Featured · Back-Lit Panel · LBLP',
     name: null,
     gradClass: 'grad-slide3',
-    seriesNameColor: '#e8d8b0', // C1: warm office white — matches back-lit panel warm CCT
+    seriesNameColor: '#e8d8b0', // C1: warm office white — matches back-lit panel warm CCT (kept for fallback)
+    // D (v2.5.5): multi-color gradient sampled from hero-commercial-office.jpg
+    // Hues: warm walnut amber → cool grey-blue glass → soft tungsten cream
+    seriesNameGradient: 'linear-gradient(95deg, #c89060 0%, #d0b890 30%, #a8b8c8 60%, #e8d8b0 100%)',
     desc: 'Back-lit panel for offices, classrooms, and commercial interiors. Up to 5×5 WATTselect/CCTselect matrix. 1×4 · 2×2 · 2×4.',
     lineDrawing: '/images/heroes/line-drawings/line-panel.png',
     stats: [
@@ -162,8 +174,12 @@ const verticals = [
               {heroSlides.map((slide, i) => (
                 <div class={`slot-content${i === 0 ? ' active' : ''}`} data-slot-slide={i}>
                   {slide.brandMark === 'proarch'
-                    ? <h2 class="display-product" style={`color: ${slide.seriesNameColor ?? '#fff'};`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
-                    : <h2 class="display-product" style={`color: ${slide.seriesNameColor ?? '#fff'};`}>{slide.name}</h2>
+                    ? <h2 class="display-product" style={slide.seriesNameGradient
+                        ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
+                        : `color: ${slide.seriesNameColor ?? '#fff'};`}>pro<span class="aa">Ⓐ</span>RCH-III</h2>
+                    : <h2 class="display-product" style={slide.seriesNameGradient
+                        ? `background: ${slide.seriesNameGradient}; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;`
+                        : `color: ${slide.seriesNameColor ?? '#fff'};`}>{slide.name}</h2>
                   }
                 </div>
               ))}

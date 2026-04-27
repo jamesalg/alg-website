@@ -106,6 +106,8 @@ const verticalSlug  = parentVertical.toLowerCase();
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0;
+    /* B1 v2.5.5: mixed-case — no text-transform */
+    text-transform: none;
   }
   .hero-wordmark :global(.aa) {
     color: var(--color-alg-red, #F32740);
@@ -113,11 +115,18 @@ const verticalSlug  = parentVertical.toLowerCase();
     font-weight: inherit;
   }
   .hero-desc {
-    font-size: 17px;
+    font-size: 1rem;
     line-height: 1.55;
     color: rgba(255,255,255,0.70);
-    max-width: 640px;
+    max-width: 920px;
     margin-bottom: 32px;
+  }
+  /* B2 v2.5.5: force single-line at desktop ≥ 1024px */
+  @media (min-width: 1024px) {
+    .hero-desc {
+      white-space: nowrap;
+      overflow: visible;
+    }
   }
   .hero-pills {
     display: flex;
