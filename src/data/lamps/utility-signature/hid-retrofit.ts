@@ -30,19 +30,19 @@ const hid_retrofitData = {
 
 export const siblingFamilies = [
     {
-      slug: 'a-lamp',
+      slug: 'a-lamp', vertical: 'General',
       name: 'A-Lamp',
       tagline: 'A19 utility LED lamps for everyday commercial replacement.',
       skuCount: 4,
     },
     {
-      slug: 'br-lamp',
+      slug: 'br-lamp', vertical: 'General',
       name: 'BR Flood',
       tagline: 'BR40 flood lamps for recessed and track lighting.',
       skuCount: 7,
     },
     {
-      slug: 'par-lamp',
+      slug: 'par-lamp', vertical: 'General',
       name: 'PAR Reflector',
       tagline: 'PAR38 reflector lamps for outdoor and commercial applications.',
       skuCount: 2,

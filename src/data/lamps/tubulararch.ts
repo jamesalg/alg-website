@@ -15,7 +15,7 @@ const tubulararchData = {
   pillRow: ['T5 · T8 · PL · PLL · U6', 'UL-A · UL-A+B · UL-B', 'Commercial Retrofit', 'DLC Listed'],
   families: [
     {
-      slug: 't5',
+      slug: 't5', vertical: 'General',
       name: 'T5',
       tagline: 'T5HE and T5HO fluorescent lamp replacements.',
       heroImage: '',
@@ -23,7 +23,7 @@ const tubulararchData = {
       comingSoon: false,
     },
     {
-      slug: 't8',
+      slug: 't8', vertical: 'General',
       name: 'T8',
       tagline: 'The most common fluorescent retrofit. 2FT, 4FT, and 8FT.',
       heroImage: '',
@@ -31,7 +31,7 @@ const tubulararchData = {
       comingSoon: false,
     },
     {
-      slug: 'pl',
+      slug: 'pl', vertical: 'General',
       name: 'PL',
       tagline: 'Compact fluorescent PL lamp replacements.',
       heroImage: '',
@@ -39,7 +39,7 @@ const tubulararchData = {
       comingSoon: false,
     },
     {
-      slug: 'pll',
+      slug: 'pll', vertical: 'General',
       name: 'PLL',
       tagline: 'Biax PLL lamp replacements for 2G11 base fixtures.',
       heroImage: '',
@@ -47,7 +47,7 @@ const tubulararchData = {
       comingSoon: false,
     },
     {
-      slug: 'u6',
+      slug: 'u6', vertical: 'General',
       name: 'U6',
       tagline: 'U-bend T8 lamp replacements for 2×2 troffer fixtures.',
       heroImage: '',

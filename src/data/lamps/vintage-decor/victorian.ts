@@ -30,31 +30,31 @@ const victorianData = {
 
 export const siblingFamilies = [
     {
-      slug: 'candelabra',
+      slug: 'candelabra', vertical: 'General',
       name: 'Candelabra',
       tagline: 'CA10 vintage candelabra lamps in amber finish.',
       skuCount: 2,
     },
     {
-      slug: 'edison',
+      slug: 'edison', vertical: 'General',
       name: 'Edison',
       tagline: 'ST19 Edison lamps in clear, amber, and smoked finishes.',
       skuCount: 14,
     },
     {
-      slug: 'globe',
+      slug: 'globe', vertical: 'General',
       name: 'Globe',
       tagline: 'G25 and G40 globe lamps in amber and smoked finishes.',
       skuCount: 11,
     },
     {
-      slug: 'radio',
+      slug: 'radio', vertical: 'General',
       name: 'Radio',
       tagline: 'T10 and T14 radio-style tubular lamps.',
       skuCount: 7,
     },
     {
-      slug: 'tubular',
+      slug: 'tubular', vertical: 'General',
       name: 'Tubular',
       tagline: 'T9 tubular lamps in clear and amber finishes.',
       skuCount: 12,

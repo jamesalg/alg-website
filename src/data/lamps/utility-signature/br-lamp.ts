@@ -24,25 +24,25 @@ const br_lampData = {
   certifications: ['UL Listed', 'FCC'],
   datasheetUrl: undefined,
   installGuideUrl: undefined,
-  comingSoon: false,
+  comingSoon: true,
   isTubularArch: false,
 };
 
 export const siblingFamilies = [
     {
-      slug: 'a-lamp',
+      slug: 'a-lamp', vertical: 'General',
       name: 'A-Lamp',
       tagline: 'A19 utility LED lamps for everyday commercial replacement.',
       skuCount: 4,
     },
     {
-      slug: 'par-lamp',
+      slug: 'par-lamp', vertical: 'General',
       name: 'PAR Reflector',
       tagline: 'PAR38 reflector lamps for outdoor and commercial applications.',
       skuCount: 2,
     },
     {
-      slug: 'hid-retrofit',
+      slug: 'hid-retrofit', vertical: 'General',
       name: 'HID Retrofit',
       tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
       skuCount: 0,

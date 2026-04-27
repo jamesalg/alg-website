@@ -282,8 +282,9 @@ async function main() {
     } catch { /* dir may not exist */ }
 
     // Bespoke pages (v2.5.6+): pages that intentionally do NOT use CollectionPageLayout
-    // v2.7.0: lamp collection pages use LampCollectionPageLayout — add to bespoke set
-    const BESPOKE_PAGES = new Set(['consumer', 'tubulararch', 'nostalgic-decor', 'vintage-decor', 'utility-signature']);
+    // consumer.astro is the only true bespoke page (v2.5.6 carve-out).
+    // Lamp collection pages use LampCollectionPageLayout and are checked by Group N.
+    const BESPOKE_PAGES = new Set(['consumer']);
     for (const fname of colFiles) {
       const slug = fname.replace('.astro', '');
       if (BESPOKE_PAGES.has(slug)) {
@@ -294,7 +295,7 @@ async function main() {
       // Strip frontmatter (--- ... ---)
       const body = src.replace(/^---[\s\S]*?---\s*/m, '').trim();
       // Body must match exactly: <CollectionPageLayout collection={identifier} />
-      const LOCK_RE = /^<CollectionPageLayout\s+collection=\{[a-zA-Z_][a-zA-Z0-9_]*\}\s*\/>/;
+      const LOCK_RE = /^<(CollectionPageLayout|LampCollectionPageLayout)\s+collection=\{[a-zA-Z_][a-zA-Z0-9_]*\}\s*\/>/;
       if (!LOCK_RE.test(body)) {
         fail('H.1', `Collection page ${slug} contains markup outside the canonical layout. Body must be exactly: <CollectionPageLayout collection={data} />`);
       } else {
@@ -469,6 +470,163 @@ async function main() {
     }
     if (domViolations === 0) {
       console.log(`✅ Brand-mark DOM check: 0 unwrapped \u24b6 across ${htmlFiles.length} pages`);
+    }
+  }
+
+  // === GROUP K: BUCKET B SKU INDEX ASSERTION (v2.7.1) ===
+  //
+  // Asserts each Bucket B collection has the expected family count and live family count.
+  {
+    const { readFileSync: rfs } = await import('node:fs');
+    let skuIndex;
+    try {
+      skuIndex = JSON.parse(rfs(join(ROOT, 'src', 'data', 'sku-index.json'), 'utf-8'));
+    } catch (e) {
+      fail('K.1', 'src/data/sku-index.json not found or invalid JSON: ' + e.message);
+      skuIndex = null;
+    }
+    if (skuIndex) {
+      const expectedBucketB = {
+        'tubulararch':       { families: 5, liveFamilies: 5 },
+        'nostalgic-decor':   { families: 7, liveFamilies: 7 },
+        'vintage-decor':     { families: 6, liveFamilies: 6 },
+        'utility-signature': { families: 3, liveFamilies: 1 },  // husk-hid live + 2 coming-soon (a-lamp/br-lamp not yet in Zoho)
+      };
+      let kPass = true;
+      for (const [coll, expected] of Object.entries(expectedBucketB)) {
+        const actual = skuIndex.collections[coll];
+        if (!actual) {
+          fail('K.1', `Collection ${coll} missing from sku-index.json`);
+          kPass = false;
+          continue;
+        }
+        if (actual.families.length !== expected.families) {
+          fail('K.1', `${coll} family count: expected ${expected.families}, got ${actual.families.length} (families: ${actual.families.map(f=>f.family).join(', ')})`);
+          kPass = false;
+        }
+        const liveCount = actual.families.filter(f => !f.comingSoon).length;
+        if (liveCount !== expected.liveFamilies) {
+          fail('K.1', `${coll} live family count: expected ${expected.liveFamilies}, got ${liveCount}`);
+          kPass = false;
+        }
+      }
+      // Confirm Décor signⒶTURE is not in the index
+      if (JSON.stringify(skuIndex).includes('D\u00e9cor sign\u24b6TURE') || JSON.stringify(skuIndex).includes('D\u00e9cor signⒶTURE')) {
+        fail('K.2', 'Décor signⒶTURE found in sku-index.json — must be excluded (discontinued)');
+        kPass = false;
+      }
+      if (kPass) {
+        console.log('✅ Group K: Bucket B SKU index PASS');
+      }
+    }
+  }
+
+  // === GROUP L: COMING-SOON GRACEFUL STATE (v2.7.1) ===
+  //
+  // Every coming-soon family detail page must render data-coming-soon="true"
+  // and must NOT have a live PDF download link.
+  {
+    const comingSoonPaths = [
+      'utility-signature/a-lamp',
+      'utility-signature/br-lamp',
+      'utility-signature/par-lamp',
+    ];
+    let lPass = true;
+    for (const path of comingSoonPaths) {
+      const htmlPath = join(ROOT, 'dist', 'collections', path, 'index.html');
+      let html;
+      try {
+        const { readFileSync: rfs2 } = await import('node:fs');
+        html = rfs2(htmlPath, 'utf-8');
+      } catch {
+        fail('L.1', `Coming-soon page dist/collections/${path}/index.html not found`);
+        lPass = false;
+        continue;
+      }
+      if (!html.includes('data-coming-soon="true"')) {
+        fail('L.1', `${path}: missing data-coming-soon="true" attribute`);
+        lPass = false;
+      }
+      if (/<a[^>]+href="[^"]*\.pdf"[^>]*>\s*Documentation/i.test(html)) {
+        fail('L.1', `${path}: has live PDF download link but should be coming-soon`);
+        lPass = false;
+      }
+    }
+    if (lPass) {
+      console.log('✅ Group L: Coming-soon graceful state PASS');
+    }
+  }
+
+  // === GROUP M: AESTHETIC THEME VARIANT (v2.7.1) ===
+  //
+  // Every lamp collection page must emit the correct --lamp-bg CSS variable.
+  {
+    const themeVars = {
+      'tubulararch':       '#1a1d24',
+      'nostalgic-decor':   '#0a0d18',
+      'vintage-decor':     '#0c0d12',
+      'utility-signature': '#1a1d24',
+    };
+    let mPass = true;
+    for (const [slug, expectedBg] of Object.entries(themeVars)) {
+      const htmlPath = join(ROOT, 'dist', 'collections', slug, 'index.html');
+      let html;
+      try {
+        const { readFileSync: rfs3 } = await import('node:fs');
+        html = rfs3(htmlPath, 'utf-8');
+      } catch {
+        fail('M.1', `Lamp collection page dist/collections/${slug}/index.html not found`);
+        mPass = false;
+        continue;
+      }
+      if (!html.includes(`--lamp-bg: ${expectedBg}`) && !html.includes(`--lamp-bg:${expectedBg}`)) {
+        fail('M.1', `${slug}: missing or wrong --lamp-bg CSS var (expected ${expectedBg})`);
+        mPass = false;
+      }
+    }
+    if (mPass) {
+      console.log('✅ Group M: Aesthetic theme variant PASS');
+    }
+  }
+
+  // === GROUP N: LAMP COLLECTION PAGE STRUCTURAL LOCK (v2.7.1 Track E) ===
+  //
+  // Each of the 4 lamp collection pages must be the canonical 5-line invocation pattern:
+  //   import LampCollectionPageLayout ...
+  //   import data ...
+  //   <LampCollectionPageLayout collection={data} />
+  // No inlined markup allowed.
+  {
+    const { readFile: rf2, readdir: rd2 } = await import('node:fs/promises');
+    const { join: pj2 } = await import('node:path');
+    const LAMP_SLUGS = ['tubulararch', 'nostalgic-decor', 'vintage-decor', 'utility-signature'];
+    const colDir2 = pj2(ROOT, 'src', 'pages', 'collections');
+    let nPass = true;
+    for (const slug of LAMP_SLUGS) {
+      const fpath = pj2(colDir2, `${slug}.astro`);
+      let src;
+      try {
+        src = await rf2(fpath, 'utf8');
+      } catch {
+        fail('N.1', `Lamp collection page src/pages/collections/${slug}.astro not found`);
+        nPass = false;
+        continue;
+      }
+      // Must import LampCollectionPageLayout
+      if (!src.includes('LampCollectionPageLayout')) {
+        fail('N.1', `${slug}.astro does not import LampCollectionPageLayout — must use canonical 5-line pattern`);
+        nPass = false;
+        continue;
+      }
+      // Must be ≤ 6 lines
+      const lines = src.split('\n').filter(l => l.trim()).length;
+      if (lines > 6) {
+        fail('N.1', `${slug}.astro has ${lines} non-empty lines — must be ≤ 6 (canonical 5-line pattern)`);
+        nPass = false;
+      }
+    }
+    if (nPass) {
+      console.log('✅ Group N: Lamp collection page structural lock PASS (4 pages, ≤6 lines each, LampCollectionPageLayout)');
     }
   }
 

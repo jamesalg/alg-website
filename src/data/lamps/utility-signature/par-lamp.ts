@@ -24,25 +24,25 @@ const par_lampData = {
   certifications: ['UL Listed', 'FCC'],
   datasheetUrl: undefined,
   installGuideUrl: undefined,
-  comingSoon: false,
+  comingSoon: true,
   isTubularArch: false,
 };
 
 export const siblingFamilies = [
     {
-      slug: 'a-lamp',
+      slug: 'a-lamp', vertical: 'General',
       name: 'A-Lamp',
       tagline: 'A19 utility LED lamps for everyday commercial replacement.',
       skuCount: 4,
     },
     {
-      slug: 'br-lamp',
+      slug: 'br-lamp', vertical: 'General',
       name: 'BR Flood',
       tagline: 'BR40 flood lamps for recessed and track lighting.',
       skuCount: 7,
     },
     {
-      slug: 'hid-retrofit',
+      slug: 'hid-retrofit', vertical: 'General',
       name: 'HID Retrofit',
       tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
       skuCount: 0,
