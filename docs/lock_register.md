@@ -101,3 +101,15 @@ Acknowledged by: Manus (iter/v2.6.0-bucket-a)
 | cityⒶRCH data | `src/data/collections/cityarch.ts` | Static data file for cityⒶRCH |
 | multi-fⒶMILY data | `src/data/collections/multifamily.ts` | Static data file for multi-fⒶMILY |
 | SKU xlsx v2 | `data/SKU_Attributes_Template_v2.xlsx` | v2 source-of-truth SKU data covering all 5 Bucket A collections |
+
+## v2.7.3 — Mega menu full-width + Lamps taxonomy rename (2026-04-27)
+
+Acknowledged by: Manus (reopen/v2.7.3-megamenu-polish)
+
+### Changes (CSS + data-file edits only — no new files)
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/Header.astro` | `.megamenu.wide`: `left:2.5vw; right:2.5vw` → `left:0; right:0; width:100%` — full viewport-width mega menu |
+| B | `src/components/Header.astro` | Lamps left-rail descriptor: `Filament · Linear · Utility` → `Decor · Linear · Utility` |
+| B | `src/components/Header.astro` | CATEGORY entries: `Indoor \| tubulⒶRCH` → `Linear \| tubulⒶRCH`; `Indoor \| Nostalgic Décor` → `Nostalgic Décor`; `Indoor \| Vintage Décor` → `Vintage Décor`; `Indoor \| Utility signⒶTURE` → `Utility \| signⒶTURE` |
