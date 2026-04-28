@@ -11,7 +11,7 @@ export interface Props {
   featured: {
     family: string;
     subCategory: string;
-    displayEchelon: 'ECO' | 'PRO' | 'PRO+';
+    displayEchelon: 'ECO' | 'PRO' | 'PRO+' | null;
     maxWattage: number | null;
     skuCount: number;
     dlc: boolean;
@@ -28,11 +28,13 @@ const { collectionName, collectionSlug, featured } = Astro.props;
     </div>
     <div class="feat-grid">
       {featured.map(f => (
-        <div class={`feat-card tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}`}>
+        <div class={f.displayEchelon ? `feat-card tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}` : 'feat-card tier-none'}>
           <!-- Top strip: sub-category + tier badge -->
           <div class="feat-top">
             <span class="feat-subcat">{f.subCategory.toUpperCase()}</span>
-            <span class={`feat-tier tier-badge tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}`}>{f.displayEchelon}</span>
+            {f.displayEchelon && (
+              <span class={`feat-tier tier-badge tier-${f.displayEchelon.replace('+','-plus').toLowerCase()}`}>{f.displayEchelon}</span>
+            )}
           </div>
           <!-- Image area -->
           <div class="feat-img">

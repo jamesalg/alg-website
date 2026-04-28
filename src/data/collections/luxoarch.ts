@@ -148,16 +148,16 @@ const luxoarchData = {
     {
       slug: 'lampararch',
       name: 'lampar<span class="aa">Ⓐ</span>RCH',
-      vertical: 'Lamp',
-      description: 'LED lamp replacements for commercial retrofit.',
-      status: 'coming-soon' as const,
+      vertical: 'Industrial',
+      description: 'Industrial lighting for warehouses and manufacturing.',
+      status: 'live' as const,
     },
     {
       slug: 'cityarch',
       name: 'city<span class="aa">Ⓐ</span>RCH',
       vertical: 'Municipal',
       description: 'Street and area lighting for municipal and utility applications.',
-      status: 'coming-soon' as const,
+      status: 'live' as const,
     },
     {
       slug: 'tubularch',

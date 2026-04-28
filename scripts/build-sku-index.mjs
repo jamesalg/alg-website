@@ -1,17 +1,25 @@
 /**
  * scripts/build-sku-index.mjs
  *
+ * v2.6.0 — Bucket A expanded to 5 collections via SKU_Attributes_Template_v2.xlsx.
  * v2.7.1 — collection-aware family resolution for Bucket B lamp collections.
  *
- * Reads data/Item.xlsx (Zoho export) and emits src/data/sku-index.json
- * for use by CollectionAllFamilies.astro and LampFamilyDetailPageLayout.astro.
+ * Reads data/SKU_Attributes_Template_v2.xlsx (Bucket A: luxoarch, planoarch,
+ * lampararch, cityarch, multifamily) and data/Item.xlsx (Bucket B: lamp collections)
+ * and emits src/data/sku-index.json.
  *
- * Relevant Item.xlsx columns (1-indexed):
- *   24  Status
- *   56  CF.Wattage (W):
- *   84  CF.Collection
- *   85  CF.Commercial Grade
- *   88  CF.Family
+ * Bucket A spreadsheet columns (0-indexed):
+ *   0   collection
+ *   1   sub_category
+ *   2   family
+ *   3   sku
+ *   6   display_echelon
+ *   7   wattage
+ *   8   cct
+ *   9   voltage
+ *   13  mount_type
+ *   15  dlc_listing
+ *   16  taa_compliant
  *
  * Bucket B collections and their family-resolution strategy:
  *   tubulⒶRCH       → shape from CF.Commercial Grade (T5/T5HE/T5HO/T8/PL/PLL/U6)
@@ -20,9 +28,6 @@
  *   Décor vintⒶGE   → shape from CF.Commercial Grade (direct 1:1)
  *   Utility signⒶTURE → family from CF.Family (A-Lamp / BR-Lamp / Husk Series / PAR-Lamp)
  *   Décor signⒶTURE → EXCLUDED (discontinued line per James direction)
- *
- * Bucket A collections (luxoarch, planoarch) still read from
- * data/SKU_Attributes_Template_v1.xlsx (legacy path, unchanged).
  */
 
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -33,7 +38,9 @@ import XLSX from 'xlsx';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
-const XLSX_PATH_A = join(ROOT, 'data', 'SKU_Attributes_Template_v1.xlsx');
+// v2.6.0: v2 spreadsheet covers all 5 Bucket A collections (luxoarch, planoarch,
+// lampararch, cityarch, multifamily). v1 spreadsheet path is decommissioned.
+const XLSX_PATH_A = join(ROOT, 'data', 'SKU_Attributes_Template_v2.xlsx');
 const XLSX_PATH_B = join(ROOT, 'data', 'Item.xlsx');
 const OUT_PATH    = join(ROOT, 'src', 'data', 'sku-index.json');
 
@@ -76,7 +83,10 @@ function parseTaa(val) {
   return false;
 }
 function collectionSlug(raw) {
-  return raw.replace(/Ⓐ/g, 'a').replace(/RCH/g, 'rch').toLowerCase().replace(/[^a-z]/g, '');
+  // luxoⒶRCH → luxoarch, planoⒶRCH → planoarch, lamparⒶRCH → lampararch,
+  // cityⒶRCH → cityarch, multi-fⒶMILY → multifamily
+  return raw.replace(/Ⓐ/g, 'a').replace(/RCH/g, 'rch').replace(/MILY/g, 'mily')
+            .toLowerCase().replace(/[^a-z]/g, '');
 }
 
 // ── Bucket B: Nostalgic shape map ─────────────────────────────────────────────
@@ -179,17 +189,21 @@ function buildCollectionOutput(skus) {
   return { skus, families };
 }
 
-// ── Read Bucket A ─────────────────────────────────────────────────────────────
+// ── Read Bucket A (v2 spreadsheet: all 5 collections) ────────────────────────
 let collectionsA = {};
 if (existsSync(XLSX_PATH_A)) {
   const wbA = XLSX.readFile(XLSX_PATH_A);
   const wsA = wbA.Sheets[wbA.SheetNames[0]];
   const rowsA = XLSX.utils.sheet_to_json(wsA, { header: 1, defval: '' });
+  // Row 0: headers, Row 1: instructions, Rows 2+: data
   const dataRowsA = rowsA.slice(2);
   const byCollA = {};
   for (const row of dataRowsA) {
     const collRaw = String(row[0]).trim();
     if (!collRaw) continue;
+    // Skip summary/annotation rows (non-collection values)
+    const VALID_COLLS = new Set(['luxoⒶRCH', 'planoⒶRCH', 'lamparⒶRCH', 'cityⒶRCH', 'multi-fⒶMILY']);
+    if (!VALID_COLLS.has(collRaw)) continue;
     const slug = collectionSlug(collRaw);
     if (!byCollA[slug]) byCollA[slug] = [];
     byCollA[slug].push({
@@ -203,6 +217,8 @@ if (existsSync(XLSX_PATH_A)) {
   for (const [slug, skus] of Object.entries(byCollA)) {
     collectionsA[slug] = buildCollectionOutput(skus);
   }
+} else {
+  console.warn('[build-sku-index] WARNING: SKU_Attributes_Template_v2.xlsx not found — Bucket A will be empty');
 }
 
 // ── Read Bucket B ─────────────────────────────────────────────────────────────

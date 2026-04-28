@@ -706,6 +706,115 @@ async function main() {
     }
   }
 
+  // === GROUP I: BUCKET A SKU INDEX ASSERTION (v2.6.0 Track C) ===
+  //
+  // Asserts the 5 Bucket A collections have exactly the expected SKU and family counts.
+  // This locks the spreadsheet contract — any drift in the v2 xlsx triggers a build fail.
+  {
+    const { readFileSync: rfsI } = await import('node:fs');
+    let skuIndexI;
+    try {
+      skuIndexI = JSON.parse(rfsI(join(ROOT, 'src', 'data', 'sku-index.json'), 'utf-8'));
+    } catch (e) {
+      fail('I.2', 'src/data/sku-index.json not found or invalid JSON: ' + e.message);
+      skuIndexI = null;
+    }
+    if (skuIndexI) {
+      const EXPECTED_BUCKET_A = {
+        luxoarch:    { skus: 142, families: 22 },
+        planoarch:   { skus: 125, families: 15 },
+        lampararch:  { skus: 102, families:  9 },
+        cityarch:    { skus:  77, families: 11 },
+        multifamily: { skus:  60, families:  9 },
+      };
+      const EXPECTED_TOTAL_SKUS = 506;
+      const EXPECTED_TOTAL_FAMILIES = 66;
+      let iPass = true;
+      // Check per-collection counts
+      for (const [coll, expected] of Object.entries(EXPECTED_BUCKET_A)) {
+        const actual = skuIndexI.collections[coll];
+        if (!actual) {
+          fail('I.2', `Bucket A collection ${coll} missing from sku-index.json`);
+          iPass = false;
+          continue;
+        }
+        const actualSkus = actual.skus?.length ?? 0;
+        const actualFamilies = actual.families?.length ?? 0;
+        if (actualSkus !== expected.skus) {
+          fail('I.2', `${coll} SKU count: expected ${expected.skus}, got ${actualSkus}`);
+          iPass = false;
+        }
+        if (actualFamilies !== expected.families) {
+          fail('I.2', `${coll} family count: expected ${expected.families}, got ${actualFamilies}`);
+          iPass = false;
+        }
+      }
+      // Check totals across the 5 Bucket A collections
+      const bucketAColls = Object.keys(EXPECTED_BUCKET_A);
+      const totalSkus = bucketAColls.reduce((sum, c) => sum + (skuIndexI.collections[c]?.skus?.length ?? 0), 0);
+      const totalFamilies = bucketAColls.reduce((sum, c) => sum + (skuIndexI.collections[c]?.families?.length ?? 0), 0);
+      if (totalSkus !== EXPECTED_TOTAL_SKUS) {
+        fail('I.2', `Bucket A total SKUs: expected ${EXPECTED_TOTAL_SKUS}, got ${totalSkus}`);
+        iPass = false;
+      }
+      if (totalFamilies !== EXPECTED_TOTAL_FAMILIES) {
+        fail('I.2', `Bucket A total families: expected ${EXPECTED_TOTAL_FAMILIES}, got ${totalFamilies}`);
+        iPass = false;
+      }
+      if (iPass) {
+        console.log(`\u2705 Group I: Bucket A SKU index PASS (${EXPECTED_TOTAL_SKUS} SKUs / ${EXPECTED_TOTAL_FAMILIES} families across 5 collections)`);
+      }
+    }
+  }
+
+  // === GROUP J: NULL-ECHELON HANDLING (v2.6.0 Track C) ===
+  //
+  // For every family with display_echelon: null in sku-index.json,
+  // assert that no echelon badge HTML is emitted on its card in the rendered collection page.
+  // A badge is identified by the tier-badge class on a <span> element.
+  {
+    const { readFileSync: rfsJ } = await import('node:fs');
+    let skuIndexJ;
+    try {
+      skuIndexJ = JSON.parse(rfsJ(join(ROOT, 'src', 'data', 'sku-index.json'), 'utf-8'));
+    } catch {
+      skuIndexJ = null;
+    }
+    if (skuIndexJ) {
+      let jPass = true;
+      for (const [collSlug, collData] of Object.entries(skuIndexJ.collections)) {
+        const nullEchelonFamilies = (collData.families || []).filter(f => f.display_echelon === null || f.display_echelon === '');
+        if (nullEchelonFamilies.length === 0) continue;
+        // Check the rendered collection page
+        const htmlPath = join(ROOT, 'dist', 'collections', collSlug, 'index.html');
+        let html;
+        try {
+          html = rfsJ(htmlPath, 'utf-8');
+        } catch {
+          // Collection page not built (e.g., Bucket B) — skip
+          continue;
+        }
+        for (const fam of nullEchelonFamilies) {
+          // Find the family card for this family (data-family attribute)
+          const famName = fam.family;
+          // Extract the fam-card div for this family
+          const cardRe = new RegExp(`data-family=["']${famName.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}["'][\\s\\S]{0,2000}?(?=data-family=|fam-no-results|</div>\\s*</div>\\s*<p)`, 'i');
+          const cardMatch = html.match(cardRe);
+          if (cardMatch) {
+            // The card HTML should NOT contain a tier-badge span
+            if (/tier-badge/.test(cardMatch[0])) {
+              fail('J.2', `${collSlug}/${famName}: null-echelon family has a tier-badge span in rendered HTML`);
+              jPass = false;
+            }
+          }
+        }
+      }
+      if (jPass) {
+        console.log('\u2705 Group J: Null-echelon handling PASS (no echelon badges on null-echelon families)');
+      }
+    }
+  }
+
   // === REPORT ===
 
   console.log('');
