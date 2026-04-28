@@ -1,6 +1,6 @@
 ---
 /**
- * Footer.astro — v2.1.0 Rev3
+ * Footer.astro — v2.1.0 Rev4 (v2.7.7: build-provenance badge)
  *
  * Structure:
  *   - Footer CTA strip: "Need a quote, layout, sample, or rebate match? We respond same business day."
@@ -14,6 +14,11 @@
  *   - Sub-footer: single line with both addresses, phone, URL
  */
 const year = new Date().getFullYear();
+const buildHash = (import.meta.env.PUBLIC_BUILD_HASH || 'dev').slice(0, 7);
+const buildTimeRaw = import.meta.env.PUBLIC_BUILD_TIME;
+const buildTime = buildTimeRaw
+  ? new Date(buildTimeRaw).toISOString().slice(0, 16) + 'Z'
+  : 'local';
 ---
 
 <!-- FOOTER CTA STRIP -->
@@ -136,6 +141,8 @@ const year = new Date().getFullYear();
       <span class="sub-footer-line">&copy; {year} Archipelago Lighting Group &middot; 4615 State Street, Montclair, CA 91763 &middot; USA Production: 9345 Sycamore Canyon Blvd, Riverside CA 92508 &middot; +1 (866) 912-3220 &middot; <a href="https://www.archipelagolighting.com" class="sub-footer-url">www.archipelagolighting.com</a></span>
     </div>
   </div>
+  <!-- BUILD PROVENANCE BADGE (v2.7.7) -->
+  <div class="footer-build-stamp">build {buildHash} &middot; {buildTime}</div>
 </footer>
 
 <style>
@@ -222,5 +229,17 @@ const year = new Date().getFullYear();
   @media (max-width: 480px) {
     .footer-inner { grid-template-columns: 1fr; }
     .sub-footer-inner { padding: 16px 20px; }
+  }
+  /* BUILD PROVENANCE BADGE */
+  .footer-build-stamp {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 12px;
   }
 </style>

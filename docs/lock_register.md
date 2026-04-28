@@ -124,3 +124,16 @@ Acknowledged by: Manus (reopen/v2.7.6-megamenu-hero-polish)
 |---|---|---|
 | A | `src/components/Header.astro` | `.megamenu.solutions`: `left:2.5vw;right:2.5vw` → `left:0;right:0;width:100%` — full viewport-width Solutions mega menu |
 | B | `src/pages/index.astro` | Hero periods: first two `period-red` → `period-plain` (color:inherit); third stays `period-red`; added `.period-plain { color: inherit; }` CSS rule |
+
+## v2.7.7 — Build provenance badge + audit URL discipline (2026-04-27)
+
+Acknowledged by: Manus (iter/v2.7.7-build-provenance)
+
+### Changes
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/Footer.astro` | Added `.footer-build-stamp` div + CSS + frontmatter vars (`buildHash`, `buildTime`) |
+| A | `.github/workflows/build-and-verify.yml` | Added `PUBLIC_BUILD_HASH` and `PUBLIC_BUILD_TIME` env vars to Build site step |
+| B | `docs/reply_contract_template.md` | Created — canonical reply contract template with per-deploy URL as required audit target |
+| B | `docs/audit_checklist.md` | Created — audit workflow for James |
