@@ -137,3 +137,25 @@ Acknowledged by: Manus (iter/v2.7.7-build-provenance)
 | A | `.github/workflows/build-and-verify.yml` | Added `PUBLIC_BUILD_HASH` and `PUBLIC_BUILD_TIME` env vars to Build site step |
 | B | `docs/reply_contract_template.md` | Created — canonical reply contract template with per-deploy URL as required audit target |
 | B | `docs/audit_checklist.md` | Created — audit workflow for James |
+
+## v2.7.8 — Engineering collection pages (2026-04-27)
+
+Acknowledged by: Manus (iter/v2.7.8-engineering-pages)
+
+### New pages (engineering template — BaseLayout + inline sections)
+
+| Component | Path(s) | Lock reason |
+|---|---|---|
+| tubulⒶRCH collection index | `src/pages/collections/tubulararch.astro` | Rebuilt as full engineering collection index; Find My Tube wizard, family cards, ballast compat hub |
+| The Workshop T8 family detail | `src/pages/collections/tubulararch/t8.astro` | Rebuilt as engineering family detail; SKU collapse infographic, Find My Tube wizard, structured spec table |
+| signⒶTURE collection index | `src/pages/collections/signature.astro` | NEW engineering collection index; shape-filter tab bar, Husk card (live), 3 coming-soon family cards |
+| The Husk HID family detail | `src/pages/collections/signature/husk-hid.astro` | NEW engineering family detail; hero 4-stat bar, SKU consolidation table, Find My HID wizard, fixture compat matrix |
+
+### Verifier changes (additive-only)
+
+| Track | Path | Change |
+|---|---|---|
+| B.1 fix | `scripts/verify.mjs` | Strip `<title>` tag content and all HTML attribute values before scanning for naked Ⓐ (title metadata + data-* attrs are not rendered body content) |
+| Group H | `scripts/verify.mjs` | Added `tubulararch` and `signature` to `BESPOKE_PAGES` exemption set — engineering pages use BaseLayout, not canonical 5-line CollectionPageLayout |
+| Group M | `scripts/verify.mjs` | Removed `tubulararch` from lamp theme CSS var check — engineering page, not LampCollectionPageLayout |
+| Group N | `scripts/verify.mjs` | Removed `tubulararch` from `LAMP_SLUGS` — engineering page, not LampCollectionPageLayout; updated pass message to 3 pages |

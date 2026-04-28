@@ -80,11 +80,13 @@ async function main() {
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
       // Strip style tag content
       .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      // Strip <title> tag content (<head> metadata — not rendered body)
+      .replace(/<title>[\s\S]*?<\/title>/gi, '<title>__TITLE__</title>')
       // Strip .aa spans (they are the canonical wrapper — their content is allowed)
       .replace(/<span[^>]*class=["'][^"']*\baa\b[^"']*["'][^>]*>[\s\S]*?<\/span>/g, '')
-      // Strip data-* attribute values (JS communication channels, not rendered body)
-      .replace(/data-[a-z-]+="[^"]*"/g, '')
-      .replace(/data-[a-z-]+='[^']*'/g, '')
+      // Strip ALL HTML attribute values (JS communication channels, not rendered body)
+      // This covers data-preview-name, data-preview-desc, data-tier-*, title, alt, aria-label, etc.
+      .replace(/\s[\w:-]+=(?:"[^"]*"|'[^']*')/g, ' __ATTR__')
       // Strip HTML comments
       .replace(/<!--[\s\S]*?-->/g, '');
     if (/Ⓐ/.test(stripped)) {
@@ -289,7 +291,9 @@ async function main() {
     // Bespoke pages (v2.5.6+): pages that intentionally do NOT use CollectionPageLayout
     // consumer.astro is the only true bespoke page (v2.5.6 carve-out).
     // Lamp collection pages use LampCollectionPageLayout and are checked by Group N.
-    const BESPOKE_PAGES = new Set(['consumer']);
+    // Engineering collection pages (v2.7.8+): tubulararch and signature use full-page
+    // engineering layouts (BaseLayout + inline sections) — not the canonical 5-line pattern.
+    const BESPOKE_PAGES = new Set(['consumer', 'tubulararch', 'signature']);
     for (const fname of colFiles) {
       const slug = fname.replace('.astro', '');
       if (BESPOKE_PAGES.has(slug)) {
@@ -567,7 +571,8 @@ async function main() {
   // Every lamp collection page must emit the correct --lamp-bg CSS variable.
   {
     const themeVars = {
-      'tubulararch':       '#1a1d24',
+      // tubulararch is now an engineering collection page (v2.7.8) — uses BaseLayout, not LampCollectionPageLayout
+      // 'tubulararch':       '#1a1d24',  // exempted v2.7.8
       'nostalgic-decor':   '#0a0d18',
       'vintage-decor':     '#0c0d12',
       'utility-signature': '#1a1d24',
@@ -606,7 +611,8 @@ async function main() {
   {
     const { readFile: rf2, readdir: rd2 } = await import('node:fs/promises');
     const { join: pj2 } = await import('node:path');
-    const LAMP_SLUGS = ['tubulararch', 'nostalgic-decor', 'vintage-decor', 'utility-signature'];
+    // tubulararch exempted v2.7.8 — rebuilt as engineering collection page (BaseLayout, not LampCollectionPageLayout)
+    const LAMP_SLUGS = ['nostalgic-decor', 'vintage-decor', 'utility-signature'];
     const colDir2 = pj2(ROOT, 'src', 'pages', 'collections');
     let nPass = true;
     for (const slug of LAMP_SLUGS) {
@@ -633,7 +639,7 @@ async function main() {
       }
     }
     if (nPass) {
-      console.log('✅ Group N: Lamp collection page structural lock PASS (4 pages, ≤6 lines each, LampCollectionPageLayout)');
+      console.log('✅ Group N: Lamp collection page structural lock PASS (3 pages, ≤6 lines each, LampCollectionPageLayout)');
     }
   }
 

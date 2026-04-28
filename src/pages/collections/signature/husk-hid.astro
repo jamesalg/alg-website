@@ -1,18 +1,18 @@
 ---
 /**
- * The Workshop T8 — Family Detail Page
- * v2.7.8 — engineering family detail with SKU infographic, Find My Tube wizard, structured spec table
- * Route: /collections/tubulararch/t8
+ * The Husk — HID Retrofit Family Detail Page
+ * v2.7.8 — SKU consolidation, Find My HID wizard, structured spec table, fixture matrix, docs block
+ * Route: /collections/signature/husk-hid
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 <BaseLayout
-  title="The Workshop T8 — tubulⒶRCH | Archipelago Lighting Group"
-  description="One dip-switchable T8 lamp replaces 25 legacy fluorescent SKUs. 4FT G13 bipin. UL Type A+B hybrid. DLC Premium. Verified ballast compatibility."
-  bodyClass="page-t8-detail"
+  title="The Husk — HID Retrofit LED | signⒶTURE | Archipelago Lighting Group"
+  description="One dip-switchable LED lamp replaces 13 legacy HID wattages (70W–400W MH/HPS). E39 mogul base. 120–480V universal. DLC Premium. 50,000 hour rated life."
+  bodyClass="page-husk-detail"
 >
 <style>
-  .page-t8-detail {
+  .page-husk-detail {
     --accent: #F32740;
     --accent-dark: #C41E32;
     --fg: #111111;
@@ -53,9 +53,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .family-hero .btn--outline:hover { border-color: #fff; }
   .family-hero__badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
   .trust-badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
-  /* SKU infographic */
-  .sku-infographic { padding: 64px 0; background: var(--bg-alt); }
-  .sku-infographic__inner { width: var(--inner); margin: 0 auto; }
+  /* SKU consolidation */
+  .sku-section { padding: 64px 0; background: var(--bg-alt); }
+  .sku-section__inner { width: var(--inner); margin: 0 auto; }
   .consolidation-block { background: #fff; border-radius: 12px; border: 1.5px solid var(--border); padding: 40px; margin-top: 32px; }
   .consolidation-numbers { display: flex; align-items: center; gap: 32px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
   .consol-num { text-align: center; }
@@ -69,8 +69,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .coverage-bar__track { height: 8px; background: var(--bg-alt); border-radius: 4px; overflow: hidden; }
   .coverage-bar__fill { height: 100%; background: linear-gradient(90deg, #F32740, #FF6B35); border-radius: 4px; width: 100%; }
   .coverage-bar__range { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); margin-top: 6px; }
-  .dip-switch-note { background: #FFF3E0; border: 1.5px solid #FFB300; border-radius: 8px; padding: 16px 20px; margin-top: 24px; font-size: 14px; color: #E65100; }
-  .dip-switch-note strong { color: #BF360C; }
+  /* SKU table */
+  .sku-table-wrap { overflow-x: auto; margin-top: 24px; }
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .sku-table th { text-align: left; padding: 10px 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); border-bottom: 1.5px solid var(--border); background: var(--bg-alt); white-space: nowrap; }
+  .sku-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--fg); }
+  .sku-table tr:last-child td { border-bottom: none; }
+  .sku-table td:first-child { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); }
+  .sku-badge { font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; }
+  .sku-badge--dlc { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+  .sku-badge--baa { background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }
   /* Wizard */
   .wizard-section { padding: 64px 0; background: #fff; }
   .wizard-section__inner { width: var(--inner); margin: 0 auto; }
@@ -96,6 +104,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   @media (max-width: 480px) { .wizard-result__details { grid-template-columns: 1fr; } }
   .result-detail__label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); text-transform: uppercase; margin-bottom: 4px; }
   .result-detail__value { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .wizard-result__caveat { background: #FFF3E0; border: 1px solid #FFB300; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #E65100; margin-bottom: 20px; }
   .wizard-result__ctas { display: flex; gap: 10px; flex-wrap: wrap; }
   .wizard-result__restart { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); cursor: pointer; border: none; background: none; padding: 0; margin-top: 16px; letter-spacing: 0.06em; }
   .wizard-result__restart:hover { color: var(--accent); }
@@ -121,11 +130,23 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .sensor-callout { background: #E8F5E9; border: 1.5px solid #A5D6A7; border-radius: 8px; padding: 20px 24px; margin: 16px 24px 24px; }
   .sensor-callout__title { font-size: 15px; font-weight: 700; color: #2E7D32; margin: 0 0 6px; }
   .sensor-callout__body { font-size: 13px; color: #388E3C; line-height: 1.5; margin: 0; }
+  /* Fixture matrix */
+  .fixture-section { padding: 64px 0; background: #fff; }
+  .fixture-section__inner { width: var(--inner); margin: 0 auto; }
+  .fixture-table-wrap { overflow-x: auto; margin-top: 32px; }
+  .fixture-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .fixture-table th { text-align: left; padding: 10px 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); border-bottom: 1.5px solid var(--border); background: var(--bg-alt); white-space: nowrap; }
+  .fixture-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--fg); }
+  .fixture-table tr:last-child td { border-bottom: none; }
+  .compat-badge { font-size: 11px; font-family: var(--font-mono); padding: 2px 8px; border-radius: 3px; }
+  .compat-badge--yes { background: #E8F5E9; color: #2E7D32; }
+  .compat-badge--cond { background: #FFF3E0; color: #E65100; }
+  .fixture-note { font-size: 12px; color: var(--fg-muted); margin-top: 12px; font-style: italic; }
   /* Docs */
-  .docs-section { padding: 64px 0; background: #fff; }
+  .docs-section { padding: 64px 0; background: var(--bg-alt); }
   .docs-section__inner { width: var(--inner); margin: 0 auto; }
   .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 32px; }
-  .doc-card { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: var(--bg-alt); border-radius: 8px; text-decoration: none; border: 1.5px solid var(--border); transition: border-color 0.15s; }
+  .doc-card { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: #fff; border-radius: 8px; text-decoration: none; border: 1.5px solid var(--border); transition: border-color 0.15s; }
   .doc-card:hover { border-color: var(--accent); }
   .doc-card__icon { font-size: 24px; flex-shrink: 0; }
   .doc-card__name { font-size: 13px; font-weight: 600; color: var(--fg); }
@@ -143,23 +164,23 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <nav class="breadcrumb">
   <div class="breadcrumb__inner">
     <a href="/">Home</a><span class="breadcrumb__sep">/</span>
-    <a href="/collections/tubulararch">tubul<span class="aa">Ⓐ</span>RCH</a><span class="breadcrumb__sep">/</span>
-    <span>The Workshop T8</span>
+    <a href="/collections/signature">sign<span class="aa">Ⓐ</span>TURE</a><span class="breadcrumb__sep">/</span>
+    <span>The Husk</span>
   </div>
 </nav>
 
 <section class="family-hero">
   <div class="family-hero__inner">
-    <div class="family-hero__visual">T8 product photography<br>Rooster Creative deliverable</div>
+    <div class="family-hero__visual">Husk product photography<br>Rooster Creative deliverable</div>
     <div>
-      <div class="family-hero__eyebrow">tubul<span class="aa">Ⓐ</span>RCH · Linear LED · T8</div>
-      <h1 class="family-hero__name">The Workshop T8</h1>
-      <p class="family-hero__sub">One dip-switchable lamp replaces 25 legacy fluorescent SKUs. 4FT G13 bipin. UL Type A+B hybrid — works with your existing ballast or bypasses it.</p>
+      <div class="family-hero__eyebrow">sign<span class="aa">Ⓐ</span>TURE · HID Retrofit · E39 Mogul Base</div>
+      <h1 class="family-hero__name">The Husk</h1>
+      <p class="family-hero__sub">One dip-switchable LED lamp replaces 13 legacy HID wattages. Drop-in for 70W–400W Metal Halide and High-Pressure Sodium. No fixture change required.</p>
       <div class="family-hero__stats">
-        <div class="family-stat"><div class="family-stat__value">100</div><div class="family-stat__label">SKUs</div></div>
-        <div class="family-stat"><div class="family-stat__value">25</div><div class="family-stat__label">Legacy replaced</div></div>
-        <div class="family-stat"><div class="family-stat__value">10.5–18W</div><div class="family-stat__label">Wattage range</div></div>
-        <div class="family-stat"><div class="family-stat__value">200+</div><div class="family-stat__label">Ballasts proven</div></div>
+        <div class="family-stat"><div class="family-stat__value">7</div><div class="family-stat__label">SKUs</div></div>
+        <div class="family-stat"><div class="family-stat__value">13</div><div class="family-stat__label">Legacy replaced</div></div>
+        <div class="family-stat"><div class="family-stat__value">120–480V</div><div class="family-stat__label">Universal voltage</div></div>
+        <div class="family-stat"><div class="family-stat__value">40+</div><div class="family-stat__label">Fixtures proven</div></div>
       </div>
       <div class="family-hero__ctas">
         <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
@@ -167,95 +188,116 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <a href="#docs" class="btn btn--outline">Documentation</a>
       </div>
       <div class="family-hero__badges">
-        <span class="trust-badge">UL TYPE A+B</span>
         <span class="trust-badge">DLC PREMIUM</span>
-        <span class="trust-badge">ENERGY STAR</span>
+        <span class="trust-badge">UL LISTED</span>
+        <span class="trust-badge">120–480V</span>
         <span class="trust-badge">BAA COMPLIANT</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sku-infographic">
-  <div class="sku-infographic__inner">
+<section class="sku-section">
+  <div class="sku-section__inner">
     <div class="section-eyebrow">SKU consolidation</div>
-    <h2 class="section-title">One lamp. 25 legacy fluorescent SKUs retired.</h2>
-    <p class="section-sub">A single dip-switch on the lamp body selects wattage output. One part number handles every job from 10.5W to 18W.</p>
+    <h2 class="section-title">One lamp. 13 legacy HID wattages retired.</h2>
+    <p class="section-sub">A single dip-switch on the lamp body selects wattage output. One part number handles every job from 100W to 400W LED equivalent.</p>
     <div class="consolidation-block">
       <div class="consolidation-numbers">
         <div class="consol-num">
-          <div class="consol-num__value consol-num__value--legacy">25</div>
-          <div class="consol-num__label">Legacy fluorescent SKUs</div>
+          <div class="consol-num__value consol-num__value--legacy">13</div>
+          <div class="consol-num__label">Legacy HID SKUs</div>
         </div>
         <div class="consol-arrow">→</div>
         <div class="consol-num">
           <div class="consol-num__value consol-num__value--alg">1</div>
-          <div class="consol-num__label">Workshop T8 SKU</div>
+          <div class="consol-num__label">Husk SKU</div>
         </div>
       </div>
       <div class="coverage-bar">
-        <div class="coverage-bar__label">Wattage coverage range</div>
+        <div class="coverage-bar__label">Wattage coverage range (LED equivalent)</div>
         <div class="coverage-bar__track"><div class="coverage-bar__fill"></div></div>
-        <div class="coverage-bar__range"><span>10.5W</span><span>12W</span><span>14W</span><span>15W</span><span>18W</span></div>
+        <div class="coverage-bar__range"><span>100W</span><span>150W</span><span>200W</span><span>300W</span><span>400W</span></div>
       </div>
-      <div class="dip-switch-note">
-        <strong>Dip-switch selection:</strong> Set wattage output in the field using the 4-position DIP switch on the lamp body. No tools required. Settings are printed on the lamp label.
-      </div>
+    </div>
+    <div class="sku-table-wrap">
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>LED Watts</th>
+            <th>Lumens</th>
+            <th>CCT</th>
+            <th>Replaces (HID)</th>
+            <th>Certifications</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>ALG-HUSK-100W-4K</td><td>100W</td><td>14,000 lm</td><td>4000K</td><td>175W MH / 150W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
+          <tr><td>ALG-HUSK-150W-4K</td><td>150W</td><td>21,000 lm</td><td>4000K</td><td>250W MH / 200W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
+          <tr><td>ALG-HUSK-200W-4K</td><td>200W</td><td>28,000 lm</td><td>4000K</td><td>320W MH / 250W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
+          <tr><td>ALG-HUSK-240W-4K</td><td>240W</td><td>33,600 lm</td><td>4000K</td><td>400W MH / 320W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
+          <tr><td>ALG-HUSK-100W-5K</td><td>100W</td><td>14,000 lm</td><td>5000K</td><td>175W MH / 150W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
+          <tr><td>ALG-HUSK-150W-5K</td><td>150W</td><td>21,000 lm</td><td>5000K</td><td>250W MH / 200W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
+          <tr><td>ALG-HUSK-200W-5K</td><td>200W</td><td>28,000 lm</td><td>5000K</td><td>320W MH / 250W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<section class="wizard-section" id="find-my-tube">
+<section class="wizard-section" id="find-my-hid">
   <div class="wizard-section__inner">
-    <div class="section-eyebrow">Find My Tube</div>
+    <div class="section-eyebrow">Find My HID</div>
     <h2 class="section-title">Tell us what you're replacing. We'll tell you exactly what to order.</h2>
-    <p class="section-sub">Three questions. One SKU recommendation with dip-switch settings and rewire labor estimate.</p>
+    <p class="section-sub">Three questions. One SKU recommendation with dip-switch settings, rewire labor estimate, and pre-install caveat.</p>
     <div class="wizard" id="wizard">
       <div class="wizard__step wizard__step--active" data-step="1">
         <div class="wizard__step-header">STEP 1 OF 3</div>
-        <div class="wizard__question">What fluorescent tube are you replacing?</div>
+        <div class="wizard__question">What HID lamp are you replacing?</div>
         <div class="wizard__options">
-          <button class="wizard__option" data-next="2" data-val="F32T8"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>F32T8 — 4ft, 32W</strong><span>Most common office and commercial fixture</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="F25T8"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>F25T8 — 3ft, 25W</strong><span>Shorter fixture, less common</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="F17T8"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>F17T8 — 2ft, 17W</strong><span>Under-cabinet and task lighting</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="F40T8"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>F40T8 — 4ft, 40W (older)</strong><span>Pre-1990s magnetic ballast fixtures</span></div></button>
+          <button class="wizard__option" data-next="2" data-val="175mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>175W Metal Halide</strong><span>Common in older high-bay and area lighting</span></div></button>
+          <button class="wizard__option" data-next="2" data-val="250mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>250W Metal Halide</strong><span>Warehouse, parking, and site lighting</span></div></button>
+          <button class="wizard__option" data-next="2" data-val="400mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>400W Metal Halide</strong><span>High-output high-bay and sports lighting</span></div></button>
+          <button class="wizard__option" data-next="2" data-val="hps"><span class="wizard__option-icon">🟠</span><div class="wizard__option-text"><strong>High-Pressure Sodium (HPS)</strong><span>Orange-tinted street and area lighting</span></div></button>
         </div>
       </div>
       <div class="wizard__step" data-step="2">
         <div class="wizard__step-header">STEP 2 OF 3</div>
-        <div class="wizard__question">What type of ballast is in the fixture?</div>
+        <div class="wizard__question">What type of fixture is it?</div>
         <div class="wizard__options">
-          <button class="wizard__option" data-next="3" data-val="instant-start"><span class="wizard__option-icon">⚡</span><div class="wizard__option-text"><strong>Electronic instant-start</strong><span>Most common in post-1995 fixtures.</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="programmed-start"><span class="wizard__option-icon">⏱️</span><div class="wizard__option-text"><strong>Electronic programmed-start</strong><span>Common with occupancy sensors.</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="magnetic"><span class="wizard__option-icon">🔧</span><div class="wizard__option-text"><strong>Magnetic ballast (older)</strong><span>Pre-1990s. Type B bypass recommended.</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="unknown"><span class="wizard__option-icon">❓</span><div class="wizard__option-text"><strong>I don't know</strong><span>We'll recommend the safest option</span></div></button>
+          <button class="wizard__option" data-next="3" data-val="high-bay"><span class="wizard__option-icon">🏭</span><div class="wizard__option-text"><strong>High-bay (indoor)</strong><span>Warehouse, manufacturing, gymnasium</span></div></button>
+          <button class="wizard__option" data-next="3" data-val="area"><span class="wizard__option-icon">🌐</span><div class="wizard__option-text"><strong>Area / site (outdoor)</strong><span>Parking lot, perimeter, roadway</span></div></button>
+          <button class="wizard__option" data-next="3" data-val="flood"><span class="wizard__option-icon">🔦</span><div class="wizard__option-text"><strong>Flood / wall pack</strong><span>Building-mounted, security lighting</span></div></button>
+          <button class="wizard__option" data-next="3" data-val="post-top"><span class="wizard__option-icon">🏮</span><div class="wizard__option-text"><strong>Post-top / decorative</strong><span>Streetscape, campus, parking structure</span></div></button>
         </div>
         <button class="wizard__back" data-back="1">← Back</button>
       </div>
       <div class="wizard__step" data-step="3">
         <div class="wizard__step-header">STEP 3 OF 3</div>
-        <div class="wizard__question">What's your preferred install approach?</div>
+        <div class="wizard__question">What's your priority for this project?</div>
         <div class="wizard__options">
-          <button class="wizard__option" data-result="type-a" data-val="plug-and-play"><span class="wizard__option-icon">🔌</span><div class="wizard__option-text"><strong>Plug-and-play (Type A)</strong><span>Keep existing ballast. Faster install.</span></div></button>
-          <button class="wizard__option" data-result="type-b" data-val="bypass"><span class="wizard__option-icon">✂️</span><div class="wizard__option-text"><strong>Ballast bypass (Type B)</strong><span>Remove ballast. Lower long-term cost.</span></div></button>
-          <button class="wizard__option" data-result="type-ab" data-val="either"><span class="wizard__option-icon">🔄</span><div class="wizard__option-text"><strong>Either — recommend best option</strong><span>We'll pick based on your ballast type.</span></div></button>
+          <button class="wizard__option" data-result="rebate" data-val="rebate"><span class="wizard__option-icon">💰</span><div class="wizard__option-text"><strong>Maximize utility rebate</strong><span>DLC Premium required for most programs</span></div></button>
+          <button class="wizard__option" data-result="lumen" data-val="lumen"><span class="wizard__option-icon">☀️</span><div class="wizard__option-text"><strong>Maximum lumen output</strong><span>Brightest possible replacement</span></div></button>
+          <button class="wizard__option" data-result="baa" data-val="baa"><span class="wizard__option-icon">🇺🇸</span><div class="wizard__option-text"><strong>Buy American Act compliance</strong><span>Federal and municipal projects</span></div></button>
         </div>
         <button class="wizard__back" data-back="2">← Back</button>
       </div>
     </div>
     <div class="wizard-result" id="wizard-result">
       <div class="wizard-result__eyebrow">RECOMMENDED SKU</div>
-      <div class="wizard-result__sku" id="result-sku">ALG-T8-4FT-15W-840-AB</div>
-      <div class="wizard-result__name" id="result-name">The Workshop T8 · 4FT · 15W · 4000K · Type A+B Hybrid</div>
+      <div class="wizard-result__sku" id="result-sku">ALG-HUSK-150W-4K</div>
+      <div class="wizard-result__name" id="result-name">The Husk · 150W · 4000K · E39 Mogul Base</div>
       <div class="wizard-result__details">
-        <div class="result-detail"><div class="result-detail__label">Wattage setting</div><div class="result-detail__value">15W (DIP: 1-ON, 2-OFF, 3-OFF, 4-OFF)</div></div>
-        <div class="result-detail"><div class="result-detail__label">Install type</div><div class="result-detail__value" id="result-install">Type A+B Hybrid</div></div>
-        <div class="result-detail"><div class="result-detail__label">Rewire labor est.</div><div class="result-detail__value" id="result-labor">0 min (Type A) or 8 min/fixture (Type B)</div></div>
-        <div class="result-detail"><div class="result-detail__label">Ballast compatibility</div><div class="result-detail__value">Verified — 200+ ballasts</div></div>
+        <div class="result-detail"><div class="result-detail__label">Delivered lumens</div><div class="result-detail__value" id="result-lumens">21,000 lm</div></div>
+        <div class="result-detail"><div class="result-detail__label">Replaces</div><div class="result-detail__value" id="result-replaces">250W MH / 200W HPS</div></div>
+        <div class="result-detail"><div class="result-detail__label">Rewire labor est.</div><div class="result-detail__value">0 min (direct drop-in)</div></div>
+        <div class="result-detail"><div class="result-detail__label">Certifications</div><div class="result-detail__value" id="result-certs">DLC Premium · BAA</div></div>
       </div>
+      <div class="wizard-result__caveat">⚠️ <strong>Pre-install check:</strong> Verify fixture operates at 120–480V. Remove ballast igniter if present (probe-start MH). Confirm E39 socket is in good condition. See install guide for full checklist.</div>
       <div class="wizard-result__ctas">
         <a href="/aura" class="btn btn--primary">Request Quote for This SKU</a>
-        <a href="#" class="btn btn--outline">Download Spec Sheet</a>
+        <a href="#docs" class="btn btn--outline">Download Install Guide</a>
       </div>
       <button class="wizard-result__restart" id="wizard-restart">Start over ↺</button>
     </div>
@@ -282,12 +324,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <table class="spec-table">
           <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Lumens (delivered)</td><td>1,600 – 2,200 lm</td><td>Varies by wattage setting</td></tr>
-            <tr><td>Efficacy</td><td>Up to 140 lm/W</td><td>At 15W setting</td></tr>
-            <tr><td>CCT options</td><td>3000K / 3500K / 4000K / 5000K</td><td>Separate SKU per CCT</td></tr>
-            <tr><td>CRI</td><td>≥80</td><td>R9 ≥ 50</td></tr>
-            <tr><td>Beam angle</td><td>330°</td><td>Omnidirectional</td></tr>
-            <tr><td>MacAdam ellipse</td><td>≤3 SDCM</td><td>Lot-to-lot consistency</td></tr>
+            <tr><td>Lumens (delivered)</td><td>14,000 – 33,600 lm</td><td>Varies by wattage</td></tr>
+            <tr><td>Efficacy</td><td>Up to 140 lm/W</td><td>At 100W setting</td></tr>
+            <tr><td>CCT options</td><td>4000K / 5000K</td><td>Separate SKU per CCT</td></tr>
+            <tr><td>CRI</td><td>≥70</td><td>R9 ≥ 20</td></tr>
+            <tr><td>Beam angle</td><td>360°</td><td>Omnidirectional (E39 base)</td></tr>
+            <tr><td>MacAdam ellipse</td><td>≤5 SDCM</td><td></td></tr>
           </tbody>
         </table>
       </div>
@@ -296,27 +338,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <table class="spec-table">
           <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Input voltage</td><td>120–277V AC</td><td>Universal voltage</td></tr>
-            <tr><td>Wattage settings</td><td>10.5W / 12W / 14W / 15W / 18W</td><td>DIP-switch selectable</td></tr>
-            <tr><td>Power factor</td><td>&gt;0.90</td><td>All wattage settings</td></tr>
+            <tr><td>Input voltage</td><td>120–480V AC</td><td>Universal voltage — no ballast required</td></tr>
+            <tr><td>Wattage settings</td><td>100W / 150W / 200W / 240W</td><td>DIP-switch selectable</td></tr>
+            <tr><td>Power factor</td><td>&gt;0.95</td><td>All wattage settings</td></tr>
             <tr><td>THD</td><td>&lt;20%</td><td>At full load</td></tr>
-            <tr><td>Surge protection</td><td>2kV</td><td>Per IEC 61000-4-5</td></tr>
-            <tr><td>Inrush current</td><td>&lt;20A peak</td><td>At 120V</td></tr>
+            <tr><td>Surge protection</td><td>4kV</td><td>Per IEC 61000-4-5</td></tr>
+            <tr><td>Inrush current</td><td>&lt;35A peak</td><td>At 120V</td></tr>
           </tbody>
         </table>
-        <div class="spec-note">Type A (ballast-compatible) mode: lamp draws from ballast output. Type B (bypass) mode: lamp connects directly to line voltage. Both modes use the same lamp body.</div>
+        <div class="spec-note">Direct-wire only. No ballast required or compatible. Remove existing ballast and igniter before installation. See install guide.</div>
       </div>
       <div class="spec-group" id="spec-materials">
         <div class="spec-group__header">Materials &amp; Construction</div>
         <table class="spec-table">
           <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Tube material</td><td>Polycarbonate (PC)</td><td>Impact-resistant, UV-stable</td></tr>
-            <tr><td>End cap material</td><td>PBT thermoplastic</td><td>G13 bipin base</td></tr>
-            <tr><td>LED type</td><td>SMD 2835</td><td>High-efficiency chip</td></tr>
-            <tr><td>Driver location</td><td>Internal (end cap)</td><td>No external driver required</td></tr>
-            <tr><td>Weight</td><td>95g</td><td>4FT lamp</td></tr>
-            <tr><td>Length</td><td>1198mm (4FT nominal)</td><td>G13 bipin spacing: 26mm</td></tr>
+            <tr><td>Housing material</td><td>Die-cast aluminum</td><td>Integral heat sink fins</td></tr>
+            <tr><td>Lens material</td><td>Tempered borosilicate glass</td><td>High-temp rated</td></tr>
+            <tr><td>Base</td><td>E39 mogul screw base</td><td>Nickel-plated brass</td></tr>
+            <tr><td>LED type</td><td>COB array</td><td>High-power chip-on-board</td></tr>
+            <tr><td>Weight</td><td>1.2 kg</td><td>240W variant</td></tr>
+            <tr><td>MOL</td><td>235mm</td><td>Maximum overall length</td></tr>
           </tbody>
         </table>
       </div>
@@ -325,10 +367,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <table class="spec-table">
           <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Operating temp</td><td>-20°C to +45°C</td><td>Ambient</td></tr>
-            <tr><td>Storage temp</td><td>-40°C to +65°C</td><td></td></tr>
-            <tr><td>Humidity</td><td>10–90% RH non-condensing</td><td></td></tr>
-            <tr><td>IP rating</td><td>IP20</td><td>Indoor use only</td></tr>
+            <tr><td>Operating temp</td><td>-40°C to +50°C</td><td>Ambient</td></tr>
+            <tr><td>IP rating</td><td>IP65</td><td>Wet location rated</td></tr>
+            <tr><td>Vibration rating</td><td>3G</td><td>Per ANSI C136.31</td></tr>
             <tr><td>L70 rated life</td><td>50,000 hours</td><td>At 25°C ambient</td></tr>
             <tr><td>Warranty</td><td>5 years</td><td>Pro-rated after year 3</td></tr>
           </tbody>
@@ -339,18 +380,50 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <table class="spec-table">
           <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Dimming (Type A)</td><td>Ballast-dependent</td><td>See ballast compatibility list</td></tr>
-            <tr><td>Dimming (Type B)</td><td>0-10V / TRIAC / Phase-cut</td><td>Driver-integrated</td></tr>
-            <tr><td>Occupancy sensor</td><td>Compatible (Type A+B)</td><td>Programmed-start ballast for Type A</td></tr>
-            <tr><td>Emergency backup</td><td>Available (EM suffix SKU)</td><td>90-min backup battery option</td></tr>
+            <tr><td>Dimming</td><td>0-10V (optional)</td><td>/DIM suffix SKU</td></tr>
+            <tr><td>Occupancy sensor</td><td>Compatible</td><td>With 0-10V dimming driver</td></tr>
+            <tr><td>Emergency backup</td><td>Not available</td><td>High wattage — external inverter required</td></tr>
           </tbody>
         </table>
         <div class="sensor-callout">
-          <div class="sensor-callout__title">NLC Stand<span class="aa">Ⓐ</span>RCH Sensor-Ready</div>
-          <p class="sensor-callout__body">The Workshop T8 (Type B bypass) is compatible with NLC Stand<span class="aa">Ⓐ</span>RCH /SR sensor-ready protocol. Enables occupancy and daylight harvesting without additional wiring. Specify /SR suffix SKU.</p>
+          <div class="sensor-callout__title">NLC Stand<span class="aa">Ⓐ</span>RCH /SR Sensor-Ready</div>
+          <p class="sensor-callout__body">The Husk (/DIM variant) is compatible with NLC Stand<span class="aa">Ⓐ</span>RCH /SR sensor-ready protocol for occupancy and daylight harvesting. Specify /DIM/SR suffix SKU. Requires 0-10V compatible fixture socket.</p>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="fixture-section">
+  <div class="fixture-section__inner">
+    <div class="section-eyebrow">Fixture compatibility</div>
+    <h2 class="section-title">40+ fixtures proven. Key models shown.</h2>
+    <p class="section-sub">Full compatibility matrix available in the documentation download. Fixtures marked "Conditional" require ballast/igniter removal.</p>
+    <div class="fixture-table-wrap">
+      <table class="fixture-table">
+        <thead>
+          <tr>
+            <th>Manufacturer</th>
+            <th>Model</th>
+            <th>Type</th>
+            <th>Wattage range</th>
+            <th>Compatible</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Acuity / Lithonia</td><td>IBG Series</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
+          <tr><td>Cooper / Eaton</td><td>MHAC Series</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
+          <tr><td>GE / Current</td><td>Evolve Area</td><td>Area/site</td><td>250–400W MH</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Remove igniter</td></tr>
+          <tr><td>Hubbell</td><td>HBL Series</td><td>High-bay</td><td>175–320W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
+          <tr><td>Kim Lighting</td><td>EKM Series</td><td>Area/site</td><td>250–400W HPS</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Remove ballast</td></tr>
+          <tr><td>LSI Industries</td><td>Crossover</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
+          <tr><td>RAB Lighting</td><td>WNLED Series</td><td>Wall pack</td><td>175–250W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
+          <tr><td>Sternberg</td><td>Post-top</td><td>Post-top</td><td>175–250W MH</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Verify socket clearance</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fixture-note">Full 40+ fixture compatibility matrix available in the PDF download below. Last updated April 2026.</p>
   </div>
 </section>
 
@@ -359,24 +432,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <div class="section-eyebrow">Documentation</div>
     <h2 class="section-title">Everything you need to specify and install.</h2>
     <div class="docs-grid">
-      <a href="#" class="doc-card"><span class="doc-card__icon">📄</span><div><div class="doc-card__name">Spec Sheet</div><div class="doc-card__meta">PDF · 2.1 MB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">💡</span><div><div class="doc-card__name">IES Photometric File</div><div class="doc-card__meta">IES · 48 KB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">🔧</span><div><div class="doc-card__name">Install Guide</div><div class="doc-card__meta">PDF · 890 KB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">✅</span><div><div class="doc-card__name">Ballast Compatibility Matrix</div><div class="doc-card__meta">PDF · 1.4 MB · 200+ ballasts</div></div></a>
+      <a href="#" class="doc-card"><span class="doc-card__icon">📄</span><div><div class="doc-card__name">Spec Sheet</div><div class="doc-card__meta">PDF · 2.4 MB</div></div></a>
+      <a href="#" class="doc-card"><span class="doc-card__icon">💡</span><div><div class="doc-card__name">IES Photometric File</div><div class="doc-card__meta">IES · 64 KB</div></div></a>
+      <a href="#" class="doc-card"><span class="doc-card__icon">🔧</span><div><div class="doc-card__name">Install Guide</div><div class="doc-card__meta">PDF · 1.1 MB</div></div></a>
+      <a href="#" class="doc-card"><span class="doc-card__icon">✅</span><div><div class="doc-card__name">Fixture Compatibility Matrix</div><div class="doc-card__meta">PDF · 1.8 MB · 40+ fixtures</div></div></a>
       <a href="#" class="doc-card"><span class="doc-card__icon">🏆</span><div><div class="doc-card__name">DLC Certificate</div><div class="doc-card__meta">PDF · 340 KB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">🔒</span><div><div class="doc-card__name">UL Listing</div><div class="doc-card__meta">PDF · 220 KB</div></div></a>
+      <a href="#" class="doc-card"><span class="doc-card__icon">🇺🇸</span><div><div class="doc-card__name">BAA Compliance Letter</div><div class="doc-card__meta">PDF · 180 KB</div></div></a>
     </div>
   </div>
 </section>
 
 <section class="cta-band">
   <div class="cta-band__inner">
-    <h2 class="cta-band__title">Ready to specify The Workshop T8?</h2>
-    <p class="cta-band__sub">Quotes in 24 hours. Sample kits ship same day for retrofits ≥50 fixtures.</p>
+    <h2 class="cta-band__title">Ready to spec The Husk?</h2>
+    <p class="cta-band__sub">Quotes in 24 hours. Sample kits ship same day for retrofits ≥20 fixtures.</p>
     <div class="cta-band__row">
       <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
       <a href="#" class="btn btn--outline">Request Sample</a>
-      <a href="/collections/tubulararch" class="btn btn--outline">← Back to tubul<span class="aa">Ⓐ</span>RCH</a>
+      <a href="/collections/signature" class="btn btn--outline">← Back to sign<span class="aa">Ⓐ</span>TURE</a>
     </div>
   </div>
 </section>
@@ -384,6 +457,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <script>
   const wizard = document.getElementById('wizard');
   const resultCard = document.getElementById('wizard-result');
+
+  const skuData = {
+    rebate: { sku: 'ALG-HUSK-150W-4K', name: 'The Husk · 150W · 4000K · E39 Mogul Base', lumens: '21,000 lm', replaces: '250W MH / 200W HPS', certs: 'DLC Premium · BAA' },
+    lumen: { sku: 'ALG-HUSK-240W-4K', name: 'The Husk · 240W · 4000K · E39 Mogul Base', lumens: '33,600 lm', replaces: '400W MH / 320W HPS', certs: 'DLC Premium · BAA' },
+    baa: { sku: 'ALG-HUSK-150W-4K', name: 'The Husk · 150W · 4000K · E39 Mogul Base (BAA)', lumens: '21,000 lm', replaces: '250W MH / 200W HPS', certs: 'DLC Premium · BAA' }
+  };
 
   wizard.querySelectorAll('.wizard__option').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -393,14 +472,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         wizard.querySelector(`[data-step="${btn.dataset.next}"]`).classList.add('wizard__step--active');
       } else if (btn.dataset.result) {
         wizard.style.display = 'none';
-        const type = btn.dataset.result;
-        const skuMap = { 'type-a': 'ALG-T8-4FT-15W-840-A', 'type-b': 'ALG-T8-4FT-15W-840-B', 'type-ab': 'ALG-T8-4FT-15W-840-AB' };
-        const nameMap = { 'type-a': 'The Workshop T8 · 4FT · 15W · 4000K · Type A', 'type-b': 'The Workshop T8 · 4FT · 15W · 4000K · Type B Bypass', 'type-ab': 'The Workshop T8 · 4FT · 15W · 4000K · Type A+B Hybrid' };
-        const laborMap = { 'type-a': '0 min (plug-and-play)', 'type-b': '8 min/fixture (ballast removal)', 'type-ab': '0 min (Type A) or 8 min (Type B)' };
-        document.getElementById('result-sku').textContent = skuMap[type] || 'ALG-T8-4FT-15W-840-AB';
-        document.getElementById('result-name').textContent = nameMap[type] || '';
-        document.getElementById('result-install').textContent = type === 'type-a' ? 'Type A Plug-and-play' : type === 'type-b' ? 'Type B Bypass' : 'Type A+B Hybrid';
-        document.getElementById('result-labor').textContent = laborMap[type] || '';
+        const d = skuData[btn.dataset.result] || skuData.rebate;
+        document.getElementById('result-sku').textContent = d.sku;
+        document.getElementById('result-name').textContent = d.name;
+        document.getElementById('result-lumens').textContent = d.lumens;
+        document.getElementById('result-replaces').textContent = d.replaces;
+        document.getElementById('result-certs').textContent = d.certs;
         resultCard.classList.add('wizard-result--visible');
       }
     });
