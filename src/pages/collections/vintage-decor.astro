@@ -1,5 +1,417 @@
 ---
-import LampCollectionPageLayout from '../../layouts/LampCollectionPageLayout.astro';
-import data from '../../data/lamps/vintage-decor';
+/**
+ * Vintage Décor Collection Index
+ * v2.7.10 — rebuilt to match mockup_vintage_v3.html
+ * Route: /collections/vintage-decor
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
+
+const anchorSections = [
+  { id: 'sec-foundry',    label: 'The Foundry' },
+  { id: 'sec-belgravia',  label: 'The Belgravia' },
+  { id: 'sec-provence',   label: 'The Provence' },
+  { id: 'sec-marconi',    label: 'The Marconi' },
+  { id: 'sec-brighton',   label: 'The Brighton' },
+  { id: 'sec-glasgow',    label: 'The Glasgow' },
+];
 ---
-<LampCollectionPageLayout collection={data} />
+<BaseLayout
+  title="Vintage Décor — Named Filament LED Lamps | Archipelago Lighting Group"
+  description="Six named filament LED lamps for restoration interiors and hospitality renovations. The Foundry Edison, Belgravia Victorian, Provence Globe, Marconi Radio, Brighton Tubular, Glasgow Candelabra. 2200K, CRI 90+."
+  bodyClass="page-vintage-collection"
+>
+<style>
+  :root {
+    --vd-brick: #A6362B;
+    --vd-brick-dark: #8A2820;
+    --vd-umber: #2F1F12;
+    --vd-cream: #EFE6D2;
+    --vd-cream2: #E4D9C3;
+    --vd-ink: #1A130A;
+    --vd-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --vd-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .vd-cream   { background: var(--vd-cream); color: var(--vd-ink); }
+  .vd-cream2  { background: var(--vd-cream2); color: var(--vd-ink); }
+  .vd-umber   { background: var(--vd-umber); color: var(--vd-cream); }
+  .vd-eyebrow { font-family: var(--vd-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .vd-eyebrow-rule::before { content: ""; display: inline-block; width: 24px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 12px; }
+  .vd-brick-text { color: var(--vd-brick); }
+  .vd-h1 { font-family: var(--vd-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+  .vd-stat-num   { font-family: var(--vd-serif); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.02em; line-height: 1; }
+  .vd-stat-label { font-family: var(--vd-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+  .vd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s; font-family: var(--vd-mono); }
+  .vd-btn-primary { background: var(--vd-ink); color: var(--vd-cream); }
+  .vd-btn-primary:hover { background: #333; }
+  .vd-btn-brick { background: var(--vd-brick); color: var(--vd-cream); }
+  .vd-btn-brick:hover { background: var(--vd-brick-dark); }
+  .vd-section-nav { background: var(--vd-cream2); border-top: 1px solid rgba(26,19,10,0.1); border-bottom: 1px solid rgba(26,19,10,0.1); position: sticky; top: 0; z-index: 10; }
+  .vd-section-nav__inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: repeat(6,1fr); }
+  .vd-nav-tab { padding: 1rem 0.75rem; text-align: center; border-right: 1px solid rgba(26,19,10,0.08); cursor: pointer; transition: background 0.15s; }
+  .vd-nav-tab:last-child { border-right: none; }
+  .vd-nav-tab-num   { font-family: var(--vd-mono); font-size: 0.6rem; letter-spacing: 0.18em; opacity: 0.5; }
+  .vd-nav-tab-label { font-family: var(--vd-serif); font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
+  .vd-nav-tab-shape { font-family: var(--vd-mono); font-size: 0.6rem; letter-spacing: 0.18em; opacity: 0.6; margin-top: 0.2rem; }
+  .vd-nav-tab-dot   { width: 5px; height: 5px; border-radius: 50%; background: rgba(26,19,10,0.2); margin: 0.3rem auto 0; }
+  .vd-nav-tab.active .vd-nav-tab-dot { background: var(--vd-brick); }
+  .vd-nav-tab.active .vd-nav-tab-num { color: var(--vd-brick); opacity: 1; }
+  .vd-family-sec { scroll-margin-top: 56px; }
+  .vd-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .vd-family-inner { grid-template-columns: 1fr; } .vd-section-nav__inner { grid-template-columns: repeat(3,1fr); } }
+  .vd-copy { padding: 4rem; }
+  .vd-illust { aspect-ratio: 5/4; display: flex; align-items: center; justify-content: center; background: var(--vd-umber); position: relative; overflow: hidden; }
+  .vd-illust--light { background: var(--vd-cream2); }
+  .vd-illust-ph { font-family: var(--vd-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(239,230,210,0.2); margin: 2rem; width: calc(100% - 4rem); color: rgba(239,230,210,0.4); }
+  .vd-illust-ph--light { color: rgba(26,19,10,0.3); border-color: rgba(26,19,10,0.12); }
+  .vd-callout      { border-left: 2px solid var(--vd-brick); padding: 1.25rem 1.5rem; background: rgba(166,54,43,0.08); }
+  .vd-callout-light { border-left: 2px solid var(--vd-brick); padding: 1.25rem 1.5rem; background: rgba(166,54,43,0.12); }
+  .vd-callout-ey   { font-family: var(--vd-mono); color: var(--vd-brick); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .vd-card { background: white; padding: 2rem; border: 1px solid rgba(26,19,10,0.08); }
+  .vd-card-num { font-family: var(--vd-mono); color: var(--vd-brick); font-size: 0.65rem; letter-spacing: 0.18em; }
+  .vd-breadcrumb { border-bottom: 1px solid rgba(26,19,10,0.1); background: white; }
+  .vd-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--vd-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .vd-breadcrumb a { color: inherit; text-decoration: none; }
+  .vd-breadcrumb a:hover { color: var(--vd-brick); opacity: 1; }
+</style>
+
+<div class="vd-breadcrumb">
+  <div class="vd-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    VINTAGE DÉCOR
+  </div>
+</div>
+
+<section class="vd-umber" style="padding:6rem 1.5rem;text-align:center;position:relative;">
+  <div style="max-width:1280px;margin:0 auto;position:relative;">
+    <p class="vd-eyebrow vd-eyebrow-rule" style="color:rgba(239,230,210,0.7);margin-bottom:2rem;">SERIES · VINTAGE DÉCOR · OLD-WORLD FILAMENT</p>
+    <h1 class="vd-h1" style="font-size:clamp(2.5rem,7vw,4.5rem);color:var(--vd-cream);margin-bottom:2rem;">Old-world filament.<br><span class="vd-brick-text">New-world efficiency.</span></h1>
+    <p style="color:rgba(239,230,210,0.8);font-size:1.1rem;max-width:42rem;margin:0 auto 2.5rem;line-height:1.7;font-family:var(--vd-serif);">Six named lamps for restoration interiors, hospitality renovations, and the rooms that ask the light to look like the building it's in. Built today with 25,000-hour rated life and the dimming a <span class="cy">2026</span> control system expects.</p>
+    <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+      <div><div class="vd-stat-num" style="color:var(--vd-cream);">6</div><div class="vd-stat-label" style="color:rgba(239,230,210,0.7);">Named Lamps</div></div>
+      <div><div class="vd-stat-num" style="color:var(--vd-cream);">2200K</div><div class="vd-stat-label" style="color:rgba(239,230,210,0.7);">Candle Hour CCT</div></div>
+      <div><div class="vd-stat-num" style="color:var(--vd-cream);">CRI 90+</div><div class="vd-stat-label" style="color:rgba(239,230,210,0.7);">Color Fidelity</div></div>
+      <div><div class="vd-stat-num" style="color:var(--vd-cream);">25,000h</div><div class="vd-stat-label" style="color:rgba(239,230,210,0.7);">Long Life</div></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://algportal.archipelagolighting.com" class="vd-btn vd-btn-brick" target="_blank" rel="noopener">BROWSE THE SERIES →</a>
+    </div>
+  </div>
+</section>
+
+<div class="vd-cream" style="border-bottom:1px solid rgba(26,19,10,0.08);">
+  <div style="max-width:1536px;margin:0 auto;padding:1.5rem;text-align:center;font-style:italic;opacity:0.8;font-family:var(--vd-serif);">
+    The shapes the Belgrave hotels, the Provençal trattoria, and the Glasgow tea-room would have specified.
+  </div>
+</div>
+
+<div class="vd-section-nav" id="vd-section-nav">
+  <div class="vd-section-nav__inner">
+    <div class="vd-nav-tab active" data-nav-target="sec-foundry">
+      <div class="vd-nav-tab-num">01</div>
+      <div class="vd-nav-tab-label">The Foundry</div>
+      <div class="vd-nav-tab-shape">ST19</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+    <div class="vd-nav-tab" data-nav-target="sec-belgravia">
+      <div class="vd-nav-tab-num">02</div>
+      <div class="vd-nav-tab-label">The Belgravia</div>
+      <div class="vd-nav-tab-shape">A19</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+    <div class="vd-nav-tab" data-nav-target="sec-provence">
+      <div class="vd-nav-tab-num">03</div>
+      <div class="vd-nav-tab-label">The Provence</div>
+      <div class="vd-nav-tab-shape">G25/G40</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+    <div class="vd-nav-tab" data-nav-target="sec-marconi">
+      <div class="vd-nav-tab-num">04</div>
+      <div class="vd-nav-tab-label">The Marconi</div>
+      <div class="vd-nav-tab-shape">T10/T14</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+    <div class="vd-nav-tab" data-nav-target="sec-brighton">
+      <div class="vd-nav-tab-num">05</div>
+      <div class="vd-nav-tab-label">The Brighton</div>
+      <div class="vd-nav-tab-shape">T9</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+    <div class="vd-nav-tab" data-nav-target="sec-glasgow">
+      <div class="vd-nav-tab-num">06</div>
+      <div class="vd-nav-tab-label">The Glasgow</div>
+      <div class="vd-nav-tab-shape">CA10</div>
+      <div class="vd-nav-tab-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 01 — THE FOUNDRY EDISON -->
+<section class="vd-family-sec vd-cream" id="sec-foundry">
+  <div class="vd-family-inner">
+    <div class="vd-illust">
+      <div class="vd-illust-ph">FOUNDRY EDISON PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="vd-copy">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE FOUNDRY EDISON · 01 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The lamp that introduced America to electric light, made today.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--vd-serif);">The Foundry Edison is the ST19 Edison silhouette — the exposed-filament tubular lamp that became the visual signature of the early industrial age. Named for the East Coast foundries that ran on Edison's patent and the bare-bulb pendant lighting of the workshops they operated.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--vd-serif);">Squirrel-cage filament geometry rendered in LED, sealed in the same shouldered tubular envelope, dimmed to 2200K — the candle hour. Where the original lamp shed soot, ours sheds 70% of the energy bill.</p>
+      <div class="vd-callout" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Restaurant bare-bulb pendant arrays · the tubular lamp on its own cord</li>
+          <li>· Speakeasy / craft-cocktail bars · paired clear-glass for filament visibility</li>
+          <li>· Coffee shop ambient overheads · 2200K candle-hour CCT for early-evening register</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/st19/" class="vd-btn vd-btn-primary">VIEW THE FOUNDRY EDISON</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02 — THE BELGRAVIA VICTORIAN -->
+<section class="vd-family-sec vd-cream2" id="sec-belgravia">
+  <div class="vd-family-inner">
+    <div class="vd-copy" style="order:1;">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE BELGRAVIA VICTORIAN · 02 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">An A19 silhouette that belongs in a London townhouse.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--vd-serif);">Smoked, amber, or squirrel-cage style filaments inside the standard A19 envelope — the silhouette decorators specify when they want the filament visible without the lamp announcing itself.</p>
+      <div class="vd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Boutique hotels in heritage buildings · 4–12 lamps per chandelier</li>
+          <li>· Restaurants in pre-war buildings · brass fixtures, exposed sockets, matching lamp</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/a19/" class="vd-btn vd-btn-primary">VIEW THE BELGRAVIA</a>
+    </div>
+    <div class="vd-illust vd-illust--light" style="order:2;">
+      <div class="vd-illust-ph vd-illust-ph--light">BELGRAVIA VICTORIAN PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 — THE PROVENCE GLOBE -->
+<section class="vd-family-sec vd-cream" id="sec-provence">
+  <div class="vd-family-inner">
+    <div class="vd-illust">
+      <div class="vd-illust-ph">PROVENCE GLOBE PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="vd-copy">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE PROVENCE GLOBE · 03 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The globe lamp that looks like it belongs above the kitchen table.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--vd-serif);">The Provence Globe is the G25 and G40 globe silhouette — the lamp that makes the pendant it hangs from part of the menu. Named for the Provençal kitchens whose copper pots and amber-glass jars established the warm-light register a generation of restaurants now reproduce.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--vd-serif);">Amber and smoked finishes in two sizes (3" and 5" diameter). The lamp specified when "warm" isn't enough and "candle" isn't accurate.</p>
+      <div class="vd-callout" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Restaurant pendant arrays · 4–12 lamp chandeliers above bar / dining</li>
+          <li>· Vineyard tasting rooms and farm-to-table interiors</li>
+          <li>· Hospitality lobby focal pendants · single-statement applications</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/g25/" class="vd-btn vd-btn-primary">VIEW THE PROVENCE</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04 — THE MARCONI RADIO -->
+<section class="vd-family-sec vd-cream2" id="sec-marconi">
+  <div class="vd-family-inner">
+    <div class="vd-copy" style="order:1;">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE MARCONI RADIO · 04 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">A tubular lamp that looks like an early radio tube.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.9;font-family:var(--vd-serif);">The Marconi Radio is the T10/T14 tubular silhouette — the slender vertical lamp that became the visual cue for early-20th-century vacuum-tube electronics. Named for Guglielmo Marconi, whose radio tubes invented the silhouette that decorative lighting later borrowed.</p>
+      <div class="vd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Speakeasy and restoration interior accent fixtures</li>
+          <li>· Industrial-chic bar shelving · bottle-display backlight</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/t10/" class="vd-btn vd-btn-primary">VIEW THE MARCONI</a>
+    </div>
+    <div class="vd-illust vd-illust--light" style="order:2;">
+      <div class="vd-illust-ph vd-illust-ph--light">MARCONI RADIO PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05 — THE BRIGHTON TUBULAR -->
+<section class="vd-family-sec vd-cream" id="sec-brighton">
+  <div class="vd-family-inner">
+    <div class="vd-illust">
+      <div class="vd-illust-ph">BRIGHTON TUBULAR PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="vd-copy">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE BRIGHTON TUBULAR · 05 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">A broader tubular lamp for the long horizontal fixture.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--vd-serif);">The Brighton Tubular is the T9 broad-tubular — the lamp specified for long horizontal pendants, sign-back illumination, and the kind of fixture where a single lamp does a meter of light. Named for Brighton's seafront promenade, whose Victorian-era tubular lamp arrays still set the precedent for boardwalk lighting.</p>
+      <div class="vd-callout" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Long horizontal pendant fixtures above bar tops and chef's counters</li>
+          <li>· Restaurant signage backlight · the tubular lamp behind the menu board</li>
+          <li>· Seaside and boardwalk-restoration period lighting</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/t9/" class="vd-btn vd-btn-primary">VIEW THE BRIGHTON</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 06 — THE GLASGOW CANDELABRA -->
+<section class="vd-family-sec vd-cream2" id="sec-glasgow">
+  <div class="vd-family-inner">
+    <div class="vd-copy" style="order:1;">
+      <p class="vd-eyebrow vd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="vd-brick-text">SERIES ·</span> THE GLASGOW CANDELABRA · 06 / 06</p>
+      <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">A candelabra that earns its place above the dining table.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--vd-serif);">The Glasgow Candelabra is the CA10 flame-tip candelabra in the Vintage register — amber-finish glass, twisted-flame envelope, vertical filament. Named for Glasgow's tea rooms and the Charles Rennie Mackintosh interiors that defined what "decorated light" meant before electricity made the decoration optional.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--vd-serif);">CA10 amber for chandelier installations where the lamp itself is part of the architectural composition. Paired commonly with the Bauer CA10 from the Nostalgic series — the same shape in two registers, the architect picks.</p>
+      <div class="vd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="vd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--vd-serif);">
+          <li>· Formal dining-room chandeliers · 6–12 lamps per fixture</li>
+          <li>· Heritage building interior reproductions</li>
+        </ul>
+      </div>
+      <a href="/collections/vintage-decor/ca10/" class="vd-btn vd-btn-primary">VIEW THE GLASGOW</a>
+    </div>
+    <div class="vd-illust vd-illust--light" style="order:2;">
+      <div class="vd-illust-ph vd-illust-ph--light">GLASGOW CANDELABRA PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- FILAMENT TECHNOLOGY -->
+<section class="vd-umber">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;color:var(--vd-cream);">
+    <p class="vd-eyebrow vd-eyebrow-rule" style="color:var(--vd-brick);margin-bottom:1.5rem;">FILAMENT TECHNOLOGY · OLD SHAPES, NEW BEHAVIOR</p>
+    <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:var(--vd-cream);max-width:48rem;margin-bottom:3rem;">The filament you see was drawn to look like 1908. The behavior is <span class="cy">2026</span>.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;" class="vd-fil-grid">
+      <div>
+        <p class="vd-callout-ey" style="margin-bottom:0.75rem;">SQUIRREL-CAGE GEOMETRY</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--vd-serif);line-height:1.7;">Multiple parallel LED strands shaped into the cylindrical cage that defined Edison's 1880s carbon-filament lamps. Visible filament structure for clear-glass applications.</p>
+      </div>
+      <div>
+        <p class="vd-callout-ey" style="margin-bottom:0.75rem;">VERTICAL-LOOP GEOMETRY</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--vd-serif);line-height:1.7;">Single continuous LED strand looped vertically through the envelope — the geometry of the early carbon-arc lamp. Used in ST19, T10, and T14 tubular envelopes.</p>
+      </div>
+      <div>
+        <p class="vd-callout-ey" style="margin-bottom:0.75rem;">TWISTED-FLAME GEOMETRY</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--vd-serif);line-height:1.7;">LED strand shaped into the twisted-flame silhouette of early candelabra mantles. Used in CA10 candelabra and B11 chandelier lamps where the filament is the design feature.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .vd-fil-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- CAPABILITY PROOF -->
+<section class="vd-cream">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="vd-eyebrow vd-eyebrow-rule vd-brick-text" style="margin-bottom:1.5rem;">CAPABILITY PROOF · WHY RESTORATION SPECIFIES THIS SERIES</p>
+    <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:40rem;margin-bottom:3rem;">A lamp that respects the building it lives in.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="vd-cap-grid">
+      <div class="vd-card">
+        <p class="vd-card-num" style="margin-bottom:1rem;">01</p>
+        <h3 style="font-family:var(--vd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Period-accurate filament geometries</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--vd-serif);">
+          <li>· Filament geometries documented against pre-1940 lamp catalogs · ST19 / G25 / G40 / T10 / T14 / CA10 envelopes</li>
+          <li>· Glass finishes (smoked / amber / squirrel-cage) hand-graded per envelope to match the period reference</li>
+          <li>· No visible LED chip in any lamp — the filament IS the visual</li>
+        </ul>
+      </div>
+      <div class="vd-card">
+        <p class="vd-card-num" style="margin-bottom:1rem;">02</p>
+        <h3 style="font-family:var(--vd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Reproducible warmth across order quantities</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--vd-serif);">
+          <li>· 2200K candle-hour CCT across all 6 named lamps · ±50K binning tolerance</li>
+          <li>· Tight color binning (3-step MacAdam) for installations of 6+ lamps in one fixture</li>
+          <li>· Replacement-lamp consistency across 3+ year restoration project lifecycles</li>
+        </ul>
+      </div>
+      <div class="vd-card">
+        <p class="vd-card-num" style="margin-bottom:1rem;">03</p>
+        <h3 style="font-family:var(--vd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Custom &amp; restoration capability</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--vd-serif);">
+          <li>· Custom filament geometries available at 500+ unit orders for restoration projects</li>
+          <li>· Co-developed with restoration architects and historical-society lighting consultants</li>
+          <li>· Heritage-building-compatible warranty (50,000-hour rated where dimming protocols allow)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .vd-cap-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- NEW & EXPANDING -->
+<section class="vd-cream2" style="border-top:1px solid rgba(26,19,10,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="vd-eyebrow vd-brick-text" style="margin-bottom:1.5rem;">NEW &amp; EXPANDING IN <span class="cy">2026</span></p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;" class="vd-expand-grid">
+      <div><span class="vd-brick-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--vd-serif);">Custom-geometry filament service for restoration projects · 500+ unit minimum · Q3 <span class="cy">2026</span></span></div>
+      <div><span class="vd-brick-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--vd-serif);">Squirrel-cage variant for Belgravia Victorian A19 · Q3 <span class="cy">2026</span></span></div>
+      <div><span class="vd-brick-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--vd-serif);">G50 large-globe addition to The Provence · ballroom and lobby applications · Q4 <span class="cy">2026</span></span></div>
+      <div><span class="vd-brick-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--vd-serif);">Heritage-binning kit · 25-lamp matched samples for restoration architects · Q3 <span class="cy">2026</span></span></div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .vd-expand-grid { grid-template-columns: 1fr 1fr !important; } }
+  @media (max-width: 600px) { .vd-expand-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- DARK CTA -->
+<section class="vd-umber">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:var(--vd-cream);">
+    <h2 class="vd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Ready to spec the restoration?</h2>
+    <p style="opacity:0.8;max-width:40rem;margin:0 auto 2rem;line-height:1.7;font-family:var(--vd-serif);">Samples from US warehouses. Heritage-binning documentation for restoration submittals. Spec response under 24 hours.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/sample-request" class="vd-btn vd-btn-brick">REQUEST SAMPLE</a>
+      <a href="https://algportal.archipelagolighting.com" class="vd-btn" style="background:transparent;color:var(--vd-cream);border:1.5px solid rgba(239,230,210,0.4);" target="_blank" rel="noopener">SHOP ALL VINTAGE DÉCOR</a>
+    </div>
+  </div>
+</section>
+
+<CollectionAnchorNav sections={anchorSections} />
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.vd-nav-tab[data-nav-target]');
+    var sectionIds = ['sec-foundry','sec-belgravia','sec-provence','sec-marconi','sec-brighton','sec-glasgow'];
+    var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+    function setActive(id: string) {
+      tabs.forEach(function(tab) {
+        var t = tab as HTMLElement;
+        t.classList.toggle('active', t.dataset.navTarget === id);
+      });
+    }
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var t = tab as HTMLElement;
+        var target = t.dataset.navTarget;
+        if (target) {
+          var el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.3, rootMargin: '-10% 0% -50% 0%' });
+    sections.forEach(function(s) { if (s) observer.observe(s); });
+  })();
+  document.querySelectorAll('.cy').forEach(function(e) {
+    (e as HTMLElement).textContent = String(new Date().getFullYear());
+  });
+</script>
+</BaseLayout>

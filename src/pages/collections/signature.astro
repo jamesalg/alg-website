@@ -1,208 +1,369 @@
 ---
 /**
- * signⒶTURE Collection Index Page
- * v2.7.8 — shape-filter tab bar, coming-soon cards, stats bar
+ * signⒶTURE Collection Index
+ * v2.7.10 — rebuilt to match mockup_signature_v3.html
  * Route: /collections/signature
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
+
+const anchorSections = [
+  { id: 'sec-husk',  label: 'The Husk' },
+  { id: 'sec-wa',    label: 'Workhorse A' },
+  { id: 'sec-br',    label: 'Reflector BR' },
+  { id: 'sec-par',   label: 'Spotlight PAR' },
+];
 ---
 <BaseLayout
-  title="signⒶTURE — HID Retrofit &amp; Commercial LED | Archipelago Lighting Group"
-  description="The Husk HID retrofit lamp ships now. One dip-switchable lamp replaces 13 legacy HID wattages. E39 mogul base. 120–480V universal. DLC Premium."
+  title="signⒶTURE — Commercial LED Lamps | Archipelago Lighting Group"
+  description="Commercial-grade LED for the hardest retrofit jobs — HID, A-lamp, BR flood, PAR reflector. Seven Husk SKUs ship now. Three more families Q3 2026."
   bodyClass="page-signature-collection"
 >
 <style>
-  .page-signature-collection {
-    --accent: #F32740;
-    --accent-dark: #C41E32;
-    --fg: #111111;
-    --fg-muted: #6B6B6B;
-    --bg: #ffffff;
-    --bg-alt: #f4f4f6;
-    --border: #E5E5E5;
-    --font-mono: 'Courier New', Courier, monospace;
-    --inner: min(1280px, 100% - 64px);
+  :root {
+    --sg-accent: #F32740;
+    --sg-accent-dark: #C41E32;
+    --sg-warm: #F5C24A;
+    --sg-navy: #0F1828;
+    --sg-char: #1B1B1F;
+    --sg-paper: #F5F5F7;
+    --sg-paper2: #EBEBED;
+    --sg-ink: #111111;
+    --sg-mono: 'JetBrains Mono', 'Courier New', monospace;
   }
-  .section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-  .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--fg); margin: 0 0 12px; line-height: 1.2; }
-  .section-sub { font-size: 16px; color: var(--fg-muted); max-width: 640px; margin: 0 0 32px; line-height: 1.6; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s; }
-  .btn--primary { background: var(--accent); color: #fff; }
-  .btn--primary:hover { background: var(--accent-dark); }
-  .btn--outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
-  .btn--outline:hover { border-color: var(--fg); }
-  /* Breadcrumb */
-  .breadcrumb { background: #fff; border-bottom: 1px solid var(--border); padding: 12px 0; }
-  .breadcrumb__inner { width: var(--inner); margin: 0 auto; font-size: 12px; color: var(--fg-muted); font-family: var(--font-mono); }
-  .breadcrumb a { color: var(--fg-muted); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--accent); }
-  .breadcrumb__sep { margin: 0 8px; }
-  /* Hero */
-  .collection-hero { background: #111; color: #fff; padding: 80px 0 64px; }
-  .collection-hero__inner { width: var(--inner); margin: 0 auto; }
-  .collection-hero__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F32740; margin-bottom: 16px; }
-  .collection-hero__title { font-size: clamp(40px, 6vw, 72px); font-weight: 900; margin: 0 0 16px; line-height: 1.0; }
-  .collection-hero__sub { font-size: 18px; color: rgba(255,255,255,0.65); max-width: 640px; margin: 0 0 40px; line-height: 1.6; }
-  .stats-bar { display: flex; gap: 40px; flex-wrap: wrap; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.1); }
-  .stat-item__value { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
-  .stat-item__label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-  /* Shape filter */
-  .shape-filter { background: #fff; border-bottom: 1px solid var(--border); padding: 0; position: sticky; top: 0; z-index: 10; }
-  .shape-filter__inner { width: var(--inner); margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
-  .shape-tab { padding: 16px 20px; font-size: 13px; font-weight: 600; color: var(--fg-muted); cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
-  .shape-tab:hover { color: var(--fg); }
-  .shape-tab--active { color: var(--accent); border-bottom-color: var(--accent); }
-  .shape-tab--coming { color: var(--fg-muted); border-bottom-style: dashed; }
-  .shape-tab--coming:hover { color: var(--fg-muted); cursor: default; }
-  .shape-tab__badge { font-size: 9px; font-family: var(--font-mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 3px; padding: 2px 5px; margin-left: 6px; color: var(--fg-muted); }
-  /* Families grid */
-  .families-section { padding: 64px 0; background: var(--bg-alt); }
-  .families-section__inner { width: var(--inner); margin: 0 auto; }
-  .families-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 32px; }
-  /* Live family card */
-  .family-card { background: #fff; border-radius: 12px; border: 1.5px solid var(--border); overflow: hidden; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; }
-  .family-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(243,39,64,0.08); }
-  .family-card__visual { height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: var(--fg-muted); font-size: 12px; text-align: center; border-bottom: 1px solid var(--border); }
-  .family-card__body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-  .family-card__eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
-  .family-card__name { font-size: 20px; font-weight: 800; color: var(--fg); margin: 0 0 6px; }
-  .family-card__desc { font-size: 13px; color: var(--fg-muted); line-height: 1.5; margin: 0 0 16px; flex: 1; }
-  .family-card__chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-  .chip { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; border: 1px solid var(--border); color: var(--fg-muted); }
-  .chip--live { background: #E8F5E9; border-color: #A5D6A7; color: #2E7D32; }
-  .family-card__cta { font-size: 13px; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 4px; }
-  /* Coming-soon card */
-  .coming-card { background: #fff; border-radius: 12px; border: 1.5px dashed var(--border); overflow: hidden; display: flex; flex-direction: column; }
-  .coming-card__visual { height: 200px; background: repeating-linear-gradient(45deg, #f8f8f8, #f8f8f8 10px, #f0f0f0 10px, #f0f0f0 20px); display: flex; align-items: center; justify-content: center; color: var(--fg-muted); font-size: 12px; text-align: center; border-bottom: 1px dashed var(--border); }
-  .coming-card__body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-  .coming-card__eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--fg-muted); margin-bottom: 6px; }
-  .coming-card__name { font-size: 20px; font-weight: 800; color: var(--fg-muted); margin: 0 0 6px; }
-  .coming-card__desc { font-size: 13px; color: var(--fg-muted); line-height: 1.5; margin: 0 0 16px; flex: 1; }
-  .coming-card__timeline { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); background: var(--bg-alt); border-radius: 4px; padding: 6px 10px; margin-bottom: 12px; }
-  .coming-card__notify { font-size: 13px; color: var(--fg-muted); text-decoration: none; display: flex; align-items: center; gap: 4px; }
-  .coming-card__notify:hover { color: var(--accent); }
-  /* CTA band */
-  .cta-band { padding: 64px 0; background: #111; text-align: center; color: #fff; }
-  .cta-band__inner { width: var(--inner); margin: 0 auto; }
-  .cta-band__title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 12px; }
-  .cta-band__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 32px; }
-  .cta-band__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .cta-band .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .cta-band .btn--outline:hover { border-color: #fff; }
+  .sg-navy   { background: var(--sg-navy); color: #fff; }
+  .sg-dark   { background: var(--sg-char); color: #fff; }
+  .sg-paper  { background: var(--sg-paper); color: var(--sg-ink); }
+  .sg-paper2 { background: var(--sg-paper2); color: var(--sg-ink); }
+  .sg-eyebrow { font-family: var(--sg-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .sg-eyebrow-rule::before { content: ""; display: inline-block; width: 24px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 12px; }
+  .sg-eyebrow-red { color: var(--sg-accent); }
+  .sg-h1 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; }
+  .sg-stat-num   { font-weight: 800; font-size: 2.25rem; letter-spacing: -0.03em; line-height: 1; }
+  .sg-stat-label { font-family: var(--sg-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+  .sg-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s, border-color 0.15s; font-family: var(--sg-mono); }
+  .sg-btn-primary { background: var(--sg-accent); color: #fff; }
+  .sg-btn-primary:hover { background: var(--sg-accent-dark); }
+  .sg-btn-outline-light { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); }
+  .sg-btn-outline-light:hover { border-color: #fff; }
+  .sg-btn-outline-dark { background: transparent; color: var(--sg-ink); border: 1.5px solid rgba(0,0,0,0.25); }
+  .sg-btn-outline-dark:hover { border-color: var(--sg-ink); }
+  .sg-section-nav { background: white; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 10; }
+  .sg-section-nav__inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); }
+  .sg-nav-tab { padding: 1.25rem 1rem; text-align: center; border-right: 1px solid rgba(0,0,0,0.08); cursor: pointer; transition: background 0.15s; }
+  .sg-nav-tab:last-child { border-right: none; }
+  .sg-nav-tab-num   { font-family: var(--sg-mono); font-size: 0.65rem; letter-spacing: 0.18em; opacity: 0.5; }
+  .sg-nav-tab-label { font-family: var(--sg-mono); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.4rem; }
+  .sg-nav-tab-dot   { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); margin: 0.4rem auto 0; }
+  .sg-nav-tab.active .sg-nav-tab-dot { background: var(--sg-accent); }
+  .sg-nav-tab.active .sg-nav-tab-num { color: var(--sg-accent); opacity: 1; }
+  .sg-family-sec { scroll-margin-top: 56px; }
+  .sg-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .sg-family-inner { grid-template-columns: 1fr; } }
+  .sg-copy { padding: 4rem; }
+  .sg-illust { aspect-ratio: 5/4; display: flex; align-items: center; justify-content: center; background: #0F1828; position: relative; overflow: hidden; }
+  .sg-illust--light { background: var(--sg-paper); }
+  .sg-illust-ph { font-family: var(--sg-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(255,255,255,0.12); margin: 2rem; width: calc(100% - 4rem); color: rgba(255,255,255,0.35); }
+  .sg-illust-ph--light { color: rgba(0,0,0,0.3); border-color: rgba(0,0,0,0.12); }
+  .sg-callout      { border-left: 3px solid var(--sg-accent); padding: 1rem 1.25rem; background: var(--sg-paper2); }
+  .sg-callout-dark { border-left: 3px solid var(--sg-warm); padding: 1rem 1.25rem; background: rgba(245,194,74,0.08); }
+  .sg-callout-ey      { font-family: var(--sg-mono); color: var(--sg-accent); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .sg-callout-ey-warm { color: var(--sg-warm); }
+  .sg-matrix-row:hover { background: rgba(243,39,64,0.03); }
+  .sg-card { background: white; padding: 2rem; border: 1px solid rgba(0,0,0,0.08); }
+  .sg-card-num { font-family: var(--sg-mono); color: var(--sg-accent); font-size: 0.65rem; letter-spacing: 0.18em; }
+  .sg-breadcrumb { border-bottom: 1px solid rgba(0,0,0,0.1); background: white; }
+  .sg-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--sg-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .sg-breadcrumb a { color: inherit; text-decoration: none; }
+  .sg-breadcrumb a:hover { color: var(--sg-accent); opacity: 1; }
 </style>
 
-<nav class="breadcrumb">
-  <div class="breadcrumb__inner">
-    <a href="/">Home</a><span class="breadcrumb__sep">/</span>
-    <span>sign<span class="aa">Ⓐ</span>TURE</span>
+<div class="sg-breadcrumb">
+  <div class="sg-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    SIGN<span class="aa">Ⓐ</span>TURE
   </div>
-</nav>
+</div>
 
-<section class="collection-hero">
-  <div class="collection-hero__inner">
-    <div class="collection-hero__eyebrow">Commercial LED · HID Retrofit · High-Bay</div>
-    <h1 class="collection-hero__title">sign<span class="aa">Ⓐ</span>TURE</h1>
-    <p class="collection-hero__sub">Commercial-grade LED lamps engineered for the hardest retrofit jobs. One dip-switchable lamp per family. Every wattage. One SKU.</p>
-    <div class="stats-bar">
-      <div class="stat-item"><div class="stat-item__value">4</div><div class="stat-item__label">Families · 1 live</div></div>
-      <div class="stat-item"><div class="stat-item__value">7</div><div class="stat-item__label">SKUs live</div></div>
-      <div class="stat-item"><div class="stat-item__value">120–480V</div><div class="stat-item__label">Universal voltage</div></div>
-      <div class="stat-item"><div class="stat-item__value">DLC</div><div class="stat-item__label">Premium listed</div></div>
+<section class="sg-navy" style="padding:6rem 1.5rem;text-align:center;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p class="sg-eyebrow sg-eyebrow-rule" style="color:rgba(255,255,255,0.8);margin-bottom:2rem;">COMMERCIAL-GRADE LED · HID RETROFIT · HIGH-BAY</p>
+    <h1 class="sg-h1" style="font-size:clamp(2.5rem,7vw,4.5rem);color:#fff;margin-bottom:2rem;">Drop in.<br>Bypass the ballast.<br><span style="color:var(--sg-accent);">Done.</span></h1>
+    <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:40rem;margin:0 auto 2.5rem;line-height:1.7;">Commercial-grade LED for the heaviest-duty fixtures in the building — HID retrofit, A-lamps, BR floods, PAR reflectors. Seven Husk SKUs ship now. Three more families Q3 <span class="cy">2026</span>.</p>
+    <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;">
+      <div><div class="sg-stat-num" style="color:#fff;">4</div><div class="sg-stat-label" style="color:rgba(255,255,255,0.7);">Families · 1 live</div></div>
+      <div><div class="sg-stat-num" style="color:#fff;">7</div><div class="sg-stat-label" style="color:rgba(255,255,255,0.7);">SKUs live</div></div>
+      <div><div class="sg-stat-num" style="color:#fff;">120-277V</div><div class="sg-stat-label" style="color:rgba(255,255,255,0.7);">Std voltage tier (six SKUs)</div></div>
+      <div><div class="sg-stat-num" style="color:#fff;">DLC</div><div class="sg-stat-label" style="color:rgba(255,255,255,0.7);">SSL Replacement Lamp QPL</div></div>
+    </div>
+    <p class="sg-eyebrow" style="color:var(--sg-warm);letter-spacing:0.18em;margin-bottom:2rem;">▸ THE HUSK SHIPPING NOW · 3 MORE FAMILIES Q3 <span class="cy">2026</span></p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://algportal.archipelagolighting.com" class="sg-btn sg-btn-primary" target="_blank" rel="noopener">SHOP THE HUSK →</a>
+      <a href="/collections/signature/husk-hid/" class="sg-btn sg-btn-outline-light">VIEW HUSK SPEC</a>
     </div>
   </div>
 </section>
 
-<nav class="shape-filter" aria-label="Filter by lamp shape">
-  <div class="shape-filter__inner">
-    <button class="shape-tab shape-tab--active" data-filter="all">All Shapes</button>
-    <button class="shape-tab" data-filter="hid">HID Retrofit · E39<span class="shape-tab__badge">LIVE</span></button>
-    <button class="shape-tab shape-tab--coming" data-filter="a-lamp" disabled>A19/A21<span class="shape-tab__badge">Q3 2026</span></button>
-    <button class="shape-tab shape-tab--coming" data-filter="br" disabled>BR30/BR40<span class="shape-tab__badge">Q3 2026</span></button>
-    <button class="shape-tab shape-tab--coming" data-filter="par" disabled>PAR20/30/38<span class="shape-tab__badge">Q3 2026</span></button>
+<div class="sg-paper" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+  <div style="max-width:1536px;margin:0 auto;padding:1.5rem;text-align:center;font-style:italic;opacity:0.7;">
+    Built for the toughest retrofit jobs — high-bay warehouses, parking garages, gas-station canopies, and the buildings that haven't been touched since fluorescent ballasts were new.
   </div>
-</nav>
+</div>
 
-<section class="families-section">
-  <div class="families-section__inner">
-    <div class="section-eyebrow">Product families</div>
-    <h2 class="section-title">One family per shape. One SKU per wattage range.</h2>
-    <div class="families-grid">
-      <!-- Live: Husk HID Retrofit -->
-      <a href="/collections/signature/husk-hid" class="family-card" data-shape="hid">
-        <div class="family-card__visual">Husk product photography<br>Rooster Creative deliverable</div>
-        <div class="family-card__body">
-          <div class="family-card__eyebrow">HID RETROFIT · E39 MOGUL BASE</div>
-          <div class="family-card__name">The Husk</div>
-          <p class="family-card__desc">Replaces 13 legacy HID wattages (70W–400W MH/HPS) with one dip-switchable LED lamp. High-bay, area, and site lighting.</p>
-          <div class="family-card__chips">
-            <span class="chip chip--live">SHIPPING NOW</span>
-            <span class="chip">7 SKUs</span>
-            <span class="chip">120–480V</span>
-            <span class="chip">DLC PREMIUM</span>
+<div class="sg-section-nav" id="sg-section-nav">
+  <div class="sg-section-nav__inner">
+    <div class="sg-nav-tab active" data-nav-target="sec-husk">
+      <div class="sg-nav-tab-num">01</div>
+      <div class="sg-nav-tab-label">The Husk</div>
+      <div class="sg-nav-tab-dot"></div>
+    </div>
+    <div class="sg-nav-tab" data-nav-target="sec-wa">
+      <div class="sg-nav-tab-num">02</div>
+      <div class="sg-nav-tab-label">Workhorse A</div>
+      <div class="sg-nav-tab-dot"></div>
+    </div>
+    <div class="sg-nav-tab" data-nav-target="sec-br">
+      <div class="sg-nav-tab-num">03</div>
+      <div class="sg-nav-tab-label">Reflector BR</div>
+      <div class="sg-nav-tab-dot"></div>
+    </div>
+    <div class="sg-nav-tab" data-nav-target="sec-par">
+      <div class="sg-nav-tab-num">04</div>
+      <div class="sg-nav-tab-label">Spotlight PAR</div>
+      <div class="sg-nav-tab-dot"></div>
+    </div>
+  </div>
+</div>
+
+<section class="sg-family-sec sg-paper" id="sec-husk">
+  <div class="sg-family-inner">
+    <div class="sg-illust">
+      <div class="sg-illust-ph">HUSK LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="sg-copy">
+      <p class="sg-eyebrow sg-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span style="color:var(--sg-accent);">SECTION 01 ·</span> THE HUSK · HID RETROFIT · 01 / 04</p>
+      <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:2rem;">Seven SKUs replace thirteen legacy HID wattages.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;opacity:0.9;">The Husk is the E39 mogul-base lamp that retires the 50W–700W metal halide and high-pressure sodium ballast-and-arctube assemblies still running in 70% of pre-2010 commercial high-bay, parking, and area-lighting fixtures. Drop in. Bypass the ballast. Done.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;opacity:0.85;">120–480V universal voltage means one part number for the whole building portfolio. Zero ballast compatibility math. Zero contractor improvisation.</p>
+      <div class="sg-callout" style="margin-bottom:2rem;">
+        <p class="sg-callout-ey" style="margin-bottom:0.5rem;">WHAT'S INSIDE</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;">
+          <li>+ 7 SKUs · 12W to 300W input · replaces 50W to 700W legacy MH/HPS/HID</li>
+          <li>+ E39 mogul base · fits the same socket as the lamp it replaces</li>
+          <li>+ DLC Listed · cULus Listed · 120–277V driver (LCRN60120-CSHG covers 277–480V)</li>
+          <li>+ /SR sensor-ready variant for NLC stand<span class="aa">Ⓐ</span>RCH integration</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/signature/husk-hid/" class="sg-btn sg-btn-primary">VIEW HUSK SPEC</a>
+        <a href="https://algportal.archipelagolighting.com" class="sg-btn sg-btn-outline-dark" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sg-family-sec sg-navy" id="sec-wa">
+  <div class="sg-family-inner">
+    <div class="sg-copy" style="order:1;">
+      <p class="sg-eyebrow sg-eyebrow-rule" style="color:rgba(255,255,255,0.6);margin-bottom:1.5rem;"><span style="color:var(--sg-warm);">SECTION 02 ·</span> WORKHORSE A · 02 / 04</p>
+      <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#fff;margin-bottom:2rem;">A19 / A21 commercial-grade. The lamp that survives the property manager.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;color:rgba(255,255,255,0.7);">Glass envelope. Long-life driver. CRI 90+ for visual continuity across rooms. Dimmable per the building's existing wall-control protocol.</p>
+      <div class="sg-callout-dark" style="margin-bottom:2rem;">
+        <p class="sg-callout-ey sg-callout-ey-warm" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.85);">
+          <li>+ A19 / A21 form factors · 9W / 13W / 17W class</li>
+          <li>+ 2700K / 3000K / 4000K · CRI 90+ across all CCTs</li>
+          <li>+ ELV / TRIAC / 0-10V dimming variants · 25,000-hour rated</li>
+        </ul>
+      </div>
+      <a href="/collections/signature/a-lamp/" class="sg-btn sg-btn-primary">NOTIFY ME</a>
+    </div>
+    <div class="sg-illust" style="order:2;">
+      <div class="sg-illust-ph">WORKHORSE A PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<section class="sg-family-sec sg-paper2" id="sec-br">
+  <div class="sg-family-inner">
+    <div class="sg-illust sg-illust--light">
+      <div class="sg-illust-ph sg-illust-ph--light">REFLECTOR BR PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="sg-copy">
+      <p class="sg-eyebrow sg-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span style="color:var(--sg-accent);">SECTION 03 ·</span> REFLECTOR BR · 03 / 04</p>
+      <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:2rem;">BR30 / BR40 floods that don't look like consumer SKUs.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;opacity:0.9;">Reflector BR replaces the recessed-can floodlamps in commercial down-light grids. The form factor matches consumer BR floods, but the build, the binning, and the warranty are commercial.</p>
+      <div class="sg-callout" style="margin-bottom:2rem;">
+        <p class="sg-callout-ey" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;">
+          <li>+ BR30 / BR40 form factors · E26 medium base</li>
+          <li>+ 9W / 13W / 17W class · 2700K / 3000K / 4000K</li>
+          <li>+ Dimmable to 5% with most TRIAC dimmers</li>
+        </ul>
+      </div>
+      <a href="/collections/signature/br-lamp/" class="sg-btn sg-btn-primary">NOTIFY ME</a>
+    </div>
+  </div>
+</section>
+
+<section class="sg-family-sec sg-dark" id="sec-par">
+  <div class="sg-family-inner">
+    <div class="sg-copy" style="order:1;">
+      <p class="sg-eyebrow sg-eyebrow-rule" style="color:rgba(255,255,255,0.6);margin-bottom:1.5rem;"><span style="color:var(--sg-warm);">SECTION 04 ·</span> SPOTLIGHT PAR · 04 / 04</p>
+      <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#fff;margin-bottom:2rem;">PAR20 / PAR30 / PAR38. Beam control that survives the spec sheet.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;color:rgba(255,255,255,0.8);">Tight beam control, no halo, CRI 92+, full-range TRIAC dimming. The PAR LED that doesn't get returned.</p>
+      <div class="sg-callout-dark" style="margin-bottom:2rem;">
+        <p class="sg-callout-ey sg-callout-ey-warm" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.85);">
+          <li>+ PAR20 / PAR30S / PAR30L / PAR38 · E26 medium base</li>
+          <li>+ 5W / 9W / 13W / 17W class · 2700K to 4000K</li>
+          <li>+ CRI 92+ · TM-30 Rf 90+ · ELV/TRIAC dimming</li>
+        </ul>
+      </div>
+      <a href="/collections/signature/par-lamp/" class="sg-btn sg-btn-primary">NOTIFY ME</a>
+    </div>
+    <div class="sg-illust" style="order:2;">
+      <div class="sg-illust-ph">SPOTLIGHT PAR PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<section class="sg-paper2" id="hid-math" style="border-top:1px solid rgba(0,0,0,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="sg-eyebrow sg-eyebrow-rule sg-eyebrow-red" style="margin-bottom:1.5rem;">HID RETROFIT MATH · 7 SKUS RETIRE 13 LEGACY WATTAGES</p>
+    <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:56rem;margin-bottom:1rem;">Pick the legacy lamp. We'll show you the Husk.</h2>
+    <p style="opacity:0.8;max-width:48rem;margin-bottom:3rem;line-height:1.7;">Drop-in retrofit math built for spec writers and energy auditors. Each Husk SKU offers a 3-WATTselect input range.</p>
+    <div style="display:grid;grid-template-columns:5fr 7fr;gap:3rem;align-items:start;" class="sg-hid-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+          <div><div class="sg-stat-num">13 → 7</div><div class="sg-stat-label">SKUs retired → shipped</div></div>
+          <div><div class="sg-stat-num">~78%</div><div class="sg-stat-label">Avg. energy reduction</div></div>
+          <div><div class="sg-stat-num">~20 min</div><div class="sg-stat-label">Avg. rewire labor / fixture</div></div>
+          <div><div class="sg-stat-num">40+</div><div class="sg-stat-label">Fixture models proven</div></div>
+        </div>
+        <p class="sg-eyebrow" style="opacity:0.6;margin-bottom:1rem;">PROVEN AGAINST: COOPER · LITHONIA · HUBBELL · ACUITY · RAB</p>
+        <a href="/support/sample-request?subject=Husk+Fixture+Compatibility+Matrix" class="sg-btn sg-btn-primary" style="margin-top:1.5rem;">DOWNLOAD COMPATIBILITY MATRIX</a>
+      </div>
+      <div>
+        <div style="background:white;border:1px solid rgba(0,0,0,0.1);font-family:var(--sg-mono);font-size:0.7rem;">
+          <div style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.1);font-weight:700;letter-spacing:0.12em;opacity:0.7;">
+            <div>HUSK SKU</div><div>SAVINGS</div><div>LEGACY TYPE</div><div>LEGACY W</div><div>HUSK W</div>
           </div>
-          <div class="family-card__cta">View The Husk →</div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN1227-CSMG</div><div style="color:#16a34a;">~74%</div><div>CFL / MH/HPS/HID</div><div>60W / 100W</div><div>12 / 18 / 27W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN2745-CSMG</div><div style="color:#16a34a;">~70%</div><div>CFL / MH/HPS/HID</div><div>100W / 150W</div><div>27 / 36 / 45W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN3663-CSMG</div><div style="color:#16a34a;">~64%</div><div>CFL / MH/HPS/HID</div><div>120W / 175W</div><div>36 / 54 / 63W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN63100-CSMG</div><div style="color:#16a34a;">~60%</div><div>CFL / MH/HPS/HID</div><div>200W / 250W</div><div>63 / 80 / 100W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN60120-CSHG</div><div style="color:#16a34a;">~70%</div><div>CFL / MH/HPS/HID</div><div>200W / 400W</div><div>60 / 90 / 120W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>LCRN100150-CSMG</div><div style="color:#16a34a;">~63%</div><div>MH/HPS/HID</div><div>400W</div><div>100 / 120 / 150W</div></div>
+          <div class="sg-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 2fr 1fr 2fr;padding:0.75rem 1rem;"><div>LCRN200300-CSMG</div><div style="color:#16a34a;">~57%</div><div>MH/HPS/HID</div><div>700W</div><div>200 / 240 / 300W</div></div>
         </div>
-      </a>
-      <!-- Coming soon: A19/A21 -->
-      <div class="coming-card" data-shape="a-lamp">
-        <div class="coming-card__visual">Concept render<br>A19/A21 sign<span class="aa">Ⓐ</span>TURE</div>
-        <div class="coming-card__body">
-          <div class="coming-card__eyebrow">A19/A21 · E26 MEDIUM BASE</div>
-          <div class="coming-card__name">The Meridian</div>
-          <p class="coming-card__desc">Commercial A-lamp for high-lumen applications. Dip-switch selectable 12W–20W. Replaces 60W–100W incandescent and CFL equivalents.</p>
-          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
-          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
-        </div>
+        <p style="font-family:var(--sg-mono);font-size:0.65rem;letter-spacing:0.1em;opacity:0.5;margin-top:0.75rem;">SAVINGS = LEGACY NAMEPLATE MINUS HUSK INPUT WATTS · ASSUMES BALLAST BYPASS</p>
       </div>
-      <!-- Coming soon: BR30/BR40 -->
-      <div class="coming-card" data-shape="br">
-        <div class="coming-card__visual">Concept render<br>BR30/BR40 sign<span class="aa">Ⓐ</span>TURE</div>
-        <div class="coming-card__body">
-          <div class="coming-card__eyebrow">BR30/BR40 · E26 MEDIUM BASE</div>
-          <div class="coming-card__name">The Broadside</div>
-          <p class="coming-card__desc">Wide-flood BR lamp for commercial downlights and track. 10W–18W selectable. 110° beam angle. Replaces 65W–100W BR equivalents.</p>
-          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
-          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
-        </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .sg-hid-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<section class="sg-paper" id="capability">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="sg-eyebrow sg-eyebrow-rule sg-eyebrow-red" style="margin-bottom:1.5rem;">CAPABILITY PROOF</p>
+    <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:48rem;margin-bottom:3rem;">HID retrofit was the hardest commercial-lamp problem we could find. Workhorse, Reflector, and Spotlight inherit the same engineering.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="sg-cap-grid">
+      <div class="sg-card">
+        <p class="sg-card-num" style="margin-bottom:1rem;">01</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">Universal voltage · DLC QPL listed</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· One driver platform · 120-277V and 277-480V tiers · same SKU base across both</li>
+          <li style="margin-top:0.5rem;">· DLC Listed (Husk shipping); Premium target for Workhorse / Reflector / Spotlight at launch</li>
+        </ul>
       </div>
-      <!-- Coming soon: PAR -->
-      <div class="coming-card" data-shape="par">
-        <div class="coming-card__visual">Concept render<br>PAR20/30/38 sign<span class="aa">Ⓐ</span>TURE</div>
-        <div class="coming-card__body">
-          <div class="coming-card__eyebrow">PAR20/30/38 · E26 MEDIUM BASE</div>
-          <div class="coming-card__name">The Paragon</div>
-          <p class="coming-card__desc">Precision-beam PAR lamp for retail, hospitality, and accent lighting. 8W–20W selectable. 15°–40° beam options. Replaces 50W–100W PAR equivalents.</p>
-          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
-          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
-        </div>
+      <div class="sg-card">
+        <p class="sg-card-num" style="margin-bottom:1rem;">02</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">Photometric &amp; lifecycle data published</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· L70 ≥ 50,000 hours (TM-21 calculated) · IES files generated from lab samples, not derived</li>
+          <li style="margin-top:0.5rem;">· 40+ legacy fixture models tested · compatibility matrix versioned and downloadable</li>
+        </ul>
       </div>
+      <div class="sg-card">
+        <p class="sg-card-num" style="margin-bottom:1rem;">03</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">Dimming, sensors, and service that scale</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· 0-10V dimming standard · TRIAC/ELV on Workhorse and Spotlight</li>
+          <li style="margin-top:0.5rem;">· /SR sensor-ready Husk variant integrates with NLC stand<span class="aa">Ⓐ</span>RCH protocol</li>
+          <li style="margin-top:0.5rem;">· Per-fixture rewire-labor estimate published · spec response under 24 hours</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .sg-cap-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<section class="sg-paper2" style="border-top:1px solid rgba(0,0,0,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="sg-eyebrow sg-eyebrow-red" style="margin-bottom:1.5rem;">NEW &amp; EXPANDING IN <span class="cy">2026</span></p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;" class="sg-expand-grid">
+      <div><span style="color:var(--sg-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Workhorse A · A19 / A21 commercial-grade · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--sg-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Reflector BR · BR30 / BR40 commercial floods · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--sg-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Spotlight PAR · PAR20-38 spec-grade beam control · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--sg-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Husk fixture compatibility Rev 13 · adds 30+ models · Q3 <span class="cy">2026</span></span></div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .sg-expand-grid { grid-template-columns: 1fr 1fr !important; } }
+  @media (max-width: 600px) { .sg-expand-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<section class="sg-dark">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:#fff;">
+    <h2 class="sg-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Ready to spec the retrofit?</h2>
+    <p style="opacity:0.8;max-width:40rem;margin:0 auto 2rem;line-height:1.7;">Layouts in under 48 hours. Samples shipped from US warehouses. Spec writers who answer their email by end of business.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/layout-request" class="sg-btn sg-btn-primary">REQUEST LAYOUT</a>
+      <a href="/support/sample-request" class="sg-btn sg-btn-outline-light">REQUEST SAMPLE</a>
     </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="cta-band__inner">
-    <h2 class="cta-band__title">Ready to spec sign<span class="aa">Ⓐ</span>TURE?</h2>
-    <p class="cta-band__sub">The Husk ships now. Get a quote or request a sample for your retrofit project.</p>
-    <div class="cta-band__row">
-      <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
-      <a href="/collections/signature/husk-hid" class="btn btn--outline">View The Husk →</a>
-    </div>
-  </div>
-</section>
+<CollectionAnchorNav sections={anchorSections} />
 
 <script>
-  const tabs = document.querySelectorAll('.shape-tab:not([disabled])');
-  const cards = document.querySelectorAll('[data-shape]');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('shape-tab--active'));
-      tab.classList.add('shape-tab--active');
-      const filter = tab.dataset.filter;
-      cards.forEach(card => {
-        card.style.display = (filter === 'all' || card.dataset.shape === filter) ? '' : 'none';
+  (function () {
+    var tabs = document.querySelectorAll('.sg-nav-tab[data-nav-target]');
+    var sectionIds = ['sec-husk','sec-wa','sec-br','sec-par'];
+    var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+    function setActive(id: string) {
+      tabs.forEach(function(tab) {
+        var t = tab as HTMLElement;
+        t.classList.toggle('active', t.dataset.navTarget === id);
+      });
+    }
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var t = tab as HTMLElement;
+        var target = t.dataset.navTarget;
+        if (target) {
+          var el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.3, rootMargin: '-10% 0% -50% 0%' });
+    sections.forEach(function(s) { if (s) observer.observe(s); });
+  })();
+  document.querySelectorAll('.cy').forEach(function(e) {
+    (e as HTMLElement).textContent = String(new Date().getFullYear());
   });
 </script>
 </BaseLayout>
