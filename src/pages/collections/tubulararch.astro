@@ -1,5 +1,371 @@
 ---
-import LampCollectionPageLayout from '../../layouts/LampCollectionPageLayout.astro';
-import data from '../../data/lamps/tubulararch';
+/**
+ * tubulⒶRCH Collection Index
+ * v2.7.8 — full engineering collection index page
+ * Route: /collections/tubulararch
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<LampCollectionPageLayout collection={data} />
+<BaseLayout
+  title="tubulⒶRCH — Linear LED Retrofit Lamps | Archipelago Lighting Group"
+  description="Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, U-bend. UL-certified, DLC-listed, structured spec data and verified compatibility."
+  bodyClass="page-tubulararch-collection"
+>
+<style>
+  .page-tubulararch-collection {
+    --accent: #F32740;
+    --accent-dark: #C41E32;
+    --fg: #111111;
+    --fg-muted: #6B6B6B;
+    --bg: #ffffff;
+    --bg-alt: #f4f4f6;
+    --border: #E5E5E5;
+    --font-mono: 'Courier New', Courier, monospace;
+    --inner: min(1280px, 100% - 64px);
+  }
+  .section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--fg); margin: 0 0 12px; line-height: 1.2; }
+  .section-sub { font-size: 16px; color: var(--fg-muted); max-width: 640px; margin: 0 0 40px; line-height: 1.6; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s; }
+  .btn--primary { background: var(--accent); color: #fff; }
+  .btn--primary:hover { background: var(--accent-dark); }
+  .btn--outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
+  .btn--outline:hover { border-color: var(--fg); }
+  /* Hero */
+  .collection-hero { background: #111; color: #fff; padding: 80px 0 64px; text-align: center; }
+  .collection-hero__inner { width: var(--inner); margin: 0 auto; }
+  .collection-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F32740; margin-bottom: 16px; }
+  .collection-name { font-size: clamp(48px, 8vw, 96px); font-weight: 900; letter-spacing: -0.02em; margin: 0 0 20px; line-height: 1; color: #fff; }
+  .collection-name .aa { color: #F32740; }
+  .collection-tagline { font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.75); max-width: 640px; margin: 0 auto 40px; line-height: 1.6; }
+  .collection-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .collection-stat__value { font-size: 36px; font-weight: 800; color: #fff; line-height: 1; }
+  .collection-stat__label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .collection-hero .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
+  .collection-hero .btn--outline:hover { border-color: #fff; }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  /* Install filter */
+  .install-filter { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+  .install-filter__inner { width: var(--inner); margin: 0 auto; display: flex; align-items: center; gap: 8px; padding: 12px 0; flex-wrap: wrap; }
+  .install-filter__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--fg-muted); white-space: nowrap; margin-right: 4px; }
+  .install-filter__chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .install-chip { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1.5px solid var(--border); background: #fff; color: var(--fg-muted); cursor: pointer; transition: all 0.15s; }
+  .install-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .install-chip--active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .install-chip__count { display: inline-block; background: rgba(0,0,0,0.12); border-radius: 10px; padding: 1px 6px; font-size: 10px; margin-left: 4px; }
+  .install-chip--active .install-chip__count { background: rgba(255,255,255,0.25); }
+  .install-filter__help { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.06em; }
+  .install-filter__help a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  /* Families grid */
+  .families-section { padding: 64px 0; background: var(--bg); }
+  .families-section__inner { width: var(--inner); margin: 0 auto; }
+  .families-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+  .family-card { display: block; text-decoration: none; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; transition: box-shadow 0.15s, border-color 0.15s; }
+  .family-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
+  .family-card__visual { background: #1a1a1a; height: 180px; position: relative; display: flex; align-items: flex-end; padding: 12px; }
+  .family-card__visual-placeholder { color: rgba(255,255,255,0.3); font-size: 12px; text-align: center; width: 100%; }
+  .family-card__install-tag { position: absolute; top: 12px; left: 12px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 3px; font-weight: 700; }
+  .tag--ab { background: #F32740; color: #fff; }
+  .tag--a { background: #2E7D32; color: #fff; }
+  .tag--b { background: #1565C0; color: #fff; }
+  .family-card__body { padding: 20px; }
+  .family-card__name { font-size: 20px; font-weight: 700; color: var(--fg); margin: 0 0 6px; }
+  .family-card__tagline { font-size: 13px; color: var(--fg-muted); margin: 0 0 16px; line-height: 1.5; }
+  .family-card__meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; background: var(--bg-alt); color: var(--fg-muted); letter-spacing: 0.06em; }
+  .chip--watt { background: #FFF3E0; color: #E65100; }
+  .chip--sku { background: #E8F5E9; color: #2E7D32; }
+  .family-card__cta { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 12px; }
+  /* Replace section */
+  .replace-section { padding: 64px 0; background: var(--bg-alt); }
+  .replace-section__inner { width: var(--inner); margin: 0 auto; }
+  .replace-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
+  .replace-card { display: block; text-decoration: none; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; transition: border-color 0.15s; }
+  .replace-card:hover { border-color: var(--accent); }
+  .replace-card__legacy { font-size: 22px; font-weight: 800; color: var(--fg); font-family: var(--font-mono); }
+  .replace-card__legacy-sub { font-size: 11px; color: var(--fg-muted); margin-top: 2px; }
+  .replace-card__arrow { font-size: 20px; color: var(--accent); margin: 10px 0; }
+  .replace-card__alg { font-size: 14px; font-weight: 700; color: var(--fg); }
+  .replace-card__alg-sub { font-size: 11px; color: var(--fg-muted); margin-top: 2px; font-family: var(--font-mono); }
+  /* Applications */
+  .applications-section { padding: 64px 0; background: #fff; }
+  .applications-section__inner { width: var(--inner); margin: 0 auto; }
+  .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 32px; }
+  .app-tile { display: block; text-decoration: none; background: var(--bg-alt); border-radius: 8px; padding: 20px 16px; text-align: center; font-size: 13px; font-weight: 600; color: var(--fg); transition: background 0.15s; }
+  .app-tile:hover { background: #e8e8ea; }
+  .app-tile__icon { font-size: 24px; margin-bottom: 8px; }
+  /* Compat hub */
+  .compat-hub { padding: 64px 0; background: var(--bg-alt); }
+  .compat-hub__inner { width: var(--inner); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 768px) { .compat-hub__inner { grid-template-columns: 1fr; } }
+  .compat-hub__list { list-style: none; padding: 0; margin: 0 0 24px; }
+  .compat-hub__list-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--fg); }
+  .compat-hub__visual { background: #1a1a1a; border-radius: 8px; height: 200px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center; }
+  /* Education */
+  .education-section { padding: 64px 0; background: #fff; }
+  .education-section__inner { width: var(--inner); margin: 0 auto; }
+  .education-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+  .edu-card { display: block; text-decoration: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 28px; transition: border-color 0.15s; }
+  .edu-card:hover { border-color: var(--accent); }
+  .edu-card__num { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 12px; }
+  .edu-card__title { font-size: 17px; font-weight: 700; color: var(--fg); margin: 0 0 10px; }
+  .edu-card__body { font-size: 14px; color: var(--fg-muted); line-height: 1.6; margin: 0 0 16px; }
+  .edu-card__cta { font-size: 13px; font-weight: 600; color: var(--accent); }
+  /* Cross-collection */
+  .cross-section { padding: 64px 0; background: var(--bg-alt); }
+  .cross-section__inner { width: var(--inner); margin: 0 auto; }
+  .cross-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+  .cross-card { display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.15s; }
+  .cross-card:hover { border-color: var(--accent); }
+  .cross-card__name { font-size: 20px; font-weight: 700; color: var(--fg); margin-bottom: 4px; }
+  .cross-card__name .aa { color: var(--accent); }
+  .cross-card__sub { font-size: 13px; color: var(--fg-muted); }
+  .cross-card__meta { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 12px; font-family: var(--font-mono); color: var(--fg-muted); letter-spacing: 0.06em; }
+  .cross-card__arrow { color: var(--accent); font-size: 16px; }
+  /* CTA band */
+  .cta-band { padding: 64px 0; background: #111; text-align: center; color: #fff; }
+  .cta-band__inner { width: var(--inner); margin: 0 auto; }
+  .cta-band__title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 12px; }
+  .cta-band__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 32px; }
+  .cta-band__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-band .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
+  .cta-band .btn--outline:hover { border-color: #fff; }
+</style>
+
+<section class="collection-hero">
+  <div class="collection-hero__inner">
+    <div class="collection-eyebrow">Linear LED retrofit lamps</div>
+    <h1 class="collection-name">tubul<span class="aa">Ⓐ</span>RCH</h1>
+    <p class="collection-tagline">Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, and U-bend. All UL-certified, DLC-listed, with structured spec data and verified compatibility.</p>
+    <div class="collection-stats">
+      <div class="collection-stat"><div class="collection-stat__value">5</div><div class="collection-stat__label">Families</div></div>
+      <div class="collection-stat"><div class="collection-stat__value">147</div><div class="collection-stat__label">SKUs</div></div>
+      <div class="collection-stat"><div class="collection-stat__value">200+</div><div class="collection-stat__label">Ballasts proven</div></div>
+      <div class="collection-stat"><div class="collection-stat__value">DLC</div><div class="collection-stat__label">Premium / Standard</div></div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#families" class="btn btn--primary">Browse families</a>
+      <a href="#find-by-replacing" class="btn btn--outline">Find by what you're replacing</a>
+    </div>
+  </div>
+</section>
+
+<section class="install-filter">
+  <div class="install-filter__inner">
+    <span class="install-filter__label">Filter by install type</span>
+    <div class="install-filter__chips">
+      <button class="install-chip install-chip--active">All families <span class="install-chip__count">5</span></button>
+      <button class="install-chip">UL Type A · Plug-and-play <span class="install-chip__count">3</span></button>
+      <button class="install-chip">UL Type B · Ballast bypass <span class="install-chip__count">2</span></button>
+      <button class="install-chip">UL Type A+B · Hybrid <span class="install-chip__count">2</span></button>
+    </div>
+    <span class="install-filter__help">Don't know which type? <a href="#education">Learn the difference →</a></span>
+  </div>
+</section>
+
+<section class="families-section" id="families">
+  <div class="families-section__inner">
+    <div class="section-eyebrow">Families in this collection</div>
+    <h2 class="section-title">Five families. One taxonomy. Pick the form factor that matches your fixture.</h2>
+    <p class="section-sub">Each family is form-factor-specific and includes verified ballast or wiring compatibility, structured spec data, and downloadable IES files.</p>
+    <div class="families-grid">
+      <a href="/collections/tubulararch/t8" class="family-card">
+        <div class="family-card__visual">
+          <span class="family-card__install-tag tag--ab">UL TYPE A+B HYBRID</span>
+          <div class="family-card__visual-placeholder">T8 photography · Rooster Creative</div>
+        </div>
+        <div class="family-card__body">
+          <div class="family-card__name">The Workshop T8</div>
+          <p class="family-card__tagline">25 fluorescent SKUs replaced by one dip-switchable lamp. 4FT linear, G13 bipin.</p>
+          <div class="family-card__meta">
+            <span class="chip chip--watt">10.5–18W</span>
+            <span class="chip chip--sku">100 SKUs</span>
+            <span class="chip">DLC Premium</span>
+          </div>
+          <div class="family-card__cta">Explore The Workshop T8 →</div>
+        </div>
+      </a>
+      <a href="/collections/tubulararch/t5" class="family-card">
+        <div class="family-card__visual">
+          <span class="family-card__install-tag tag--b">UL TYPE B BYPASS</span>
+          <div class="family-card__visual-placeholder">T5 photography · Rooster Creative</div>
+        </div>
+        <div class="family-card__body">
+          <div class="family-card__name">The Slim T5</div>
+          <p class="family-card__tagline">High-output T5 replacement. 2FT and 4FT. Direct-wire bypass for long-term reliability.</p>
+          <div class="family-card__meta">
+            <span class="chip chip--watt">Up to 25W</span>
+            <span class="chip chip--sku">33 SKUs</span>
+          </div>
+          <div class="family-card__cta">Explore The Slim T5 →</div>
+        </div>
+      </a>
+      <a href="/collections/tubulararch/pl" class="family-card">
+        <div class="family-card__visual">
+          <span class="family-card__install-tag tag--a">UL TYPE A PLUG-AND-PLAY</span>
+          <div class="family-card__visual-placeholder">PL photography · Rooster Creative</div>
+        </div>
+        <div class="family-card__body">
+          <div class="family-card__name">The Compact PL</div>
+          <p class="family-card__tagline">G24 quad biax replacement. Plug-and-play into existing ballast. Downlight and wall-pack applications.</p>
+          <div class="family-card__meta">
+            <span class="chip chip--watt">Up to 9W</span>
+            <span class="chip chip--sku">6 SKUs</span>
+          </div>
+          <div class="family-card__cta">Explore The Compact PL →</div>
+        </div>
+      </a>
+      <a href="/collections/tubulararch/pll" class="family-card">
+        <div class="family-card__visual">
+          <span class="family-card__install-tag tag--a">UL TYPE A PLUG-AND-PLAY</span>
+          <div class="family-card__visual-placeholder">PLL photography · Rooster Creative</div>
+        </div>
+        <div class="family-card__body">
+          <div class="family-card__name">The Long-Pin PLL</div>
+          <p class="family-card__tagline">2G11 long-pin biax replacement. Plug-and-play. Common in architectural recessed fixtures.</p>
+          <div class="family-card__meta">
+            <span class="chip chip--watt">Up to 19W</span>
+            <span class="chip chip--sku">3 SKUs</span>
+          </div>
+          <div class="family-card__cta">Explore The Long-Pin PLL →</div>
+        </div>
+      </a>
+      <a href="/collections/tubulararch/u6" class="family-card">
+        <div class="family-card__visual">
+          <span class="family-card__install-tag tag--ab">UL TYPE A+B HYBRID</span>
+          <div class="family-card__visual-placeholder">U6 photography · Rooster Creative</div>
+        </div>
+        <div class="family-card__body">
+          <div class="family-card__name">The U-Bend U6</div>
+          <p class="family-card__tagline">FB32T8 / U-bend T8 troffer replacement. A+B hybrid for maximum install flexibility.</p>
+          <div class="family-card__meta">
+            <span class="chip chip--watt">Up to 15W</span>
+            <span class="chip chip--sku">5 SKUs</span>
+          </div>
+          <div class="family-card__cta">Explore The U-Bend U6 →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="replace-section" id="find-by-replacing">
+  <div class="replace-section__inner">
+    <div class="section-eyebrow">Quick-find</div>
+    <h2 class="section-title">Tell us what you're replacing.</h2>
+    <p class="section-sub">Route directly to the matching tubul<span class="aa">Ⓐ</span>RCH family by legacy fluorescent SKU.</p>
+    <div class="replace-grid">
+      <a href="/collections/tubulararch/t8" class="replace-card"><div class="replace-card__legacy">F32T8</div><div class="replace-card__legacy-sub">4ft fluorescent</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Workshop T8</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
+      <a href="/collections/tubulararch/t8" class="replace-card"><div class="replace-card__legacy">F25T8</div><div class="replace-card__legacy-sub">3ft fluorescent</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Workshop T8</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
+      <a href="/collections/tubulararch/t5" class="replace-card"><div class="replace-card__legacy">F28T5</div><div class="replace-card__legacy-sub">High-output T5</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Slim T5</div><div class="replace-card__alg-sub">Type B Bypass</div></a>
+      <a href="/collections/tubulararch/u6" class="replace-card"><div class="replace-card__legacy">FB32T8</div><div class="replace-card__legacy-sub">U-bend T8 troffer</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The U-Bend U6</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
+      <a href="/collections/tubulararch/pl" class="replace-card"><div class="replace-card__legacy">CFQ26W</div><div class="replace-card__legacy-sub">G24 quad biax</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Compact PL</div><div class="replace-card__alg-sub">Type A Plug-and-play</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="applications-section">
+  <div class="applications-section__inner">
+    <div class="section-eyebrow">Where tubul<span class="aa">Ⓐ</span>RCH is specified</div>
+    <h2 class="section-title">Used across every commercial vertical.</h2>
+    <div class="apps-grid">
+      <a href="#" class="app-tile"><div class="app-tile__icon">🏢</div>Office</a>
+      <a href="#" class="app-tile"><div class="app-tile__icon">🏭</div>Warehouse</a>
+      <a href="#" class="app-tile"><div class="app-tile__icon">🛍️</div>Retail</a>
+      <a href="#" class="app-tile"><div class="app-tile__icon">🏥</div>Healthcare</a>
+      <a href="#" class="app-tile"><div class="app-tile__icon">🎓</div>Education</a>
+      <a href="#" class="app-tile"><div class="app-tile__icon">🅿️</div>Parking</a>
+    </div>
+  </div>
+</section>
+
+<section class="compat-hub">
+  <div class="compat-hub__inner">
+    <div>
+      <div class="section-eyebrow">Ballast compatibility</div>
+      <h2 class="section-title">200+ ballasts. Tested. Documented.</h2>
+      <p class="section-sub">Every tubul<span class="aa">Ⓐ</span>RCH family ships with a verified ballast compatibility list. Search by ballast model number, manufacturer, or install type.</p>
+      <ul class="compat-hub__list">
+        <li class="compat-hub__list-item"><strong>Instant-start electronic</strong> — most common, highest compatibility</li>
+        <li class="compat-hub__list-item"><strong>Programmed-start electronic</strong> — reduced list; occupancy-sensor spaces</li>
+        <li class="compat-hub__list-item"><strong>Rapid-start electronic</strong> — pre-2005 fixtures; Type B recommended</li>
+        <li class="compat-hub__list-item"><strong>Magnetic ballast</strong> — Type B bypass required</li>
+        <li class="compat-hub__list-item"><strong>P.E. sign-off</strong> per release</li>
+      </ul>
+      <a href="#" class="btn btn--primary">Open Compatibility Hub →</a>
+    </div>
+    <div class="compat-hub__visual">Compatibility Hub preview<br>(deferred to launch)</div>
+  </div>
+</section>
+
+<section class="education-section" id="education">
+  <div class="education-section__inner">
+    <div class="section-eyebrow">Learn the category</div>
+    <h2 class="section-title">Three things every retrofit buyer should know.</h2>
+    <p class="section-sub">LED tube retrofit is more nuanced than "screw in a new bulb." These guides cover the questions we hear most often.</p>
+    <div class="education-grid">
+      <a href="#" class="edu-card">
+        <div class="edu-card__num">01</div>
+        <h3 class="edu-card__title">UL Type A vs Type B vs Type A+B</h3>
+        <p class="edu-card__body">Type A keeps the existing ballast. Type B bypasses it. Type A+B does either. Each has trade-offs in install labor, long-term maintenance, and compatibility risk.</p>
+        <div class="edu-card__cta">Read the guide →</div>
+      </a>
+      <a href="#" class="edu-card">
+        <div class="edu-card__num">02</div>
+        <h3 class="edu-card__title">How to read a ballast compatibility list</h3>
+        <p class="edu-card__body">What does ✓ vs blank mean? When is "compatible" actually "marginal"? Why ballast age and silent revisions matter. How to interpret our matrix legend.</p>
+        <div class="edu-card__cta">Read the guide →</div>
+      </a>
+      <a href="#" class="edu-card">
+        <div class="edu-card__num">03</div>
+        <h3 class="edu-card__title">When to retrofit vs replace the fixture</h3>
+        <p class="edu-card__body">Retrofit lamps are fast and cheap. New fixtures give better photometric performance and longer warranties. Includes a 5-question decision framework.</p>
+        <div class="edu-card__cta">Read the guide →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cross-section">
+  <div class="cross-section__inner">
+    <div class="section-eyebrow">More from Lamps</div>
+    <h2 class="section-title">Other lamp collections.</h2>
+    <div class="cross-grid">
+      <a href="/collections/signature" class="cross-card">
+        <div><div class="cross-card__name">sign<span class="aa">Ⓐ</span>TURE</div><div class="cross-card__sub">Utility lamps · HID retrofits · A · BR · PAR</div></div>
+        <div class="cross-card__meta"><span>1 LIVE · 3 COMING SOON</span><span class="cross-card__arrow">→</span></div>
+      </a>
+      <a href="/collections/vintage-decor" class="cross-card">
+        <div><div class="cross-card__name">Vintage Décor</div><div class="cross-card__sub">Old-world filament · Brass + amber glass</div></div>
+        <div class="cross-card__meta"><span>6 FAMILIES</span><span class="cross-card__arrow">→</span></div>
+      </a>
+      <a href="/collections/nostalgic-decor" class="cross-card">
+        <div><div class="cross-card__name">Nostalgic Décor</div><div class="cross-card__sub">Mid-century modern · Warm amber filament</div></div>
+        <div class="cross-card__meta"><span>7 FAMILIES</span><span class="cross-card__arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-band__inner">
+    <h2 class="cta-band__title">Specify the right tube.</h2>
+    <p class="cta-band__sub">Quotes in 24 hours. Pilot install kits ship same day for retrofits ≥50 fixtures.</p>
+    <div class="cta-band__row">
+      <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
+      <a href="#" class="btn btn--outline">Request Sample</a>
+      <a href="#" class="btn btn--outline">Find a Distributor</a>
+      <a href="#" class="btn btn--outline">Find a Rep</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.install-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.install-chip').forEach(c => c.classList.remove('install-chip--active'));
+      chip.classList.add('install-chip--active');
+    });
+  });
+</script>
+</BaseLayout>

@@ -1,0 +1,208 @@
+---
+/**
+ * signⒶTURE Collection Index Page
+ * v2.7.8 — shape-filter tab bar, coming-soon cards, stats bar
+ * Route: /collections/signature
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="signⒶTURE — HID Retrofit &amp; Commercial LED | Archipelago Lighting Group"
+  description="The Husk HID retrofit lamp ships now. One dip-switchable lamp replaces 13 legacy HID wattages. E39 mogul base. 120–480V universal. DLC Premium."
+  bodyClass="page-signature-collection"
+>
+<style>
+  .page-signature-collection {
+    --accent: #F32740;
+    --accent-dark: #C41E32;
+    --fg: #111111;
+    --fg-muted: #6B6B6B;
+    --bg: #ffffff;
+    --bg-alt: #f4f4f6;
+    --border: #E5E5E5;
+    --font-mono: 'Courier New', Courier, monospace;
+    --inner: min(1280px, 100% - 64px);
+  }
+  .section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--fg); margin: 0 0 12px; line-height: 1.2; }
+  .section-sub { font-size: 16px; color: var(--fg-muted); max-width: 640px; margin: 0 0 32px; line-height: 1.6; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s; }
+  .btn--primary { background: var(--accent); color: #fff; }
+  .btn--primary:hover { background: var(--accent-dark); }
+  .btn--outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
+  .btn--outline:hover { border-color: var(--fg); }
+  /* Breadcrumb */
+  .breadcrumb { background: #fff; border-bottom: 1px solid var(--border); padding: 12px 0; }
+  .breadcrumb__inner { width: var(--inner); margin: 0 auto; font-size: 12px; color: var(--fg-muted); font-family: var(--font-mono); }
+  .breadcrumb a { color: var(--fg-muted); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb__sep { margin: 0 8px; }
+  /* Hero */
+  .collection-hero { background: #111; color: #fff; padding: 80px 0 64px; }
+  .collection-hero__inner { width: var(--inner); margin: 0 auto; }
+  .collection-hero__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F32740; margin-bottom: 16px; }
+  .collection-hero__title { font-size: clamp(40px, 6vw, 72px); font-weight: 900; margin: 0 0 16px; line-height: 1.0; }
+  .collection-hero__sub { font-size: 18px; color: rgba(255,255,255,0.65); max-width: 640px; margin: 0 0 40px; line-height: 1.6; }
+  .stats-bar { display: flex; gap: 40px; flex-wrap: wrap; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .stat-item__value { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
+  .stat-item__label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  /* Shape filter */
+  .shape-filter { background: #fff; border-bottom: 1px solid var(--border); padding: 0; position: sticky; top: 0; z-index: 10; }
+  .shape-filter__inner { width: var(--inner); margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+  .shape-tab { padding: 16px 20px; font-size: 13px; font-weight: 600; color: var(--fg-muted); cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+  .shape-tab:hover { color: var(--fg); }
+  .shape-tab--active { color: var(--accent); border-bottom-color: var(--accent); }
+  .shape-tab--coming { color: var(--fg-muted); border-bottom-style: dashed; }
+  .shape-tab--coming:hover { color: var(--fg-muted); cursor: default; }
+  .shape-tab__badge { font-size: 9px; font-family: var(--font-mono); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 3px; padding: 2px 5px; margin-left: 6px; color: var(--fg-muted); }
+  /* Families grid */
+  .families-section { padding: 64px 0; background: var(--bg-alt); }
+  .families-section__inner { width: var(--inner); margin: 0 auto; }
+  .families-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-top: 32px; }
+  /* Live family card */
+  .family-card { background: #fff; border-radius: 12px; border: 1.5px solid var(--border); overflow: hidden; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; }
+  .family-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(243,39,64,0.08); }
+  .family-card__visual { height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: var(--fg-muted); font-size: 12px; text-align: center; border-bottom: 1px solid var(--border); }
+  .family-card__body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .family-card__eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .family-card__name { font-size: 20px; font-weight: 800; color: var(--fg); margin: 0 0 6px; }
+  .family-card__desc { font-size: 13px; color: var(--fg-muted); line-height: 1.5; margin: 0 0 16px; flex: 1; }
+  .family-card__chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .chip { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; border: 1px solid var(--border); color: var(--fg-muted); }
+  .chip--live { background: #E8F5E9; border-color: #A5D6A7; color: #2E7D32; }
+  .family-card__cta { font-size: 13px; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 4px; }
+  /* Coming-soon card */
+  .coming-card { background: #fff; border-radius: 12px; border: 1.5px dashed var(--border); overflow: hidden; display: flex; flex-direction: column; }
+  .coming-card__visual { height: 200px; background: repeating-linear-gradient(45deg, #f8f8f8, #f8f8f8 10px, #f0f0f0 10px, #f0f0f0 20px); display: flex; align-items: center; justify-content: center; color: var(--fg-muted); font-size: 12px; text-align: center; border-bottom: 1px dashed var(--border); }
+  .coming-card__body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .coming-card__eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--fg-muted); margin-bottom: 6px; }
+  .coming-card__name { font-size: 20px; font-weight: 800; color: var(--fg-muted); margin: 0 0 6px; }
+  .coming-card__desc { font-size: 13px; color: var(--fg-muted); line-height: 1.5; margin: 0 0 16px; flex: 1; }
+  .coming-card__timeline { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); background: var(--bg-alt); border-radius: 4px; padding: 6px 10px; margin-bottom: 12px; }
+  .coming-card__notify { font-size: 13px; color: var(--fg-muted); text-decoration: none; display: flex; align-items: center; gap: 4px; }
+  .coming-card__notify:hover { color: var(--accent); }
+  /* CTA band */
+  .cta-band { padding: 64px 0; background: #111; text-align: center; color: #fff; }
+  .cta-band__inner { width: var(--inner); margin: 0 auto; }
+  .cta-band__title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 12px; }
+  .cta-band__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 32px; }
+  .cta-band__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-band .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
+  .cta-band .btn--outline:hover { border-color: #fff; }
+</style>
+
+<nav class="breadcrumb">
+  <div class="breadcrumb__inner">
+    <a href="/">Home</a><span class="breadcrumb__sep">/</span>
+    <span>sign<span class="aa">Ⓐ</span>TURE</span>
+  </div>
+</nav>
+
+<section class="collection-hero">
+  <div class="collection-hero__inner">
+    <div class="collection-hero__eyebrow">Commercial LED · HID Retrofit · High-Bay</div>
+    <h1 class="collection-hero__title">sign<span class="aa">Ⓐ</span>TURE</h1>
+    <p class="collection-hero__sub">Commercial-grade LED lamps engineered for the hardest retrofit jobs. One dip-switchable lamp per family. Every wattage. One SKU.</p>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-item__value">4</div><div class="stat-item__label">Families · 1 live</div></div>
+      <div class="stat-item"><div class="stat-item__value">7</div><div class="stat-item__label">SKUs live</div></div>
+      <div class="stat-item"><div class="stat-item__value">120–480V</div><div class="stat-item__label">Universal voltage</div></div>
+      <div class="stat-item"><div class="stat-item__value">DLC</div><div class="stat-item__label">Premium listed</div></div>
+    </div>
+  </div>
+</section>
+
+<nav class="shape-filter" aria-label="Filter by lamp shape">
+  <div class="shape-filter__inner">
+    <button class="shape-tab shape-tab--active" data-filter="all">All Shapes</button>
+    <button class="shape-tab" data-filter="hid">HID Retrofit · E39<span class="shape-tab__badge">LIVE</span></button>
+    <button class="shape-tab shape-tab--coming" data-filter="a-lamp" disabled>A19/A21<span class="shape-tab__badge">Q3 2026</span></button>
+    <button class="shape-tab shape-tab--coming" data-filter="br" disabled>BR30/BR40<span class="shape-tab__badge">Q3 2026</span></button>
+    <button class="shape-tab shape-tab--coming" data-filter="par" disabled>PAR20/30/38<span class="shape-tab__badge">Q3 2026</span></button>
+  </div>
+</nav>
+
+<section class="families-section">
+  <div class="families-section__inner">
+    <div class="section-eyebrow">Product families</div>
+    <h2 class="section-title">One family per shape. One SKU per wattage range.</h2>
+    <div class="families-grid">
+      <!-- Live: Husk HID Retrofit -->
+      <a href="/collections/signature/husk-hid" class="family-card" data-shape="hid">
+        <div class="family-card__visual">Husk product photography<br>Rooster Creative deliverable</div>
+        <div class="family-card__body">
+          <div class="family-card__eyebrow">HID RETROFIT · E39 MOGUL BASE</div>
+          <div class="family-card__name">The Husk</div>
+          <p class="family-card__desc">Replaces 13 legacy HID wattages (70W–400W MH/HPS) with one dip-switchable LED lamp. High-bay, area, and site lighting.</p>
+          <div class="family-card__chips">
+            <span class="chip chip--live">SHIPPING NOW</span>
+            <span class="chip">7 SKUs</span>
+            <span class="chip">120–480V</span>
+            <span class="chip">DLC PREMIUM</span>
+          </div>
+          <div class="family-card__cta">View The Husk →</div>
+        </div>
+      </a>
+      <!-- Coming soon: A19/A21 -->
+      <div class="coming-card" data-shape="a-lamp">
+        <div class="coming-card__visual">Concept render<br>A19/A21 sign<span class="aa">Ⓐ</span>TURE</div>
+        <div class="coming-card__body">
+          <div class="coming-card__eyebrow">A19/A21 · E26 MEDIUM BASE</div>
+          <div class="coming-card__name">The Meridian</div>
+          <p class="coming-card__desc">Commercial A-lamp for high-lumen applications. Dip-switch selectable 12W–20W. Replaces 60W–100W incandescent and CFL equivalents.</p>
+          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
+          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
+        </div>
+      </div>
+      <!-- Coming soon: BR30/BR40 -->
+      <div class="coming-card" data-shape="br">
+        <div class="coming-card__visual">Concept render<br>BR30/BR40 sign<span class="aa">Ⓐ</span>TURE</div>
+        <div class="coming-card__body">
+          <div class="coming-card__eyebrow">BR30/BR40 · E26 MEDIUM BASE</div>
+          <div class="coming-card__name">The Broadside</div>
+          <p class="coming-card__desc">Wide-flood BR lamp for commercial downlights and track. 10W–18W selectable. 110° beam angle. Replaces 65W–100W BR equivalents.</p>
+          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
+          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
+        </div>
+      </div>
+      <!-- Coming soon: PAR -->
+      <div class="coming-card" data-shape="par">
+        <div class="coming-card__visual">Concept render<br>PAR20/30/38 sign<span class="aa">Ⓐ</span>TURE</div>
+        <div class="coming-card__body">
+          <div class="coming-card__eyebrow">PAR20/30/38 · E26 MEDIUM BASE</div>
+          <div class="coming-card__name">The Paragon</div>
+          <p class="coming-card__desc">Precision-beam PAR lamp for retail, hospitality, and accent lighting. 8W–20W selectable. 15°–40° beam options. Replaces 50W–100W PAR equivalents.</p>
+          <div class="coming-card__timeline">Estimated shipping: Q3 2026</div>
+          <a href="/aura" class="coming-card__notify">→ Notify me when shipping</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-band__inner">
+    <h2 class="cta-band__title">Ready to spec sign<span class="aa">Ⓐ</span>TURE?</h2>
+    <p class="cta-band__sub">The Husk ships now. Get a quote or request a sample for your retrofit project.</p>
+    <div class="cta-band__row">
+      <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
+      <a href="/collections/signature/husk-hid" class="btn btn--outline">View The Husk →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.shape-tab:not([disabled])');
+  const cards = document.querySelectorAll('[data-shape]');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('shape-tab--active'));
+      tab.classList.add('shape-tab--active');
+      const filter = tab.dataset.filter;
+      cards.forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.shape === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</BaseLayout>
