@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "cf-build": "PUBLIC_BUILD_HASH=${CF_PAGES_COMMIT_SHA:-dev} PUBLIC_BUILD_TIME=${CF_PAGES_BUILD_DATE:-local} astro build",
     "preview": "astro preview",
     "astro": "astro",
     "verify": "node scripts/verify.mjs"

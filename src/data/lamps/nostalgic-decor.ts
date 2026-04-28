@@ -94,8 +94,8 @@ const nostalgicDecorData = {
       status: 'live' as const,
     },
     {
-      slug: 'utility-signature',
-      name: 'Utility sign<span class="aa">Ⓐ</span>TURE',
+      slug: 'signature',
+      name: 'sign<span class="aa">Ⓐ</span>TURE',
       vertical: 'Lamps',
       description: 'Utility LED lamps for everyday replacement: A-lamps, BR floods, PAR reflectors.',
       status: 'live' as const,

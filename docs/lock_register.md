@@ -159,3 +159,58 @@ Acknowledged by: Manus (iter/v2.7.8-engineering-pages)
 | Group H | `scripts/verify.mjs` | Added `tubulararch` and `signature` to `BESPOKE_PAGES` exemption set — engineering pages use BaseLayout, not canonical 5-line CollectionPageLayout |
 | Group M | `scripts/verify.mjs` | Removed `tubulararch` from lamp theme CSS var check — engineering page, not LampCollectionPageLayout |
 | Group N | `scripts/verify.mjs` | Removed `tubulararch` from `LAMP_SLUGS` — engineering page, not LampCollectionPageLayout; updated pass message to 3 pages |
+
+## v2.7.x — Foundation fixes (2026-04-28)
+
+Acknowledged by: Manus (iter/v2.7.x-foundation-fixes)
+
+### Fix 1+2: Build-hash pipeline
+
+| Track | Path | Change |
+|---|---|---|
+| A | `package.json` | Added `cf-build` script: `PUBLIC_BUILD_HASH=$CF_PAGES_COMMIT_SHA PUBLIC_BUILD_TIME=$(date -u +%Y-%m-%dT%H:%MZ) astro build` |
+| A | `docs/CLOUDFLARE_PAGES_SETUP.md` | Created — instructions to set CF Pages build command to `pnpm run cf-build` |
+
+### Fix 3: URL tree reconciliation (utility-signature → signature)
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/Header.astro` | Mega menu: all `utility-signature` hrefs → `/collections/signature/`; label `Utility \| signⒶTURE` → `signⒶTURE` |
+| A | `src/layouts/LampCollectionPageLayout.astro` | `utility-signature` slug reference → `signature` |
+| A | `src/layouts/LampFamilyDetailPageLayout.astro` | Breadcrumb label `utility-signature` → `signature`; breadcrumb path `INDOOR` → `LAMPS` |
+| A | `src/data/lamps/nostalgic-decor.ts` | `relatedCollections` slug `utility-signature` → `signature` |
+| A | `src/data/lamps/vintage-decor.ts` | `relatedCollections` slug `utility-signature` → `signature` |
+| A | `src/data/sku-index.json` | Collection key `utility-signature` → `signature` |
+| A | `src/data/lamps/signature/` | NEW directory — migrated from `src/data/lamps/utility-signature/` (a-lamp, br-lamp, par-lamp, husk-hid) |
+| A | `src/pages/collections/signature/` | NEW directory — migrated a-lamp.astro, br-lamp.astro, par-lamp.astro from `utility-signature/` |
+| A | `scripts/verify.mjs` | All `utility-signature` references → `signature` (Groups K, L, M, N, P) |
+
+### Fix 4: CTA audit
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/collections/signature/husk-hid.astro` | SHOP CTA: `href="#"` → `href="https://algportal.archipelagolighting.com"` |
+| A | `src/pages/collections/tubulararch/t8.astro` | SHOP CTA: `href="#"` → `href="https://algportal.archipelagolighting.com"` |
+
+### Fix 5: Stat reconciliation
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/collections/tubulararch.astro` | Collection stat: `147 SKUs` → `23 SKUs`; added qualifier: `1 family shipping now · 4 more in Q3 2026` |
+| A | `src/pages/collections/tubulararch/t8.astro` | Family stat: `100 SKUs` → `5 SKUs` |
+
+### Fix 6: Décor family-detail rebuild
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/data/lamps/nostalgic-decor/*.ts` (7 files) | Named products, narrative copy, correct sibling SKU counts from Item.xlsx |
+| A | `src/data/lamps/vintage-decor/*.ts` (6 files) | Named products, narrative copy, correct sibling SKU counts from Item.xlsx |
+| A | `src/layouts/LampFamilyDetailPageLayout.astro` | Series eyebrow above H1 (collection name + "Series"); spec table columns updated to Décor SKU format (SKU Description, Wattage, CCT, Finish/Style, Voltage, Dimmable); breadcrumb INDOOR → LAMPS |
+
+### Fix 7: Verifier bespoke justifications + replacements
+
+| Track | Path | Change |
+|---|---|---|
+| A | `scripts/verify.mjs` | Group M: `signature` exempted (bespoke page, no lampBg var) |
+| A | `scripts/verify.mjs` | Group N: `signature` removed from LAMP_SLUGS (bespoke page); pass message updated to 2 pages |
+| A | `scripts/verify.mjs` | Groups K/L/P: `utility-signature` → `signature` |

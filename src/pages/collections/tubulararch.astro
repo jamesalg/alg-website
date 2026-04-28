@@ -44,6 +44,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .collection-hero .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
   .collection-hero .btn--outline:hover { border-color: #fff; }
   .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .collection-stat-qualifier { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); text-transform: uppercase; margin: -24px 0 28px; text-align: center; }
   /* Install filter */
   .install-filter { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
   .install-filter__inner { width: var(--inner); margin: 0 auto; display: flex; align-items: center; gap: 8px; padding: 12px 0; flex-wrap: wrap; }
@@ -139,10 +140,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <p class="collection-tagline">Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, and U-bend. All UL-certified, DLC-listed, with structured spec data and verified compatibility.</p>
     <div class="collection-stats">
       <div class="collection-stat"><div class="collection-stat__value">5</div><div class="collection-stat__label">Families</div></div>
-      <div class="collection-stat"><div class="collection-stat__value">147</div><div class="collection-stat__label">SKUs</div></div>
+      <div class="collection-stat"><div class="collection-stat__value">23</div><div class="collection-stat__label">SKUs</div></div>
       <div class="collection-stat"><div class="collection-stat__value">200+</div><div class="collection-stat__label">Ballasts proven</div></div>
       <div class="collection-stat"><div class="collection-stat__value">DLC</div><div class="collection-stat__label">Premium / Standard</div></div>
     </div>
+    <p class="collection-stat-qualifier">1 family shipping now · 4 more in Q3 2026</p>
     <div class="hero-ctas">
       <a href="#families" class="btn btn--primary">Browse families</a>
       <a href="#find-by-replacing" class="btn btn--outline">Find by what you're replacing</a>
@@ -179,7 +181,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <p class="family-card__tagline">25 fluorescent SKUs replaced by one dip-switchable lamp. 4FT linear, G13 bipin.</p>
           <div class="family-card__meta">
             <span class="chip chip--watt">10.5–18W</span>
-            <span class="chip chip--sku">100 SKUs</span>
+            <span class="chip chip--sku">5 SKUs</span>
             <span class="chip">DLC Premium</span>
           </div>
           <div class="family-card__cta">Explore The Workshop T8 →</div>

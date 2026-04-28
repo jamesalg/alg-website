@@ -1,18 +1,18 @@
 /**
- * BR Flood family detail data
- * Collection: utility-signature
+ * A-Lamp family detail data
+ * Collection: signature
  * v2.7.0
  */
-const br_lampData = {
-  slug: 'br-lamp',
-  name: 'BR Flood',
-  collectionSlug: 'utility-signature',
-  collectionName: 'Utility sign<span class="aa">Ⓐ</span>TURE',
-  collectionTitleAscii: 'UTILITY SIGN<span class="aa">Ⓐ</span>TURE',
-  collectionHeadlineLine: 'Utility sign<span class="aa">Ⓐ</span>TURE',
+const a_lampData = {
+  slug: 'a-lamp',
+  name: 'A-Lamp',
+  collectionSlug: 'signature',
+  collectionName: 'sign<span class="aa">Ⓐ</span>TURE',
+  collectionTitleAscii: 'SIGN<span class="aa">Ⓐ</span>TURE',
+  collectionHeadlineLine: 'sign<span class="aa">Ⓐ</span>TURE',
   collectionAesthetic: 'utility' as const,
-  tagline: 'BR40 flood lamps for recessed and track lighting.',
-  description: 'BR40 flood lamps for recessed and track lighting.',
+  tagline: 'A19 utility LED lamps for everyday commercial replacement.',
+  description: 'A19 utility LED lamps for everyday commercial replacement.',
   heroImage: '',
   echelon: undefined,
   keySpecs: {
@@ -29,9 +29,9 @@ const br_lampData = {
 };
 
 export const siblingFamilies = [
-  { slug: 'a-lamp', name: 'A-Lamp', skuCount: 5, tagline: '' },
-  { slug: 'husk-hid', name: 'Hid Retrofit', skuCount: 5, tagline: '' },
-  { slug: 'par-lamp', name: 'PAR-Lamp', skuCount: 5, tagline: '' },
+  { slug: 'br-lamp', name: 'BR-Lamp', skuCount: 6, tagline: '' },
+  { slug: 'husk-hid', name: 'Hid Retrofit', skuCount: 6, tagline: '' },
+  { slug: 'par-lamp', name: 'PAR-Lamp', skuCount: 6, tagline: '' },
 ];
 
 export const relatedCollections = [
@@ -41,9 +41,9 @@ export const relatedCollections = [
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a utility lamp recommendation for each row.',
-  sampleCopy: 'Request a physical sample of any active Utility sign<span class="aa">Ⓐ</span>TURE family. Ships within 3 business days.',
+  sampleCopy: 'Request a physical sample of any active sign<span class="aa">Ⓐ</span>TURE family. Ships within 3 business days.',
   distributorCopy: 'Find a stocking distributor near your project site.',
   repCopy: 'Connect with a local sales rep for specification support and pricing.',
 };
 
-export default br_lampData;
+export default a_lampData;

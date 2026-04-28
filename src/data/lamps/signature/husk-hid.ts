@@ -1,15 +1,15 @@
 /**
  * HID Retrofit family detail data
- * Collection: utility-signature
+ * Collection: signature
  * v2.7.2 — comingSoon set to false; husk-hid has live SKUs in sku-index.json
  */
 const hid_retrofitData = {
   slug: 'husk-hid',
   name: 'HID Retrofit',
-  collectionSlug: 'utility-signature',
-  collectionName: 'Utility sign<span class="aa">Ⓐ</span>TURE',
-  collectionTitleAscii: 'UTILITY SIGN<span class="aa">Ⓐ</span>TURE',
-  collectionHeadlineLine: 'Utility sign<span class="aa">Ⓐ</span>TURE',
+  collectionSlug: 'signature',
+  collectionName: 'sign<span class="aa">Ⓐ</span>TURE',
+  collectionTitleAscii: 'SIGN<span class="aa">Ⓐ</span>TURE',
+  collectionHeadlineLine: 'sign<span class="aa">Ⓐ</span>TURE',
   collectionAesthetic: 'utility' as const,
   tagline: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
   description: 'HID retrofit lamps for metal halide and high-pressure sodium fixtures.',
@@ -41,7 +41,7 @@ export const relatedCollections = [
 
 export const getStarted = {
   layoutCopy: 'Submit a fixture schedule and we return a utility lamp recommendation for each row.',
-  sampleCopy: 'Request a physical sample of any active Utility sign<span class="aa">Ⓐ</span>TURE family. Ships within 3 business days.',
+  sampleCopy: 'Request a physical sample of any active sign<span class="aa">Ⓐ</span>TURE family. Ships within 3 business days.',
   distributorCopy: 'Find a stocking distributor near your project site.',
   repCopy: 'Connect with a local sales rep for specification support and pricing.',
 };
