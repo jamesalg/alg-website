@@ -499,7 +499,7 @@ async function main() {
         'tubulararch':       { families: 5, liveFamilies: 5 },
         'nostalgic-decor':   { families: 7, liveFamilies: 7 },
         'vintage-decor':     { families: 6, liveFamilies: 6 },
-        'utility-signature': { families: 3, liveFamilies: 1 },  // husk-hid live + 2 coming-soon (a-lamp/br-lamp not yet in Zoho)
+        'signature': { families: 3, liveFamilies: 1 },  // husk-hid live + 2 coming-soon (a-lamp/br-lamp not yet in Zoho)
       };
       let kPass = true;
       for (const [coll, expected] of Object.entries(expectedBucketB)) {
@@ -536,9 +536,9 @@ async function main() {
   // and must NOT have a live PDF download link.
   {
     const comingSoonPaths = [
-      'utility-signature/a-lamp',
-      'utility-signature/br-lamp',
-      'utility-signature/par-lamp',
+      'signature/a-lamp',
+      'signature/br-lamp',
+      'signature/par-lamp',
     ];
     let lPass = true;
     for (const path of comingSoonPaths) {
@@ -571,11 +571,11 @@ async function main() {
   // Every lamp collection page must emit the correct --lamp-bg CSS variable.
   {
     const themeVars = {
-      // tubulararch is now an engineering collection page (v2.7.8) — uses BaseLayout, not LampCollectionPageLayout
+      // tubulararch and signature are bespoke collection pages (v2.7.8) — use BaseLayout, not LampCollectionPageLayout
       // 'tubulararch':       '#1a1d24',  // exempted v2.7.8
+      // 'signature':         '#1a1d24',  // exempted v2.7.8
       'nostalgic-decor':   '#0a0d18',
       'vintage-decor':     '#0c0d12',
-      'utility-signature': '#1a1d24',
     };
     let mPass = true;
     for (const [slug, expectedBg] of Object.entries(themeVars)) {
@@ -611,8 +611,8 @@ async function main() {
   {
     const { readFile: rf2, readdir: rd2 } = await import('node:fs/promises');
     const { join: pj2 } = await import('node:path');
-    // tubulararch exempted v2.7.8 — rebuilt as engineering collection page (BaseLayout, not LampCollectionPageLayout)
-    const LAMP_SLUGS = ['nostalgic-decor', 'vintage-decor', 'utility-signature'];
+    // tubulararch and signature exempted v2.7.8 — rebuilt as bespoke collection pages (BaseLayout, not LampCollectionPageLayout)
+    const LAMP_SLUGS = ['nostalgic-decor', 'vintage-decor'];
     const colDir2 = pj2(ROOT, 'src', 'pages', 'collections');
     let nPass = true;
     for (const slug of LAMP_SLUGS) {
@@ -639,7 +639,7 @@ async function main() {
       }
     }
     if (nPass) {
-      console.log('✅ Group N: Lamp collection page structural lock PASS (3 pages, ≤6 lines each, LampCollectionPageLayout)');
+      console.log('✅ Group N: Lamp collection page structural lock PASS (2 pages, ≤6 lines each, LampCollectionPageLayout)');
     }
   }
 
@@ -680,7 +680,7 @@ async function main() {
       'nostalgic-decor/g16-5', 'nostalgic-decor/g25', 'nostalgic-decor/s14',
       'vintage-decor/candelabra', 'vintage-decor/edison', 'vintage-decor/globe',
       'vintage-decor/radio', 'vintage-decor/tubular', 'vintage-decor/victorian',
-      'utility-signature/husk-hid',
+      'signature/husk-hid',
     ];
     let pPass = true;
     for (const path of FAMILIES_REQUIRING_SKUS) {

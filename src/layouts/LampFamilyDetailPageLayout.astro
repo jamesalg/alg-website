@@ -153,7 +153,7 @@ const t = themes[f.collectionAesthetic];
 const collectionLabelHtml = f.collectionSlug === 'tubulararch' ? 'TUBUL<span class="aa">\u24B6</span>RCH' :
   f.collectionSlug === 'nostalgic-decor' ? 'NOST<span class="aa">\u24B6</span>LGIC D\u00C9COR' :
   f.collectionSlug === 'vintage-decor' ? 'VINT<span class="aa">\u24B6</span>GE D\u00C9COR' :
-  f.collectionSlug === 'utility-signature' ? 'UTILITY SIGN<span class="aa">\u24B6</span>TURE' :
+  f.collectionSlug === 'signature' ? 'SIGN<span class="aa">\u24B6</span>TURE' :
   f.collectionName.toUpperCase();
 
 const collectionHref = `/collections/${f.collectionSlug}/`;
@@ -268,7 +268,25 @@ const pageTitle = `${f.name} | ${collectionTitlePlain} | Archipelago Lighting Gr
     position: relative;
   }
   .lamp-hero__copy { position: relative; z-index: 2; }
-
+  .lamp-hero__series-eyebrow {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lampAccent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .lamp-hero__series-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--lampAccent);
+    flex-shrink: 0;
+  }
   .lamp-family-name {
     font-family: Georgia, 'Times New Roman', serif;
     font-weight: 400;
@@ -740,7 +758,7 @@ const pageTitle = `${f.name} | ${collectionTitlePlain} | Archipelago Lighting Gr
   <span class="bc-sep">›</span>
   <a href="/products/">PRODUCTS</a>
   <span class="bc-sep">›</span>
-  <a href="/products/indoor/">INDOOR</a>
+  <a href="/products/lamps/">LAMPS</a>
   <span class="bc-sep">›</span>
   <a href={collectionHref} set:html={collectionLabelHtml}></a>
   <span class="bc-sep">›</span>
@@ -763,13 +781,14 @@ const pageTitle = `${f.name} | ${collectionTitlePlain} | Archipelago Lighting Gr
   <!-- HERO -->
   <section class="lamp-hero">
     <div class="lamp-hero__copy">
+      <div class="lamp-hero__series-eyebrow" set:html={`${f.collectionName} · Series`}></div>
       <h1 class="lamp-family-name">
         {f.name}
         {f.comingSoon
           ? <span class="echelon-badge echelon-badge--soon">COMING SOON</span>
           : f.echelon
             ? <span class="echelon-badge echelon-badge--accent">{f.echelon}</span>
-            : <span class="echelon-badge">ECO</span>
+            : null
         }
       </h1>
       <h2 class="lamp-tagline">{f.tagline}</h2>
@@ -855,33 +874,39 @@ const pageTitle = `${f.name} | ${collectionTitlePlain} | Archipelago Lighting Gr
         <table class="spec-table">
           <thead>
             <tr>
-              <th>Model</th>
-              <th>Generation</th>
-              <th>Type</th>
-              <th>Base</th>
+              <th>SKU Description</th>
               <th>Wattage</th>
-              <th>Lumens</th>
-              <th>MOL / MOD</th>
               <th>CCT</th>
-              <th>CRI</th>
+              <th>Finish / Style</th>
+              <th>Voltage</th>
+              <th>Dimmable</th>
             </tr>
           </thead>
           <tbody>
             {familySkus.length > 0
-              ? familySkus.map((sku: any) => (
-                <tr>
-                  <td>{sku.model ?? sku.sku ?? '—'}</td>
-                  <td>{sku.generation ?? sku.gen ?? '—'}</td>
-                  <td>{sku.type ?? sku.glass ?? '—'}</td>
-                  <td>{sku.base ?? '—'}</td>
-                  <td>{sku.wattage ?? sku.watts ?? '—'}</td>
-                  <td>{sku.lumens ?? sku.lm ?? '—'}</td>
-                  <td>{sku.mol ?? sku.dimensions ?? '—'}</td>
-                  <td>{sku.cct ?? '—'}</td>
-                  <td>{sku.cri ?? '—'}</td>
-                </tr>
-              ))
-              : <tr><td colspan="9" style="text-align:center;padding:32px;color:var(--lampFgMuted);font-size:12px;letter-spacing:0.05em;">LOADING SKU DATA</td></tr>
+              ? familySkus.map((sku: any) => {
+                // Parse Décor SKU string: "Décor | Shape | Finish | Wattage/CCT[/Style]"
+                const parts = (sku.sku ?? '').split('|').map((p: string) => p.trim());
+                const skuDesc = parts.slice(1).join(' · ') || sku.sku || '—';
+                const wattage = sku.wattages?.[0] ? `${sku.wattages[0]}W` : (parts[3]?.match(/([\d.]+W)/)?.[1] ?? '—');
+                const cct = parts[3]?.match(/(\d{4}K)/)?.[1] ?? (sku.ccts?.[0] ? `${sku.ccts[0]}K` : '—');
+                const finish = parts[2] ?? '—';
+                const style = parts[3]?.replace(/[\d.]+W\/\d{4}K\/?/, '').replace(/^\//, '') || '—';
+                const finishStyle = style && style !== '—' ? `${finish} · ${style}` : finish;
+                const voltage = sku.voltage || '120V';
+                const dimmable = (sku.sku ?? '').includes('Non-Dimmable') ? 'No' : 'Yes';
+                return (
+                  <tr>
+                    <td style="font-family:'JetBrains Mono','Courier New',monospace;font-size:11px;">{parts[1] ?? sku.sku}</td>
+                    <td>{wattage}</td>
+                    <td>{cct}</td>
+                    <td>{finishStyle}</td>
+                    <td>{voltage}</td>
+                    <td>{dimmable}</td>
+                  </tr>
+                );
+              })
+              : <tr><td colspan="6" style="text-align:center;padding:32px;color:var(--lampFgMuted);font-size:12px;letter-spacing:0.05em;">LOADING SKU DATA</td></tr>
             }
           </tbody>
         </table>
