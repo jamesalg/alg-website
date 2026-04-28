@@ -25,6 +25,9 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          PUBLIC_BUILD_HASH: ${{ github.sha }}
+          PUBLIC_BUILD_TIME: ${{ github.run_started_at }}
 
       - name: Run verification suite
         run: npm run verify
