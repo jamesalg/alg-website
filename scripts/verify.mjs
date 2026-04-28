@@ -293,7 +293,9 @@ async function main() {
     // Lamp collection pages use LampCollectionPageLayout and are checked by Group N.
     // Engineering collection pages (v2.7.8+): tubulararch and signature use full-page
     // engineering layouts (BaseLayout + inline sections) — not the canonical 5-line pattern.
-    const BESPOKE_PAGES = new Set(['consumer', 'tubulararch', 'signature']);
+    // Décor collection pages (v2.7.10+): nostalgic-decor and vintage-decor rebuilt as full-page
+    // bespoke designs matching v3 mockups — not the canonical 5-line LampCollectionPageLayout.
+    const BESPOKE_PAGES = new Set(['consumer', 'tubulararch', 'signature', 'nostalgic-decor', 'vintage-decor']);
     for (const fname of colFiles) {
       const slug = fname.replace('.astro', '');
       if (BESPOKE_PAGES.has(slug)) {
@@ -574,8 +576,9 @@ async function main() {
       // tubulararch and signature are bespoke collection pages (v2.7.8) — use BaseLayout, not LampCollectionPageLayout
       // 'tubulararch':       '#1a1d24',  // exempted v2.7.8
       // 'signature':         '#1a1d24',  // exempted v2.7.8
-      'nostalgic-decor':   '#0a0d18',
-      'vintage-decor':     '#0c0d12',
+      // nostalgic-decor and vintage-decor are bespoke collection pages (v2.7.10) — rebuilt to match v3 mockups
+      // 'nostalgic-decor':   '#0a0d18',  // exempted v2.7.10
+      // 'vintage-decor':     '#0c0d12',  // exempted v2.7.10
     };
     let mPass = true;
     for (const [slug, expectedBg] of Object.entries(themeVars)) {
@@ -612,7 +615,8 @@ async function main() {
     const { readFile: rf2, readdir: rd2 } = await import('node:fs/promises');
     const { join: pj2 } = await import('node:path');
     // tubulararch and signature exempted v2.7.8 — rebuilt as bespoke collection pages (BaseLayout, not LampCollectionPageLayout)
-    const LAMP_SLUGS = ['nostalgic-decor', 'vintage-decor'];
+    // nostalgic-decor and vintage-decor exempted v2.7.10 — rebuilt as bespoke collection pages (BaseLayout, not LampCollectionPageLayout)
+    const LAMP_SLUGS = [];
     const colDir2 = pj2(ROOT, 'src', 'pages', 'collections');
     let nPass = true;
     for (const slug of LAMP_SLUGS) {

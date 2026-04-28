@@ -1,512 +1,480 @@
 ---
 /**
  * The Husk — HID Retrofit Family Detail Page
- * v2.7.8 — SKU consolidation, Find My HID wizard, structured spec table, fixture matrix, docs block
+ * v2.7.10 — rebuilt to match mockup_signature_husk_v1.html
  * Route: /collections/signature/husk-hid
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ResourceCard from '../../../components/ResourceCard.astro';
+
+const resources = [
+  {
+    icon: 'PDF',
+    title: 'Datasheet',
+    desc: 'LCRN Husk-Series product datasheet · 6 pages',
+    url: 'https://workdrive.archipelagolighting.com/external/345810295f515de74af9989fbd7cb47cd10cecf8ca1416c087df7bec9f7fc3a8',
+    family: 'The Husk',
+    resourceType: 'Datasheet',
+  },
+  {
+    icon: 'PDF',
+    title: 'Installation Guide',
+    desc: 'Ballast bypass procedure · per-SKU dip-switch reference',
+    url: 'https://workdrive.archipelagolighting.com/external/6ecf2c9f1d9e9e4aa7efcae0f566bb2039376d1a8d9dcec25195025e1dc1e23c',
+    family: 'The Husk',
+    resourceType: 'Installation Guide',
+  },
+  {
+    icon: 'IES',
+    title: 'IES Files',
+    desc: 'Photometric data per SKU · per WATTselect / CCTselect',
+    url: null,
+    family: 'The Husk',
+    resourceType: 'IES Files',
+  },
+  {
+    icon: 'MP4',
+    title: 'Promo Video',
+    desc: 'LCRN Husk product video',
+    url: null,
+    family: 'The Husk',
+    resourceType: 'Promo Video',
+  },
+];
+
+const skus = [
+  { sku: 'LCRN1227-CSMG', watt: '12 / 18 / 27W', cct: '3000 / 4000 / 5000K', lumens: '3,780 / 4,185 / 4,050', replaces: '60W CFL · 100W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN1227-CSMG/SR' },
+  { sku: 'LCRN2745-CSMG', watt: '27 / 36 / 45W', cct: '3000 / 4000 / 5000K', lumens: '6,300 / 6,975 / 6,750', replaces: '100W CFL · 150W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN2745-CSMG/SR' },
+  { sku: 'LCRN4565-CSMG', watt: '45 / 55 / 65W', cct: '3000 / 4000 / 5000K', lumens: '9,450 / 10,450 / 10,000', replaces: '150W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN4565-CSMG/SR' },
+  { sku: 'LCRN6590-CSMG', watt: '65 / 80 / 90W', cct: '3000 / 4000 / 5000K', lumens: '13,650 / 15,400 / 14,850', replaces: '250W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN6590-CSMG/SR' },
+  { sku: 'LCRN60120-CSMG', watt: '60 / 90 / 120W', cct: '3000 / 4000 / 5000K', lumens: '12,600 / 14,700 / 14,400', replaces: '200W CFL · 400W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN60120-CSMG/SR' },
+  { sku: 'LCRN60120-CSHG', watt: '60 / 90 / 120W', cct: '3000 / 4000 / 5000K', lumens: '12,600 / 14,700 / 18,000', replaces: '200W CFL · 400W MH/HPS/HID', voltage: '277–480V', sr: 'LCRN60120-CSHG/SR' },
+  { sku: 'LCRN100150-CSMG', watt: '100 / 120 / 150W', cct: '3000 / 4000 / 5000K', lumens: '20,550 / 23,100 / 21,750', replaces: '400W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN100150-CSMG/SR' },
+  { sku: 'LCRN200300-CSMG', watt: '200 / 240 / 300W', cct: '3000 / 4000 / 5000K', lumens: '41,700 / 46,200 / 44,100', replaces: '700W MH/HPS/HID', voltage: '120–277V', sr: 'LCRN200300-CSMG/SR' },
+];
 ---
 <BaseLayout
-  title="The Husk — HID Retrofit LED | signⒶTURE | Archipelago Lighting Group"
-  description="One dip-switchable LED lamp replaces 13 legacy HID wattages (70W–400W MH/HPS). E39 mogul base. 120–480V universal. DLC Premium. 50,000 hour rated life."
-  bodyClass="page-husk-detail"
+  title="The Husk — HID Retrofit | signⒶTURE | Archipelago Lighting Group"
+  description="The Husk: 7 SKUs, 63 configurations, 12–300W input, replaces 50–700W legacy MH/HPS/HID. E39 mogul base. Ballast bypass. 120–480V. The signⒶTURE commercial HID retrofit."
+  bodyClass="page-husk-family"
 >
 <style>
-  .page-husk-detail {
-    --accent: #F32740;
-    --accent-dark: #C41E32;
-    --fg: #111111;
-    --fg-muted: #6B6B6B;
-    --bg: #ffffff;
-    --bg-alt: #f4f4f6;
-    --border: #E5E5E5;
-    --font-mono: 'Courier New', Courier, monospace;
-    --inner: min(1280px, 100% - 64px);
+  :root {
+    --husk-accent: #F32740;
+    --husk-warm: #F5C24A;
+    --husk-navy: #0A1628;
+    --husk-paper: #F8F6F2;
+    --husk-paper2: #F0EDE7;
+    --husk-ink: #111111;
+    --husk-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --husk-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
-  .section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-  .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--fg); margin: 0 0 12px; line-height: 1.2; }
-  .section-sub { font-size: 16px; color: var(--fg-muted); max-width: 640px; margin: 0 0 32px; line-height: 1.6; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s; }
-  .btn--primary { background: var(--accent); color: #fff; }
-  .btn--primary:hover { background: var(--accent-dark); }
-  .btn--outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
-  .btn--outline:hover { border-color: var(--fg); }
-  /* Breadcrumb */
-  .breadcrumb { background: #fff; border-bottom: 1px solid var(--border); padding: 12px 0; }
-  .breadcrumb__inner { width: var(--inner); margin: 0 auto; font-size: 12px; color: var(--fg-muted); font-family: var(--font-mono); }
-  .breadcrumb a { color: var(--fg-muted); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--accent); }
-  .breadcrumb__sep { margin: 0 8px; }
-  /* Hero */
-  .family-hero { background: #111; color: #fff; padding: 64px 0; }
-  .family-hero__inner { width: var(--inner); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-  @media (max-width: 768px) { .family-hero__inner { grid-template-columns: 1fr; } }
-  .family-hero__visual { background: #1a1a1a; border-radius: 8px; height: 320px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center; border: 1px solid rgba(255,255,255,0.08); }
-  .family-hero__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F32740; margin-bottom: 12px; }
-  .family-hero__name { font-size: clamp(32px, 5vw, 56px); font-weight: 900; margin: 0 0 8px; line-height: 1.05; }
-  .family-hero__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 28px; line-height: 1.6; }
-  .family-hero__stats { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 28px; }
-  .family-stat__value { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
-  .family-stat__label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
-  .family-hero__ctas { display: flex; gap: 10px; flex-wrap: wrap; }
-  .family-hero .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .family-hero .btn--outline:hover { border-color: #fff; }
-  .family-hero__badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
-  .trust-badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
-  /* SKU consolidation */
-  .sku-section { padding: 64px 0; background: var(--bg-alt); }
-  .sku-section__inner { width: var(--inner); margin: 0 auto; }
-  .consolidation-block { background: #fff; border-radius: 12px; border: 1.5px solid var(--border); padding: 40px; margin-top: 32px; }
-  .consolidation-numbers { display: flex; align-items: center; gap: 32px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
-  .consol-num { text-align: center; }
-  .consol-num__value { font-size: 72px; font-weight: 900; line-height: 1; }
-  .consol-num__value--legacy { color: var(--fg-muted); text-decoration: line-through; }
-  .consol-num__value--alg { color: var(--accent); }
-  .consol-num__label { font-size: 13px; color: var(--fg-muted); margin-top: 6px; }
-  .consol-arrow { font-size: 40px; color: var(--accent); }
-  .coverage-bar { margin-top: 24px; }
-  .coverage-bar__label { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.08em; margin-bottom: 8px; }
-  .coverage-bar__track { height: 8px; background: var(--bg-alt); border-radius: 4px; overflow: hidden; }
-  .coverage-bar__fill { height: 100%; background: linear-gradient(90deg, #F32740, #FF6B35); border-radius: 4px; width: 100%; }
-  .coverage-bar__range { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); margin-top: 6px; }
-  /* SKU table */
-  .sku-table-wrap { overflow-x: auto; margin-top: 24px; }
-  .sku-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .sku-table th { text-align: left; padding: 10px 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); border-bottom: 1.5px solid var(--border); background: var(--bg-alt); white-space: nowrap; }
-  .sku-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--fg); }
-  .sku-table tr:last-child td { border-bottom: none; }
-  .sku-table td:first-child { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); }
-  .sku-badge { font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; }
-  .sku-badge--dlc { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
-  .sku-badge--baa { background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }
-  /* Wizard */
-  .wizard-section { padding: 64px 0; background: #fff; }
-  .wizard-section__inner { width: var(--inner); margin: 0 auto; }
-  .wizard { background: var(--bg-alt); border-radius: 12px; border: 1.5px solid var(--border); padding: 40px; margin-top: 32px; max-width: 720px; }
-  .wizard__step { display: none; }
-  .wizard__step--active { display: block; }
-  .wizard__step-header { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
-  .wizard__question { font-size: 20px; font-weight: 700; color: var(--fg); margin: 0 0 24px; }
-  .wizard__options { display: flex; flex-direction: column; gap: 10px; }
-  .wizard__option { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: border-color 0.15s; font-size: 14px; color: var(--fg); text-align: left; }
-  .wizard__option:hover { border-color: var(--accent); }
-  .wizard__option-icon { font-size: 20px; flex-shrink: 0; }
-  .wizard__option-text strong { display: block; font-weight: 600; margin-bottom: 2px; }
-  .wizard__option-text span { font-size: 12px; color: var(--fg-muted); }
-  .wizard__back { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); cursor: pointer; border: none; background: none; padding: 0; margin-top: 20px; letter-spacing: 0.06em; }
-  .wizard__back:hover { color: var(--accent); }
-  .wizard-result { display: none; background: #fff; border: 2px solid var(--accent); border-radius: 12px; padding: 32px; margin-top: 32px; max-width: 720px; }
-  .wizard-result--visible { display: block; }
-  .wizard-result__eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; }
-  .wizard-result__sku { font-size: 28px; font-weight: 900; color: var(--fg); margin: 0 0 6px; font-family: var(--font-mono); }
-  .wizard-result__name { font-size: 16px; color: var(--fg-muted); margin: 0 0 24px; }
-  .wizard-result__details { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  @media (max-width: 480px) { .wizard-result__details { grid-template-columns: 1fr; } }
-  .result-detail__label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); text-transform: uppercase; margin-bottom: 4px; }
-  .result-detail__value { font-size: 15px; font-weight: 600; color: var(--fg); }
-  .wizard-result__caveat { background: #FFF3E0; border: 1px solid #FFB300; border-radius: 6px; padding: 12px 16px; font-size: 13px; color: #E65100; margin-bottom: 20px; }
-  .wizard-result__ctas { display: flex; gap: 10px; flex-wrap: wrap; }
-  .wizard-result__restart { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); cursor: pointer; border: none; background: none; padding: 0; margin-top: 16px; letter-spacing: 0.06em; }
-  .wizard-result__restart:hover { color: var(--accent); }
-  /* Spec table */
-  .spec-section { padding: 64px 0; background: var(--bg-alt); }
-  .spec-section__inner { width: var(--inner); margin: 0 auto; display: grid; grid-template-columns: 200px 1fr; gap: 48px; align-items: start; }
-  @media (max-width: 900px) { .spec-section__inner { grid-template-columns: 1fr; } }
-  .spec-toc { position: sticky; top: 80px; }
-  .spec-toc__title { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 12px; }
-  .spec-toc__list { list-style: none; padding: 0; margin: 0; }
-  .spec-toc__item { margin-bottom: 4px; }
-  .spec-toc__link { font-size: 13px; color: var(--fg-muted); text-decoration: none; padding: 6px 10px; display: block; border-radius: 4px; transition: background 0.15s, color 0.15s; border-left: 2px solid transparent; }
-  .spec-toc__link:hover, .spec-toc__link--active { background: rgba(243,39,64,0.06); color: var(--accent); border-left-color: var(--accent); }
-  .spec-group { background: #fff; border-radius: 8px; border: 1.5px solid var(--border); margin-bottom: 24px; overflow: hidden; }
-  .spec-group__header { padding: 16px 24px; background: var(--bg-alt); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
-  .spec-table { width: 100%; border-collapse: collapse; }
-  .spec-table th { text-align: left; padding: 10px 24px; font-size: 11px; font-family: var(--font-mono); letter-spacing: 0.06em; color: var(--fg-muted); border-bottom: 1px solid var(--border); background: #fafafa; }
-  .spec-table td { padding: 10px 24px; font-size: 13px; color: var(--fg); border-bottom: 1px solid var(--border); }
-  .spec-table tr:last-child td { border-bottom: none; }
-  .spec-table td:first-child { color: var(--fg-muted); font-size: 12px; width: 40%; }
-  .spec-table td:nth-child(2) { font-weight: 500; }
-  .spec-note { padding: 12px 24px; background: #FFF8E1; border-top: 1px solid #FFE082; font-size: 12px; color: #795548; }
-  .sensor-callout { background: #E8F5E9; border: 1.5px solid #A5D6A7; border-radius: 8px; padding: 20px 24px; margin: 16px 24px 24px; }
-  .sensor-callout__title { font-size: 15px; font-weight: 700; color: #2E7D32; margin: 0 0 6px; }
-  .sensor-callout__body { font-size: 13px; color: #388E3C; line-height: 1.5; margin: 0; }
-  /* Fixture matrix */
-  .fixture-section { padding: 64px 0; background: #fff; }
-  .fixture-section__inner { width: var(--inner); margin: 0 auto; }
-  .fixture-table-wrap { overflow-x: auto; margin-top: 32px; }
-  .fixture-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .fixture-table th { text-align: left; padding: 10px 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--fg-muted); border-bottom: 1.5px solid var(--border); background: var(--bg-alt); white-space: nowrap; }
-  .fixture-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--fg); }
-  .fixture-table tr:last-child td { border-bottom: none; }
-  .compat-badge { font-size: 11px; font-family: var(--font-mono); padding: 2px 8px; border-radius: 3px; }
-  .compat-badge--yes { background: #E8F5E9; color: #2E7D32; }
-  .compat-badge--cond { background: #FFF3E0; color: #E65100; }
-  .fixture-note { font-size: 12px; color: var(--fg-muted); margin-top: 12px; font-style: italic; }
-  /* Docs */
-  .docs-section { padding: 64px 0; background: var(--bg-alt); }
-  .docs-section__inner { width: var(--inner); margin: 0 auto; }
-  .docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 32px; }
-  .doc-card { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: #fff; border-radius: 8px; text-decoration: none; border: 1.5px solid var(--border); transition: border-color 0.15s; }
-  .doc-card:hover { border-color: var(--accent); }
-  .doc-card__icon { font-size: 24px; flex-shrink: 0; }
-  .doc-card__name { font-size: 13px; font-weight: 600; color: var(--fg); }
-  .doc-card__meta { font-size: 11px; color: var(--fg-muted); font-family: var(--font-mono); margin-top: 2px; }
-  /* CTA band */
-  .cta-band { padding: 64px 0; background: #111; text-align: center; color: #fff; }
-  .cta-band__inner { width: var(--inner); margin: 0 auto; }
-  .cta-band__title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 12px; }
-  .cta-band__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 32px; }
-  .cta-band__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .cta-band .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .cta-band .btn--outline:hover { border-color: #fff; }
+  .husk-paper  { background: var(--husk-paper); color: var(--husk-ink); }
+  .husk-paper2 { background: var(--husk-paper2); color: var(--husk-ink); }
+  .husk-dark   { background: var(--husk-navy); color: white; }
+  .husk-char   { background: #0F0F0F; color: white; }
+  .husk-eyebrow { font-family: var(--husk-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .husk-eyebrow-rule::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--husk-accent); vertical-align: middle; margin-right: 12px; }
+  .husk-accent-text { color: var(--husk-accent); }
+  .husk-warm-text { color: var(--husk-warm); }
+  .husk-h1 { font-family: var(--husk-sans); font-weight: 800; letter-spacing: -0.025em; line-height: 1.0; }
+  .husk-h2 { font-family: var(--husk-sans); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .husk-stat-num { font-family: var(--husk-sans); font-weight: 900; font-size: 1.75rem; letter-spacing: -0.02em; line-height: 1; color: var(--husk-accent); }
+  .husk-stat-label { font-family: var(--husk-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.65; margin-top: 4px; }
+  .husk-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s; font-family: var(--husk-mono); }
+  .husk-btn-primary { background: var(--husk-accent); color: white; }
+  .husk-btn-primary:hover { background: #d01f33; }
+  .husk-btn-outline { background: transparent; color: var(--husk-ink); border: 1.5px solid rgba(17,17,17,0.3); }
+  .husk-btn-outline:hover { border-color: var(--husk-ink); }
+  .husk-btn-ghost { background: transparent; color: var(--husk-ink); }
+  .husk-btn-ghost:hover { text-decoration: underline; }
+  .husk-trust-badge { font-family: var(--husk-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(17,17,17,0.2); display: inline-block; }
+  .husk-voltage-tag { font-family: var(--husk-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(17,17,17,0.15); background: rgba(17,17,17,0.04); display: inline-block; }
+  .husk-voltage-tag-red { border-color: rgba(243,39,64,0.4); background: rgba(243,39,64,0.06); color: var(--husk-accent); }
+  .husk-photo-ph { background: #1a1a1a; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+  .husk-photo-ph-text { font-family: var(--husk-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(255,255,255,0.12); margin: 2rem; color: rgba(255,255,255,0.4); }
+  .husk-spec-row { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(17,17,17,0.08); font-size: 0.875rem; }
+  .husk-spec-row dt { font-family: var(--husk-mono); font-size: 0.7rem; letter-spacing: 0.08em; opacity: 0.7; }
+  .husk-spec-row dd { margin: 0; }
+  .husk-spec-block-num { font-family: var(--husk-mono); font-size: 0.6rem; letter-spacing: 0.18em; color: var(--husk-accent); }
+  .husk-candor { background: rgba(245,194,74,0.12); border-left: 3px solid var(--husk-warm); padding: 1.5rem 2rem; }
+  .husk-candor-ey { font-family: var(--husk-mono); color: #8a6510; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .husk-sku-table { width: 100%; background: white; border: 1px solid rgba(17,17,17,0.1); font-family: var(--husk-mono); font-size: 0.68rem; }
+  .husk-sku-table th { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(17,17,17,0.1); font-weight: 700; letter-spacing: 0.1em; opacity: 0.7; }
+  .husk-sku-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(17,17,17,0.06); }
+  .husk-sku-table tr:hover td { background: rgba(243,39,64,0.03); }
+  .husk-cert-cell { padding: 1rem; border: 1px solid rgba(17,17,17,0.1); background: white; display: flex; flex-direction: column; gap: 4px; }
+  .husk-cert-mark { font-family: var(--husk-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; }
+  .husk-cert-detail { font-size: 0.75rem; opacity: 0.65; }
+  .husk-sister-card { display: block; padding: 1.25rem; border: 1px solid rgba(17,17,17,0.1); background: white; text-decoration: none; color: inherit; transition: border-color 0.15s; }
+  .husk-sister-card:hover { border-color: var(--husk-accent); }
+  .husk-breadcrumb { border-bottom: 1px solid rgba(17,17,17,0.1); background: white; }
+  .husk-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--husk-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .husk-breadcrumb a { color: inherit; text-decoration: none; }
+  .husk-breadcrumb a:hover { color: var(--husk-accent); opacity: 1; }
+  .husk-sensor-callout { background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.3); padding: 1.5rem 2rem; }
 </style>
 
-<nav class="breadcrumb">
-  <div class="breadcrumb__inner">
-    <a href="/">Home</a><span class="breadcrumb__sep">/</span>
-    <a href="/collections/signature">sign<span class="aa">Ⓐ</span>TURE</a><span class="breadcrumb__sep">/</span>
-    <span>The Husk</span>
+<div class="husk-breadcrumb">
+  <div class="husk-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    <a href="/collections/signature/">SIGN<span class="aa">Ⓐ</span>TURE</a> ›
+    THE HUSK
   </div>
-</nav>
+</div>
 
-<section class="family-hero">
-  <div class="family-hero__inner">
-    <div class="family-hero__visual">Husk product photography<br>Rooster Creative deliverable</div>
+<main id="main">
+
+<!-- HERO -->
+<section class="husk-paper" aria-labelledby="husk-hero-h1">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="husk-hero-grid">
+    <div class="husk-photo-ph">
+      <div class="husk-photo-ph-text">HUSK PRODUCT PHOTOGRAPHY<br><span style="opacity:0.5;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">E39 MOGUL BASE · LAMP &amp; FIXTURE CUTAWAY</span></div>
+    </div>
     <div>
-      <div class="family-hero__eyebrow">sign<span class="aa">Ⓐ</span>TURE · HID Retrofit · E39 Mogul Base</div>
-      <h1 class="family-hero__name">The Husk</h1>
-      <p class="family-hero__sub">One dip-switchable LED lamp replaces 13 legacy HID wattages. Drop-in for 70W–400W Metal Halide and High-Pressure Sodium. No fixture change required.</p>
-      <div class="family-hero__stats">
-        <div class="family-stat"><div class="family-stat__value">7</div><div class="family-stat__label">SKUs</div></div>
-        <div class="family-stat"><div class="family-stat__value">13</div><div class="family-stat__label">Legacy replaced</div></div>
-        <div class="family-stat"><div class="family-stat__value">120–480V</div><div class="family-stat__label">Universal voltage</div></div>
-        <div class="family-stat"><div class="family-stat__value">40+</div><div class="family-stat__label">Fixtures proven</div></div>
+      <p class="husk-eyebrow husk-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="husk-accent-text">SIGN<span class="aa">Ⓐ</span>TURE ·</span> HID RETROFIT · E39 MOGUL BASE</p>
+      <h1 id="husk-hero-h1" class="husk-h1" style="font-size:clamp(2.5rem,5vw,3.75rem);margin-bottom:1.5rem;">The Husk</h1>
+      <p style="font-size:0.95rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.9;max-width:36rem;">One commercial-grade LED replaces a span of legacy metal-halide and high-pressure-sodium wattages. Drop in, bypass the ballast, done. Six SKUs ship at 120–277V; the LCRN60120-CSHG variant covers 277–480V applications.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;">
+        <span class="husk-voltage-tag">BALLAST BYPASS</span>
+        <span class="husk-voltage-tag">LINE VOLTAGE DIRECT</span>
+        <span class="husk-voltage-tag">120–277V (-CSMG · 6 SKUs)</span>
+        <span class="husk-voltage-tag husk-voltage-tag-red">277–480V (-CSHG · LCRN60120 only)</span>
       </div>
-      <div class="family-hero__ctas">
-        <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
-        <a href="https://algportal.archipelagolighting.com" class="btn btn--outline" target="_blank" rel="noopener">SHOP Stock &amp; Buy</a>
-        <a href="#docs" class="btn btn--outline">Documentation</a>
+      <dl style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2rem;margin-bottom:2rem;">
+        <div><dd class="husk-stat-num">7 SKUs</dd><dt class="husk-stat-label">3-WATTselect × 3-CCTselect each</dt></div>
+        <div><dd class="husk-stat-num">12–300W</dd><dt class="husk-stat-label">Input wattage span (per datasheet)</dt></div>
+        <div><dd class="husk-stat-num">50–700W</dd><dt class="husk-stat-label">Legacy MH/HPS/HID replaced</dt></div>
+        <div><dd class="husk-stat-num">150 lm/W</dd><dt class="husk-stat-label">Efficacy (typ. at 5000K)</dt></div>
+      </dl>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;">
+        <span class="husk-trust-badge">DLC LISTED</span>
+        <span class="husk-trust-badge">UL LISTED</span>
+        <span class="husk-trust-badge">120–480V</span>
+        <span class="husk-trust-badge">IP64</span>
+        <span class="husk-trust-badge">5-YEAR WARRANTY</span>
       </div>
-      <div class="family-hero__badges">
-        <span class="trust-badge">DLC PREMIUM</span>
-        <span class="trust-badge">UL LISTED</span>
-        <span class="trust-badge">120–480V</span>
-        <span class="trust-badge">BAA COMPLIANT</span>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <a href="/support/sample-request?subject=Husk+HID+Quote" class="husk-btn husk-btn-primary">REQUEST AURA QUOTE</a>
+        <a href="https://algportal.archipelagolighting.com" class="husk-btn husk-btn-outline" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
+        <a href="#resources" class="husk-btn husk-btn-ghost">DOCUMENTATION ↓</a>
       </div>
     </div>
   </div>
 </section>
+<style>
+  @media (max-width: 768px) { .husk-hero-grid { grid-template-columns: 1fr !important; } }
+</style>
 
-<section class="sku-section">
-  <div class="sku-section__inner">
-    <div class="section-eyebrow">SKU consolidation</div>
-    <h2 class="section-title">One lamp. 13 legacy HID wattages retired.</h2>
-    <p class="section-sub">A single dip-switch on the lamp body selects wattage output. One part number handles every job from 100W to 400W LED equivalent.</p>
-    <div class="consolidation-block">
-      <div class="consolidation-numbers">
-        <div class="consol-num">
-          <div class="consol-num__value consol-num__value--legacy">13</div>
-          <div class="consol-num__label">Legacy HID SKUs</div>
+<!-- SKU CONSOLIDATION -->
+<section class="husk-dark" aria-labelledby="husk-consol-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="husk-eyebrow" style="color:var(--husk-warm);margin-bottom:1.5rem;">SKU CONSOLIDATION · WATTSELECT × CCTSELECT</p>
+    <h2 id="husk-consol-h2" class="husk-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:1rem;">Seven SKUs. <span class="husk-warm-text">Sixty-three configurations.</span></h2>
+    <div style="display:grid;grid-template-columns:5fr 7fr;gap:3rem;align-items:center;" class="husk-consol-grid">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:1.5rem;">
+          <div style="font-size:4.5rem;font-weight:900;color:rgba(255,255,255,0.25);font-family:var(--husk-sans);">13</div>
+          <div style="font-size:2rem;color:rgba(255,255,255,0.4);">→</div>
+          <div style="font-size:4.5rem;font-weight:900;color:var(--husk-warm);font-family:var(--husk-sans);">7</div>
         </div>
-        <div class="consol-arrow">→</div>
-        <div class="consol-num">
-          <div class="consol-num__value consol-num__value--alg">1</div>
-          <div class="consol-num__label">Husk SKU</div>
-        </div>
+        <p class="husk-eyebrow" style="opacity:0.6;margin-top:0.75rem;">LEGACY HID WATTAGES · HUSK SKUS</p>
       </div>
-      <div class="coverage-bar">
-        <div class="coverage-bar__label">Wattage coverage range (LED equivalent)</div>
-        <div class="coverage-bar__track"><div class="coverage-bar__fill"></div></div>
-        <div class="coverage-bar__range"><span>100W</span><span>150W</span><span>200W</span><span>300W</span><span>400W</span></div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:1.5rem;">
+        <p class="husk-eyebrow" style="opacity:0.7;margin-bottom:1rem;">WATTAGE COVERAGE · LEGACY MH/HPS → HUSK SKU</p>
+        <div style="height:12px;background:rgba(255,255,255,0.1);border-radius:6px;margin-bottom:0.75rem;overflow:hidden;">
+          <div style="height:100%;background:linear-gradient(to right,var(--husk-warm),var(--husk-accent));border-radius:6px;"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);font-family:var(--husk-mono);font-size:0.6rem;text-align:center;opacity:0.8;">
+          <div>50W</div><div>70W</div><div>100W</div><div>175W</div><div>250W</div><div>400W</div><div>700W</div>
+        </div>
+        <p class="husk-eyebrow" style="opacity:0.5;margin-top:1.5rem;line-height:1.7;">7 SKUS · LCRN1227 · LCRN1827 · LCRN2727 · LCRN4527 · LCRN6527 · LCRN12027 · LCRN200300 · ALL CSMG SUFFIX (CCT 2700K · MOGUL E39)</p>
       </div>
     </div>
-    <div class="sku-table-wrap">
-      <table class="sku-table">
+  </div>
+</section>
+<style>
+  @media (max-width: 768px) { .husk-consol-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- FIND MY HID WIZARD -->
+<section class="husk-paper2" aria-labelledby="husk-wizard-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">FIND MY HID</p>
+    <h2 id="husk-wizard-h2" class="husk-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">Tell us what you're replacing. We'll tell you what to order — and how long the rewire takes.</h2>
+    <p style="opacity:0.7;max-width:36rem;margin-bottom:2rem;font-size:0.9rem;">Three questions. One SKU recommendation with per-fixture labor estimate.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;max-width:56rem;" class="husk-wizard-grid">
+      <div style="padding:1.5rem;border:1px solid rgba(17,17,17,0.1);background:white;">
+        <h3 style="font-weight:600;font-size:0.95rem;margin-bottom:1rem;">What HID lamp are you replacing?</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="lamp-type" value="mh"> Metal Halide (MH)</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="lamp-type" value="hps"> High-Pressure Sodium (HPS)</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="lamp-type" value="hid"> Generic HID / Unknown</label>
+        </div>
+      </div>
+      <div style="padding:1.5rem;border:1px solid rgba(17,17,17,0.1);background:white;">
+        <h3 style="font-weight:600;font-size:0.95rem;margin-bottom:1rem;">What's the fixture / install path?</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="fixture-type" value="bypass"> Ballast bypass (recommended)</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="fixture-type" value="existing"> Keep existing ballast</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="fixture-type" value="new"> New fixture installation</label>
+        </div>
+      </div>
+      <div style="padding:1.5rem;border:1px solid rgba(17,17,17,0.1);background:white;">
+        <h3 style="font-weight:600;font-size:0.95rem;margin-bottom:1rem;">Building voltage at the fixture?</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="voltage" value="120-277"> 120–277V (standard)</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="voltage" value="277-480"> 277–480V (high-voltage)</label>
+        </div>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) { .husk-wizard-grid { grid-template-columns: 1fr !important; } }
+    </style>
+    <p style="font-family:var(--husk-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.5;margin-top:1.5rem;">CONTACT SALES FOR A FULL SPEC RESPONSE WITH PER-FIXTURE LABOR ESTIMATE · <a href="/support/sample-request?subject=Husk+HID+Spec" style="color:var(--husk-accent);text-decoration:none;">REQUEST AURA QUOTE →</a></p>
+  </div>
+</section>
+
+<!-- STRUCTURED SPEC TABLE -->
+<section class="husk-paper" aria-labelledby="husk-spec-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">FULL SPECIFICATION</p>
+    <h2 id="husk-spec-h2" class="husk-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Five spec blocks. Anchored, exportable, signed.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="husk-spec-grid">
+      <article id="spec-electrical">
+        <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">01</p>
+        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Electrical &amp; Driver</h3>
+        <dl>
+          <div class="husk-spec-row"><dt>Input voltage</dt><dd>120–277V AC (-CSMG) · 277–480V AC (-CSHG)</dd></div>
+          <div class="husk-spec-row"><dt>Wattage (WATTselect)</dt><dd>3-position dip-switch · per-SKU range (see SKU table)</dd></div>
+          <div class="husk-spec-row"><dt>Power factor</dt><dd>≥0.90</dd></div>
+          <div class="husk-spec-row"><dt>THD</dt><dd>≤20%</dd></div>
+          <div class="husk-spec-row"><dt>Surge protection</dt><dd>4kV L-N per datasheet</dd></div>
+          <div class="husk-spec-row"><dt>Driver type</dt><dd>Constant-current · integrated · non-dimmable (standard)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-photometric">
+        <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">02</p>
+        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Photometric</h3>
+        <dl>
+          <div class="husk-spec-row"><dt>Efficacy</dt><dd>Up to 150 lm/W (typ. at 5000K)</dd></div>
+          <div class="husk-spec-row"><dt>CCT options (CCTselect)</dt><dd>3000K · 4000K · 5000K</dd></div>
+          <div class="husk-spec-row"><dt>CRI</dt><dd>≥80 (standard) · ≥90 on request</dd></div>
+          <div class="husk-spec-row"><dt>Beam angle</dt><dd>360° omnidirectional</dd></div>
+          <div class="husk-spec-row"><dt>L70 life</dt><dd>&gt;50,000 hours</dd></div>
+        </dl>
+      </article>
+      <article id="spec-materials">
+        <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">03</p>
+        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Materials &amp; Build</h3>
+        <dl>
+          <div class="husk-spec-row"><dt>Base</dt><dd>E39 mogul screw base</dd></div>
+          <div class="husk-spec-row"><dt>Housing</dt><dd>Die-cast aluminum · passive thermal management</dd></div>
+          <div class="husk-spec-row"><dt>Lens</dt><dd>Polycarbonate · UV-stabilized</dd></div>
+          <div class="husk-spec-row"><dt>IP rating</dt><dd>IP64 (dust-tight · splash-proof)</dd></div>
+          <div class="husk-spec-row"><dt>RoHS</dt><dd>Compliant</dd></div>
+        </dl>
+      </article>
+      <article id="spec-environmental">
+        <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">04</p>
+        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Environmental</h3>
+        <dl>
+          <div class="husk-spec-row"><dt>Operating temperature</dt><dd>-40°F to 122°F (-40°C to 50°C)</dd></div>
+          <div class="husk-spec-row"><dt>Storage temperature</dt><dd>-40°F to 185°F (-40°C to 85°C)</dd></div>
+          <div class="husk-spec-row"><dt>Humidity</dt><dd>0–95% non-condensing</dd></div>
+          <div class="husk-spec-row"><dt>Location rating</dt><dd>Wet location listed (with compatible fixture)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-compliance" style="grid-column:1/-1;">
+        <p class="husk-spec-block-num" style="margin-bottom:0.5rem;">05</p>
+        <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:1rem;">Compliance &amp; Listings</h3>
+        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+          <div class="husk-spec-row"><dt>Safety</dt><dd>cULus Listed per datasheet</dd></div>
+          <div class="husk-spec-row"><dt>DLC</dt><dd>DLC Listed · QPL # to confirm on submittal</dd></div>
+          <div class="husk-spec-row"><dt>EMC</dt><dd>FCC Part 15 · ICES-003</dd></div>
+          <div class="husk-spec-row"><dt>Warranty</dt><dd>5 years / 50,000 hours (standard per datasheet)</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .husk-spec-grid { grid-template-columns: 1fr !important; } }
+  @media (max-width: 900px) { .husk-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
+</style>
+
+<!-- SENSOR RECEPTACLE -->
+<section class="husk-paper2">
+  <div style="max-width:1536px;margin:0 auto;padding:3rem 1.5rem;">
+    <div class="husk-sensor-callout" style="max-width:56rem;">
+      <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:0.75rem;color:#166534;">3-pin sensor receptacle · contr<span class="aa">Ⓐ</span>LS compatible.</h3>
+      <p style="font-size:0.9rem;line-height:1.7;opacity:0.9;color:#15803d;">The /SR sensor-ready variant includes a 3-pin NEMA plug-and-play receptacle compatible with the contr<span class="aa">Ⓐ</span>LS ecosystem and NLC-protocol sensors. Occupancy, daylight harvesting, and networked control — no fixture rewire required. Available for every base SKU.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIXTURE COMPATIBILITY MATRIX -->
+<section class="husk-paper" aria-labelledby="husk-matrix-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">FIXTURE COMPATIBILITY</p>
+    <h2 id="husk-matrix-h2" class="husk-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">A real fixture compatibility matrix — once engineering signs off.</h2>
+    <p style="opacity:0.7;max-width:48rem;margin-bottom:2rem;line-height:1.7;">The Husk is a ballast-bypass lamp — it works in any E39 mogul-base fixture that accepts line voltage at the socket. The matrix below shows tested fixture models with confirmed pass status. Engineering is reviewing additional fixtures; this list will expand with each rev.</p>
+    <div style="overflow-x:auto;">
+      <table class="husk-sku-table spec-table" style="min-width:600px;">
+        <thead>
+          <tr>
+            <th>FIXTURE MODEL</th><th>MFR</th><th>TYPE</th><th style="text-align:center;">PASS</th><th>CAVEAT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>BLED26</td><td>RAB</td><td>Area / Shoebox</td><td style="text-align:center;color:#16a34a;font-weight:700;">✓</td><td>Gasket check on older housings</td></tr>
+          <tr><td>OLBR</td><td>Lithonia</td><td>Outdoor Area</td><td style="text-align:center;color:#16a34a;font-weight:700;">✓</td><td>Gasket replacement recommended</td></tr>
+          <tr><td>WPLED</td><td>RAB</td><td>Wall Pack</td><td style="text-align:center;color:#16a34a;font-weight:700;">✓</td><td>—</td></tr>
+          <tr><td>VHBAY</td><td>Lithonia</td><td>High Bay</td><td style="text-align:center;color:#16a34a;font-weight:700;">✓</td><td>—</td></tr>
+          <tr><td>BXSP</td><td>Acuity</td><td>Shoebox</td><td style="text-align:center;color:#ca8a04;font-weight:700;">△</td><td>Verify socket temp rating at 300W</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:1.5rem;">
+      <a href="/support/sample-request?subject=Husk+Fixture+Matrix" class="husk-btn husk-btn-primary">DOWNLOAD FULL MATRIX (PDF)</a>
+      <a href="/support/sample-request?subject=Husk+Fixture+Test+Request" class="husk-btn husk-btn-outline">SUBMIT A FIXTURE FOR TESTING</a>
+    </div>
+  </div>
+</section>
+
+<!-- REWIRE LABOR CANDOR -->
+<section class="husk-paper2">
+  <div style="max-width:1536px;margin:0 auto;padding:3rem 1.5rem;">
+    <div class="husk-candor" style="max-width:56rem;">
+      <p class="husk-candor-ey" style="margin-bottom:0.75rem;">— ENGINEERING CANDOR · REWIRE LABOR</p>
+      <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:0.75rem;">Ballast bypass takes ~20 min per fixture. Plan the bid accordingly.</h3>
+      <p style="font-size:0.9rem;line-height:1.7;margin-bottom:0.75rem;opacity:0.9;">A clean ballast bypass on a Husk-compatible fixture averages 20 minutes for a journeyman electrician (2-pole disconnect, ballast removal, line-voltage land at the socket, fixture re-seal). Some legacy fixtures — particularly older RAB BLED and Lithonia OLBR housings — require gasket replacement to maintain damp-location rating after the housing is opened.</p>
+      <p style="font-size:0.9rem;line-height:1.7;opacity:0.9;">For portfolio retrofits we publish per-fixture labor estimates so the energy-savings calc lines up with the install bid, not just the spec sheet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="husk-paper" aria-labelledby="husk-cert-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">CERTIFICATIONS &amp; LISTINGS</p>
+    <h2 id="husk-cert-h2" class="husk-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">Documented, not declared.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;" class="husk-cert-grid">
+      <div class="husk-cert-cell"><span class="husk-cert-mark">cULus Listed</span><span class="husk-cert-detail">Per datasheet</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">DLC Listed</span><span class="husk-cert-detail">QPL # to confirm on submittal</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">IP64</span><span class="husk-cert-detail">Weather rating per datasheet</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">RoHS</span><span class="husk-cert-detail">EU compliance</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">4kV Surge (L-N)</span><span class="husk-cert-detail">Per datasheet</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">PF ≥ 0.9 · THD ≤ 20%</span><span class="husk-cert-detail">Per datasheet</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">5-Year / 50,000h</span><span class="husk-cert-detail">Standard warranty (per datasheet)</span></div>
+      <div class="husk-cert-cell"><span class="husk-cert-mark">−40°F to 122°F</span><span class="husk-cert-detail">Operating temperature</span></div>
+    </div>
+    <style>
+      @media (max-width: 768px) { .husk-cert-grid { grid-template-columns: 1fr 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- ORDERABLE SKU TABLE -->
+<section class="husk-paper2" aria-labelledby="husk-sku-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">ORDERABLE SKUS</p>
+    <h2 id="husk-sku-h2" class="husk-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Seven SKUs. Every legacy HID wattage.</h2>
+    <p style="opacity:0.8;max-width:40rem;margin-bottom:2rem;font-size:0.9rem;">All SKUs ship from US warehouses · 3-day standard delivery. /SR sensor-ready variants available for every base SKU.</p>
+    <div style="overflow-x:auto;">
+      <table class="husk-sku-table" style="min-width:760px;">
         <thead>
           <tr>
             <th>SKU</th>
-            <th>LED Watts</th>
-            <th>Lumens</th>
-            <th>CCT</th>
-            <th>Replaces (HID)</th>
-            <th>Certifications</th>
+            <th style="text-align:center;">3-WATTselect</th>
+            <th style="text-align:center;">3-CCTselect</th>
+            <th style="text-align:center;">LUMENS (3K / 4K / 5K)</th>
+            <th>REPLACES</th>
+            <th style="text-align:center;">VOLTAGE</th>
+            <th>/SR VARIANT</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>ALG-HUSK-100W-4K</td><td>100W</td><td>14,000 lm</td><td>4000K</td><td>175W MH / 150W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
-          <tr><td>ALG-HUSK-150W-4K</td><td>150W</td><td>21,000 lm</td><td>4000K</td><td>250W MH / 200W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
-          <tr><td>ALG-HUSK-200W-4K</td><td>200W</td><td>28,000 lm</td><td>4000K</td><td>320W MH / 250W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
-          <tr><td>ALG-HUSK-240W-4K</td><td>240W</td><td>33,600 lm</td><td>4000K</td><td>400W MH / 320W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span> <span class="sku-badge sku-badge--baa">BAA</span></td></tr>
-          <tr><td>ALG-HUSK-100W-5K</td><td>100W</td><td>14,000 lm</td><td>5000K</td><td>175W MH / 150W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
-          <tr><td>ALG-HUSK-150W-5K</td><td>150W</td><td>21,000 lm</td><td>5000K</td><td>250W MH / 200W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
-          <tr><td>ALG-HUSK-200W-5K</td><td>200W</td><td>28,000 lm</td><td>5000K</td><td>320W MH / 250W HPS</td><td><span class="sku-badge sku-badge--dlc">DLC</span></td></tr>
+          {skus.map(s => (
+            <tr>
+              <td style="font-weight:600;">{s.sku}</td>
+              <td style="text-align:center;">{s.watt}</td>
+              <td style="text-align:center;">{s.cct}</td>
+              <td style="text-align:center;">{s.lumens}</td>
+              <td>{s.replaces}</td>
+              <td style="text-align:center;">{s.voltage}</td>
+              <td>{s.sr}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<section class="wizard-section" id="find-my-hid">
-  <div class="wizard-section__inner">
-    <div class="section-eyebrow">Find My HID</div>
-    <h2 class="section-title">Tell us what you're replacing. We'll tell you exactly what to order.</h2>
-    <p class="section-sub">Three questions. One SKU recommendation with dip-switch settings, rewire labor estimate, and pre-install caveat.</p>
-    <div class="wizard" id="wizard">
-      <div class="wizard__step wizard__step--active" data-step="1">
-        <div class="wizard__step-header">STEP 1 OF 3</div>
-        <div class="wizard__question">What HID lamp are you replacing?</div>
-        <div class="wizard__options">
-          <button class="wizard__option" data-next="2" data-val="175mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>175W Metal Halide</strong><span>Common in older high-bay and area lighting</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="250mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>250W Metal Halide</strong><span>Warehouse, parking, and site lighting</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="400mh"><span class="wizard__option-icon">💡</span><div class="wizard__option-text"><strong>400W Metal Halide</strong><span>High-output high-bay and sports lighting</span></div></button>
-          <button class="wizard__option" data-next="2" data-val="hps"><span class="wizard__option-icon">🟠</span><div class="wizard__option-text"><strong>High-Pressure Sodium (HPS)</strong><span>Orange-tinted street and area lighting</span></div></button>
-        </div>
-      </div>
-      <div class="wizard__step" data-step="2">
-        <div class="wizard__step-header">STEP 2 OF 3</div>
-        <div class="wizard__question">What type of fixture is it?</div>
-        <div class="wizard__options">
-          <button class="wizard__option" data-next="3" data-val="high-bay"><span class="wizard__option-icon">🏭</span><div class="wizard__option-text"><strong>High-bay (indoor)</strong><span>Warehouse, manufacturing, gymnasium</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="area"><span class="wizard__option-icon">🌐</span><div class="wizard__option-text"><strong>Area / site (outdoor)</strong><span>Parking lot, perimeter, roadway</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="flood"><span class="wizard__option-icon">🔦</span><div class="wizard__option-text"><strong>Flood / wall pack</strong><span>Building-mounted, security lighting</span></div></button>
-          <button class="wizard__option" data-next="3" data-val="post-top"><span class="wizard__option-icon">🏮</span><div class="wizard__option-text"><strong>Post-top / decorative</strong><span>Streetscape, campus, parking structure</span></div></button>
-        </div>
-        <button class="wizard__back" data-back="1">← Back</button>
-      </div>
-      <div class="wizard__step" data-step="3">
-        <div class="wizard__step-header">STEP 3 OF 3</div>
-        <div class="wizard__question">What's your priority for this project?</div>
-        <div class="wizard__options">
-          <button class="wizard__option" data-result="rebate" data-val="rebate"><span class="wizard__option-icon">💰</span><div class="wizard__option-text"><strong>Maximize utility rebate</strong><span>DLC Premium required for most programs</span></div></button>
-          <button class="wizard__option" data-result="lumen" data-val="lumen"><span class="wizard__option-icon">☀️</span><div class="wizard__option-text"><strong>Maximum lumen output</strong><span>Brightest possible replacement</span></div></button>
-          <button class="wizard__option" data-result="baa" data-val="baa"><span class="wizard__option-icon">🇺🇸</span><div class="wizard__option-text"><strong>Buy American Act compliance</strong><span>Federal and municipal projects</span></div></button>
-        </div>
-        <button class="wizard__back" data-back="2">← Back</button>
-      </div>
+<!-- RESOURCES BLOCK -->
+<section class="husk-paper" id="resources" aria-labelledby="husk-resources-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">RESOURCES</p>
+    <h2 id="husk-resources-h2" class="husk-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">Everything a spec writer needs.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;" class="husk-resources-grid">
+      {resources.map(r => <ResourceCard {...r} />)}
     </div>
-    <div class="wizard-result" id="wizard-result">
-      <div class="wizard-result__eyebrow">RECOMMENDED SKU</div>
-      <div class="wizard-result__sku" id="result-sku">ALG-HUSK-150W-4K</div>
-      <div class="wizard-result__name" id="result-name">The Husk · 150W · 4000K · E39 Mogul Base</div>
-      <div class="wizard-result__details">
-        <div class="result-detail"><div class="result-detail__label">Delivered lumens</div><div class="result-detail__value" id="result-lumens">21,000 lm</div></div>
-        <div class="result-detail"><div class="result-detail__label">Replaces</div><div class="result-detail__value" id="result-replaces">250W MH / 200W HPS</div></div>
-        <div class="result-detail"><div class="result-detail__label">Rewire labor est.</div><div class="result-detail__value">0 min (direct drop-in)</div></div>
-        <div class="result-detail"><div class="result-detail__label">Certifications</div><div class="result-detail__value" id="result-certs">DLC Premium · BAA</div></div>
-      </div>
-      <div class="wizard-result__caveat">⚠️ <strong>Pre-install check:</strong> Verify fixture operates at 120–480V. Remove ballast igniter if present (probe-start MH). Confirm E39 socket is in good condition. See install guide for full checklist.</div>
-      <div class="wizard-result__ctas">
-        <a href="/aura" class="btn btn--primary">Request Quote for This SKU</a>
-        <a href="#docs" class="btn btn--outline">Download Install Guide</a>
-      </div>
-      <button class="wizard-result__restart" id="wizard-restart">Start over ↺</button>
+    <style>
+      @media (max-width: 768px) { .husk-resources-grid { grid-template-columns: 1fr 1fr !important; } }
+      @media (max-width: 480px) { .husk-resources-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- SISTER FAMILIES -->
+<section class="husk-paper2" aria-labelledby="husk-sister-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="husk-eyebrow husk-eyebrow-rule husk-accent-text" style="margin-bottom:1.5rem;">SISTER FAMILIES IN SIGN<span class="aa">Ⓐ</span>TURE</p>
+    <h2 id="husk-sister-h2" class="husk-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">More commercial-grade lamps inheriting Husk's engineering.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;" class="husk-sister-grid">
+      <a href="/collections/signature/a-lamp/" class="husk-sister-card">
+        <p style="font-family:var(--husk-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">WORKHORSE A · Q3 <span class="cy">2026</span></p>
+        <h3 style="font-weight:600;margin-bottom:0.25rem;">Workhorse A</h3>
+        <p style="font-size:0.8rem;opacity:0.7;">A19 / A21 commercial-grade · CRI 90+ · ELV/TRIAC/0-10V dimming</p>
+      </a>
+      <a href="/collections/signature/br-lamp/" class="husk-sister-card">
+        <p style="font-family:var(--husk-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">REFLECTOR BR · Q3 <span class="cy">2026</span></p>
+        <h3 style="font-weight:600;margin-bottom:0.25rem;">Reflector BR</h3>
+        <p style="font-size:0.8rem;opacity:0.7;">BR30 / BR40 commercial floods · published dimmer compat</p>
+      </a>
+      <a href="/collections/signature/par-lamp/" class="husk-sister-card">
+        <p style="font-family:var(--husk-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">SPOTLIGHT PAR · Q3 <span class="cy">2026</span></p>
+        <h3 style="font-weight:600;margin-bottom:0.25rem;">Spotlight PAR</h3>
+        <p style="font-size:0.8rem;opacity:0.7;">PAR20 / PAR30 / PAR38 spec-grade beam control · CRI 92+</p>
+      </a>
+    </div>
+    <style>
+      @media (max-width: 768px) { .husk-sister-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- DARK CTA -->
+<section class="husk-char">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;">
+    <h2 class="husk-h2" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Ready to retire the HID?</h2>
+    <p style="opacity:0.7;max-width:40rem;margin:0 auto 2rem;line-height:1.7;">Husk samples shipped 3-day from US warehouses. Per-fixture labor estimates included with every spec response. Portfolio retrofit quotes within 24 hours.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/sample-request?subject=Husk+HID" class="husk-btn husk-btn-primary">REQUEST AURA QUOTE</a>
+      <a href="/support/sample-request?subject=Husk+Sample" class="husk-btn" style="background:transparent;color:white;border:1.5px solid rgba(255,255,255,0.3);">REQUEST SAMPLE</a>
+      <a href="https://algportal.archipelagolighting.com" class="husk-btn" style="background:transparent;color:white;border:1.5px solid rgba(255,255,255,0.3);" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
     </div>
   </div>
 </section>
 
-<section class="spec-section" id="specs">
-  <div class="spec-section__inner">
-    <nav class="spec-toc">
-      <div class="spec-toc__title">Spec sections</div>
-      <ul class="spec-toc__list">
-        <li class="spec-toc__item"><a href="#spec-optical" class="spec-toc__link spec-toc__link--active">Optical</a></li>
-        <li class="spec-toc__item"><a href="#spec-electrical" class="spec-toc__link">Electrical</a></li>
-        <li class="spec-toc__item"><a href="#spec-materials" class="spec-toc__link">Materials</a></li>
-        <li class="spec-toc__item"><a href="#spec-environmental" class="spec-toc__link">Environmental</a></li>
-        <li class="spec-toc__item"><a href="#spec-controls" class="spec-toc__link">Controls</a></li>
-      </ul>
-    </nav>
-    <div class="spec-content">
-      <div class="section-eyebrow">Structured specifications</div>
-      <h2 class="section-title">Full spec data. Five sections.</h2>
-      <div class="spec-group" id="spec-optical">
-        <div class="spec-group__header">Optical</div>
-        <table class="spec-table">
-          <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>Lumens (delivered)</td><td>14,000 – 33,600 lm</td><td>Varies by wattage</td></tr>
-            <tr><td>Efficacy</td><td>Up to 140 lm/W</td><td>At 100W setting</td></tr>
-            <tr><td>CCT options</td><td>4000K / 5000K</td><td>Separate SKU per CCT</td></tr>
-            <tr><td>CRI</td><td>≥70</td><td>R9 ≥ 20</td></tr>
-            <tr><td>Beam angle</td><td>360°</td><td>Omnidirectional (E39 base)</td></tr>
-            <tr><td>MacAdam ellipse</td><td>≤5 SDCM</td><td></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="spec-group" id="spec-electrical">
-        <div class="spec-group__header">Electrical</div>
-        <table class="spec-table">
-          <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>Input voltage</td><td>120–480V AC</td><td>Universal voltage — no ballast required</td></tr>
-            <tr><td>Wattage settings</td><td>100W / 150W / 200W / 240W</td><td>DIP-switch selectable</td></tr>
-            <tr><td>Power factor</td><td>&gt;0.95</td><td>All wattage settings</td></tr>
-            <tr><td>THD</td><td>&lt;20%</td><td>At full load</td></tr>
-            <tr><td>Surge protection</td><td>4kV</td><td>Per IEC 61000-4-5</td></tr>
-            <tr><td>Inrush current</td><td>&lt;35A peak</td><td>At 120V</td></tr>
-          </tbody>
-        </table>
-        <div class="spec-note">Direct-wire only. No ballast required or compatible. Remove existing ballast and igniter before installation. See install guide.</div>
-      </div>
-      <div class="spec-group" id="spec-materials">
-        <div class="spec-group__header">Materials &amp; Construction</div>
-        <table class="spec-table">
-          <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>Housing material</td><td>Die-cast aluminum</td><td>Integral heat sink fins</td></tr>
-            <tr><td>Lens material</td><td>Tempered borosilicate glass</td><td>High-temp rated</td></tr>
-            <tr><td>Base</td><td>E39 mogul screw base</td><td>Nickel-plated brass</td></tr>
-            <tr><td>LED type</td><td>COB array</td><td>High-power chip-on-board</td></tr>
-            <tr><td>Weight</td><td>1.2 kg</td><td>240W variant</td></tr>
-            <tr><td>MOL</td><td>235mm</td><td>Maximum overall length</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="spec-group" id="spec-environmental">
-        <div class="spec-group__header">Environmental &amp; Ratings</div>
-        <table class="spec-table">
-          <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>Operating temp</td><td>-40°C to +50°C</td><td>Ambient</td></tr>
-            <tr><td>IP rating</td><td>IP65</td><td>Wet location rated</td></tr>
-            <tr><td>Vibration rating</td><td>3G</td><td>Per ANSI C136.31</td></tr>
-            <tr><td>L70 rated life</td><td>50,000 hours</td><td>At 25°C ambient</td></tr>
-            <tr><td>Warranty</td><td>5 years</td><td>Pro-rated after year 3</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="spec-group" id="spec-controls">
-        <div class="spec-group__header">Controls &amp; Compatibility</div>
-        <table class="spec-table">
-          <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td>Dimming</td><td>0-10V (optional)</td><td>/DIM suffix SKU</td></tr>
-            <tr><td>Occupancy sensor</td><td>Compatible</td><td>With 0-10V dimming driver</td></tr>
-            <tr><td>Emergency backup</td><td>Not available</td><td>High wattage — external inverter required</td></tr>
-          </tbody>
-        </table>
-        <div class="sensor-callout">
-          <div class="sensor-callout__title">NLC Stand<span class="aa">Ⓐ</span>RCH /SR Sensor-Ready</div>
-          <p class="sensor-callout__body">The Husk (/DIM variant) is compatible with NLC Stand<span class="aa">Ⓐ</span>RCH /SR sensor-ready protocol for occupancy and daylight harvesting. Specify /DIM/SR suffix SKU. Requires 0-10V compatible fixture socket.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="fixture-section">
-  <div class="fixture-section__inner">
-    <div class="section-eyebrow">Fixture compatibility</div>
-    <h2 class="section-title">40+ fixtures proven. Key models shown.</h2>
-    <p class="section-sub">Full compatibility matrix available in the documentation download. Fixtures marked "Conditional" require ballast/igniter removal.</p>
-    <div class="fixture-table-wrap">
-      <table class="fixture-table">
-        <thead>
-          <tr>
-            <th>Manufacturer</th>
-            <th>Model</th>
-            <th>Type</th>
-            <th>Wattage range</th>
-            <th>Compatible</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Acuity / Lithonia</td><td>IBG Series</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
-          <tr><td>Cooper / Eaton</td><td>MHAC Series</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
-          <tr><td>GE / Current</td><td>Evolve Area</td><td>Area/site</td><td>250–400W MH</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Remove igniter</td></tr>
-          <tr><td>Hubbell</td><td>HBL Series</td><td>High-bay</td><td>175–320W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
-          <tr><td>Kim Lighting</td><td>EKM Series</td><td>Area/site</td><td>250–400W HPS</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Remove ballast</td></tr>
-          <tr><td>LSI Industries</td><td>Crossover</td><td>High-bay</td><td>175–400W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
-          <tr><td>RAB Lighting</td><td>WNLED Series</td><td>Wall pack</td><td>175–250W MH</td><td><span class="compat-badge compat-badge--yes">YES</span></td><td>Direct drop-in</td></tr>
-          <tr><td>Sternberg</td><td>Post-top</td><td>Post-top</td><td>175–250W MH</td><td><span class="compat-badge compat-badge--cond">COND</span></td><td>Verify socket clearance</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="fixture-note">Full 40+ fixture compatibility matrix available in the PDF download below. Last updated April 2026.</p>
-  </div>
-</section>
-
-<section class="docs-section" id="docs">
-  <div class="docs-section__inner">
-    <div class="section-eyebrow">Documentation</div>
-    <h2 class="section-title">Everything you need to specify and install.</h2>
-    <div class="docs-grid">
-      <a href="#" class="doc-card"><span class="doc-card__icon">📄</span><div><div class="doc-card__name">Spec Sheet</div><div class="doc-card__meta">PDF · 2.4 MB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">💡</span><div><div class="doc-card__name">IES Photometric File</div><div class="doc-card__meta">IES · 64 KB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">🔧</span><div><div class="doc-card__name">Install Guide</div><div class="doc-card__meta">PDF · 1.1 MB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">✅</span><div><div class="doc-card__name">Fixture Compatibility Matrix</div><div class="doc-card__meta">PDF · 1.8 MB · 40+ fixtures</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">🏆</span><div><div class="doc-card__name">DLC Certificate</div><div class="doc-card__meta">PDF · 340 KB</div></div></a>
-      <a href="#" class="doc-card"><span class="doc-card__icon">🇺🇸</span><div><div class="doc-card__name">BAA Compliance Letter</div><div class="doc-card__meta">PDF · 180 KB</div></div></a>
-    </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="cta-band__inner">
-    <h2 class="cta-band__title">Ready to spec The Husk?</h2>
-    <p class="cta-band__sub">Quotes in 24 hours. Sample kits ship same day for retrofits ≥20 fixtures.</p>
-    <div class="cta-band__row">
-      <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
-      <a href="#" class="btn btn--outline">Request Sample</a>
-      <a href="/collections/signature" class="btn btn--outline">← Back to sign<span class="aa">Ⓐ</span>TURE</a>
-    </div>
-  </div>
-</section>
+</main>
 
 <script>
-  const wizard = document.getElementById('wizard');
-  const resultCard = document.getElementById('wizard-result');
-
-  const skuData = {
-    rebate: { sku: 'ALG-HUSK-150W-4K', name: 'The Husk · 150W · 4000K · E39 Mogul Base', lumens: '21,000 lm', replaces: '250W MH / 200W HPS', certs: 'DLC Premium · BAA' },
-    lumen: { sku: 'ALG-HUSK-240W-4K', name: 'The Husk · 240W · 4000K · E39 Mogul Base', lumens: '33,600 lm', replaces: '400W MH / 320W HPS', certs: 'DLC Premium · BAA' },
-    baa: { sku: 'ALG-HUSK-150W-4K', name: 'The Husk · 150W · 4000K · E39 Mogul Base (BAA)', lumens: '21,000 lm', replaces: '250W MH / 200W HPS', certs: 'DLC Premium · BAA' }
-  };
-
-  wizard.querySelectorAll('.wizard__option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const step = btn.closest('.wizard__step');
-      if (btn.dataset.next) {
-        step.classList.remove('wizard__step--active');
-        wizard.querySelector(`[data-step="${btn.dataset.next}"]`).classList.add('wizard__step--active');
-      } else if (btn.dataset.result) {
-        wizard.style.display = 'none';
-        const d = skuData[btn.dataset.result] || skuData.rebate;
-        document.getElementById('result-sku').textContent = d.sku;
-        document.getElementById('result-name').textContent = d.name;
-        document.getElementById('result-lumens').textContent = d.lumens;
-        document.getElementById('result-replaces').textContent = d.replaces;
-        document.getElementById('result-certs').textContent = d.certs;
-        resultCard.classList.add('wizard-result--visible');
-      }
-    });
+  document.querySelectorAll('.cy').forEach(function(e) {
+    (e as HTMLElement).textContent = String(new Date().getFullYear());
   });
-
-  wizard.querySelectorAll('.wizard__back').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const currentStep = btn.closest('.wizard__step');
-      currentStep.classList.remove('wizard__step--active');
-      wizard.querySelector(`[data-step="${btn.dataset.back}"]`).classList.add('wizard__step--active');
-    });
-  });
-
-  document.getElementById('wizard-restart').addEventListener('click', () => {
-    resultCard.classList.remove('wizard-result--visible');
-    wizard.style.display = '';
-    wizard.querySelectorAll('.wizard__step').forEach((s, i) => s.classList.toggle('wizard__step--active', i === 0));
-  });
-
-  const tocLinks = document.querySelectorAll('.spec-toc__link');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('spec-toc__link--active'));
-        const active = document.querySelector(`.spec-toc__link[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('spec-toc__link--active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -60% 0px' });
-  document.querySelectorAll('.spec-group').forEach(g => observer.observe(g));
 </script>
 </BaseLayout>

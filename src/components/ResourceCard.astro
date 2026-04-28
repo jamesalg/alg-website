@@ -1,0 +1,108 @@
+---
+/**
+ * ResourceCard.astro
+ * v2.7.10 — Resource card with Zoho WorkDrive fallback logic.
+ *
+ * When url is empty, null, "n/a", contains "TODO", or contains a {TOKEN}
+ * placeholder, the card renders with:
+ *   - CTA text: "Request via sales →"
+ *   - href: /support/sample-request?subject={encodedSubject}
+ *   - target: _self (not _blank)
+ *
+ * Props:
+ *   icon:     string  — short label shown in the icon box (e.g. "PDF", "IES")
+ *   title:    string  — card title (e.g. "Datasheet")
+ *   desc:     string  — one-line description
+ *   url:      string | null | undefined  — Zoho WorkDrive public URL
+ *   family:   string  — family name for fallback subject line (e.g. "Workhorse T8")
+ *   resource: string  — resource type for fallback subject line (e.g. "Datasheet")
+ */
+
+interface Props {
+  icon: string;
+  title: string;
+  desc: string;
+  url?: string | null;
+  family: string;
+  resource: string;
+}
+
+const { icon, title, desc, url, family, resource } = Astro.props;
+
+function isFallback(u: string | null | undefined): boolean {
+  if (!u) return true;
+  const s = u.trim();
+  if (!s || s === 'n/a' || s === 'N/A' || s === 'TODO') return true;
+  if (s.includes('TODO') || s.includes('{TOKEN}') || (s.includes('{') && s.includes('}'))) return true;
+  return false;
+}
+
+const fallback = isFallback(url);
+const subject = encodeURIComponent(`${family} ${resource}`);
+const href = fallback
+  ? `/support/sample-request?subject=${subject}`
+  : url!;
+const target = fallback ? '_self' : '_blank';
+const rel = fallback ? undefined : 'noopener noreferrer';
+const ctaText = fallback ? 'Request via sales →' : '↗ ZOHO WORKDRIVE';
+---
+
+<a href={href} target={target} rel={rel} class="resource-card">
+  <div class="resource-icon">{icon}</div>
+  <div class="resource-title">{title}</div>
+  <div class="resource-desc">{desc}</div>
+  <div class="resource-cta" class:list={[fallback ? 'resource-cta--fallback' : '']}>{ctaText}</div>
+</a>
+
+<style>
+  .resource-card {
+    padding: 1.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .resource-card:hover {
+    border-color: var(--color-alg-red, #F32740);
+    box-shadow: 0 2px 8px rgba(243,39,64,0.08);
+  }
+  .resource-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-alg-red, #F32740);
+    color: var(--color-alg-red, #F32740);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+  .resource-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .resource-desc {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    line-height: 1.4;
+  }
+  .resource-cta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-top: auto;
+    text-transform: uppercase;
+  }
+  .resource-cta--fallback {
+    color: var(--color-alg-red, #F32740);
+    opacity: 1;
+    font-weight: 600;
+  }
+</style>

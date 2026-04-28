@@ -214,3 +214,45 @@ Acknowledged by: Manus (iter/v2.7.x-foundation-fixes)
 | A | `scripts/verify.mjs` | Group M: `signature` exempted (bespoke page, no lampBg var) |
 | A | `scripts/verify.mjs` | Group N: `signature` removed from LAMP_SLUGS (bespoke page); pass message updated to 2 pages |
 | A | `scripts/verify.mjs` | Groups K/L/P: `utility-signature` → `signature` |
+
+---
+
+## v2.7.10 — Category + Family-Detail Rebuild (2026-04-28)
+
+**Branch:** `iter/v2.7.10-category-and-family-pages`
+**PR:** #35 (squash-merged to main)
+**Verifier:** ALL CHECKS PASSED · 40 pages
+
+### Category page rebuilds (v3 mockups)
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/collections/tubulararch.astro` | Full rebuild to v3 mockup: sticky section nav, 5 family sections (Workhorse T8, Slim T5, Compact PL, Long-Pin PLL, U-Bend U6), ballast matrix, capability proof, stat corrected to 23 SKUs with qualifier |
+| A | `src/pages/collections/signature.astro` | Full rebuild to v3 mockup: 4 family sections (Husk HID, A-Lamp, BR Flood, PAR Reflector), HID math section, capability proof |
+| A | `src/pages/collections/nostalgic-decor.astro` | Full rebuild to v3 mockup: 7 named lamp sections (Eames A19, Knoll B10, Bauer CA10, Saarinen G16.5, Bertoia G25, Noguchi S14, Aalto A15), naming story, capability proof |
+| A | `src/pages/collections/vintage-decor.astro` | Full rebuild to v3 mockup: 6 named lamp sections (Foundry Edison, Parlor Victorian, Loft Tubular, Salon Globe, Studio Radio, Boudoir Candelabra), filament technology section, capability proof |
+
+### Family detail page rebuilds (v1 mockups)
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/collections/tubulararch/t8.astro` | Full rebuild: Workhorse T8 branding, 5-SKU spec matrix, dip-switch config table (25 configs), resources block with Zoho fallback (2 cards → Request via sales), sister families |
+| A | `src/pages/collections/signature/husk-hid.astro` | Full rebuild: The Husk HID branding, 7-SKU spec table, fixture compat matrix, sensor section, resources block with Zoho fallback (2 cards → Request via sales), sister families |
+| A | `src/pages/collections/nostalgic-decor/a19.astro` | Full rebuild: Eames A19 branding, Where It Belongs section, spec block, dimmer table, SKU table, resources block with Zoho fallback (2 cards → Request via sales), sister families |
+| A | `src/pages/collections/vintage-decor/edison.astro` | Full rebuild: Foundry Edison branding, filament spotlight, spec block, SKU table, resources block with Zoho fallback (2 cards → Request via sales), sister families |
+
+### Shared components
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/ResourceCard.astro` | NEW — Zoho fallback logic: empty/TODO/{TOKEN} URL → "Request via sales →" CTA routed to `/support/sample-request?subject=[Family]+[Resource type]`; card stays visible to preserve 4-card grid rhythm |
+
+### Global fixes
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/Header.astro` | Mega menu routing: `/nostalgic-decor/a-lamp` → `/a19`; `/candle-blunt-tip` → `/b10`; `/candle-flame-tip` → `/ca10`; signature family links: `/signature/` → `/signature/a-lamp`, `/signature/br-lamp`, `/signature/par-lamp` |
+
+### Verifier bespoke justifications
+| Track | Path | Change |
+|---|---|---|
+| A | `scripts/verify.mjs` | Group H: `nostalgic-decor` and `vintage-decor` added to BESPOKE_PAGES (v3 mockup rebuild — BaseLayout, not LampCollectionPageLayout) |
+| A | `scripts/verify.mjs` | Group M: `nostalgic-decor` and `vintage-decor` exempted from --lampBg check (bespoke pages, v2.7.10) |
+| A | `scripts/verify.mjs` | Group N: `nostalgic-decor` and `vintage-decor` removed from LAMP_SLUGS (bespoke pages, v2.7.10); LAMP_SLUGS now empty array |
+| A | `scripts/verify.mjs` | Group P: `spec-table` class added to main SKU tables in t8.astro, husk-hid.astro, a19.astro, edison.astro to satisfy P.1 check |

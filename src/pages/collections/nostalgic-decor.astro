@@ -1,5 +1,456 @@
 ---
-import LampCollectionPageLayout from '../../layouts/LampCollectionPageLayout.astro';
-import data from '../../data/lamps/nostalgic-decor';
+/**
+ * Nostalgic Décor Collection Index
+ * v2.7.10 — rebuilt to match mockup_nostalgic_v3.html
+ * Route: /collections/nostalgic-decor
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
+
+const anchorSections = [
+  { id: 'sec-saarinen',  label: 'The Saarinen' },
+  { id: 'sec-eames',     label: 'The Eames' },
+  { id: 'sec-knoll',     label: 'The Knoll' },
+  { id: 'sec-bauer',     label: 'The Bauer' },
+  { id: 'sec-heath',     label: 'The Heath' },
+  { id: 'sec-eichler',   label: 'The Eichler' },
+  { id: 'sec-marshall',  label: 'The Marshall' },
+];
 ---
-<LampCollectionPageLayout collection={data} />
+<BaseLayout
+  title="Nostalgic Décor — Named LED Lamps | Archipelago Lighting Group"
+  description="Seven named LED lamps for mid-century interiors. The Saarinen A15, Eames A19, Knoll B10, Bauer CA10, Heath G16.5, Eichler G25, Marshall S14. 2400–2700K, CRI 90+, 25,000h."
+  bodyClass="page-nostalgic-collection"
+>
+<style>
+  :root {
+    --nd-amber: #C7822E;
+    --nd-amber-dark: #A86520;
+    --nd-plum: #2A1B22;
+    --nd-warm-bg: #F5EFE3;
+    --nd-warm-bg2: #EDE5D3;
+    --nd-ink: #1A140C;
+    --nd-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --nd-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .nd-warm   { background: var(--nd-warm-bg); color: var(--nd-ink); }
+  .nd-warm2  { background: var(--nd-warm-bg2); color: var(--nd-ink); }
+  .nd-plum   { background: var(--nd-plum); color: #F5EFE3; }
+  .nd-eyebrow { font-family: var(--nd-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .nd-eyebrow-rule::before { content: ""; display: inline-block; width: 24px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 12px; }
+  .nd-amber-text { color: var(--nd-amber); }
+  .nd-h1 { font-family: var(--nd-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+  .nd-stat-num   { font-family: var(--nd-serif); font-weight: 700; font-size: 2.25rem; letter-spacing: -0.02em; line-height: 1; }
+  .nd-stat-label { font-family: var(--nd-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+  .nd-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s; font-family: var(--nd-mono); }
+  .nd-btn-primary { background: var(--nd-ink); color: var(--nd-warm-bg); }
+  .nd-btn-primary:hover { background: #333; }
+  .nd-btn-amber { background: var(--nd-amber); color: var(--nd-warm-bg); }
+  .nd-btn-amber:hover { background: var(--nd-amber-dark); }
+  .nd-section-nav { background: var(--nd-warm-bg2); border-top: 1px solid rgba(26,20,12,0.1); border-bottom: 1px solid rgba(26,20,12,0.1); position: sticky; top: 0; z-index: 10; }
+  .nd-section-nav__inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: repeat(7,1fr); }
+  .nd-nav-tab { padding: 1rem 0.75rem; text-align: center; border-right: 1px solid rgba(26,20,12,0.08); cursor: pointer; transition: background 0.15s; }
+  .nd-nav-tab:last-child { border-right: none; }
+  .nd-nav-tab-num   { font-family: var(--nd-mono); font-size: 0.6rem; letter-spacing: 0.18em; opacity: 0.5; }
+  .nd-nav-tab-label { font-family: var(--nd-serif); font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
+  .nd-nav-tab-shape { font-family: var(--nd-mono); font-size: 0.6rem; letter-spacing: 0.18em; opacity: 0.6; margin-top: 0.2rem; }
+  .nd-nav-tab-dot   { width: 5px; height: 5px; border-radius: 50%; background: rgba(26,20,12,0.2); margin: 0.3rem auto 0; }
+  .nd-nav-tab.active .nd-nav-tab-dot { background: var(--nd-amber); }
+  .nd-nav-tab.active .nd-nav-tab-num { color: var(--nd-amber); opacity: 1; }
+  .nd-family-sec { scroll-margin-top: 56px; }
+  .nd-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .nd-family-inner { grid-template-columns: 1fr; } .nd-section-nav__inner { grid-template-columns: repeat(4,1fr); } }
+  .nd-copy { padding: 4rem; }
+  .nd-illust { aspect-ratio: 5/4; display: flex; align-items: center; justify-content: center; background: var(--nd-plum); position: relative; overflow: hidden; }
+  .nd-illust--light { background: var(--nd-warm-bg2); }
+  .nd-illust-ph { font-family: var(--nd-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(255,255,255,0.12); margin: 2rem; width: calc(100% - 4rem); color: rgba(255,255,255,0.35); }
+  .nd-illust-ph--light { color: rgba(26,20,12,0.3); border-color: rgba(26,20,12,0.12); }
+  .nd-callout      { border-left: 2px solid var(--nd-amber); padding: 1.25rem 1.5rem; background: rgba(199,130,46,0.08); }
+  .nd-callout-light { border-left: 2px solid var(--nd-amber); padding: 1.25rem 1.5rem; background: rgba(199,130,46,0.12); }
+  .nd-callout-ey   { font-family: var(--nd-mono); color: var(--nd-amber); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .nd-card { background: white; padding: 2rem; border: 1px solid rgba(26,20,12,0.08); }
+  .nd-card-num { font-family: var(--nd-mono); color: var(--nd-amber); font-size: 0.65rem; letter-spacing: 0.18em; }
+  .nd-breadcrumb { border-bottom: 1px solid rgba(26,20,12,0.1); background: white; }
+  .nd-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--nd-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .nd-breadcrumb a { color: inherit; text-decoration: none; }
+  .nd-breadcrumb a:hover { color: var(--nd-amber); opacity: 1; }
+</style>
+
+<div class="nd-breadcrumb">
+  <div class="nd-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    NOSTALGIC DÉCOR
+  </div>
+</div>
+
+<section class="nd-plum" style="padding:6rem 1.5rem;text-align:center;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p class="nd-eyebrow nd-eyebrow-rule" style="color:rgba(245,239,227,0.7);margin-bottom:2rem;">SERIES · NOSTALGIC DÉCOR · MID-CENTURY NAMED LAMPS</p>
+    <h1 class="nd-h1" style="font-size:clamp(2.5rem,7vw,4.5rem);color:#F5EFE3;margin-bottom:2rem;">Seven lamps for the rooms<br>that earn their light slowly.</h1>
+    <p style="color:rgba(245,239,227,0.8);font-size:1.1rem;max-width:42rem;margin:0 auto 2.5rem;line-height:1.7;font-family:var(--nd-serif);">The shapes Saarinen, Eames, Knoll, and Bauer would have specified, made today with the dimming, life, and amber glow they couldn't get in 1962.</p>
+    <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+      <div><div class="nd-stat-num" style="color:#F5EFE3;">7</div><div class="nd-stat-label" style="color:rgba(245,239,227,0.7);">Named Lamps</div></div>
+      <div><div class="nd-stat-num" style="color:#F5EFE3;">2400–2700K</div><div class="nd-stat-label" style="color:rgba(245,239,227,0.7);">Warm Amber</div></div>
+      <div><div class="nd-stat-num" style="color:#F5EFE3;">CRI 90+</div><div class="nd-stat-label" style="color:rgba(245,239,227,0.7);">Color Fidelity</div></div>
+      <div><div class="nd-stat-num" style="color:#F5EFE3;">25,000h</div><div class="nd-stat-label" style="color:rgba(245,239,227,0.7);">Long Life</div></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://algportal.archipelagolighting.com" class="nd-btn nd-btn-amber" target="_blank" rel="noopener">BROWSE THE SERIES →</a>
+    </div>
+  </div>
+</section>
+
+<div class="nd-warm" style="border-bottom:1px solid rgba(26,20,12,0.08);">
+  <div style="max-width:1536px;margin:0 auto;padding:1.5rem;text-align:center;font-style:italic;opacity:0.8;font-family:var(--nd-serif);">
+    Designed for living rooms, not lobbies. For the lamp on the nightstand. The one above the breakfast table. The one that's the last thing you turn off.
+  </div>
+</div>
+
+<div class="nd-section-nav" id="nd-section-nav">
+  <div class="nd-section-nav__inner">
+    <div class="nd-nav-tab active" data-nav-target="sec-saarinen">
+      <div class="nd-nav-tab-num">01</div>
+      <div class="nd-nav-tab-label">The Saarinen</div>
+      <div class="nd-nav-tab-shape">A15</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-eames">
+      <div class="nd-nav-tab-num">02</div>
+      <div class="nd-nav-tab-label">The Eames</div>
+      <div class="nd-nav-tab-shape">A19</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-knoll">
+      <div class="nd-nav-tab-num">03</div>
+      <div class="nd-nav-tab-label">The Knoll</div>
+      <div class="nd-nav-tab-shape">B10</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-bauer">
+      <div class="nd-nav-tab-num">04</div>
+      <div class="nd-nav-tab-label">The Bauer</div>
+      <div class="nd-nav-tab-shape">CA10</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-heath">
+      <div class="nd-nav-tab-num">05</div>
+      <div class="nd-nav-tab-label">The Heath</div>
+      <div class="nd-nav-tab-shape">G16.5</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-eichler">
+      <div class="nd-nav-tab-num">06</div>
+      <div class="nd-nav-tab-label">The Eichler</div>
+      <div class="nd-nav-tab-shape">G25</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+    <div class="nd-nav-tab" data-nav-target="sec-marshall">
+      <div class="nd-nav-tab-num">07</div>
+      <div class="nd-nav-tab-label">The Marshall</div>
+      <div class="nd-nav-tab-shape">S14</div>
+      <div class="nd-nav-tab-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 01 — THE SAARINEN A15 -->
+<section class="nd-family-sec nd-warm" id="sec-saarinen">
+  <div class="nd-family-inner">
+    <div class="nd-illust">
+      <div class="nd-illust-ph">SAARINEN A15 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="nd-copy">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE SAARINEN A15 · 01 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">A small bulb for the rooms that don't need a big one.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">A15 is a small-format bulbous A-lamp — the same A-lamp silhouette as A19, scaled down. Available in candelabra base (E12) for vanity strips and small chandeliers, or medium base (E26) for accent fixtures and bedside lamps. Named for Eero Saarinen, whose tulip-pedestal furniture taught a generation that the small object beside the chair earns its place by what it does, not by what it claims.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">Frosted, clear, and silver-tip finishes. 2400K, 2700K, and 3000K CCTs across the variant set. CRI 83+ on standard SKUs, 90+ on JA8 and T20-compliant variants.</p>
+      <div class="nd-callout" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Bedside table lamps and accent sconces (E26 medium-base SKUs)</li>
+          <li>· Vanity strips and small chandeliers requiring a candelabra base (E12 SKUs)</li>
+          <li>· Hospitality bedside lamps · powder-room mirror frames</li>
+          <li>· Anywhere an A-lamp is too large but the lamp still needs to be visible</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/a15/" class="nd-btn nd-btn-primary">VIEW THE SAARINEN</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02 — THE EAMES A19 -->
+<section class="nd-family-sec nd-warm2" id="sec-eames">
+  <div class="nd-family-inner">
+    <div class="nd-copy" style="order:1;">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE EAMES A19 · 02 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The standard-bearer of mid-century domestic light.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">The Eames A19 is the lamp Charles and Ray Eames would have used in the Case Study House — a standard A19 silhouette with a warm nostalgic finish, 2700K and 2400K CCT options, and a frosted or smoked glass that softens the filament into a warm ambient glow.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">For residential living rooms, hospitality bedside tables, and any application where the lamp is the last thing you see before the lights go out.</p>
+      <div class="nd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Living-room table lamps · the one that gets switched on at 4 PM</li>
+          <li>· Hotel guest room nightstand fixtures</li>
+          <li>· Restaurant ambient overhead clusters · 4–8 per dining room</li>
+          <li>· Reading lamps with TRIAC or ELV dimming · CRI 90+ for fidelity</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/a19/" class="nd-btn nd-btn-primary">VIEW THE EAMES</a>
+    </div>
+    <div class="nd-illust nd-illust--light" style="order:2;">
+      <div class="nd-illust-ph nd-illust-ph--light">EAMES A19 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 — THE KNOLL B10 -->
+<section class="nd-family-sec nd-warm" id="sec-knoll">
+  <div class="nd-family-inner">
+    <div class="nd-illust">
+      <div class="nd-illust-ph">KNOLL B10 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="nd-copy">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE KNOLL B10 · 03 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The chandelier lamp that still looks like a lamp.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">B10 is the blunt-tip candelabra — the workhorse of decorative chandeliers and wall sconces. Named for Florence Knoll Bassett, whose mid-century corporate and residential interiors taught a generation that the lamp itself is part of the composition, not a hidden source.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">Frosted glass for residential living rooms and dining chandeliers; clear glass for hospitality applications where the filament is the design feature.</p>
+      <div class="nd-callout" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Decorative chandeliers · 4 to 12 lamps per fixture</li>
+          <li>· Wall sconces with exposed bases · candelabra silhouette as the design feature</li>
+          <li>· Restaurant chandelier clusters · CRI 90+ for tablescape continuity</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/b10/" class="nd-btn nd-btn-primary">VIEW THE KNOLL</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04 — THE BAUER CA10 -->
+<section class="nd-family-sec nd-warm2" id="sec-bauer">
+  <div class="nd-family-inner">
+    <div class="nd-copy" style="order:1;">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE BAUER CA10 · 04 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">A flame that doesn't pretend to be electricity.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">For decorative chandeliers and entryway sconces where the lamp's silhouette is doing as much work as the photons it produces.</p>
+      <div class="nd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Formal entryway chandeliers · the lamp the guest sees first</li>
+          <li>· Restaurant sconces · clear glass · CRI 92+ flame-mimic CCT</li>
+          <li>· Ceremonial / ballroom decorative lighting · paired with B10 candelabras</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/ca10/" class="nd-btn nd-btn-primary">VIEW THE BAUER</a>
+    </div>
+    <div class="nd-illust nd-illust--light" style="order:2;">
+      <div class="nd-illust-ph nd-illust-ph--light">BAUER CA10 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05 — THE HEATH G16.5 -->
+<section class="nd-family-sec nd-warm" id="sec-heath">
+  <div class="nd-family-inner">
+    <div class="nd-illust">
+      <div class="nd-illust-ph">HEATH G16.5 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="nd-copy">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE HEATH G16.5 · 05 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The small globe for the mirror that tells the truth.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">G16.5 is the small-format globe — the lamp that gets installed in vanity strips above bathroom mirrors, in salon cabinets, and in dressing-room makeup surrounds. Named for Heath Ceramics, whose mid-century ceramics taught a generation that surface and light belonged together.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">CRI 90+ ensures color fidelity for the place where color decisions actually get made — the bathroom mirror at 7 AM.</p>
+      <div class="nd-callout" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Bathroom vanity strips · 5–8 lamps per fixture</li>
+          <li>· Salon cabinet illumination · cosmetic-counter applications</li>
+          <li>· Hospitality dressing-room makeup mirrors</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/g16/" class="nd-btn nd-btn-primary">VIEW THE HEATH</a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 06 — THE EICHLER G25 -->
+<section class="nd-family-sec nd-warm2" id="sec-eichler">
+  <div class="nd-family-inner">
+    <div class="nd-copy" style="order:1;">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE EICHLER G25 · 06 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The pendant lamp for the suburb that wanted to be modern.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">G25 is the medium globe — the larger sibling of the G16.5. Named for Joseph Eichler, who built mid-century modern homes by the thousand and needed pendant lamps that wouldn't betray the architecture. Larger envelope, slightly broader spread, same warm amber glow.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">For decorative pendants over breakfast bars, kitchen islands, and any place a single statement lamp does the visual work of three.</p>
+      <div class="nd-callout-light" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Decorative pendants over kitchen islands and breakfast bars</li>
+          <li>· Restaurant bar overheads · single-lamp focal points</li>
+          <li>· Mid-century-modern residential vanity surrounds (paired with G16.5)</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/g25/" class="nd-btn nd-btn-primary">VIEW THE EICHLER</a>
+    </div>
+    <div class="nd-illust nd-illust--light" style="order:2;">
+      <div class="nd-illust-ph nd-illust-ph--light">EICHLER G25 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07 — THE MARSHALL S14 -->
+<section class="nd-family-sec nd-warm" id="sec-marshall">
+  <div class="nd-family-inner">
+    <div class="nd-illust">
+      <div class="nd-illust-ph">MARSHALL S14 PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="nd-copy">
+      <p class="nd-eyebrow nd-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="nd-amber-text">SERIES ·</span> THE MARSHALL S14 · 07 / 07</p>
+      <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">The lamp that hangs from a string and still has a name.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1rem;opacity:0.9;font-family:var(--nd-serif);">S14 is the commercial-grade string-light lamp — outdoor patio strands, market lighting, restaurant rooftop arrays. The Marshall name marks this as the festoon-grade installation lamp built for repeat-season service, not the consumer SKU at the home center. Damp-rated socket. Shatter-resistant glass envelope. 25,000-hour rated.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.5rem;opacity:0.8;font-family:var(--nd-serif);">For the bar that opens its patio in May and closes it in October. The hospitality property running four parallel strands above an outdoor dining deck.</p>
+      <div class="nd-callout" style="margin-bottom:1.5rem;">
+        <p class="nd-callout-ey" style="margin-bottom:0.5rem;">WHERE IT BELONGS</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;font-family:var(--nd-serif);">
+          <li>· Restaurant patio string installations</li>
+          <li>· Hospitality rooftop bars · 100+ lamps per array</li>
+          <li>· Wedding / event decorative outdoor strands · damp-rated</li>
+        </ul>
+      </div>
+      <a href="/collections/nostalgic-decor/s14/" class="nd-btn nd-btn-primary">VIEW THE MARSHALL</a>
+    </div>
+  </div>
+</section>
+
+<!-- NAMING STORY -->
+<section class="nd-plum">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;color:#F5EFE3;">
+    <p class="nd-eyebrow nd-eyebrow-rule" style="color:var(--nd-amber);margin-bottom:1.5rem;">THE NAMING STORY · MID-CENTURY DESIGN COMPANIONS</p>
+    <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#F5EFE3;max-width:48rem;margin-bottom:1rem;">Seven names. Seven shapes. One philosophy: a lamp earns its place at the table.</h2>
+    <p style="opacity:0.8;max-width:44rem;margin-bottom:3rem;line-height:1.7;font-family:var(--nd-serif);">Each lamp in the Nostalgic Décor series is named for a mid-century designer or builder whose work demanded a particular kind of light — soft, warm, imperfect-on-purpose.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;" class="nd-story-grid">
+      <div>
+        <p class="nd-callout-ey" style="margin-bottom:0.75rem;color:var(--nd-amber);">RESIDENTIAL FIT</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--nd-serif);line-height:1.7;">Living rooms, bedside, dining nooks, vanity strips, hallway sconces. The lamps that get switched on for the second half of the day and stay on until bedtime.</p>
+      </div>
+      <div>
+        <p class="nd-callout-ey" style="margin-bottom:0.75rem;color:var(--nd-amber);">HOSPITALITY FIT</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--nd-serif);line-height:1.7;">Boutique hotel guest rooms, restaurant ambient overheads, lobby chandeliers, bar pendants. Used at scale (200–2000 lamps per property) where binning and CRI consistency become the spec writer's job.</p>
+      </div>
+      <div>
+        <p class="nd-callout-ey" style="margin-bottom:0.75rem;color:var(--nd-amber);">SPECIFICATION FIT</p>
+        <p style="font-size:0.875rem;opacity:0.85;font-family:var(--nd-serif);line-height:1.7;">A&amp;D specs that call out lamp series rather than generic "warm white E26." The naming gives the designer a SKU to spec; we supply matching binning, dimming, and warranty across the order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .nd-story-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- CAPABILITY PROOF -->
+<section class="nd-warm">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="nd-eyebrow nd-eyebrow-rule nd-amber-text" style="margin-bottom:1.5rem;">CAPABILITY PROOF · WHY DESIGNERS SPEC THIS SERIES</p>
+    <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:40rem;margin-bottom:3rem;">A residential lamp built like a hospitality SKU.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="nd-cap-grid">
+      <div class="nd-card">
+        <p class="nd-card-num" style="margin-bottom:1rem;">01</p>
+        <h3 style="font-family:var(--nd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Color fidelity that survives the bathroom mirror</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--nd-serif);">
+          <li>· CRI 90+ across the full Nostalgic Décor series · TM-30 Rf 88+</li>
+          <li>· Tight binning (3-step MacAdam) for installations of 4+ lamps in one fixture</li>
+          <li>· 2400K and 2700K options to match any architectural register</li>
+        </ul>
+      </div>
+      <div class="nd-card">
+        <p class="nd-card-num" style="margin-bottom:1rem;">02</p>
+        <h3 style="font-family:var(--nd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Dimming that doesn't flicker, doesn't pop, doesn't argue</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--nd-serif);">
+          <li>· TRIAC and ELV dimming compatibility · published list of tested dimmers</li>
+          <li>· 5% lower cutoff for living-room ambient settings</li>
+          <li>· Drop-out behavior tested at low-end with Lutron, Leviton, Cooper, Legrand controls</li>
+        </ul>
+      </div>
+      <div class="nd-card">
+        <p class="nd-card-num" style="margin-bottom:1rem;">03</p>
+        <h3 style="font-family:var(--nd-serif);font-size:1.2rem;margin-bottom:0.75rem;">Hospitality scale, residential intent</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;font-family:var(--nd-serif);">
+          <li>· Order quantities from 6 to 6,000 · same SKU, same binning, same warranty</li>
+          <li>· Stocked across 5 US warehouses for sub-3-day shipment</li>
+          <li>· Replacement-lamp consistency over 3+ year project lifecycles</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .nd-cap-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- NEW & EXPANDING -->
+<section class="nd-warm2" style="border-top:1px solid rgba(26,20,12,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="nd-eyebrow nd-amber-text" style="margin-bottom:1.5rem;">NEW &amp; EXPANDING IN <span class="cy">2026</span></p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;" class="nd-expand-grid">
+      <div><span class="nd-amber-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--nd-serif);">JA8 / Title 24 compliant variants across A15 and A19 · Q3 <span class="cy">2026</span></span></div>
+      <div><span class="nd-amber-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--nd-serif);">S14 outdoor damp-rated string-light kit · 25-lamp set · Q3 <span class="cy">2026</span></span></div>
+      <div><span class="nd-amber-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--nd-serif);">Heritage binning kit · 7-lamp matched samples for A&amp;D specifiers · Q3 <span class="cy">2026</span></span></div>
+      <div><span class="nd-amber-text" style="font-weight:700;">→</span> <span style="font-size:0.875rem;font-family:var(--nd-serif);">B10 silver-tip candelabra variant for hospitality chandelier specs · Q4 <span class="cy">2026</span></span></div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .nd-expand-grid { grid-template-columns: 1fr 1fr !important; } }
+  @media (max-width: 600px) { .nd-expand-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- DARK CTA -->
+<section class="nd-plum">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:#F5EFE3;">
+    <h2 class="nd-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Ready to spec the series?</h2>
+    <p style="opacity:0.8;max-width:40rem;margin:0 auto 2rem;line-height:1.7;font-family:var(--nd-serif);">Samples from US warehouses. Spec response under 24 hours. Binning documentation for A&amp;D submittals.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/sample-request" class="nd-btn nd-btn-amber">REQUEST SAMPLE</a>
+      <a href="https://algportal.archipelagolighting.com" class="nd-btn" style="background:transparent;color:#F5EFE3;border:1.5px solid rgba(245,239,227,0.4);" target="_blank" rel="noopener">SHOP ALL NOSTALGIC DÉCOR</a>
+    </div>
+  </div>
+</section>
+
+<CollectionAnchorNav sections={anchorSections} />
+
+<script>
+  (function () {
+    var tabs = document.querySelectorAll('.nd-nav-tab[data-nav-target]');
+    var sectionIds = ['sec-saarinen','sec-eames','sec-knoll','sec-bauer','sec-heath','sec-eichler','sec-marshall'];
+    var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+    function setActive(id: string) {
+      tabs.forEach(function(tab) {
+        var t = tab as HTMLElement;
+        t.classList.toggle('active', t.dataset.navTarget === id);
+      });
+    }
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var t = tab as HTMLElement;
+        var target = t.dataset.navTarget;
+        if (target) {
+          var el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.3, rootMargin: '-10% 0% -50% 0%' });
+    sections.forEach(function(s) { if (s) observer.observe(s); });
+  })();
+  document.querySelectorAll('.cy').forEach(function(e) {
+    (e as HTMLElement).textContent = String(new Date().getFullYear());
+  });
+</script>
+</BaseLayout>

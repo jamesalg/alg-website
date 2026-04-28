@@ -1,373 +1,461 @@
 ---
 /**
  * tubulⒶRCH Collection Index
- * v2.7.8 — full engineering collection index page
+ * v2.7.10 — rebuilt to match mockup_tubulararch_v3.html
  * Route: /collections/tubulararch
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CollectionAnchorNav from '../../components/CollectionAnchorNav.astro';
+
+const anchorSections = [
+  { id: 'sec-t8',  label: 'Workhorse T8' },
+  { id: 'sec-t5',  label: 'Slim T5' },
+  { id: 'sec-pl',  label: 'Compact PL' },
+  { id: 'sec-pll', label: 'Long-Pin PLL' },
+  { id: 'sec-u6',  label: 'U-Bend U6' },
+];
 ---
 <BaseLayout
-  title="tubulⒶRCH — Linear LED Retrofit Lamps | Archipelago Lighting Group"
+  title="tubulⒶRCH — Linear LED Retrofit | Archipelago Lighting Group"
   description="Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, U-bend. UL-certified, DLC-listed, structured spec data and verified compatibility."
   bodyClass="page-tubulararch-collection"
 >
 <style>
-  .page-tubulararch-collection {
-    --accent: #F32740;
-    --accent-dark: #C41E32;
-    --fg: #111111;
-    --fg-muted: #6B6B6B;
-    --bg: #ffffff;
-    --bg-alt: #f4f4f6;
-    --border: #E5E5E5;
-    --font-mono: 'Courier New', Courier, monospace;
-    --inner: min(1280px, 100% - 64px);
+  :root {
+    --ta-accent: #F32740;
+    --ta-accent-dark: #C41E32;
+    --ta-warm: #F5C24A;
+    --ta-char: #1B1B1F;
+    --ta-paper: #F5F5F7;
+    --ta-paper2: #EBEBED;
+    --ta-ink: #111111;
+    --ta-mono: 'JetBrains Mono', 'Courier New', monospace;
   }
-  .section-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-  .section-title { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--fg); margin: 0 0 12px; line-height: 1.2; }
-  .section-sub { font-size: 16px; color: var(--fg-muted); max-width: 640px; margin: 0 0 40px; line-height: 1.6; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s, color 0.15s; }
-  .btn--primary { background: var(--accent); color: #fff; }
-  .btn--primary:hover { background: var(--accent-dark); }
-  .btn--outline { background: transparent; color: var(--fg); border: 1.5px solid var(--border); }
-  .btn--outline:hover { border-color: var(--fg); }
-  /* Hero */
-  .collection-hero { background: #111; color: #fff; padding: 80px 0 64px; text-align: center; }
-  .collection-hero__inner { width: var(--inner); margin: 0 auto; }
-  .collection-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #F32740; margin-bottom: 16px; }
-  .collection-name { font-size: clamp(48px, 8vw, 96px); font-weight: 900; letter-spacing: -0.02em; margin: 0 0 20px; line-height: 1; color: #fff; }
-  .collection-name .aa { color: #F32740; }
-  .collection-tagline { font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.75); max-width: 640px; margin: 0 auto 40px; line-height: 1.6; }
-  .collection-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-  .collection-stat__value { font-size: 36px; font-weight: 800; color: #fff; line-height: 1; }
-  .collection-stat__label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-  .collection-hero .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .collection-hero .btn--outline:hover { border-color: #fff; }
-  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .collection-stat-qualifier { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); text-transform: uppercase; margin: -24px 0 28px; text-align: center; }
-  /* Install filter */
-  .install-filter { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-  .install-filter__inner { width: var(--inner); margin: 0 auto; display: flex; align-items: center; gap: 8px; padding: 12px 0; flex-wrap: wrap; }
-  .install-filter__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--fg-muted); white-space: nowrap; margin-right: 4px; }
-  .install-filter__chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .install-chip { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1.5px solid var(--border); background: #fff; color: var(--fg-muted); cursor: pointer; transition: all 0.15s; }
-  .install-chip:hover { border-color: var(--accent); color: var(--accent); }
-  .install-chip--active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .install-chip__count { display: inline-block; background: rgba(0,0,0,0.12); border-radius: 10px; padding: 1px 6px; font-size: 10px; margin-left: 4px; }
-  .install-chip--active .install-chip__count { background: rgba(255,255,255,0.25); }
-  .install-filter__help { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.06em; }
-  .install-filter__help a { color: var(--accent); font-weight: 600; text-decoration: none; }
-  /* Families grid */
-  .families-section { padding: 64px 0; background: var(--bg); }
-  .families-section__inner { width: var(--inner); margin: 0 auto; }
-  .families-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
-  .family-card { display: block; text-decoration: none; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; transition: box-shadow 0.15s, border-color 0.15s; }
-  .family-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-color: var(--accent); }
-  .family-card__visual { background: #1a1a1a; height: 180px; position: relative; display: flex; align-items: flex-end; padding: 12px; }
-  .family-card__visual-placeholder { color: rgba(255,255,255,0.3); font-size: 12px; text-align: center; width: 100%; }
-  .family-card__install-tag { position: absolute; top: 12px; left: 12px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 3px; font-weight: 700; }
-  .tag--ab { background: #F32740; color: #fff; }
-  .tag--a { background: #2E7D32; color: #fff; }
-  .tag--b { background: #1565C0; color: #fff; }
-  .family-card__body { padding: 20px; }
-  .family-card__name { font-size: 20px; font-weight: 700; color: var(--fg); margin: 0 0 6px; }
-  .family-card__tagline { font-size: 13px; color: var(--fg-muted); margin: 0 0 16px; line-height: 1.5; }
-  .family-card__meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .chip { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; background: var(--bg-alt); color: var(--fg-muted); letter-spacing: 0.06em; }
-  .chip--watt { background: #FFF3E0; color: #E65100; }
-  .chip--sku { background: #E8F5E9; color: #2E7D32; }
-  .family-card__cta { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 12px; }
-  /* Replace section */
-  .replace-section { padding: 64px 0; background: var(--bg-alt); }
-  .replace-section__inner { width: var(--inner); margin: 0 auto; }
-  .replace-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
-  .replace-card { display: block; text-decoration: none; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; transition: border-color 0.15s; }
-  .replace-card:hover { border-color: var(--accent); }
-  .replace-card__legacy { font-size: 22px; font-weight: 800; color: var(--fg); font-family: var(--font-mono); }
-  .replace-card__legacy-sub { font-size: 11px; color: var(--fg-muted); margin-top: 2px; }
-  .replace-card__arrow { font-size: 20px; color: var(--accent); margin: 10px 0; }
-  .replace-card__alg { font-size: 14px; font-weight: 700; color: var(--fg); }
-  .replace-card__alg-sub { font-size: 11px; color: var(--fg-muted); margin-top: 2px; font-family: var(--font-mono); }
-  /* Applications */
-  .applications-section { padding: 64px 0; background: #fff; }
-  .applications-section__inner { width: var(--inner); margin: 0 auto; }
-  .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 32px; }
-  .app-tile { display: block; text-decoration: none; background: var(--bg-alt); border-radius: 8px; padding: 20px 16px; text-align: center; font-size: 13px; font-weight: 600; color: var(--fg); transition: background 0.15s; }
-  .app-tile:hover { background: #e8e8ea; }
-  .app-tile__icon { font-size: 24px; margin-bottom: 8px; }
-  /* Compat hub */
-  .compat-hub { padding: 64px 0; background: var(--bg-alt); }
-  .compat-hub__inner { width: var(--inner); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  @media (max-width: 768px) { .compat-hub__inner { grid-template-columns: 1fr; } }
-  .compat-hub__list { list-style: none; padding: 0; margin: 0 0 24px; }
-  .compat-hub__list-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--fg); }
-  .compat-hub__visual { background: #1a1a1a; border-radius: 8px; height: 200px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 13px; text-align: center; }
-  /* Education */
-  .education-section { padding: 64px 0; background: #fff; }
-  .education-section__inner { width: var(--inner); margin: 0 auto; }
-  .education-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
-  .edu-card { display: block; text-decoration: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 28px; transition: border-color 0.15s; }
-  .edu-card:hover { border-color: var(--accent); }
-  .edu-card__num { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 12px; }
-  .edu-card__title { font-size: 17px; font-weight: 700; color: var(--fg); margin: 0 0 10px; }
-  .edu-card__body { font-size: 14px; color: var(--fg-muted); line-height: 1.6; margin: 0 0 16px; }
-  .edu-card__cta { font-size: 13px; font-weight: 600; color: var(--accent); }
-  /* Cross-collection */
-  .cross-section { padding: 64px 0; background: var(--bg-alt); }
-  .cross-section__inner { width: var(--inner); margin: 0 auto; }
-  .cross-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
-  .cross-card { display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; background: #fff; border: 1.5px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.15s; }
-  .cross-card:hover { border-color: var(--accent); }
-  .cross-card__name { font-size: 20px; font-weight: 700; color: var(--fg); margin-bottom: 4px; }
-  .cross-card__name .aa { color: var(--accent); }
-  .cross-card__sub { font-size: 13px; color: var(--fg-muted); }
-  .cross-card__meta { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 12px; font-family: var(--font-mono); color: var(--fg-muted); letter-spacing: 0.06em; }
-  .cross-card__arrow { color: var(--accent); font-size: 16px; }
-  /* CTA band */
-  .cta-band { padding: 64px 0; background: #111; text-align: center; color: #fff; }
-  .cta-band__inner { width: var(--inner); margin: 0 auto; }
-  .cta-band__title { font-size: clamp(24px, 4vw, 40px); font-weight: 800; margin: 0 0 12px; }
-  .cta-band__sub { font-size: 16px; color: rgba(255,255,255,0.65); margin: 0 0 32px; }
-  .cta-band__row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .cta-band .btn--outline { border-color: rgba(255,255,255,0.3); color: #fff; }
-  .cta-band .btn--outline:hover { border-color: #fff; }
+  .ta-dark  { background: var(--ta-char); color: #fff; }
+  .ta-paper { background: var(--ta-paper); color: var(--ta-ink); }
+  .ta-paper2{ background: var(--ta-paper2); color: var(--ta-ink); }
+  .ta-eyebrow {
+    font-family: var(--ta-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .ta-eyebrow-rule::before {
+    content: "";
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: currentColor;
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+  .ta-eyebrow-red { color: var(--ta-accent); }
+  .ta-h1 { font-family: 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.02; }
+  .ta-accent { color: var(--ta-accent); }
+  .ta-warm   { color: var(--ta-warm); }
+  .ta-stat-num   { font-weight: 800; font-size: 2.25rem; letter-spacing: -0.03em; line-height: 1; }
+  .ta-stat-label { font-family: var(--ta-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+  .ta-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 12px 24px; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.06em; text-decoration: none; cursor: pointer;
+    border: none; transition: background 0.15s, color 0.15s, border-color 0.15s;
+    font-family: var(--ta-mono);
+  }
+  .ta-btn-primary { background: var(--ta-accent); color: #fff; }
+  .ta-btn-primary:hover { background: var(--ta-accent-dark); }
+  .ta-btn-outline-light { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); }
+  .ta-btn-outline-light:hover { border-color: #fff; }
+  .ta-btn-outline-dark { background: transparent; color: var(--ta-ink); border: 1.5px solid rgba(0,0,0,0.25); }
+  .ta-btn-outline-dark:hover { border-color: var(--ta-ink); }
+  /* Section nav */
+  .ta-section-nav { background: white; border-top: 1px solid rgba(0,0,0,0.1); border-bottom: 1px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 10; }
+  .ta-section-nav__inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: repeat(5,1fr); }
+  .ta-nav-tab { padding: 1.25rem 1rem; text-align: center; border-right: 1px solid rgba(0,0,0,0.08); cursor: pointer; transition: background 0.15s; }
+  .ta-nav-tab:last-child { border-right: none; }
+  .ta-nav-tab-num   { font-family: var(--ta-mono); font-size: 0.65rem; letter-spacing: 0.18em; opacity: 0.5; }
+  .ta-nav-tab-label { font-family: var(--ta-mono); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.4rem; }
+  .ta-nav-tab-dot   { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); margin: 0.4rem auto 0; }
+  .ta-nav-tab.active .ta-nav-tab-dot { background: var(--ta-accent); }
+  .ta-nav-tab.active .ta-nav-tab-num { color: var(--ta-accent); opacity: 1; }
+  /* Family sections */
+  .ta-family-sec { scroll-margin-top: 56px; }
+  .ta-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 768px) { .ta-family-inner { grid-template-columns: 1fr; } }
+  .ta-copy { padding: 4rem; }
+  .ta-illust {
+    aspect-ratio: 5/4; display: flex; align-items: center; justify-content: center;
+    background: #1B1B1F; position: relative; overflow: hidden;
+  }
+  .ta-illust--light { background: var(--ta-paper); }
+  .ta-illust-ph {
+    font-family: var(--ta-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; text-align: center; padding: 2rem;
+    border: 1px dashed rgba(255,255,255,0.12); margin: 2rem;
+    width: calc(100% - 4rem); color: rgba(255,255,255,0.35);
+  }
+  .ta-illust-ph--light { color: rgba(0,0,0,0.3); border-color: rgba(0,0,0,0.12); }
+  .ta-callout       { border-left: 3px solid var(--ta-accent); padding: 1rem 1.25rem; background: var(--ta-paper2); }
+  .ta-callout-dark  { border-left: 3px solid var(--ta-warm); padding: 1rem 1.25rem; background: rgba(245,194,74,0.08); }
+  .ta-callout-ey    { font-family: var(--ta-mono); color: var(--ta-accent); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .ta-callout-ey-warm { color: var(--ta-warm); }
+  /* Ballast matrix */
+  .ta-matrix-row:hover { background: rgba(243,39,64,0.03); }
+  /* Capability cards */
+  .ta-card { background: white; padding: 2rem; border: 1px solid rgba(0,0,0,0.08); }
+  .ta-card-num { font-family: var(--ta-mono); color: var(--ta-accent); font-size: 0.65rem; letter-spacing: 0.18em; }
+  /* Breadcrumb */
+  .ta-breadcrumb { border-bottom: 1px solid rgba(0,0,0,0.1); background: white; }
+  .ta-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--ta-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .ta-breadcrumb a { color: inherit; text-decoration: none; }
+  .ta-breadcrumb a:hover { color: var(--ta-accent); opacity: 1; }
 </style>
 
-<section class="collection-hero">
-  <div class="collection-hero__inner">
-    <div class="collection-eyebrow">Linear LED retrofit lamps</div>
-    <h1 class="collection-name">tubul<span class="aa">Ⓐ</span>RCH</h1>
-    <p class="collection-tagline">Five families covering every fluorescent retrofit job — T5, T8, PL, PLL, and U-bend. All UL-certified, DLC-listed, with structured spec data and verified compatibility.</p>
-    <div class="collection-stats">
-      <div class="collection-stat"><div class="collection-stat__value">5</div><div class="collection-stat__label">Families</div></div>
-      <div class="collection-stat"><div class="collection-stat__value">23</div><div class="collection-stat__label">SKUs</div></div>
-      <div class="collection-stat"><div class="collection-stat__value">200+</div><div class="collection-stat__label">Ballasts proven</div></div>
-      <div class="collection-stat"><div class="collection-stat__value">DLC</div><div class="collection-stat__label">Premium / Standard</div></div>
+<!-- Breadcrumb -->
+<div class="ta-breadcrumb">
+  <div class="ta-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    TUBUL<span class="aa">Ⓐ</span>RCH
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="ta-dark" style="padding:6rem 1.5rem;text-align:center;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p class="ta-eyebrow ta-eyebrow-rule" style="color:rgba(255,255,255,0.7);margin-bottom:2rem;">LINEAR LED RETROFIT · ENGINEERING-CREDIBILITY COLLECTION</p>
+    <h1 class="ta-h1" style="font-size:clamp(2.5rem,7vw,4.5rem);color:#fff;margin-bottom:2rem;">Five form factors.<br><span class="ta-accent">One spec language.</span></h1>
+    <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:40rem;margin:0 auto 2.5rem;line-height:1.7;">From 2-foot T5 office lighting to 4-foot T8 warehouses to compact PL/PLL biax retrofits to U-bend recess fixtures. UL-certified, DLC-listed, and tested against the 200+ ballast models you actually have in the field.</p>
+    <div style="display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.25rem;">
+      <div><div class="ta-stat-num" style="color:#fff;">5</div><div class="ta-stat-label" style="color:rgba(255,255,255,0.7);">Families</div></div>
+      <div><div class="ta-stat-num" style="color:#fff;">23</div><div class="ta-stat-label" style="color:rgba(255,255,255,0.7);">SKUs</div></div>
+      <div><div class="ta-stat-num" style="color:#fff;">200+</div><div class="ta-stat-label" style="color:rgba(255,255,255,0.7);">Ballasts proven</div></div>
+      <div><div class="ta-stat-num" style="color:#fff;">DLC</div><div class="ta-stat-label" style="color:rgba(255,255,255,0.7);">SSL Replacement Lamp QPL</div></div>
     </div>
-    <p class="collection-stat-qualifier">1 family shipping now · 4 more in Q3 2026</p>
-    <div class="hero-ctas">
-      <a href="#families" class="btn btn--primary">Browse families</a>
-      <a href="#find-by-replacing" class="btn btn--outline">Find by what you're replacing</a>
+    <p class="ta-eyebrow" style="color:var(--ta-warm);letter-spacing:0.18em;margin-bottom:2rem;">▸ 1 FAMILY SHIPPING NOW · 4 MORE Q3 <span class="cy">2026</span></p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="#sec-t8" class="ta-btn ta-btn-primary">BROWSE FAMILIES →</a>
+      <a href="/collections/tubulararch/t8/#wizard" class="ta-btn ta-btn-outline-light">FIND BY WHAT YOU'RE REPLACING</a>
     </div>
   </div>
 </section>
 
-<section class="install-filter">
-  <div class="install-filter__inner">
-    <span class="install-filter__label">Filter by install type</span>
-    <div class="install-filter__chips">
-      <button class="install-chip install-chip--active">All families <span class="install-chip__count">5</span></button>
-      <button class="install-chip">UL Type A · Plug-and-play <span class="install-chip__count">3</span></button>
-      <button class="install-chip">UL Type B · Ballast bypass <span class="install-chip__count">2</span></button>
-      <button class="install-chip">UL Type A+B · Hybrid <span class="install-chip__count">2</span></button>
+<!-- Tagline band -->
+<div class="ta-paper2" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+  <div style="max-width:1536px;margin:0 auto;padding:1.5rem;text-align:center;font-style:italic;opacity:0.7;">
+    Engineered for spec writers. Stocked for distributors. Warrantied for the trades who install them.
+  </div>
+</div>
+
+<!-- Sticky section nav -->
+<div class="ta-section-nav" id="ta-section-nav">
+  <div class="ta-section-nav__inner">
+    <div class="ta-nav-tab active" data-nav-target="sec-t8">
+      <div class="ta-nav-tab-num">01</div>
+      <div class="ta-nav-tab-label">Workhorse T8</div>
+      <div class="ta-nav-tab-dot"></div>
     </div>
-    <span class="install-filter__help">Don't know which type? <a href="#education">Learn the difference →</a></span>
+    <div class="ta-nav-tab" data-nav-target="sec-t5">
+      <div class="ta-nav-tab-num">02</div>
+      <div class="ta-nav-tab-label">Slim T5</div>
+      <div class="ta-nav-tab-dot"></div>
+    </div>
+    <div class="ta-nav-tab" data-nav-target="sec-pl">
+      <div class="ta-nav-tab-num">03</div>
+      <div class="ta-nav-tab-label">Compact PL</div>
+      <div class="ta-nav-tab-dot"></div>
+    </div>
+    <div class="ta-nav-tab" data-nav-target="sec-pll">
+      <div class="ta-nav-tab-num">04</div>
+      <div class="ta-nav-tab-label">Long-Pin PLL</div>
+      <div class="ta-nav-tab-dot"></div>
+    </div>
+    <div class="ta-nav-tab" data-nav-target="sec-u6">
+      <div class="ta-nav-tab-num">05</div>
+      <div class="ta-nav-tab-label">U-Bend U6</div>
+      <div class="ta-nav-tab-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 01 — Workhorse T8 -->
+<section class="ta-family-sec ta-paper" id="sec-t8">
+  <div class="ta-family-inner">
+    <div class="ta-illust">
+      <div class="ta-illust-ph">T8 LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="ta-copy">
+      <p class="ta-eyebrow ta-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span style="color:var(--ta-accent);">SECTION 01 ·</span> WORKHORSE T8 · 01 / 05</p>
+      <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:2rem;">The four-foot tube that retired 25 legacy SKUs.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;opacity:0.9;">The Workhorse T8 is the workhorse of fluorescent retrofit — 4-foot G13 bipin form factor that drops into the same socket as every legacy 32W T8 fluorescent. Where it differs: a single dip-switchable lamp body covers 10.5W, 12W, 14W, 15W, and 18W output, plus 5 CCTs from 3000K to 5000K. One part number on the truck. Twenty-five configurations on the job.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;opacity:0.85;">Type A+B hybrid means it works with your existing electronic ballast OR direct line voltage if the ballast is dead. The contractor decides at install time. The spec writer doesn't have to choose between two SKUs.</p>
+      <div class="ta-callout" style="margin-bottom:2rem;">
+        <p class="ta-callout-ey" style="margin-bottom:0.5rem;">WHO BUYS IT</p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;">
+          <li>+ Facilities engineers replacing 32W F32T8 across multi-building portfolios</li>
+          <li>+ Distributors stocking one part number for warehouse, retail, and office accounts</li>
+          <li>+ Contractors who need ballast-bypass flexibility at the truck level</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/tubulararch/t8/" class="ta-btn ta-btn-primary">VIEW T8 SPEC</a>
+        <a href="/collections/tubulararch/t8/#ies" class="ta-btn ta-btn-outline-dark">DOWNLOAD IES</a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="families-section" id="families">
-  <div class="families-section__inner">
-    <div class="section-eyebrow">Families in this collection</div>
-    <h2 class="section-title">Five families. One taxonomy. Pick the form factor that matches your fixture.</h2>
-    <p class="section-sub">Each family is form-factor-specific and includes verified ballast or wiring compatibility, structured spec data, and downloadable IES files.</p>
-    <div class="families-grid">
-      <a href="/collections/tubulararch/t8" class="family-card">
-        <div class="family-card__visual">
-          <span class="family-card__install-tag tag--ab">UL TYPE A+B HYBRID</span>
-          <div class="family-card__visual-placeholder">T8 photography · Rooster Creative</div>
+<!-- Section 02 — Slim T5 -->
+<section class="ta-family-sec ta-dark" id="sec-t5">
+  <div class="ta-family-inner">
+    <div class="ta-copy" style="order:1;">
+      <p class="ta-eyebrow ta-eyebrow-rule" style="color:rgba(255,255,255,0.6);margin-bottom:1.5rem;"><span style="color:var(--ta-warm);">SECTION 02 ·</span> SLIM T5 · 02 / 05</p>
+      <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#fff;margin-bottom:2rem;">Two diameters. Two install paths. Same spec voice.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;color:rgba(255,255,255,0.8);">T5 is two distinct fixture populations: T5HE office linear (high-efficiency, 28W class, 4ft) and T5HO warehouse strips (high-output, 54W class, 4ft / 6ft / 8ft). The Slim T5 family covers both with form-factor parity to the legacy lamps and ballast-compatible LED retrofit.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;color:rgba(255,255,255,0.7);">When you spec a T5 retrofit, the question is rarely "which LED" — it's "which ballast was installed in 2009?" Slim T5 answers both UL Type A (electronic ballast required) and UL Type B (line-voltage bypass) so the spec doesn't depend on guesswork at the fixture.</p>
+      <div class="ta-callout-dark" style="margin-bottom:2rem;">
+        <p class="ta-callout-ey ta-callout-ey-warm" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.85);">
+          <li>+ T5HE base SKUs: 12W / 25W / 28W class · 3500K / 4000K / 5000K</li>
+          <li>+ T5HO base SKUs: 24W / 40W / 54W class · matching CCT range</li>
+          <li>+ Programmed-start ballast compatibility tested against 60+ models</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/tubulararch/t5/" class="ta-btn ta-btn-primary">NOTIFY ME WHEN SHIPPING</a>
+        <a href="#ballast-matrix" class="ta-btn ta-btn-outline-light">SEE BALLAST COMPATIBILITY</a>
+      </div>
+    </div>
+    <div class="ta-illust" style="order:2;">
+      <div class="ta-illust-ph">T5 LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 03 — Compact PL -->
+<section class="ta-family-sec ta-paper2" id="sec-pl">
+  <div class="ta-family-inner">
+    <div class="ta-illust ta-illust--light">
+      <div class="ta-illust-ph ta-illust-ph--light">PL LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="ta-copy">
+      <p class="ta-eyebrow ta-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span style="color:var(--ta-accent);">SECTION 03 ·</span> COMPACT PL · 03 / 05</p>
+      <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:2rem;">Down-light fixtures don't deserve another CFL bulb run.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;opacity:0.9;">Compact PL replaces the 2-pin and 4-pin biax CFLs that occupy roughly 40% of legacy commercial down-light fixtures. The lamps look like the originals (G24q-3 / G23 / 2G11), wire like the originals, and survive the dimming protocols their original ballasts use.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;opacity:0.8;">If your facility still has 26W quad-tube CFLs in 6-inch recessed cans, this is the family that retires them without a fixture replacement.</p>
+      <div class="ta-callout" style="margin-bottom:2rem;">
+        <p class="ta-callout-ey" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;">
+          <li>+ 13W / 18W / 26W base SKUs · matching pin configurations</li>
+          <li>+ 0-10V dimming where the original ballast supports it</li>
+          <li>+ DLC Listed (DLC SSL Replacement Lamp QPL) for utility-rebate eligibility</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/tubulararch/pl/" class="ta-btn ta-btn-primary">NOTIFY ME</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 04 — Long-Pin PLL -->
+<section class="ta-family-sec ta-dark" id="sec-pll">
+  <div class="ta-family-inner">
+    <div class="ta-copy" style="order:1;">
+      <p class="ta-eyebrow ta-eyebrow-rule" style="color:rgba(255,255,255,0.6);margin-bottom:1.5rem;"><span style="color:var(--ta-warm);">SECTION 04 ·</span> LONG-PIN PLL · 04 / 05</p>
+      <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);color:#fff;margin-bottom:2rem;">The wraparound fixture's last fluorescent.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;color:rgba(255,255,255,0.8);">PLL is the long single-ended biax — most often found in stairwell wraparounds, parking-deck downlights, and corridor strip fixtures from the late-90s commercial build cycle. Long-Pin PLL retires those without breaking the original fixture envelope.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;color:rgba(255,255,255,0.7);">The reality: most of those fixtures are still there because the building owner doesn't want to swap the housing. PLL gives them a 50,000-hour LED life cycle inside the fixture they already own.</p>
+      <div class="ta-callout-dark" style="margin-bottom:2rem;">
+        <p class="ta-callout-ey ta-callout-ey-warm" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.85);">
+          <li>+ 24W / 36W / 40W class · 2G11 long-pin base</li>
+          <li>+ Universal 120-277V driver with DALI-2 capable variant Q4</li>
+          <li>+ 50,000-hour rated life · L70 verified</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/tubulararch/pll/" class="ta-btn ta-btn-primary">NOTIFY ME</a>
+      </div>
+    </div>
+    <div class="ta-illust" style="order:2;">
+      <div class="ta-illust-ph">PLL LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 05 — U-Bend U6 -->
+<section class="ta-family-sec ta-paper" id="sec-u6">
+  <div class="ta-family-inner">
+    <div class="ta-illust ta-illust--light">
+      <div class="ta-illust-ph ta-illust-ph--light">U6 LAMP PHOTOGRAPHY<br>ROOSTER CREATIVE DELIVERABLE</div>
+    </div>
+    <div class="ta-copy">
+      <p class="ta-eyebrow ta-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span style="color:var(--ta-accent);">SECTION 05 ·</span> U-BEND U6 · 05 / 05</p>
+      <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:2rem;">For the 2×2 troffers that never got swapped.</h2>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:1.25rem;opacity:0.9;">U-Bend U6 retires the U-bent T8 fluorescent commonly found in 2-foot-square recessed troffers — the lamp that sits in roughly 30% of pre-2010 commercial ceiling grids. 6-inch leg spacing matches the original. Bipin sockets unchanged. The grid keeps its original geometry.</p>
+      <p style="font-size:1rem;line-height:1.7;margin-bottom:2rem;opacity:0.8;">Most facilities have these as a "we'll get to it eventually" line item. U6 makes "eventually" cost the same as a tube swap.</p>
+      <div class="ta-callout" style="margin-bottom:2rem;">
+        <p class="ta-callout-ey" style="margin-bottom:0.5rem;">SHIPPING IN Q3 <span class="cy">2026</span></p>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;">
+          <li>+ 14W / 17W class · 6" leg spacing · G13 bipin</li>
+          <li>+ Type A direct ballast OR Type B line-voltage bypass</li>
+          <li>+ 25,000-hour life</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="/collections/tubulararch/u6/" class="ta-btn ta-btn-primary">NOTIFY ME</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ballast Compatibility Matrix -->
+<section class="ta-paper2" id="ballast-matrix" style="border-top:1px solid rgba(0,0,0,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="ta-eyebrow ta-eyebrow-rule ta-eyebrow-red" style="margin-bottom:1.5rem;">BALLAST COMPATIBILITY · 200+ MODELS PROVEN</p>
+    <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:56rem;margin-bottom:1rem;">Every retrofit assumes a ballast. Ours tells you which one.</h2>
+    <p style="opacity:0.8;max-width:48rem;margin-bottom:3rem;line-height:1.7;">Across the five tubul<span class="aa">Ⓐ</span>RCH families, we maintain a versioned compatibility matrix against every ballast model we've tested in the field. Legend: ✓ verified pass · ⚠ pass with caveat · × known incompatibility · — not yet tested.</p>
+    <div style="display:grid;grid-template-columns:5fr 7fr;gap:3rem;align-items:start;" class="ta-ballast-grid">
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+          <div><div class="ta-stat-num">200+</div><div class="ta-stat-label">Ballast models in test population</div></div>
+          <div><div class="ta-stat-num">~87%</div><div class="ta-stat-label">Pass rate · T8 against full population</div></div>
+          <div><div class="ta-stat-num">Q2-<span class="cy">2026</span></div><div class="ta-stat-label">Matrix Rev 12 · current</div></div>
+          <div><div class="ta-stat-num">8</div><div class="ta-stat-label">Manufacturers covered</div></div>
         </div>
-        <div class="family-card__body">
-          <div class="family-card__name">The Workshop T8</div>
-          <p class="family-card__tagline">25 fluorescent SKUs replaced by one dip-switchable lamp. 4FT linear, G13 bipin.</p>
-          <div class="family-card__meta">
-            <span class="chip chip--watt">10.5–18W</span>
-            <span class="chip chip--sku">5 SKUs</span>
-            <span class="chip">DLC Premium</span>
+        <p class="ta-eyebrow" style="opacity:0.6;margin-bottom:1rem;">COVERED: PHILIPS · OSRAM · GE · KEYSTONE · UNIVERSAL · TRIDONIC · SYLVANIA · ADVANCE</p>
+        <a href="/support/sample-request?subject=Ballast+Compatibility+Matrix" class="ta-btn ta-btn-primary" style="margin-top:1.5rem;">DOWNLOAD FULL MATRIX (PDF)</a>
+      </div>
+      <div>
+        <div style="background:white;border:1px solid rgba(0,0,0,0.1);font-family:var(--ta-mono);font-size:0.7rem;">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.1);font-weight:700;letter-spacing:0.12em;opacity:0.7;">
+            <div>BALLAST MODEL</div><div>T5HE</div><div>T5HO</div><div>T8</div><div>U6</div>
           </div>
-          <div class="family-card__cta">Explore The Workshop T8 →</div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Philips ICN-2P32-N</div><div style="color:#16a34a;">✓</div><div>—</div><div style="color:#16a34a;">✓</div><div style="color:#16a34a;">✓</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Osram QTP 2x32 T8/UNV</div><div style="color:#16a34a;">✓</div><div>—</div><div style="color:#16a34a;">✓</div><div style="color:#16a34a;">✓</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>GE GE332MAX-N/ULTRA</div><div>—</div><div>—</div><div style="color:#16a34a;">✓</div><div style="color:#ca8a04;">⚠</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Tridonic PCA T5 ECO</div><div style="color:#16a34a;">✓</div><div style="color:#16a34a;">✓</div><div>—</div><div>—</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Universal C2032UNVME</div><div>—</div><div>—</div><div style="color:#dc2626;">×</div><div>—</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Sylvania QTP 2x32T8/UNV</div><div>—</div><div>—</div><div style="color:#16a34a;">✓</div><div style="color:#16a34a;">✓</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);"><div>Advance ICN-4P32-N</div><div style="color:#16a34a;">✓</div><div>—</div><div style="color:#16a34a;">✓</div><div style="color:#16a34a;">✓</div></div>
+          <div class="ta-matrix-row" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;padding:0.75rem 1rem;"><div>Keystone KTEB-232-UV-PS-N</div><div>—</div><div>—</div><div style="color:#ca8a04;">⚠</div><div>—</div></div>
         </div>
-      </a>
-      <a href="/collections/tubulararch/t5" class="family-card">
-        <div class="family-card__visual">
-          <span class="family-card__install-tag tag--b">UL TYPE B BYPASS</span>
-          <div class="family-card__visual-placeholder">T5 photography · Rooster Creative</div>
-        </div>
-        <div class="family-card__body">
-          <div class="family-card__name">The Slim T5</div>
-          <p class="family-card__tagline">High-output T5 replacement. 2FT and 4FT. Direct-wire bypass for long-term reliability.</p>
-          <div class="family-card__meta">
-            <span class="chip chip--watt">Up to 25W</span>
-            <span class="chip chip--sku">33 SKUs</span>
-          </div>
-          <div class="family-card__cta">Explore The Slim T5 →</div>
-        </div>
-      </a>
-      <a href="/collections/tubulararch/pl" class="family-card">
-        <div class="family-card__visual">
-          <span class="family-card__install-tag tag--a">UL TYPE A PLUG-AND-PLAY</span>
-          <div class="family-card__visual-placeholder">PL photography · Rooster Creative</div>
-        </div>
-        <div class="family-card__body">
-          <div class="family-card__name">The Compact PL</div>
-          <p class="family-card__tagline">G24 quad biax replacement. Plug-and-play into existing ballast. Downlight and wall-pack applications.</p>
-          <div class="family-card__meta">
-            <span class="chip chip--watt">Up to 9W</span>
-            <span class="chip chip--sku">6 SKUs</span>
-          </div>
-          <div class="family-card__cta">Explore The Compact PL →</div>
-        </div>
-      </a>
-      <a href="/collections/tubulararch/pll" class="family-card">
-        <div class="family-card__visual">
-          <span class="family-card__install-tag tag--a">UL TYPE A PLUG-AND-PLAY</span>
-          <div class="family-card__visual-placeholder">PLL photography · Rooster Creative</div>
-        </div>
-        <div class="family-card__body">
-          <div class="family-card__name">The Long-Pin PLL</div>
-          <p class="family-card__tagline">2G11 long-pin biax replacement. Plug-and-play. Common in architectural recessed fixtures.</p>
-          <div class="family-card__meta">
-            <span class="chip chip--watt">Up to 19W</span>
-            <span class="chip chip--sku">3 SKUs</span>
-          </div>
-          <div class="family-card__cta">Explore The Long-Pin PLL →</div>
-        </div>
-      </a>
-      <a href="/collections/tubulararch/u6" class="family-card">
-        <div class="family-card__visual">
-          <span class="family-card__install-tag tag--ab">UL TYPE A+B HYBRID</span>
-          <div class="family-card__visual-placeholder">U6 photography · Rooster Creative</div>
-        </div>
-        <div class="family-card__body">
-          <div class="family-card__name">The U-Bend U6</div>
-          <p class="family-card__tagline">FB32T8 / U-bend T8 troffer replacement. A+B hybrid for maximum install flexibility.</p>
-          <div class="family-card__meta">
-            <span class="chip chip--watt">Up to 15W</span>
-            <span class="chip chip--sku">5 SKUs</span>
-          </div>
-          <div class="family-card__cta">Explore The U-Bend U6 →</div>
-        </div>
-      </a>
+        <p style="font-family:var(--ta-mono);font-size:0.65rem;letter-spacing:0.1em;opacity:0.5;margin-top:0.75rem;">SHOWING 8 OF 200+ · DOWNLOAD MATRIX FOR FULL TABLE</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .ta-ballast-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- Capability Proof -->
+<section class="ta-paper" id="capability">
+  <div style="max-width:1536px;margin:0 auto;padding:6rem 1.5rem;">
+    <p class="ta-eyebrow ta-eyebrow-rule ta-eyebrow-red" style="margin-bottom:1.5rem;">CAPABILITY PROOF</p>
+    <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);max-width:48rem;margin-bottom:3rem;">We engineer fluorescent retrofit like the spec writers do — because we hire from them.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="ta-cap-grid">
+      <div class="ta-card">
+        <p class="ta-card-num" style="margin-bottom:1rem;">01</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">UL discipline · DLC QPL listed</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· UL Type A, Type B, and Type A+B hybrid lamps · file numbers verified against UL Online Certifications Directory each release</li>
+          <li style="margin-top:0.5rem;">· DLC Listed on Workhorse T8 (live); Premium target for Slim / Compact / Long-Pin / U-Bend at launch</li>
+        </ul>
+      </div>
+      <div class="ta-card">
+        <p class="ta-card-num" style="margin-bottom:1rem;">02</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">Photometric &amp; lifecycle data published</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· Rated life: 50,000 hours (per datasheet) · 5-year warranty</li>
+          <li style="margin-top:0.5rem;">· IES files generated from real lab samples · not derived from generic distributions</li>
+          <li style="margin-top:0.5rem;">· Mortality and failure-mode data documented in install guides, not buried in datasheets</li>
+        </ul>
+      </div>
+      <div class="ta-card">
+        <p class="ta-card-num" style="margin-bottom:1rem;">03</p>
+        <h3 style="font-weight:700;font-size:1.1rem;margin-bottom:0.75rem;">Dimming protocols and install reality</h3>
+        <ul style="font-size:0.875rem;line-height:1.8;list-style:none;padding:0;margin:0;opacity:0.9;">
+          <li>· 0-10V standard across Type A and Type A+B variants</li>
+          <li style="margin-top:0.5rem;">· Dip-switch settings printed on the lamp body AND in every install sheet</li>
+          <li style="margin-top:0.5rem;">· Field labor estimates per family, per install path · published, not pitched</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .ta-cap-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- New & Expanding -->
+<section class="ta-paper2" style="border-top:1px solid rgba(0,0,0,0.1);">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="ta-eyebrow ta-eyebrow-red" style="margin-bottom:1.5rem;">NEW &amp; EXPANDING IN <span class="cy">2026</span></p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;" class="ta-expand-grid">
+      <div><span style="color:var(--ta-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Slim T5 family launch · UL Type A and Type B in parallel · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--ta-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Compact PL biax retrofit · 2G11 / G24q-3 / G23 base options · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--ta-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Long-Pin PLL · stairwell and parking-deck retrofit · Q3 <span class="cy">2026</span></span></div>
+      <div><span style="color:var(--ta-accent);font-weight:700;">→</span> <span style="font-size:0.875rem;">Compatibility matrix Rev 13 · adds 40+ commercial dimming ballasts · Q3 <span class="cy">2026</span></span></div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 900px) { .ta-expand-grid { grid-template-columns: 1fr 1fr !important; } }
+  @media (max-width: 600px) { .ta-expand-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- Dark CTA -->
+<section class="ta-dark">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:#fff;">
+    <h2 class="ta-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Ready to spec the retrofit?</h2>
+    <p style="opacity:0.8;max-width:40rem;margin:0 auto 2rem;line-height:1.7;">Layouts in under 48 hours. Samples shipped from US warehouses. Spec writers who answer their email by end of business.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/layout-request" class="ta-btn ta-btn-primary">REQUEST LAYOUT</a>
+      <a href="/support/sample-request" class="ta-btn ta-btn-outline-light">REQUEST SAMPLE</a>
     </div>
   </div>
 </section>
 
-<section class="replace-section" id="find-by-replacing">
-  <div class="replace-section__inner">
-    <div class="section-eyebrow">Quick-find</div>
-    <h2 class="section-title">Tell us what you're replacing.</h2>
-    <p class="section-sub">Route directly to the matching tubul<span class="aa">Ⓐ</span>RCH family by legacy fluorescent SKU.</p>
-    <div class="replace-grid">
-      <a href="/collections/tubulararch/t8" class="replace-card"><div class="replace-card__legacy">F32T8</div><div class="replace-card__legacy-sub">4ft fluorescent</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Workshop T8</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
-      <a href="/collections/tubulararch/t8" class="replace-card"><div class="replace-card__legacy">F25T8</div><div class="replace-card__legacy-sub">3ft fluorescent</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Workshop T8</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
-      <a href="/collections/tubulararch/t5" class="replace-card"><div class="replace-card__legacy">F28T5</div><div class="replace-card__legacy-sub">High-output T5</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Slim T5</div><div class="replace-card__alg-sub">Type B Bypass</div></a>
-      <a href="/collections/tubulararch/u6" class="replace-card"><div class="replace-card__legacy">FB32T8</div><div class="replace-card__legacy-sub">U-bend T8 troffer</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The U-Bend U6</div><div class="replace-card__alg-sub">A+B Hybrid</div></a>
-      <a href="/collections/tubulararch/pl" class="replace-card"><div class="replace-card__legacy">CFQ26W</div><div class="replace-card__legacy-sub">G24 quad biax</div><div class="replace-card__arrow">↓</div><div class="replace-card__alg">The Compact PL</div><div class="replace-card__alg-sub">Type A Plug-and-play</div></a>
-    </div>
-  </div>
-</section>
-
-<section class="applications-section">
-  <div class="applications-section__inner">
-    <div class="section-eyebrow">Where tubul<span class="aa">Ⓐ</span>RCH is specified</div>
-    <h2 class="section-title">Used across every commercial vertical.</h2>
-    <div class="apps-grid">
-      <a href="#" class="app-tile"><div class="app-tile__icon">🏢</div>Office</a>
-      <a href="#" class="app-tile"><div class="app-tile__icon">🏭</div>Warehouse</a>
-      <a href="#" class="app-tile"><div class="app-tile__icon">🛍️</div>Retail</a>
-      <a href="#" class="app-tile"><div class="app-tile__icon">🏥</div>Healthcare</a>
-      <a href="#" class="app-tile"><div class="app-tile__icon">🎓</div>Education</a>
-      <a href="#" class="app-tile"><div class="app-tile__icon">🅿️</div>Parking</a>
-    </div>
-  </div>
-</section>
-
-<section class="compat-hub">
-  <div class="compat-hub__inner">
-    <div>
-      <div class="section-eyebrow">Ballast compatibility</div>
-      <h2 class="section-title">200+ ballasts. Tested. Documented.</h2>
-      <p class="section-sub">Every tubul<span class="aa">Ⓐ</span>RCH family ships with a verified ballast compatibility list. Search by ballast model number, manufacturer, or install type.</p>
-      <ul class="compat-hub__list">
-        <li class="compat-hub__list-item"><strong>Instant-start electronic</strong> — most common, highest compatibility</li>
-        <li class="compat-hub__list-item"><strong>Programmed-start electronic</strong> — reduced list; occupancy-sensor spaces</li>
-        <li class="compat-hub__list-item"><strong>Rapid-start electronic</strong> — pre-2005 fixtures; Type B recommended</li>
-        <li class="compat-hub__list-item"><strong>Magnetic ballast</strong> — Type B bypass required</li>
-        <li class="compat-hub__list-item"><strong>P.E. sign-off</strong> per release</li>
-      </ul>
-      <a href="#" class="btn btn--primary">Open Compatibility Hub →</a>
-    </div>
-    <div class="compat-hub__visual">Compatibility Hub preview<br>(deferred to launch)</div>
-  </div>
-</section>
-
-<section class="education-section" id="education">
-  <div class="education-section__inner">
-    <div class="section-eyebrow">Learn the category</div>
-    <h2 class="section-title">Three things every retrofit buyer should know.</h2>
-    <p class="section-sub">LED tube retrofit is more nuanced than "screw in a new bulb." These guides cover the questions we hear most often.</p>
-    <div class="education-grid">
-      <a href="#" class="edu-card">
-        <div class="edu-card__num">01</div>
-        <h3 class="edu-card__title">UL Type A vs Type B vs Type A+B</h3>
-        <p class="edu-card__body">Type A keeps the existing ballast. Type B bypasses it. Type A+B does either. Each has trade-offs in install labor, long-term maintenance, and compatibility risk.</p>
-        <div class="edu-card__cta">Read the guide →</div>
-      </a>
-      <a href="#" class="edu-card">
-        <div class="edu-card__num">02</div>
-        <h3 class="edu-card__title">How to read a ballast compatibility list</h3>
-        <p class="edu-card__body">What does ✓ vs blank mean? When is "compatible" actually "marginal"? Why ballast age and silent revisions matter. How to interpret our matrix legend.</p>
-        <div class="edu-card__cta">Read the guide →</div>
-      </a>
-      <a href="#" class="edu-card">
-        <div class="edu-card__num">03</div>
-        <h3 class="edu-card__title">When to retrofit vs replace the fixture</h3>
-        <p class="edu-card__body">Retrofit lamps are fast and cheap. New fixtures give better photometric performance and longer warranties. Includes a 5-question decision framework.</p>
-        <div class="edu-card__cta">Read the guide →</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="cross-section">
-  <div class="cross-section__inner">
-    <div class="section-eyebrow">More from Lamps</div>
-    <h2 class="section-title">Other lamp collections.</h2>
-    <div class="cross-grid">
-      <a href="/collections/signature" class="cross-card">
-        <div><div class="cross-card__name">sign<span class="aa">Ⓐ</span>TURE</div><div class="cross-card__sub">Utility lamps · HID retrofits · A · BR · PAR</div></div>
-        <div class="cross-card__meta"><span>1 LIVE · 3 COMING SOON</span><span class="cross-card__arrow">→</span></div>
-      </a>
-      <a href="/collections/vintage-decor" class="cross-card">
-        <div><div class="cross-card__name">Vintage Décor</div><div class="cross-card__sub">Old-world filament · Brass + amber glass</div></div>
-        <div class="cross-card__meta"><span>6 FAMILIES</span><span class="cross-card__arrow">→</span></div>
-      </a>
-      <a href="/collections/nostalgic-decor" class="cross-card">
-        <div><div class="cross-card__name">Nostalgic Décor</div><div class="cross-card__sub">Mid-century modern · Warm amber filament</div></div>
-        <div class="cross-card__meta"><span>7 FAMILIES</span><span class="cross-card__arrow">→</span></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="cta-band__inner">
-    <h2 class="cta-band__title">Specify the right tube.</h2>
-    <p class="cta-band__sub">Quotes in 24 hours. Pilot install kits ship same day for retrofits ≥50 fixtures.</p>
-    <div class="cta-band__row">
-      <a href="/aura" class="btn btn--primary">Request AURA Quote</a>
-      <a href="#" class="btn btn--outline">Request Sample</a>
-      <a href="#" class="btn btn--outline">Find a Distributor</a>
-      <a href="#" class="btn btn--outline">Find a Rep</a>
-    </div>
-  </div>
-</section>
+<!-- Right-rail anchor nav -->
+<CollectionAnchorNav sections={anchorSections} />
 
 <script>
-  document.querySelectorAll('.install-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.install-chip').forEach(c => c.classList.remove('install-chip--active'));
-      chip.classList.add('install-chip--active');
+  (function () {
+    var tabs = document.querySelectorAll('.ta-nav-tab[data-nav-target]');
+    var sectionIds = ['sec-t8','sec-t5','sec-pl','sec-pll','sec-u6'];
+    var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+
+    function setActive(id: string) {
+      tabs.forEach(function(tab) {
+        var t = tab as HTMLElement;
+        t.classList.toggle('active', t.dataset.navTarget === id);
+      });
+    }
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var t = tab as HTMLElement;
+        var target = t.dataset.navTarget;
+        if (target) {
+          var el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.3, rootMargin: '-10% 0% -50% 0%' });
+
+    sections.forEach(function(s) { if (s) observer.observe(s); });
+  })();
+
+  document.querySelectorAll('.cy').forEach(function(e) {
+    (e as HTMLElement).textContent = String(new Date().getFullYear());
   });
 </script>
 </BaseLayout>
