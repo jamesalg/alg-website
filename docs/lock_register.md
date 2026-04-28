@@ -113,3 +113,14 @@ Acknowledged by: Manus (reopen/v2.7.3-megamenu-polish)
 | A | `src/components/Header.astro` | `.megamenu.wide`: `left:2.5vw; right:2.5vw` → `left:0; right:0; width:100%` — full viewport-width mega menu |
 | B | `src/components/Header.astro` | Lamps left-rail descriptor: `Filament · Linear · Utility` → `Decor · Linear · Utility` |
 | B | `src/components/Header.astro` | CATEGORY entries: `Indoor \| tubulⒶRCH` → `Linear \| tubulⒶRCH`; `Indoor \| Nostalgic Décor` → `Nostalgic Décor`; `Indoor \| Vintage Décor` → `Vintage Décor`; `Indoor \| Utility signⒶTURE` → `Utility \| signⒶTURE` |
+
+## v2.7.6 — Mega menu full-width (Solutions) + hero period color (2026-04-27)
+
+Acknowledged by: Manus (reopen/v2.7.6-megamenu-hero-polish)
+
+### Changes (CSS + HTML edits only — no new files)
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/components/Header.astro` | `.megamenu.solutions`: `left:2.5vw;right:2.5vw` → `left:0;right:0;width:100%` — full viewport-width Solutions mega menu |
+| B | `src/pages/index.astro` | Hero periods: first two `period-red` → `period-plain` (color:inherit); third stays `period-red`; added `.period-plain { color: inherit; }` CSS rule |

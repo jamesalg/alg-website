@@ -143,8 +143,8 @@ const verticals = [
         <div class="hero-persistent">
           <span class="p-eyebrow">Commercial &amp; Industrial · DLC Premium</span>
           <h1>
-            Specified<span class="period-red">.</span><br />
-            Stocked<span class="period-red">.</span><br />
+            Specified<span class="period-plain">.</span><br />
+            Stocked<span class="period-plain">.</span><br />
             <span class="accent">Shipped<span class="period-red">.</span></span>
           </h1>
           <p class="tag">Five US warehouses. 2,000+ active SKUs. Layouts in under 48 hours.</p>
@@ -704,7 +704,8 @@ const verticals = [
   .hero-persistent h1 .stop { color: var(--brand); }
   .hero-persistent h1 .accent { color: var(--brand); }
   /* Brand signature: red trailing period on each headline word */
-  .period-red { color: var(--brand); }
+  .period-plain { color: inherit; }          /* white — matches body text */
+  .period-red { color: var(--brand); }        /* red — final period only */
   .hero-persistent .tag {
     font-size: 15px;
     font-weight: 500;
