@@ -16,4 +16,9 @@ export default defineConfig({
   },
   trailingSlash: 'never',
   // Compression handled by Cloudflare CDN — no in-build minification quirks
+  vite: {
+    preview: {
+      allowedHosts: true,
+    },
+  },
 });

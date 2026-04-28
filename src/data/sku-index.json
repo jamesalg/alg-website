@@ -6272,6 +6272,5315 @@
         }
       ]
     },
+    "cityarch": {
+      "skus": [
+        {
+          "sku": "LBOL24-3CS-27VS1/DB/R/DFR",
+          "family": "Sentry",
+          "sub_category": "Bollard",
+          "display_echelon": "PRO",
+          "wattages": [
+            10,
+            14,
+            19,
+            24
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LBOL24-3CS-27VS1/DB/R/RFR",
+          "family": "Sentry",
+          "sub_category": "Bollard",
+          "display_echelon": "PRO",
+          "wattages": [
+            10,
+            14,
+            19,
+            24
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LBOL24-3CS-27VS1/DB/S/CDR",
+          "family": "Sentry",
+          "sub_category": "Bollard",
+          "display_echelon": "PRO",
+          "wattages": [
+            10,
+            14,
+            19,
+            24
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LBOL26-3CS-27S1/DB/R/RCT",
+          "family": "Sentry",
+          "sub_category": "Bollard",
+          "display_echelon": "PRO",
+          "wattages": [
+            10,
+            16,
+            21,
+            26
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "OSP25T-65G11-D",
+          "family": "Hyperion",
+          "sub_category": "Direct Burial",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W500-50HOM/B/5/RB3",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            125,
+            200,
+            250,
+            300,
+            350,
+            400,
+            450,
+            500
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W500-50HOM/B/5/RB3/TAA",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            125,
+            200,
+            250,
+            300,
+            350,
+            400,
+            450,
+            500
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LHMF8W500-50UOM/B/5/RB3",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            125,
+            200,
+            250,
+            300,
+            350,
+            400,
+            450,
+            500
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W500-50UOM/B/5/RB3/TAA",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            125,
+            200,
+            250,
+            300,
+            350,
+            400,
+            450,
+            500
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LHMF8W750-50HOM/B/5/RB3",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W750-50HOM/B/5/RB3/TAA",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LHMF8W750-50UOM/B/5/RB3",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W750-50UOM/B/5/RB3/TAA",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LHMF8W750-50UOM/S/5/RB3",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LHMF8W750-50UOM/S/5/RB3/TAA",
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "wattages": [
+            200,
+            300,
+            375,
+            450,
+            525,
+            600,
+            675,
+            750
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "SRP410-SM/D/BC/AP30",
+          "family": "Redwood",
+          "sub_category": "Pole",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "SSP410-SM/D/BC/AP30",
+          "family": "Sequoia",
+          "sub_category": "Pole",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/27VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/27VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/27VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/27VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/48VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/48VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/48VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP090-3CS/48VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            36,
+            54,
+            72,
+            90
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/27VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/27VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/27VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/27VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/48VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/48VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/48VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP130-3CS/48VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            52,
+            78,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/27VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/27VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/27VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/27VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/48VS1/B/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/48VS1/B/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/48VS1/DB/BL",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP160-3CS/48VS1/DB/FD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            64,
+            96,
+            128,
+            160
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP4W-S3-UB",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            45,
+            70,
+            87,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP4W-S3-UD",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            45,
+            70,
+            87,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP4W-S3-UW",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            45,
+            70,
+            87,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP5W130-5CS-27VS2/3BL/DB",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            45,
+            70,
+            87,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K → 5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP5W130-5CS-48VS2/3BL/DB",
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "wattages": [
+            45,
+            70,
+            87,
+            100,
+            130
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "4500K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP3W150-US3-UB",
+          "family": "Unity",
+          "sub_category": "Post Top",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            125,
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LPTP3W75-US3-UB",
+          "family": "Unity",
+          "sub_category": "Post Top",
+          "display_echelon": "ECO",
+          "wattages": [
+            35,
+            50,
+            75
+          ],
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW045-30-U5S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            45
+          ],
+          "ccts": [
+            "3000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW070-50-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            70
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW100-30-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            100
+          ],
+          "ccts": [
+            "3000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW100-40-H3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            100
+          ],
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "347 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW100-40-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            100
+          ],
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW100-50-H3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            100
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "347 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW100-50-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            100
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW150-40-H3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "347 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW150-40-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "4000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW150-50-H3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "347 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRDW150-50-U3S",
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LP15DBS-4RG11/D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LP20DBS-4RG11/D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP10R-3G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP10S-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP15R-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP15S-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP15S-4G11-D/4SBC/PP/AB1025",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP20R-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP20S-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP25R-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP25S-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP30R-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP30S-4G11-B",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP30S-4G11-D",
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "OSP30T-65G11-D",
+          "family": "Centurion",
+          "sub_category": "Tapered",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LPAR38C150030K1",
+          "family": "LPAR Series",
+          "sub_category": "Traffic Control Lamp",
+          "display_echelon": "PRO",
+          "wattages": [
+            14
+          ],
+          "ccts": [
+            "3000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LPAR38C39048K1",
+          "family": "LPAR Series",
+          "sub_category": "Traffic Control Lamp",
+          "display_echelon": "PRO",
+          "wattages": [
+            7
+          ],
+          "ccts": [
+            "4800K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LPAR38C90030K1",
+          "family": "LPAR Series",
+          "sub_category": "Traffic Control Lamp",
+          "display_echelon": "PRO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "3000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        }
+      ],
+      "families": [
+        {
+          "family": "Sentry",
+          "sub_category": "Bollard",
+          "display_echelon": "PRO",
+          "max_wattage": 26,
+          "sku_count": 4,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Hyperion",
+          "sub_category": "Direct Burial",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 1,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "OmniMax",
+          "sub_category": "High Mast",
+          "display_echelon": "PRO+",
+          "max_wattage": 750,
+          "sku_count": 10,
+          "dlc": true,
+          "ccts": [
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "277 - 480V"
+          ],
+          "mount_types": [],
+          "taa": true
+        },
+        {
+          "family": "Redwood",
+          "sub_category": "Pole",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 1,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Sequoia",
+          "sub_category": "Pole",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 1,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Unity",
+          "sub_category": "Post Top",
+          "display_echelon": "ECO",
+          "max_wattage": 150,
+          "sku_count": 2,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Symmetry",
+          "sub_category": "Post Top",
+          "display_echelon": "PRO",
+          "max_wattage": 160,
+          "sku_count": 29,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "3000K → 5000K",
+            "3500K",
+            "4000K",
+            "4500K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "277 - 480V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Abbey",
+          "sub_category": "Roadway",
+          "display_echelon": "PRO",
+          "max_wattage": 150,
+          "sku_count": 11,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "347 - 480V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Alpine",
+          "sub_category": "Surface Mount",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 14,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Centurion",
+          "sub_category": "Tapered",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 1,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "LPAR Series",
+          "sub_category": "Traffic Control Lamp",
+          "display_echelon": "PRO",
+          "max_wattage": 14,
+          "sku_count": 3,
+          "dlc": false,
+          "ccts": [
+            "3000K",
+            "4800K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [],
+          "taa": false
+        }
+      ]
+    },
+    "lampararch": {
+      "skus": [
+        {
+          "sku": "LRHB3W150-S4-I3U/B",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W150-S4-I3U/B/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB3W150-S4-I3U/W",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W150-S4-I3U/W/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB3W240-S4-I3U/B",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W240-S4-I3U/B/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB3W240-S4-I3U/W",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W240-S4-I3U/W/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB3W300-S4-I3U/B",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W300-S4-I3U/B/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB3W300-S4-I3U/W",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB3W300-S4-I3U/W/TAA",
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB150-3CS-UJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB150-3CS-UJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            100,
+            120,
+            150
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB240-3CS-UJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            150,
+            200,
+            240
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LRHB240-3CS-UJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            150,
+            200,
+            240
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB300-3CS-UJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB300-3CS-UJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            200,
+            240,
+            300
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB400-40C-UJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB400-40C-UJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB400-50C-HJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB400-50C-HJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LRHB400-50C-UJ2",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LRHB400-50C-UJ2/TAA",
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            400
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB085-UT50",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            85
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB150-HT50",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB150-UT50",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            150
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB220-HT50",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            220
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB220-UT50",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            220
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB220-UT50/TAA",
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "wattages": [
+            220
+          ],
+          "ccts": [
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB155-2CS-HT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            85,
+            130,
+            155
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB155-2CS-HT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            85,
+            130,
+            155
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB155-2CS-UT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            85,
+            130,
+            155
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB155-2CS-UT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            85,
+            130,
+            155
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB320-2CS-HT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB320-2CS-HT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB320-2CS-UT/O4090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB320-2CS-UT/O6565",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB320-2CS-UT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLHB320-2CS-UT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            215,
+            255,
+            320
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": true
+        },
+        {
+          "sku": "LLHB400-2CS-HT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            330,
+            360,
+            400
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LLHB400-2CS-HT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            330,
+            360,
+            400
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": true
+        },
+        {
+          "sku": "LLHB400-2CS-UT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            330,
+            360,
+            400
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LLHB400-2CS-UT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            330,
+            360,
+            400
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": true
+        },
+        {
+          "sku": "LLHB500-2CS-HT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            350,
+            420,
+            500
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LLHB500-2CS-HT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            350,
+            420,
+            500
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "277 - 480V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": true
+        },
+        {
+          "sku": "LLHB500-2CS-UT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            350,
+            420,
+            500
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LLHB500-2CS-UT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            350,
+            420,
+            500
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": true
+        },
+        {
+          "sku": "LLHB600-2CS-UT/O9090",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            480,
+            550,
+            600
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LLHB600-2CS-UT/O9090/TAA",
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "wattages": [
+            480,
+            550,
+            600
+          ],
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": null,
+          "taa": true
+        },
+        {
+          "sku": "LLSN2-2035CS",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/B",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/B/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/B/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/B/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/B/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN2-2035CS/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            20,
+            25,
+            30,
+            35
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/B",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/B/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/B/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/B/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/B/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN4-3550CS/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            35,
+            40,
+            45,
+            50
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/B",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/B/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/B/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/B/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/B/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/FL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/FR",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/RL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN8-40100CS/WL",
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "wattages": [
+            40,
+            60,
+            80,
+            100
+          ],
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN20-xx-2S3-H",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            10,
+            15,
+            24
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-2S3-H2",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            10,
+            15,
+            24
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-4S3-H",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            24,
+            32,
+            40
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-4S3-H/90",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            24,
+            32,
+            40
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-4S3-H2",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            24,
+            32,
+            40
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-4S3-H2/EM08",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            24,
+            32,
+            40
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-8S3-H",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            40,
+            50,
+            64
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-8S3-H2",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            40,
+            50,
+            64
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSN3W-xx-8S3-HM",
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "wattages": [
+            64,
+            75,
+            90
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Premium",
+          "taa": false
+        },
+        {
+          "sku": "LLSR444-PS3",
+          "family": "retroⒶRCH-L1",
+          "sub_category": "Retrofit Linear Strip",
+          "display_echelon": "",
+          "wattages": [
+            34,
+            38,
+            45
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Standard",
+          "taa": false
+        },
+        {
+          "sku": "LLSR888-PS3",
+          "family": "retroⒶRCH-L1",
+          "sub_category": "Retrofit Linear Strip",
+          "display_echelon": "",
+          "wattages": [
+            54,
+            68,
+            90
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Standard",
+          "taa": false
+        },
+        {
+          "sku": "LLSRxx-4-ES3",
+          "family": "retroⒶRCH-L1",
+          "sub_category": "Retrofit Linear Strip",
+          "display_echelon": "",
+          "wattages": [
+            18,
+            25,
+            30
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Standard",
+          "taa": false
+        },
+        {
+          "sku": "LLSRxx-8-PS3",
+          "family": "retroⒶRCH-L1",
+          "sub_category": "Retrofit Linear Strip",
+          "display_echelon": "",
+          "wattages": [
+            65,
+            75,
+            90
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [],
+          "dlc": "Standard",
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3GTU-S3S",
+          "family": "Eureka-I",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "PRO",
+          "wattages": [
+            30,
+            38,
+            46
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3HBP-3CS/CL",
+          "family": "Eureka-I",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "PRO",
+          "wattages": [
+            150,
+            175,
+            200
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3HBU-3CS/CL",
+          "family": "Eureka-I",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "PRO",
+          "wattages": [
+            100,
+            125,
+            135
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P2-3E20-S3P",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15,
+            17,
+            20
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3E135-S3P",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            100,
+            125,
+            135
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3E250-S3P",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            150,
+            200,
+            250
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3E40-S3P",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            20,
+            30,
+            40
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P4-3E46-3SP",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            20,
+            30,
+            46
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LV3P8-3E80-S3P",
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "wattages": [
+            60,
+            70,
+            80
+          ],
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120 - 277V",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        }
+      ],
+      "families": [
+        {
+          "family": "Icarus-III",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "max_wattage": 300,
+          "sku_count": 12,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "taa": true
+        },
+        {
+          "family": "Tiny-I",
+          "sub_category": "High-Bay",
+          "display_echelon": "ECO",
+          "max_wattage": 220,
+          "sku_count": 6,
+          "dlc": true,
+          "ccts": [
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "277 - 480V"
+          ],
+          "mount_types": [],
+          "taa": true
+        },
+        {
+          "family": "Jupiter-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "max_wattage": 400,
+          "sku_count": 12,
+          "dlc": true,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "277 - 480V"
+          ],
+          "mount_types": [
+            "Ring Hook"
+          ],
+          "taa": true
+        },
+        {
+          "family": "Titan-II",
+          "sub_category": "High-Bay",
+          "display_echelon": "PRO",
+          "max_wattage": 600,
+          "sku_count": 20,
+          "dlc": true,
+          "ccts": [
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V",
+            "277 - 480V"
+          ],
+          "mount_types": [],
+          "taa": true
+        },
+        {
+          "family": "Vanguard-I",
+          "sub_category": "Linear Strip",
+          "display_echelon": "ECO",
+          "max_wattage": 90,
+          "sku_count": 9,
+          "dlc": true,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Hallmark",
+          "sub_category": "Linear Strip",
+          "display_echelon": "PRO+",
+          "max_wattage": 100,
+          "sku_count": 30,
+          "dlc": true,
+          "ccts": [
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "retroⒶRCH-L1",
+          "sub_category": "Retrofit Linear Strip",
+          "display_echelon": "",
+          "max_wattage": 90,
+          "sku_count": 4,
+          "dlc": true,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "Eureka-II",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "ECO",
+          "max_wattage": 250,
+          "sku_count": 6,
+          "dlc": false,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Eureka-I",
+          "sub_category": "Vapor-Tight",
+          "display_echelon": "PRO",
+          "max_wattage": 200,
+          "sku_count": 3,
+          "dlc": false,
+          "ccts": [
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120 - 277V"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        }
+      ]
+    },
+    "multifamily": {
+      "skus": [
+        {
+          "sku": "CRC4-SB/E26",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC4-SB/T24",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/E26",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/E26/A19",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/E26/BR30",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/T24",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/T24/LDRR612",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "CRC6-SB/T24/LSMT615",
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "wattages": [],
+          "ccts": [],
+          "voltage": "",
+          "mount_types": [],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0510-E2S5/B",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0510-E2S5/W",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0712-E2S5/W/S",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            12
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0715-E2S5/B",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0715-E2S5/W",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0918-E2S5/B",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0918-E2S5/W",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0918-E2S5/W/S",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL1121-E2S5/B",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            21
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL1121-E2S5/W",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            21
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL1122-E2S5/W/S",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            22
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL1324-E2S5/B",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            24
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL1324-E2S5/W",
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            24
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0510-LE1S5/B",
+          "family": "Lunar Eclipse",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0715-LE1S5/B",
+          "family": "Lunar Eclipse",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDLL0918-LE1S5/B",
+          "family": "Lunar Eclipse",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/BK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/BK/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/BZ",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/BZ/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/W",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR410-S5-N2/B/W/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/BK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/BK/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/BZ",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/BZ/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/W",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRR615-S5-N2/B/W/12PK",
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDGR410-S5/O1/B",
+          "family": "Orbit",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDGR410-S5/O1/W",
+          "family": "Orbit",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDGR615-S5/O1/B",
+          "family": "Orbit",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDGR615-S5/O1/W",
+          "family": "Orbit",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS306-RSZ5/B",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            6
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS306-RSZ5/F",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            6
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS411-RSZ5/B",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            11
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS411-RSZ5/F",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            11
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS615-RSZ5/B",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS615-RSZ5/F",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS819-RSZ5/B",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            19
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS819-RSZ5/F",
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "wattages": [
+            19
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS409-R2S5/F",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            9
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS409-R2S5/F/12PK",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            9
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS612-R2S5/F",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            12
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS612-R2S5/F/12PK",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            12
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS818-R2S5/F",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LDRS818-R2S5/F/12PK",
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "wattages": [
+            18
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSMT410-S5E",
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSMT410-S5E/24PK",
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            10
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSMT615-S5E",
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSMT615-S5E/24PK",
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSMT615-S5E/P",
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "wattages": [
+            15
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        },
+        {
+          "sku": "LSFL25-5CS/B/W1",
+          "family": "Wally",
+          "sub_category": "Security Flood",
+          "display_echelon": "ECO",
+          "wattages": [
+            16,
+            25
+          ],
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltage": "120V ONLY",
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "dlc": null,
+          "taa": false
+        }
+      ],
+      "families": [
+        {
+          "family": "Gehry",
+          "sub_category": "Commercial Recess Can",
+          "display_echelon": "",
+          "max_wattage": 0,
+          "sku_count": 8,
+          "dlc": false,
+          "ccts": [],
+          "voltages": [],
+          "mount_types": [],
+          "taa": false
+        },
+        {
+          "family": "eCrescent",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "max_wattage": 15,
+          "sku_count": 5,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Nebula-II",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "max_wattage": 15,
+          "sku_count": 12,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Orbit",
+          "sub_category": "Downlight",
+          "display_echelon": "ECO",
+          "max_wattage": 15,
+          "sku_count": 4,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Eclipse-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "max_wattage": 24,
+          "sku_count": 13,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Lunar Eclipse",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "max_wattage": 18,
+          "sku_count": 3,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Radius-II",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO",
+          "max_wattage": 18,
+          "sku_count": 6,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Radius SafeZone",
+          "sub_category": "Downlight",
+          "display_echelon": "PRO+",
+          "max_wattage": 19,
+          "sku_count": 8,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Recessed Mount"
+          ],
+          "taa": false
+        },
+        {
+          "family": "Wally",
+          "sub_category": "Security Flood",
+          "display_echelon": "ECO",
+          "max_wattage": 25,
+          "sku_count": 1,
+          "dlc": false,
+          "ccts": [
+            "2700K",
+            "3000K",
+            "3500K",
+            "4000K",
+            "5000K"
+          ],
+          "voltages": [
+            "120V ONLY"
+          ],
+          "mount_types": [
+            "Surface Mount"
+          ],
+          "taa": false
+        }
+      ]
+    },
     "tubulararch": {
       "skus": [
         {

@@ -215,7 +215,9 @@ const skusJson = JSON.stringify(skus);
               >
                 <div class="fc-top">
                   <span class="fc-subcat">{fam.sub_category.toUpperCase()}</span>
-                  <span class={`fc-tier tier-badge tier-${fam.display_echelon.replace('+','-plus').toLowerCase()}`}>{fam.display_echelon}</span>
+                  {fam.display_echelon && (
+                    <span class={`fc-tier tier-badge tier-${fam.display_echelon.replace('+','-plus').toLowerCase()}`}>{fam.display_echelon}</span>
+                  )}
                 </div>
                 <div class="fc-img">
                   <span class="fc-watermark" set:html={wrapAa(fam.family)}></span>

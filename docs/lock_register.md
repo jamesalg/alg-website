@@ -87,3 +87,17 @@ Locked components MUST NOT be modified in any future iteration without an explic
 | Date | Branch | Paths | Reason |
 |---|---|---|---|
 | 2026-04-27 | iter/v2.7.2-bucket-b-visual-rebuild | `scripts/verify.mjs` | Additive-only: removed branch exemption from Group G, added Groups O and P |
+
+## v2.6.0 — Bucket A expansion (2026-04-27)
+
+Acknowledged by: Manus (iter/v2.6.0-bucket-a)
+
+| Component | Path(s) | Lock reason |
+|---|---|---|
+| lamparⒶRCH page | `src/pages/collections/lampararch.astro` | Canonical 5-line collection page; structural lock Group H |
+| cityⒶRCH page | `src/pages/collections/cityarch.astro` | Canonical 5-line collection page; structural lock Group H |
+| multi-fⒶMILY page | `src/pages/collections/multifamily.astro` | Canonical 5-line collection page; structural lock Group H |
+| lamparⒶRCH data | `src/data/collections/lampararch.ts` | Static data file for lamparⒶRCH |
+| cityⒶRCH data | `src/data/collections/cityarch.ts` | Static data file for cityⒶRCH |
+| multi-fⒶMILY data | `src/data/collections/multifamily.ts` | Static data file for multi-fⒶMILY |
+| SKU xlsx v2 | `data/SKU_Attributes_Template_v2.xlsx` | v2 source-of-truth SKU data covering all 5 Bucket A collections |
