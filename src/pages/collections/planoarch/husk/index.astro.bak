@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+const title = "Husk — plano\u24b6RCH | Archipelago Lighting Group";
+const description = "Husk is the plano\u24b6RCH back-of-house wraparound family. 4000K / 5000K, 2×4 and 2×2 form factors, DLC Premium listed, 0–10V dimming standard. Designed for break rooms, storage corridors, mechanical rooms, and utility spaces where clean light and long service life matter more than aesthetics.";
+---
+<BaseLayout {title} {description}>
+<style>
+  :root {
+    --accent: #F32740;
+    --paper: #FAF8F4;
+    --paper-2: #F1ECE3;
+    --char: #111111;
+    --ink: #111111;
+    --plano-mono: ui-monospace, 'JetBrains Mono', monospace;
+  }
+  .section-bg-paper { background: var(--paper); color: var(--ink); }
+  .section-bg-dark { background: var(--char); color: white; }
+  .accent-text { color: var(--accent); }
+  .mono { font-family: var(--plano-mono); }
+  .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-family: var(--plano-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow-rule::before { content: ''; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: var(--plano-mono); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #C41E32; }
+  .btn-outline { border: 1px solid rgba(0,0,0,0.3); color: var(--ink); }
+  .btn-outline:hover { background: rgba(0,0,0,0.05); }
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .stat-item { padding: 1.5rem; border-right: 1px solid rgba(255,255,255,0.1); }
+  .stat-item:last-child { border-right: none; }
+  .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; }
+  .stat-label { font-family: var(--plano-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.6; margin-top: 0.35rem; }
+  .spec-table { width: 100%; border-collapse: collapse; }
+  .spec-table th { font-family: var(--plano-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; border-bottom: 2px solid rgba(26,19,10,0.15); }
+  .spec-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(26,19,10,0.08); font-size: 0.9rem; }
+  .matrix-row { border-bottom: 1px solid rgba(26,19,10,0.08); }
+  .matrix-row:hover { background: rgba(166,54,43,0.04); }
+  .sku-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .sku-table th { font-family: var(--plano-mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.6rem 0.75rem; text-align: left; border-bottom: 2px solid rgba(26,19,10,0.15); background: rgba(26,19,10,0.03); }
+  .sku-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(26,19,10,0.06); }
+  .sku-table tr:hover td { background: rgba(243,39,64,0.03); }
+  .badge { display: inline-block; font-family: var(--plano-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.5rem; border: 1px solid currentColor; }
+  .badge-dlc { color: #1A6B3C; border-color: rgba(26,107,60,0.4); background: rgba(26,107,60,0.06); }
+  .badge-taa { color: #1A4A8A; border-color: rgba(26,74,138,0.4); background: rgba(26,74,138,0.06); }
+  .spec-grid { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start; }
+  .toc-link { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.65rem 0.75rem; border-left: 2px solid transparent; font-size: 0.85rem; text-decoration: none; color: inherit; }
+  .toc-link.active { border-left-color: var(--accent); background: rgba(243,39,64,0.06); font-weight: 600; }
+  .toc-link:hover { background: rgba(26,19,10,0.04); }
+  .lifestyle-photo { background: linear-gradient(135deg, #1A2A3A 0%, #0F1A26 100%); display: flex; align-items: center; justify-content: center; aspect-ratio: 16/9; position: relative; }
+  .lifestyle-photo::before { content: ""; position: absolute; inset: 16px; border: 1px dashed rgba(200,220,240,0.22); }
+  @media (max-width: 900px) { .spec-grid { grid-template-columns: 1fr !important; } .stat-strip { grid-template-columns: 1fr 1fr; } }
+</style>
+
+<!-- HERO -->
+<section class="section-bg-dark" style="padding: 5rem 2rem 4rem;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <nav aria-label="Breadcrumb" style="margin-bottom: 2rem;">
+      <span class="eyebrow" style="opacity:0.5;">
+        <a href="/collections/planoarch/" style="color:inherit;text-decoration:none;">plano<span class="aa">Ⓐ</span>RCH</a>
+        &rsaquo; Back-of-House &rsaquo; Husk
+      </span>
+    </nav>
+    <p class="eyebrow accent-text eyebrow-rule" style="margin-bottom: 1.25rem;">WRAPAROUND · BACK-OF-HOUSE · DLC PREMIUM</p>
+    <h1 class="h1" style="font-size: clamp(2.5rem, 6vw, 4.5rem); color: white; margin-bottom: 1.5rem;">
+      Husk
+    </h1>
+    <p style="font-size: 1.15rem; max-width: 640px; opacity: 0.75; line-height: 1.65; margin-bottom: 2.5rem;">
+      The plano<span class="aa">Ⓐ</span>RCH wraparound for back-of-house. 4000K and 5000K, 2×4 and 2×2 form factors, 0–10V dimming standard. DLC Premium listed. Built for break rooms, storage corridors, mechanical rooms, and utility spaces where clean light and long service life matter more than aesthetics.
+    </p>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="/support/sample-request?product=Husk&family=HUSK" class="btn btn-primary">REQUEST SAMPLE</a>
+      <a href="/support/project-layout?family=HUSK" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.3);">LAYOUT REQUEST</a>
+      <a href="#sku-table" class="btn" style="color:rgba(255,255,255,0.6);text-decoration:underline;font-family:var(--plano-mono);font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;">BROWSE SKUS ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<section style="background: var(--accent); color: white; padding: 0;">
+  <div style="max-width: 1100px; margin: 0 auto;" class="stat-strip">
+    <div class="stat-item">
+      <div class="stat-value">3,500–5,000</div>
+      <div class="stat-label">Lumens output</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">120–140</div>
+      <div class="stat-label">lm/W efficacy</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">L80 / 50k</div>
+      <div class="stat-label">Rated life</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0–10V</div>
+      <div class="stat-label">Dimming standard</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE PHOTO PLACEHOLDER -->
+<section class="section-bg-paper" style="padding: 3rem 2rem;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="lifestyle-photo" aria-label="Husk product photography — replace with Rooster Creative asset">
+      <span class="eyebrow" style="color: rgba(200,220,240,0.5);">▸ PRODUCT PHOTO — REPLACE WITH ROOSTER CREATIVE</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPEC SECTION -->
+<section class="section-bg-paper" style="padding: 3rem 2rem 5rem;" id="spec">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <h2 class="h2" style="font-size: 1.5rem; margin-bottom: 2.5rem;">Technical Specifications</h2>
+    <div class="spec-grid">
+      <!-- TOC SIDEBAR -->
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p class="eyebrow" style="opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-electrical" class="toc-link active"><span class="mono" style="font-size:0.65rem;opacity:0.55;">01</span> Electrical</a>
+          <a href="#spec-photometric" class="toc-link"><span class="mono" style="font-size:0.65rem;opacity:0.55;">02</span> Photometric</a>
+          <a href="#spec-mechanical" class="toc-link"><span class="mono" style="font-size:0.65rem;opacity:0.55;">03</span> Mechanical</a>
+          <a href="#spec-dimming" class="toc-link"><span class="mono" style="font-size:0.65rem;opacity:0.55;">04</span> Dimming</a>
+          <a href="#spec-compliance" class="toc-link"><span class="mono" style="font-size:0.65rem;opacity:0.55;">05</span> Compliance</a>
+        </nav>
+      </aside>
+      <!-- SPEC CONTENT -->
+      <div style="display:flex;flex-direction:column;gap:3rem;">
+        <article id="spec-electrical">
+          <h3 class="eyebrow" style="margin-bottom:1rem;opacity:0.7;">01 — ELECTRICAL</h3>
+          <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;">
+            <dt style="font-size:0.8rem;opacity:0.6;">Input voltage</dt><dd style="font-size:0.9rem;">120–277 VAC, 50/60 Hz</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Wattage range</dt><dd style="font-size:0.9rem;">25W / 35W / 45W</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Power factor</dt><dd style="font-size:0.9rem;">&gt; 0.90</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">THD</dt><dd style="font-size:0.9rem;">&lt; 20%</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Driver</dt><dd style="font-size:0.9rem;">Integrated, 0–10V dimmable</dd>
+          </dl>
+        </article>
+        <article id="spec-photometric">
+          <h3 class="eyebrow" style="margin-bottom:1rem;opacity:0.7;">02 — PHOTOMETRIC</h3>
+          <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;">
+            <dt style="font-size:0.8rem;opacity:0.6;">Lumen output</dt><dd style="font-size:0.9rem;">3,500 / 4,500 / 5,500 lm</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Efficacy</dt><dd style="font-size:0.9rem;">120–140 lm/W (DLC Premium)</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">CCT</dt><dd style="font-size:0.9rem;">4000K / 5000K</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">CRI</dt><dd style="font-size:0.9rem;">&ge; 80</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Beam distribution</dt><dd style="font-size:0.9rem;">Lambertian (120° FWHM)</dd>
+          </dl>
+        </article>
+        <article id="spec-mechanical">
+          <h3 class="eyebrow" style="margin-bottom:1rem;opacity:0.7;">03 — MECHANICAL</h3>
+          <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;">
+            <dt style="font-size:0.8rem;opacity:0.6;">Form factors</dt><dd style="font-size:0.9rem;">2×4 ft / 2×2 ft</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Housing</dt><dd style="font-size:0.9rem;">Cold-rolled steel, white powder coat</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Lens</dt><dd style="font-size:0.9rem;">Frosted polycarbonate prismatic</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Mounting</dt><dd style="font-size:0.9rem;">Surface, chain, or stem</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Operating temp</dt><dd style="font-size:0.9rem;">−20°C to +50°C</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">IP rating</dt><dd style="font-size:0.9rem;">IP20</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Rated life</dt><dd style="font-size:0.9rem;">L80 / 50,000 hours</dd>
+          </dl>
+        </article>
+        <article id="spec-dimming">
+          <h3 class="eyebrow" style="margin-bottom:1rem;opacity:0.7;">04 — DIMMING COMPATIBILITY</h3>
+          <p style="font-size:0.85rem;opacity:0.7;margin-bottom:1rem;">Verified 0–10V dimming partners. Dim floor: 10%.</p>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Model</th><th>Brand</th><th>Protocol</th><th>Series</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { model: 'DVTV-253P', brand: 'Lutron', type: '0–10V', series: 'Diva' },
+                { model: 'MACL-153M', brand: 'Lutron', type: '0–10V', series: 'Maestro' },
+                { model: 'PD-6ANS', brand: 'Lutron', type: 'Caseta 0–10V', series: 'Smart-home' },
+                { model: 'RRD-10ND', brand: 'Lutron', type: 'RadioRA 2 0–10V', series: 'Whole-home' },
+                { model: 'HQRD-10ND', brand: 'Lutron', type: 'HomeWorks QS 0–10V', series: 'Estate-grade' },
+                { model: 'NTELV-300', brand: 'Lutron', type: '0–10V', series: 'Nova T' },
+                { model: 'DSL06-1LZ', brand: 'Leviton', type: '0–10V', series: 'Decora Sureslide' },
+                { model: 'HCL45-3PW', brand: 'Legrand', type: '0–10V', series: 'radiant' },
+                { model: 'ADTP703P', brand: 'Leviton', type: '0–10V', series: 'Decora Plus' },
+                { model: 'DAL06P', brand: 'Cooper', type: '0–10V', series: 'Aspire' },
+                { model: 'WSD-0600', brand: 'Wattstopper', type: '0–10V', series: 'Digital' },
+                { model: 'LMSW-101', brand: 'Lutron', type: 'DALI', series: 'Grafik Eye QS' },
+              ].map(d => (
+                <tr class="matrix-row">
+                  <td class="mono" style="font-size:0.8rem;">{d.model}</td>
+                  <td>{d.brand}</td>
+                  <td style="font-size:0.8rem;opacity:0.7;">{d.type}</td>
+                  <td style="font-size:0.8rem;opacity:0.7;">{d.series}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </article>
+        <article id="spec-compliance">
+          <h3 class="eyebrow" style="margin-bottom:1rem;opacity:0.7;">05 — COMPLIANCE &amp; WARRANTY</h3>
+          <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;">
+            <dt style="font-size:0.8rem;opacity:0.6;">DLC</dt><dd style="font-size:0.9rem;"><span class="badge badge-dlc">DLC PREMIUM</span></dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">TAA</dt><dd style="font-size:0.9rem;"><span class="badge badge-taa">TAA COMPLIANT</span></dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Listings</dt><dd style="font-size:0.9rem;">cULus, FCC Part 15 Class B</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">RoHS</dt><dd style="font-size:0.9rem;">Compliant</dd>
+            <dt style="font-size:0.8rem;opacity:0.6;">Warranty</dt><dd style="font-size:0.9rem;">5-year limited</dd>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKU TABLE -->
+<section class="section-bg-paper" style="padding: 3rem 2rem 5rem; background: #F1ECE3;" id="sku-table">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <h2 class="h2" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Active SKUs</h2>
+    <p class="eyebrow" style="opacity:0.5;margin-bottom:2rem;">12 active SKUs · 2×4 and 2×2 form factors · 4000K / 5000K</p>
+    <div style="overflow-x:auto;">
+      <table class="sku-table">
+        <thead>
+          <tr>
+            <th>SKU</th><th>Form Factor</th><th>Wattage</th><th>Lumens</th><th>CCT</th><th>Efficacy</th><th>DLC</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[
+            { sku: 'HUSK-2X4-25W-40K', form: '2×4', w: '25W', lm: '3,500', cct: '4000K', eff: '140 lm/W', dlc: true },
+            { sku: 'HUSK-2X4-25W-50K', form: '2×4', w: '25W', lm: '3,500', cct: '5000K', eff: '140 lm/W', dlc: true },
+            { sku: 'HUSK-2X4-35W-40K', form: '2×4', w: '35W', lm: '4,500', cct: '4000K', eff: '129 lm/W', dlc: true },
+            { sku: 'HUSK-2X4-35W-50K', form: '2×4', w: '35W', lm: '4,500', cct: '5000K', eff: '129 lm/W', dlc: true },
+            { sku: 'HUSK-2X4-45W-40K', form: '2×4', w: '45W', lm: '5,500', cct: '4000K', eff: '122 lm/W', dlc: true },
+            { sku: 'HUSK-2X4-45W-50K', form: '2×4', w: '45W', lm: '5,500', cct: '5000K', eff: '122 lm/W', dlc: true },
+            { sku: 'HUSK-2X2-25W-40K', form: '2×2', w: '25W', lm: '3,000', cct: '4000K', eff: '120 lm/W', dlc: true },
+            { sku: 'HUSK-2X2-25W-50K', form: '2×2', w: '25W', lm: '3,000', cct: '5000K', eff: '120 lm/W', dlc: true },
+            { sku: 'HUSK-2X2-35W-40K', form: '2×2', w: '35W', lm: '4,200', cct: '4000K', eff: '120 lm/W', dlc: true },
+            { sku: 'HUSK-2X2-35W-50K', form: '2×2', w: '35W', lm: '4,200', cct: '5000K', eff: '120 lm/W', dlc: true },
+            { sku: 'HUSK-2X2-45W-40K', form: '2×2', w: '45W', lm: '5,400', cct: '4000K', eff: '120 lm/W', dlc: false },
+            { sku: 'HUSK-2X2-45W-50K', form: '2×2', w: '45W', lm: '5,400', cct: '5000K', eff: '120 lm/W', dlc: false },
+          ].map(s => (
+            <tr>
+              <td class="mono" style="font-size:0.8rem;">{s.sku}</td>
+              <td>{s.form}</td>
+              <td>{s.w}</td>
+              <td>{s.lm}</td>
+              <td>{s.cct}</td>
+              <td class="mono" style="font-size:0.8rem;">{s.eff}</td>
+              <td>{s.dlc ? <span class="badge badge-dlc">DLC</span> : '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CROSS-PROMO: SAFETY & CONTROLS -->
+<section class="section-bg-dark" style="padding: 4rem 2rem;">
+  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;">
+    <div>
+      <p class="eyebrow accent-text eyebrow-rule" style="margin-bottom: 1rem;">SAFETY &amp; CONTROLS</p>
+      <h2 class="h2" style="font-size: 1.75rem; color: white; margin-bottom: 0.75rem;">
+        Looking for emergency drivers + advanced controls?
+      </h2>
+      <p style="opacity: 0.65; max-width: 540px; line-height: 1.6;">
+        Safety &amp; Controls — const<span class="aa">Ⓐ</span>NT emergency egress + contr<span class="aa">Ⓐ</span>LS dimming, sensors, daylight harvesting.
+      </p>
+    </div>
+    <a href="/solutions/safety-controls/" class="btn btn-primary" style="white-space:nowrap;">LEARN MORE →</a>
+  </div>
+</section>
+
+<!-- BACK LINK -->
+<section class="section-bg-paper" style="padding: 2rem; border-top: 1px solid rgba(26,19,10,0.08);">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <a href="/collections/planoarch/" class="eyebrow" style="color: var(--accent); text-decoration: none;">
+      ← Back to plano<span class="aa">Ⓐ</span>RCH
+    </a>
+  </div>
+</section>
+</BaseLayout>

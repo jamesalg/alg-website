@@ -79,6 +79,15 @@ const planoarchData = {
   ],
   featured: [
     {
+      family: 'Husk',
+      subCategory: 'Wraparound',
+      displayEchelon: 'PRO' as const,
+      maxWattage: 40,
+      skuCount: 8,
+      dlc: true,
+      lineDrawing: null,
+    },
+    {
       family: 'Astra',
       subCategory: 'Downlight',
       displayEchelon: 'PRO+' as const,

@@ -1,5 +1,450 @@
 ---
-import LampFamilyDetailPageLayout from '../../../layouts/LampFamilyDetailPageLayout.astro';
-import data, { siblingFamilies, relatedCollections, getStarted } from '../../../data/lamps/nostalgic-decor/g16-5';
+/**
+ * The Heath G16.5 — Nostalgic Décor Family Detail Page
+ * v2.7.10 — rebuilt to match mockup_nostalgic_g16-5_v1.html
+ * Route: /collections/nostalgic-decor/g16-5
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ResourceCard from '../../../components/ResourceCard.astro';
+
+const resources = [
+  {
+    icon: 'PDF',
+    title: 'Datasheet',
+    desc: 'Heath G16.5 product datasheet',
+    url: 'https://workdrive.archipelagolighting.com/external/206567f91f1893fcaceef8b1123dc3e3c591dbd47a2e8c74365b095f2b7e37e8',
+    family: 'The Heath G16.5',
+    resource: 'Datasheet',
+  },
+  {
+    icon: 'PDF',
+    title: 'Installation Sheet',
+    desc: 'Per-SKU install instructions',
+    url: null,
+    family: 'The Heath G16.5',
+    resource: 'Installation Sheet',
+  },
+  {
+    icon: 'IES',
+    title: 'IES Files',
+    desc: 'Photometric data · per CCT and glass finish',
+    url: 'https://workdrive.archipelagolighting.com/external/68e47352b16db89aafda2da6e64b37559a593207711945ed855648b55025fbe5',
+    family: 'The Heath G16.5',
+    resource: 'IES Files',
+  },
+  {
+    icon: 'PDF',
+    title: 'ALG Décor Lamps · Product Guide · Q2 2026',
+    desc: 'Full Décor lamp catalog · Nostalgic + Vintage series',
+    url: null,
+    family: 'The Heath G16.5',
+    resource: 'Product Guide',
+  },
+];
+
+const skus = [
+  { sku: 'LTG16.5F45024MB', finish: 'Frosted', base: 'E26', watts: '4.5W', eq: '40W', lumens: '450', cct: '2400K', cri: '90+', cert: '—' },
+  { sku: 'LTG16.5F65027MB', finish: 'Frosted', base: 'E26', watts: '6.5W', eq: '60W', lumens: '650', cct: '2700K', cri: '90+', cert: '—' },
+  { sku: 'LTG16.5F65027MB/JA8', finish: 'Frosted', base: 'E26', watts: '6.5W', eq: '60W', lumens: '650', cct: '2700K', cri: '90+', cert: 'JA8 · T20' },
+  { sku: 'LTG16.5F75027MB/JA8', finish: 'Frosted', base: 'E26', watts: '7.5W', eq: '60W', lumens: '800', cct: '2700K', cri: '90+', cert: 'JA8 · T20' },
+  { sku: 'LTG16.5C65027MB', finish: 'Clear', base: 'E26', watts: '6.5W', eq: '60W', lumens: '650', cct: '2700K', cri: '90+', cert: '—' },
+  { sku: 'LTG16.5C65027MB/JA8', finish: 'Clear', base: 'E26', watts: '6.5W', eq: '60W', lumens: '650', cct: '2700K', cri: '90+', cert: 'JA8 · T20' },
+  { sku: 'LTG16.5C75027MB', finish: 'Clear', base: 'E26', watts: '7.5W', eq: '60W', lumens: '800', cct: '2700K', cri: '90+', cert: '—' },
+  { sku: 'LTG16.5C75027MB/JA8', finish: 'Clear', base: 'E26', watts: '7.5W', eq: '60W', lumens: '800', cct: '2700K', cri: '90+', cert: 'JA8 · T20' },
+  { sku: 'LTG16.5C60027MB', finish: 'Clear', base: 'E26', watts: '6.0W', eq: '60W', lumens: '800', cct: '2700K', cri: '90+', cert: 'T20' },
+  { sku: 'LTG16.5C80030MB/JA8', finish: 'Clear', base: 'E26', watts: '8.0W', eq: '60W', lumens: '800', cct: '3000K', cri: '90+', cert: 'T20' },
+  { sku: 'LTG16.5S50024MB', finish: 'Silver-Tip', base: 'E26', watts: '4.5W', eq: '40W', lumens: '450', cct: '2400K', cri: '83+', cert: '—' },
+  { sku: 'LTG16.5S80027MB/JA8', finish: 'Silver-Tip', base: 'E26', watts: '8.0W', eq: '60W', lumens: '800', cct: '2700K', cri: '90+', cert: 'T20' },
+];
+
+const dimmers = [
+  { model: 'TGCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Toggler' },
+  { model: 'SCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Skylark' },
+  { model: 'DVCL-153P', brand: 'Lutron', type: 'CL', series: 'Diva CL' },
+  { model: 'LGCL-153P', brand: 'Lutron', type: 'CL', series: 'Lyneo' },
+  { model: 'MACL-153M', brand: 'Lutron', type: 'CL', series: 'Maestro CL' },
+  { model: 'PD-6WCL', brand: 'Lutron', type: 'Caseta wireless', series: 'Smart-home' },
+  { model: 'AY-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Ariadni' },
+  { model: 'D-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva' },
+  { model: 'GL-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Glyder' },
+  { model: 'S-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Skylark' },
+  { model: 'DV-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva legacy' },
+  { model: 'SELV-300P', brand: 'Lutron', type: 'ELV', series: 'Skylark ELV' },
+  { model: 'DVELV-300P', brand: 'Lutron', type: 'ELV', series: 'Diva ELV' },
+  { model: 'NTELV-500', brand: 'Lutron', type: 'ELV', series: 'Nova T ELV' },
+  { model: 'RRD-6NA', brand: 'Lutron', type: 'RadioRA 2', series: 'Whole-home wireless' },
+  { model: 'MRF-2-6ELV-120', brand: 'Lutron', type: 'RadioRA 2 ELV', series: 'Whole-home wireless ELV' },
+  { model: 'HQRD-6NA', brand: 'Lutron', type: 'HomeWorks QS', series: 'Estate-grade' },
+  { model: 'DSL06-1LZ', brand: 'Leviton', type: 'CL', series: 'Decora Sureslide CL' },
+  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant CL' },
+  { model: 'FLR603P', brand: 'Forbes & Lomax', type: 'TRIAC', series: 'Designer rotary' },
+  { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
+  { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
+];
 ---
-<LampFamilyDetailPageLayout family={data} siblingFamilies={siblingFamilies} relatedCollections={relatedCollections} getStarted={getStarted} />
+<BaseLayout
+  title="The Heath G16.5 — Nostalgic Décor | Archipelago Lighting Group"
+  description="The Heath G16.5: CRI 90+, 2400K–3000K, frosted/clear/silver-tip glass, dimmable to 5%. The standard-bearer of mid-century domestic light. 16 active LTG16.5 variants."
+  bodyClass="page-g16-5-family"
+>
+<style>
+  :root {
+    --g16-5-amber: #C17B2A;
+    --g16-5-warm: #F5EFE3;
+    --g16-5-warm2: #EDE5D3;
+    --g16-5-ink: #1A140C;
+    --g16-5-umber: #2C1A0A;
+    --g16-5-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --g16-5-serif: 'Georgia', 'Times New Roman', serif;
+    --g16-5-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .g16-5-warm  { background: var(--g16-5-warm); color: var(--g16-5-ink); }
+  .g16-5-warm2 { background: var(--g16-5-warm2); color: var(--g16-5-ink); }
+  .g16-5-umber { background: var(--g16-5-umber); color: #EFE6D2; }
+  .g16-5-eyebrow { font-family: var(--g16-5-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .g16-5-eyebrow-rule::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--g16-5-amber); vertical-align: middle; margin-right: 12px; }
+  .g16-5-amber-text { color: var(--g16-5-amber); }
+  .g16-5-h1 { font-family: var(--g16-5-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+  .g16-5-h2 { font-family: var(--g16-5-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .g16-5-serif-text { font-family: var(--g16-5-serif); }
+  .g16-5-stat-num { font-family: var(--g16-5-sans); font-weight: 900; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; color: var(--g16-5-amber); }
+  .g16-5-stat-label { font-family: var(--g16-5-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.65; margin-top: 4px; }
+  .g16-5-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s; font-family: var(--g16-5-mono); }
+  .g16-5-btn-primary { background: var(--g16-5-amber); color: white; }
+  .g16-5-btn-primary:hover { background: #a06520; }
+  .g16-5-btn-outline { background: transparent; color: var(--g16-5-ink); border: 1.5px solid rgba(26,20,12,0.3); }
+  .g16-5-btn-outline:hover { border-color: var(--g16-5-ink); }
+  .g16-5-btn-ghost { background: transparent; color: var(--g16-5-ink); }
+  .g16-5-btn-ghost:hover { text-decoration: underline; }
+  .g16-5-trust-badge { font-family: var(--g16-5-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(26,20,12,0.2); display: inline-block; }
+  .g16-5-photo-ph { background: #2C1A0A; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+  .g16-5-photo-ph-text { font-family: var(--g16-5-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(245,239,227,0.15); margin: 2rem; color: rgba(245,239,227,0.4); }
+  .g16-5-spec-row { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(26,20,12,0.08); font-size: 0.875rem; }
+  .g16-5-spec-row dt { font-family: var(--g16-5-mono); font-size: 0.7rem; letter-spacing: 0.08em; opacity: 0.7; }
+  .g16-5-spec-row dd { margin: 0; font-family: var(--g16-5-serif); }
+  .g16-5-spec-block-num { font-family: var(--g16-5-mono); font-size: 0.6rem; letter-spacing: 0.18em; color: var(--g16-5-amber); }
+  .g16-5-sku-table { width: 100%; background: white; border: 1px solid rgba(26,20,12,0.1); font-family: var(--g16-5-mono); font-size: 0.68rem; }
+  .g16-5-sku-table th { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(26,20,12,0.1); font-weight: 700; letter-spacing: 0.1em; opacity: 0.7; }
+  .g16-5-sku-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(26,20,12,0.06); }
+  .g16-5-sku-table tr:hover td { background: rgba(193,123,42,0.04); }
+  .g16-5-sister-card { display: block; padding: 1.25rem; border: 1px solid rgba(26,20,12,0.1); background: var(--g16-5-warm); text-decoration: none; color: inherit; transition: border-color 0.15s; }
+  .g16-5-sister-card:hover { border-color: var(--g16-5-amber); }
+  .g16-5-breadcrumb { border-bottom: 1px solid rgba(26,20,12,0.1); background: white; }
+  .g16-5-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--g16-5-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .g16-5-breadcrumb a { color: inherit; text-decoration: none; }
+  .g16-5-breadcrumb a:hover { color: var(--g16-5-amber); opacity: 1; }
+  .g16-5-callout-ey { font-family: var(--g16-5-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8a5a10; }
+</style>
+
+<div class="g16-5-breadcrumb">
+  <div class="g16-5-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    <a href="/collections/nostalgic-decor/">NOSTALGIC DÉCOR</a> ›
+    THE Heath G16.5
+  </div>
+</div>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="g16-5-warm" aria-labelledby="g16-5-hero-h1">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="g16-5-hero-grid">
+    <div class="g16-5-photo-ph lifestyle-photo">
+      <div class="g16-5-photo-ph-text lifestyle-photo">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">Heath G16.5 IN MID-CENTURY LIVING ROOM SETTING<br>SOFT EVENING REGISTER · TABLE LAMP CONTEXT</span></div>
+    </div>
+    <div>
+      <p class="g16-5-eyebrow g16-5-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="g16-5-amber-text">SERIES ·</span> NOSTALGIC DÉCOR · MID-CENTURY DOMESTIC</p>
+      <h1 id="g16-5-hero-h1" class="g16-5-h1" style="font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1rem;">The Heath G16.5</h1>
+      <p class="g16-5-serif-text" style="font-size:1.25rem;font-style:italic;margin-bottom:1.5rem;opacity:0.9;">The standard-bearer of mid-century domestic light.</p>
+      <p class="g16-5-serif-text" style="font-size:1rem;line-height:1.75;margin-bottom:2rem;opacity:0.85;max-width:36rem;">A standard G16.5 silhouette in the mid-century domestic register Charles and Ray Heath helped define — soft amber glow, frosted glass, and a filament that softens into a warm halo rather than burning at the eye. Built for residential living rooms, hospitality bedside tables, and the lamp on the nightstand that's the last thing you see before the lights go out.</p>
+      <dl style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2rem;margin-bottom:2rem;">
+        <div><dd class="g16-5-stat-num">6.5–7.5W</dd><dt class="g16-5-stat-label">Input wattage range</dt></div>
+        <div><dd class="g16-5-stat-num">350–650 lm</dd><dt class="g16-5-stat-label">Lumen output</dt></div>
+        <div><dd class="g16-5-stat-num">CRI 90+</dd><dt class="g16-5-stat-label">TM-30 Rf 88+</dt></div>
+        <div><dd class="g16-5-stat-num">25,000h</dd><dt class="g16-5-stat-label">L70 rated life</dt></div>
+      </dl>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;">
+        <span class="g16-5-trust-badge">CRI 90+</span>
+        <span class="g16-5-trust-badge">UL LISTED</span>
+        <span class="g16-5-trust-badge">CEC TITLE 24 JA8</span>
+        <span class="g16-5-trust-badge">DIMMABLE TO 5%</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <a href="/support/sample-request?subject=Heath+G16.5+Spec" class="g16-5-btn g16-5-btn-primary">SPECIFY THIS LAMP</a>
+        <a href="/support/sample-request?subject=Heath+G16.5+Sample" class="g16-5-btn g16-5-btn-outline">REQUEST SAMPLE</a>
+        <a href="#resources" class="g16-5-btn g16-5-btn-ghost">DOCUMENTATION ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 768px) { .g16-5-hero-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- WHERE IT BELONGS -->
+<section class="g16-5-warm2" aria-labelledby="g16-5-belongs-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">WHERE THE Heath BELONGS</p>
+    <h2 id="g16-5-belongs-h2" class="g16-5-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:3rem;">Three install registers. One lamp.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="g16-5-belongs-grid">
+      <div style="background:var(--g16-5-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="g16-5-callout-ey" style="margin-bottom:0.75rem;">RESIDENTIAL · LIVING ROOM</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">The lamp that gets switched on at 4 PM.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--g16-5-serif);">Living-room table lamps, reading sconces, mantel sconces. Specified by interior designers who want CRI 90+ for soft-skin accuracy and tight binning across multiple lamps in a single room.</p>
+      </div>
+      <div style="background:var(--g16-5-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="g16-5-callout-ey" style="margin-bottom:0.75rem;">HOSPITALITY · GUEST ROOM</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">200 to 2,000 lamps. One binning class.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--g16-5-serif);">Hotel bedside table lamps, corridor sconces, lobby vanity strips. 3-step MacAdam binning across the entire order so adjacent lamps don't read as different colors at low dim levels.</p>
+      </div>
+      <div style="background:var(--g16-5-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="g16-5-callout-ey" style="margin-bottom:0.75rem;">RESTAURANT · AMBIENT</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">Eight chandelier lamps, four dim states, no flicker.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--g16-5-serif);">Restaurant ambient overhead clusters, bar sconces. ELV/TRIAC dim-to-5% performance verified on Lutron, Leviton, Cooper, and Legrand control systems for restaurant-grade smoothness.</p>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) { .g16-5-belongs-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- STRUCTURED SPECS -->
+<section class="g16-5-warm" aria-labelledby="g16-5-specs-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
+    <h2 id="g16-5-specs-h2" class="g16-5-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · designer-grade detail.</h2>
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;" class="g16-5-spec-grid">
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p style="font-family:var(--ns-mono);font-size:0.65rem;letter-spacing:0.18em;opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-color" class="toc-link active"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">01</span> Color &amp; Filament</a>
+          <a href="#spec-electrical" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">02</span> Electrical</a>
+          <a href="#spec-dimming" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">03</span> Dimming &amp; Controls</a>
+          <a href="#spec-materials" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">04</span> Materials &amp; Finish</a>
+          <a href="#spec-compliance" class="toc-link"><span style="font-family:var(--ns-mono);font-size:0.65rem;opacity:0.55;">05</span> Compliance &amp; Warranty</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;gap:3rem;">
+      <article id="spec-color">
+        <p class="g16-5-spec-block-num" style="margin-bottom:0.5rem;">01</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Color &amp; Optical</h3>
+        <dl>
+          <div class="g16-5-spec-row"><dt>CCT options</dt><dd>2400K · 2700K · 3000K</dd></div>
+          <div class="g16-5-spec-row"><dt>CRI</dt><dd>≥90 (TM-30 Rf 88+)</dd></div>
+          <div class="g16-5-spec-row"><dt>MacAdam binning</dt><dd>3-step (standard) · matched binning kits available</dd></div>
+          <div class="g16-5-spec-row"><dt>Glass options</dt><dd><span class="swatch" style="background:rgba(239,230,210,0.5);border:1px solid rgba(26,19,10,0.3);" title="Clear"></span> <span class="swatch" style="background:rgba(239,230,210,0.7);border:1px solid rgba(26,19,10,0.2);" title="Frosted"></span> Frosted · Clear · Silver-Tip</dd></div>
+          <div class="g16-5-spec-row"><dt>Beam distribution</dt><dd>Omnidirectional · 360°</dd></div>
+        </dl>
+      </article>
+      <article id="spec-electrical">
+        <p class="g16-5-spec-block-num" style="margin-bottom:0.5rem;">02</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Electrical</h3>
+        <dl>
+          <div class="g16-5-spec-row"><dt>Input voltage</dt><dd>120V AC · 60Hz</dd></div>
+          <div class="g16-5-spec-row"><dt>Wattage range</dt><dd>4.5W – 8.0W (per SKU)</dd></div>
+          <div class="g16-5-spec-row"><dt>Lumen output</dt><dd>350 – 800 lm (per SKU)</dd></div>
+          <div class="g16-5-spec-row"><dt>Efficacy</dt><dd>~100 lm/W (typ.)</dd></div>
+          <div class="g16-5-spec-row"><dt>L70 life</dt><dd>25,000 hours</dd></div>
+        </dl>
+      </article>
+      <article id="spec-dimming">
+        <p class="g16-5-spec-block-num" style="margin-bottom:0.5rem;">03</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Dimming &amp; Controls</h3>
+        <dl>
+          <div class="g16-5-spec-row"><dt>Dimming types</dt><dd>TRIAC · ELV · CL (leading/trailing edge)</dd></div>
+          <div class="g16-5-spec-row"><dt>Dim-to</dt><dd>5% (smooth, flicker-free)</dd></div>
+          <div class="g16-5-spec-row"><dt>Compatible systems</dt><dd>Lutron · Leviton · Legrand · Forbes &amp; Lomax · Cooper</dd></div>
+          <div class="g16-5-spec-row"><dt>Dim-to-warm</dt><dd>Not applicable (fixed CCT per SKU)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-materials">
+        <p class="g16-5-spec-block-num" style="margin-bottom:0.5rem;">04</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Materials &amp; Finish</h3>
+        <dl>
+          <div class="g16-5-spec-row"><dt>Base</dt><dd>E26 medium screw base</dd></div>
+          <div class="g16-5-spec-row"><dt>Envelope</dt><dd>G16.5 (60mm diameter)</dd></div>
+          <div class="g16-5-spec-row"><dt>Glass</dt><dd><span class="swatch" style="background:rgba(239,230,210,0.5);border:1px solid rgba(26,19,10,0.3);" title="Clear"></span> <span class="swatch" style="background:rgba(239,230,210,0.7);border:1px solid rgba(26,19,10,0.2);" title="Frosted"></span> Frosted · Clear · Silver-Tip (per SKU)</dd></div>
+          <div class="g16-5-spec-row"><dt>Filament style</dt><dd>Spiral / standard (per SKU)</dd></div>
+          <div class="g16-5-spec-row"><dt>MOL</dt><dd>4.3" (109mm)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-compliance">
+        <p class="g16-5-spec-block-num" style="margin-bottom:0.5rem;">05</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Compliance &amp; Warranty</h3>
+        <dl>
+          <div class="g16-5-spec-row"><dt>Safety</dt><dd>UL Listed</dd></div>
+          <div class="g16-5-spec-row"><dt>Energy code</dt><dd>CEC Title 24 JA8-2022-E · T20 (on JA8 variants)</dd></div>
+          <div class="g16-5-spec-row"><dt>Warranty</dt><dd>3 years / 25,000 hours</dd></div>
+          <div class="g16-5-spec-row"><dt>RoHS</dt><dd>Compliant</dd></div>
+        </dl>
+      </article>
+    </div>
+    
+      </div>
+    <style>
+      @media (max-width: 900px) { .g16-5-spec-grid { grid-template-columns: 1fr !important; } }
+      @media (max-width: 900px) { .g16-5-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- DIMMER COMPATIBILITY TABLE -->
+<section class="g16-5-warm2" aria-labelledby="g16-5-dim-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">DIMMER COMPATIBILITY</p>
+    <h2 id="g16-5-dim-h2" class="g16-5-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">The Nostalgic &amp; Vintage GEN-2 dimmer list.</h2>
+    <p style="opacity:0.7;max-width:40rem;margin-bottom:2rem;font-size:0.9rem;font-family:var(--g16-5-serif);">Tested and confirmed on the following control systems. All pass at 5% minimum dim level with no flicker, buzz, or pop-on.</p>
+    <div style="overflow-x:auto;">
+      <table class="g16-5-sku-table" style="min-width:520px;">
+        <thead>
+          <tr>
+            <th>MODEL</th><th>BRAND</th><th style="text-align:center;">TYPE</th><th style="text-align:center;">PASS</th><th>SERIES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dimmers.map(d => (
+            <tr class="matrix-row">
+              <td style="font-weight:600;">{d.model}</td>
+              <td>{d.brand}</td>
+              <td style="text-align:center;">{d.type}</td>
+              <td style="text-align:center;color:#16a34a;font-weight:700;">✓</td>
+              <td>{d.series}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-top:1rem;">▸ MATRIX UPDATED 2026.Q2 · NEW DIMMERS ADDED QUARTERLY · SUBMIT YOUR CONTROL FOR TESTING</p>
+  </div>
+</section>
+
+<!-- HOSPITALITY BINNING CALLOUT -->
+<section class="g16-5-warm">
+  <div style="max-width:1536px;margin:0 auto;padding:3rem 1.5rem;">
+    <div style="background:#E9DEC5;border:1px solid rgba(26,20,12,0.1);padding:2rem;display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:center;" class="g16-5-binning-grid">
+      <div>
+        <p class="g16-5-callout-ey" style="margin-bottom:0.75rem;">— HOSPITALITY BINNING KIT</p>
+        <h3 class="g16-5-h2" style="font-size:1.5rem;margin-bottom:0.75rem;font-style:italic;">50 matched lamps. Same MacAdam ellipse. Same warranty.</h3>
+        <p class="g16-5-serif-text" style="font-size:1rem;opacity:0.9;line-height:1.7;">For boutique hotels and hospitality renovations specifying 200–2,000 lamps, the binning kit ships 50 lamps from the same production run with verified 3-step MacAdam consistency. Replacement lamps shipped from the same bin reservoir for 24 months.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="/support/sample-request?subject=Heath+G16.5+Binning+Kit" class="g16-5-btn g16-5-btn-primary" style="justify-content:center;">REQUEST BINNING KIT</a>
+        <a href="/support/sample-request?subject=Heath+G16.5+Hospitality" class="g16-5-btn g16-5-btn-outline" style="justify-content:center;">SPEAK TO HOSPITALITY REP</a>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) { .g16-5-binning-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- SKU TABLE -->
+<section class="g16-5-warm2" aria-labelledby="g16-5-sku-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">ORDERABLE VARIANTS</p>
+    <h2 id="g16-5-sku-h2" class="g16-5-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Showing 12 of 16 active LTG16.5 variants.</h2>
+    <p class="g16-5-serif-text" style="opacity:0.8;max-width:40rem;margin-bottom:2rem;font-size:0.9rem;">All E26 medium-base. Three glass options (Frosted · Clear · Silver-Tip). Standard-warranty 3-year / 25,000-hour rated life per datasheet. JA8-2022-E and T20-compliant variants available where required.</p>
+    <div style="overflow-x:auto;">
+      <table class="g16-5-sku-table spec-table" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th>SKU</th><th>FINISH</th><th style="text-align:center;">BASE</th><th style="text-align:center;">WATTS</th><th style="text-align:center;">EQ.</th><th style="text-align:center;">LUMENS</th><th style="text-align:center;">CCT</th><th style="text-align:center;">CRI</th><th>CERT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {skus.map(s => (
+            <tr class="matrix-row">
+              <td style="font-weight:600;">{s.sku}</td>
+              <td>{s.finish}</td>
+              <td style="text-align:center;">{s.base}</td>
+              <td style="text-align:center;">{s.watts}</td>
+              <td style="text-align:center;">{s.eq}</td>
+              <td style="text-align:center;">{s.lumens}</td>
+              <td style="text-align:center;">{s.cct}</td>
+              <td style="text-align:center;">{s.cri}</td>
+              <td>{s.cert}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-top:1rem;">▸ FULL VARIANT LIST INCLUDES 16 ACTIVE LTG16.5 SKUS · ALTERNATIVE CCTS AVAILABLE AS SPECIAL ORDER · CONTACT SALES@ARCHIPELAGOLIGHTING.COM</p>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="g16-5-warm" id="resources" aria-labelledby="g16-5-resources-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">RESOURCES</p>
+    <h2 id="g16-5-resources-h2" class="g16-5-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">For designers and spec writers.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;" class="g16-5-resources-grid">
+      {resources.map(r => <ResourceCard {...r} />)}
+    </div>
+    <style>
+      @media (max-width: 768px) { .g16-5-resources-grid { grid-template-columns: 1fr 1fr !important; } }
+      @media (max-width: 480px) { .g16-5-resources-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- SISTER LAMPS -->
+<section class="g16-5-warm2" aria-labelledby="g16-5-sister-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="g16-5-eyebrow g16-5-eyebrow-rule g16-5-amber-text" style="margin-bottom:1.5rem;">SISTER LAMPS IN NOSTALGIC DÉCOR</p>
+    <h2 id="g16-5-sister-h2" class="g16-5-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">Six more named lamps. Same series register.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;" class="g16-5-sister-grid">
+      <a href="/collections/nostalgic-decor/a15/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">A15</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Saarinen</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Small-format candelabra · vanity strips and accent fixtures</p>
+      </a>
+      <a href="/collections/nostalgic-decor/b10/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">B10</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Knoll</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Blunt-tip candelabra · decorative chandeliers</p>
+      </a>
+      <a href="/collections/nostalgic-decor/ca10/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">CA10</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Bauer</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Flame-tip candelabra · entryway and formal sconces</p>
+      </a>
+      <a href="/collections/nostalgic-decor/g16-5/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">G16.5</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Heath</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Small globe · vanity strips</p>
+      </a>
+      <a href="/collections/nostalgic-decor/g25/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">G25</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Eichler</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Medium globe · pendant fixtures</p>
+      </a>
+      <a href="/collections/nostalgic-decor/s14/" class="g16-5-sister-card">
+        <p style="font-family:var(--g16-5-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">S14</p>
+        <h3 class="g16-5-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Marshall</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--g16-5-serif);">Commercial-grade string light · outdoor</p>
+      </a>
+    </div>
+    <style>
+      @media (max-width: 768px) { .g16-5-sister-grid { grid-template-columns: 1fr 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- DARK CTA -->
+<section style="background:#1A140C;">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:#F5EFE3;">
+    <h2 class="g16-5-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Specify the Heath. Deliver the room.</h2>
+    <p class="g16-5-serif-text" style="opacity:0.7;max-width:40rem;margin:0 auto 2rem;line-height:1.7;">Interior designers answered same business day. Hospitality binning kits shipped 5-day. Custom CCT requests quoted within 48 hours.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/sample-request?subject=Heath+G16.5+Spec" class="g16-5-btn g16-5-btn-primary">SPECIFY THIS LAMP</a>
+      <a href="/support/sample-request?subject=Heath+G16.5+Sample" class="g16-5-btn" style="background:transparent;color:#F5EFE3;border:1.5px solid rgba(245,239,227,0.3);">REQUEST SAMPLE</a>
+      <a href="https://algportal.archipelagolighting.com" class="g16-5-btn" style="background:transparent;color:#F5EFE3;border:1.5px solid rgba(245,239,227,0.3);" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
+    </div>
+  </div>
+</section>
+
+</main>
+</BaseLayout>

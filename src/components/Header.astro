@@ -169,7 +169,7 @@
 
         <!-- COLUMN 2: CATEGORY -->
         <div class="mm-col mm-col-cat">
-          <div class="mm-col-head">Category</div>
+          <div class="mm-col-head">Collections</div>
           <!-- INDOOR · 2 categories -->
           <div class="mm-cat-group active" data-cat-group="indoor">
             <a href="/collections/planoarch/index.html" class="mm-cat-item active" data-cat="indoor-plano"
@@ -729,14 +729,23 @@
   }
   .megamenu.wide .mm-col::-webkit-scrollbar{width:6px;}
   .megamenu.wide .mm-col::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
-  .megamenu.wide .mm-col.mm-col-main{background:#F4F4F6;}
-  /* G8: mm-col-main recolor — light surface, dark text */
-  .megamenu.wide .mm-col-main .mm-col-head{color:rgba(17,17,17,0.5);border-bottom-color:rgba(17,17,17,0.08);}
+  /* G6 v2.7.13.1: BROWSE BY column — warm cream bg matching Eichler G25 hero */
+  .megamenu.wide .mm-col.mm-col-main{background:#F5EFE3;}
+  /* G5/G7 v2.7.13.1: mm-col-main text — dark on cream, eyebrow matches Industry Vertical */
+  .megamenu.wide .mm-col-main .mm-col-head{
+    color:rgb(107,114,128);
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+  }
   .megamenu.wide .mm-col-main .mm-main-item{color:rgb(17,17,17);}
   .megamenu.wide .mm-col-main .mm-main-item .mm-main-sub{color:rgba(17,17,17,0.7);}
   .megamenu.wide .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgba(17,17,17,0.7);}
   .megamenu.wide .mm-col-main .mm-main-item.active{background:var(--brand);color:#fff;}
   .megamenu.wide .mm-col-main .mm-main-item.active .mm-main-sub{color:rgba(255,255,255,0.85);}
+  .megamenu.wide .mm-col-main .mm-main-item:hover{background:var(--brand);color:#fff;}
   .megamenu.wide .mm-col-main .mm-main-group-label{color:rgba(17,17,17,0.5);}
   .megamenu.wide .mm-col-main .mm-main-divider{background:rgba(17,17,17,0.08);}
   .megamenu.wide .mm-col.mm-col-cat{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
@@ -749,10 +758,7 @@
     margin-bottom:14px;padding-bottom:10px;
     border-bottom:1px solid rgba(0,0,0,0.08);
   }
-  .megamenu.wide .mm-col-main .mm-col-head{
-    color:rgba(255,255,255,0.5);
-    border-bottom-color:rgba(255,255,255,0.1);
-  }
+  /* G7 v2.7.13.1: .wide mm-col-main mm-col-head — overridden above with canonical eyebrow treatment */
 
   /* ---- COLUMN 1: Main nav items ---- */
   .mm-main-item{
@@ -930,11 +936,22 @@
   .megamenu.solutions .mm-col{
     padding:20px 18px;overflow-y:auto;max-height:calc(100vh - 110px);
   }
-  .megamenu.solutions .mm-col-main{background:#F4F4F6;}
-  .megamenu.solutions .mm-col-main .mm-col-head{color:rgba(17,17,17,0.5);border-bottom-color:rgba(17,17,17,0.08);}
+  /* G6/G5/G7 v2.7.13.1: SOLUTIONS mm-col-main — warm cream bg, dark text, canonical eyebrow */
+  .megamenu.solutions .mm-col-main{background:#F5EFE3;}
+  .megamenu.solutions .mm-col-main .mm-col-head{
+    color:rgb(107,114,128);
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+  }
   .megamenu.solutions .mm-col-main .mm-main-item{color:rgb(17,17,17);}
   .megamenu.solutions .mm-col-main .mm-main-item .mm-main-sub{color:rgba(17,17,17,0.7);}
   .megamenu.solutions .mm-col-main .mm-main-item.active{background:var(--brand);color:#fff;}
+  .megamenu.solutions .mm-col-main .mm-main-item.active .mm-main-sub{color:rgba(255,255,255,0.85);}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover{background:var(--brand);color:#fff;}
+  .megamenu.solutions .mm-col-main .mm-main-item:hover .mm-main-sub{color:rgba(255,255,255,0.85);}
   .megamenu.solutions .mm-col-main .mm-main-group-label{color:rgba(17,17,17,0.5);}
   .megamenu.solutions .mm-col-main .mm-main-divider{background:rgba(17,17,17,0.08);}
   .megamenu.solutions .mm-col-vert{background:var(--bg2);border-right:1px solid rgba(0,0,0,0.06);}
@@ -945,9 +962,7 @@
     font-weight:600;margin-bottom:14px;padding-bottom:10px;
     border-bottom:1px solid rgba(0,0,0,0.08);
   }
-  .megamenu.solutions .mm-col-main .mm-col-head{
-    color:rgba(255,255,255,0.5);border-bottom-color:rgba(255,255,255,0.1);
-  }
+  /* G7 v2.7.13.1: .solutions mm-col-main mm-col-head — overridden above with canonical eyebrow treatment */
   .mm-vert-item{
     display:block;padding:11px 14px;
     font-family:'Sora',sans-serif;font-size:13px;font-weight:600;
