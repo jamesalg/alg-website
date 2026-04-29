@@ -53,7 +53,7 @@ const cards = [
         <div class="gs-card">
           <div class="gs-icon">{card.icon}</div>
           <div class="gs-title">{card.title}</div>
-          <p class="gs-body">{card.body}</p>
+          <p class="gs-body" set:html={card.body}></p>
           <a href={card.href} class="gs-cta">{card.cta}</a>
         </div>
       ))}

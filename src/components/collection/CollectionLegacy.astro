@@ -12,7 +12,7 @@ const { legacy } = Astro.props;
   <div class="collection-content">
     <div class="leg-eyebrow">Legacy Products</div>
     <h2 class="leg-headline">{legacy.headline}</h2>
-    <p class="leg-body">{legacy.body}</p>
+    <p class="leg-body" set:html={legacy.body}></p>
     <a href={legacy.notifyLink} class="leg-cta">Get notified of replacements →</a>
   </div>
 </section>

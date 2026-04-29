@@ -52,21 +52,28 @@ const skus = [
 ];
 
 const dimmers = [
+  { model: 'TGCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Toggler' },
+  { model: 'SCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Skylark' },
+  { model: 'DVCL-153P', brand: 'Lutron', type: 'CL', series: 'Diva CL' },
+  { model: 'LGCL-153P', brand: 'Lutron', type: 'CL', series: 'Lyneo' },
+  { model: 'MACL-153M', brand: 'Lutron', type: 'CL', series: 'Maestro CL' },
+  { model: 'PD-6WCL', brand: 'Lutron', type: 'Caseta wireless', series: 'Smart-home' },
+  { model: 'AY-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Ariadni' },
   { model: 'D-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva' },
   { model: 'GL-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Glyder' },
   { model: 'S-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Skylark' },
-  { model: 'DV-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva (legacy)' },
+  { model: 'DV-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva legacy' },
   { model: 'SELV-300P', brand: 'Lutron', type: 'ELV', series: 'Skylark ELV' },
   { model: 'DVELV-300P', brand: 'Lutron', type: 'ELV', series: 'Diva ELV' },
-  { model: 'NTELV-500', brand: 'Lutron', type: 'ELV', series: 'Nova T★ ELV' },
+  { model: 'NTELV-500', brand: 'Lutron', type: 'ELV', series: 'Nova T ELV' },
   { model: 'RRD-6NA', brand: 'Lutron', type: 'RadioRA 2', series: 'Whole-home wireless' },
   { model: 'MRF-2-6ELV-120', brand: 'Lutron', type: 'RadioRA 2 ELV', series: 'Whole-home wireless ELV' },
-  { model: 'HQRD-6NA', brand: 'Lutron', type: 'HomeWorks QS', series: 'HomeWorks QS · estate-grade' },
+  { model: 'HQRD-6NA', brand: 'Lutron', type: 'HomeWorks QS', series: 'Estate-grade' },
   { model: 'DSL06-1LZ', brand: 'Leviton', type: 'CL', series: 'Decora Sureslide CL' },
-  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant® CL' },
+  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant CL' },
   { model: 'FLR603P', brand: 'Forbes & Lomax', type: 'TRIAC', series: 'Designer rotary' },
   { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
-  { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: '—' },
+  { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
 ];
 ---
 <BaseLayout
@@ -139,8 +146,8 @@ const dimmers = [
 <!-- HERO -->
 <section class="ed-cream" aria-labelledby="globe-hero-h1">
   <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="globe-hero-grid">
-    <div class="ed-photo-ph">
-      <div class="ed-photo-ph-text">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">PROVENCE GLOBE IN BISTRO PENDANT SETTING
+    <div class="ed-photo-ph lifestyle-photo">
+      <div class="ed-photo-ph-text lifestyle-photo">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">PROVENCE GLOBE IN BISTRO PENDANT SETTING
 WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
     </div>
     <div>
@@ -207,7 +214,18 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="globe-specs-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · restoration-grade detail.</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="globe-spec-grid">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;" class="globe-spec-grid">
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p style="font-family:var(--ed-mono);font-size:0.65rem;letter-spacing:0.18em;opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-color" class="toc-link active"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">01</span> Color &amp; Filament</a>
+          <a href="#spec-electrical" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">02</span> Electrical</a>
+          <a href="#spec-dimming" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">03</span> Dimming &amp; Controls</a>
+          <a href="#spec-materials" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">04</span> Materials &amp; Finish</a>
+          <a href="#spec-compliance" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">05</span> Compliance &amp; Warranty</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;gap:3rem;">
       <article id="spec-color">
         <p class="ed-spec-block-num" style="margin-bottom:0.5rem;">01</p>
         <h3 class="ed-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Color &amp; Filament</h3>
@@ -215,7 +233,14 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
           <div class="ed-spec-row"><dt>CCT</dt><dd>2200K (candle-hour)</dd></div>
           <div class="ed-spec-row"><dt>CRI</dt><dd>≥90</dd></div>
           <div class="ed-spec-row"><dt>Filament geometry</dt><dd>Squirrel-cage · spiral (per SKU)</dd></div>
-          <div class="ed-spec-row"><dt>Glass options</dt><dd>Amber · Smoked</dd></div>
+          <div class="ed-spec-row"><dt>Glass finish</dt>
+          <dd>
+            <span class="swatch" style="background:rgba(239,230,210,0.5);border:1px solid rgba(26,19,10,0.3);" title="Clear"></span><span style="font-size:0.85rem;">Clear</span>
+            &nbsp;
+            <span class="swatch" style="background:#C7822E;" title="Amber"></span><span style="font-size:0.85rem;">Amber</span>
+            &nbsp;
+            <span class="swatch" style="background:#6E5236;" title="Smoked"></span><span style="font-size:0.85rem;">Smoked</span>
+          </dd></div>
           <div class="ed-spec-row"><dt>Envelope</dt><dd>G25 (80mm) · G40 (127mm)</dd></div>
         </dl>
       </article>
@@ -248,10 +273,10 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
           <div class="ed-spec-row"><dt>MOL (G40)</dt><dd>~6.5" (165mm)</dd></div>
         </dl>
       </article>
-      <article id="spec-compliance" style="grid-column:1/-1;">
+      <article id="spec-compliance">
         <p class="ed-spec-block-num" style="margin-bottom:0.5rem;">05</p>
         <h3 class="ed-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Compliance &amp; Warranty</h3>
-        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+        <dl>
           <div class="ed-spec-row"><dt>Safety</dt><dd>UL Listed</dd></div>
           <div class="ed-spec-row"><dt>Energy code</dt><dd>CEC Title 24 JA8-2022-E · T20 (on JA8 variants)</dd></div>
           <div class="ed-spec-row"><dt>Warranty</dt><dd>3 years / 25,000 hours</dd></div>
@@ -259,6 +284,8 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
         </dl>
       </article>
     </div>
+    
+      </div>
     <style>
       @media (max-width: 900px) { .globe-spec-grid { grid-template-columns: 1fr !important; } }
       @media (max-width: 900px) { .globe-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
@@ -281,7 +308,7 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
         </thead>
         <tbody>
           {dimmers.map(d => (
-            <tr>
+            <tr class="matrix-row">
               <td style="font-weight:600;">{d.model}</td>
               <td>{d.brand}</td>
               <td style="text-align:center;">{d.type}</td>
@@ -322,7 +349,7 @@ WARM EVENING REGISTER · OUTDOOR DINING CONTEXT</span></div>
         </thead>
         <tbody>
           {skus.map(s => (
-            <tr>
+            <tr class="matrix-row">
               <td style="font-weight:600;">{s.sku}</td>
               <td>{s.finish}</td>
               <td style="text-align:center;">{s.base}</td>

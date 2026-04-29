@@ -8,3 +8,14 @@
 /collections/vintage-decor/t10/    /collections/vintage-decor/radio/        301
 /collections/vintage-decor/t9/     /collections/vintage-decor/tubular/      301
 /collections/vintage-decor/ca10/   /collections/vintage-decor/candelabra/   301
+
+# v2.7.13 — G5: Safety & Controls sub-page anchor redirects
+/solutions/safety-controls/constant/   /solutions/safety-controls/#constant   301
+/solutions/safety-controls/controls/   /solutions/safety-controls/#controls   301
+
+# v2.7.13 — G6: controls-em stub redirect
+/collections/controls-em               /solutions/safety-controls/            301
+/collections/controls-em/              /solutions/safety-controls/            301
+
+# v2.7.13 — G6: tubulararch -> tubularch canonical redirect
+/collections/tubulararch/              /collections/tubularch/                301

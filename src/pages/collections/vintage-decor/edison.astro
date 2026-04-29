@@ -55,16 +55,28 @@ const skus = [
 ];
 
 const dimmers = [
+  { model: 'TGCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Toggler · neutral required' },
+  { model: 'SCL-153P', brand: 'Lutron', type: 'CL (TRIAC)', series: 'Skylark · neutral required' },
+  { model: 'DVCL-153P', brand: 'Lutron', type: 'CL', series: 'Diva CL · neutral required' },
+  { model: 'LGCL-153P', brand: 'Lutron', type: 'CL', series: 'Lyneo' },
+  { model: 'MACL-153M', brand: 'Lutron', type: 'CL', series: 'Maestro CL multi-location' },
+  { model: 'PD-6WCL', brand: 'Lutron', type: 'Caseta wireless', series: 'Smart-home compatible' },
+  { model: 'AY-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Ariadni' },
   { model: 'D-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva' },
   { model: 'GL-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Glyder' },
   { model: 'S-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Skylark' },
+  { model: 'DV-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva (legacy)' },
   { model: 'SELV-300P', brand: 'Lutron', type: 'ELV', series: 'Skylark ELV' },
   { model: 'DVELV-300P', brand: 'Lutron', type: 'ELV', series: 'Diva ELV' },
+  { model: 'NTELV-500', brand: 'Lutron', type: 'ELV', series: 'Nova T ELV' },
   { model: 'RRD-6NA', brand: 'Lutron', type: 'RadioRA 2', series: 'Whole-home wireless' },
+  { model: 'MRF-2-6ELV-120', brand: 'Lutron', type: 'RadioRA 2 ELV', series: 'Whole-home wireless ELV' },
+  { model: 'HQRD-6NA', brand: 'Lutron', type: 'HomeWorks QS', series: 'Estate-grade' },
   { model: 'DSL06-1LZ', brand: 'Leviton', type: 'CL', series: 'Decora Sureslide CL' },
-  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant® CL' },
+  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant CL' },
   { model: 'FLR603P', brand: 'Forbes & Lomax', type: 'TRIAC', series: 'Designer rotary' },
   { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
+  { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: 'Aspire' },
 ];
 ---
 <BaseLayout
@@ -137,8 +149,8 @@ const dimmers = [
 <!-- HERO -->
 <section class="ed-cream" aria-labelledby="ed-hero-h1">
   <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="ed-hero-grid">
-    <div class="ed-photo-ph">
-      <div class="ed-photo-ph-text">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">FOUNDRY EDISON IN INDUSTRIAL LOFT SETTING<br>BARE-BULB PENDANT · SQUIRREL-CAGE FILAMENT VISIBLE</span></div>
+    <div class="ed-photo-ph lifestyle-photo">
+      <div class="ed-photo-ph-text lifestyle-photo">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">FOUNDRY EDISON IN INDUSTRIAL LOFT SETTING<br>BARE-BULB PENDANT · SQUIRREL-CAGE FILAMENT VISIBLE</span></div>
     </div>
     <div>
       <p class="ed-eyebrow ed-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="ed-brick-text">SERIES ·</span> VINTAGE DÉCOR · INDUSTRIAL REVIVAL</p>
@@ -228,7 +240,18 @@ const dimmers = [
   <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
     <p class="ed-eyebrow ed-eyebrow-rule ed-brick-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
     <h2 id="ed-specs-h2" class="ed-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · restoration-grade detail.</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="ed-spec-grid">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;" class="ed-spec-grid">
+      <aside aria-label="Spec sections" style="position:sticky;top:1.5rem;">
+        <p style="font-family:var(--ed-mono);font-size:0.65rem;letter-spacing:0.18em;opacity:0.55;margin-bottom:0.75rem;padding:0 0.75rem;">SPEC SECTIONS</p>
+        <nav style="display:flex;flex-direction:column;gap:0.25rem;">
+          <a href="#spec-color" class="toc-link active"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">01</span> Color &amp; Filament</a>
+          <a href="#spec-electrical" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">02</span> Electrical</a>
+          <a href="#spec-dimming" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">03</span> Dimming &amp; Controls</a>
+          <a href="#spec-materials" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">04</span> Materials &amp; Finish</a>
+          <a href="#spec-compliance" class="toc-link"><span style="font-family:var(--ed-mono);font-size:0.65rem;opacity:0.55;">05</span> Compliance &amp; Warranty</a>
+        </nav>
+      </aside>
+      <div style="display:flex;flex-direction:column;gap:3rem;">
       <article id="spec-color">
         <p class="ed-spec-block-num" style="margin-bottom:0.5rem;">01</p>
         <h3 class="ed-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Color &amp; Filament</h3>
@@ -236,7 +259,13 @@ const dimmers = [
           <div class="ed-spec-row"><dt>CCT</dt><dd>2200K (candle-hour) · 2700K (on select JA8 variants)</dd></div>
           <div class="ed-spec-row"><dt>CRI</dt><dd>≥90</dd></div>
           <div class="ed-spec-row"><dt>Filament geometry</dt><dd>Squirrel-cage · cylindrical · 6–8 parallel strands</dd></div>
-          <div class="ed-spec-row"><dt>Glass options</dt><dd>Amber · Clear</dd></div>
+          <div class="ed-spec-row"><dt>Glass finish</dt><dd>
+            <span class="swatch" style="background:rgba(239,230,210,0.5);border:1px solid rgba(26,19,10,0.3);" title="Clear"></span><span style="font-size:0.85rem;">Clear (C)</span>
+            &nbsp;
+            <span class="swatch" style="background:#C7822E;" title="Amber"></span><span style="font-size:0.85rem;">Amber (V · X)</span>
+            &nbsp;
+            <span class="swatch" style="background:#6E5236;" title="Smoked"></span><span style="font-size:0.85rem;">Smoked (M)</span>
+          </dd></div>
           <div class="ed-spec-row"><dt>Envelope</dt><dd>ST19 (60mm) · ST21 (67mm)</dd></div>
         </dl>
       </article>
@@ -256,7 +285,7 @@ const dimmers = [
         <dl>
           <div class="ed-spec-row"><dt>Dimming types</dt><dd>TRIAC · ELV · CL</dd></div>
           <div class="ed-spec-row"><dt>Dim-to</dt><dd>5% (smooth, flicker-free)</dd></div>
-          <div class="ed-spec-row"><dt>Compatible systems</dt><dd>Lutron · Leviton · Legrand · Forbes &amp; Lomax</dd></div>
+          <div class="ed-spec-row"><dt>Compatible systems</dt><dd>Lutron · Leviton · Legrand · Forbes &amp; Lomax · Cooper</dd></div>
         </dl>
       </article>
       <article id="spec-materials">
@@ -264,25 +293,26 @@ const dimmers = [
         <h3 class="ed-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Materials &amp; Finish</h3>
         <dl>
           <div class="ed-spec-row"><dt>Base</dt><dd>E26 medium screw base</dd></div>
-          <div class="ed-spec-row"><dt>Filament suffix</dt><dd>V (standard) · V/JA8 (spiral, JA8-certified)</dd></div>
+          <div class="ed-spec-row"><dt>Filament suffix</dt><dd>SV (Spiral Vertical) · SC (Squirrel Cage) · SH (Spiral Horizontal) · LT (long-tip)</dd></div>
           <div class="ed-spec-row"><dt>MOL (ST19)</dt><dd>~4.8" (122mm)</dd></div>
           <div class="ed-spec-row"><dt>MOL (ST21)</dt><dd>~5.3" (135mm)</dd></div>
         </dl>
       </article>
-      <article id="spec-compliance" style="grid-column:1/-1;">
+      <article id="spec-compliance">
         <p class="ed-spec-block-num" style="margin-bottom:0.5rem;">05</p>
         <h3 class="ed-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Compliance &amp; Warranty</h3>
-        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
-          <div class="ed-spec-row"><dt>Safety</dt><dd>UL Listed</dd></div>
+        <dl>
+          <div class="ed-spec-row"><dt>Safety</dt><dd>UL Listed · UL Enclosed Rated · Wet Location rated (per datasheet)</dd></div>
           <div class="ed-spec-row"><dt>Energy code</dt><dd>CEC Title 24 JA8-2022-E · T20 (on JA8 variants)</dd></div>
+          <div class="ed-spec-row"><dt>EMC</dt><dd>FCC Part 15 Class B</dd></div>
           <div class="ed-spec-row"><dt>Warranty</dt><dd>3 years / 25,000 hours</dd></div>
-          <div class="ed-spec-row"><dt>RoHS</dt><dd>Compliant</dd></div>
+          <div class="ed-spec-row"><dt>RoHS · REACH</dt><dd>Compliant</dd></div>
         </dl>
       </article>
+      </div>
     </div>
     <style>
       @media (max-width: 900px) { .ed-spec-grid { grid-template-columns: 1fr !important; } }
-      @media (max-width: 900px) { .ed-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
     </style>
   </div>
 </section>
@@ -302,7 +332,7 @@ const dimmers = [
         </thead>
         <tbody>
           {dimmers.map(d => (
-            <tr>
+            <tr class="matrix-row">
               <td style="font-weight:600;">{d.model}</td>
               <td>{d.brand}</td>
               <td style="text-align:center;">{d.type}</td>
@@ -343,7 +373,7 @@ const dimmers = [
         </thead>
         <tbody>
           {skus.map(s => (
-            <tr>
+            <tr class="matrix-row">
               <td style="font-weight:600;">{s.sku}</td>
               <td>{s.finish}</td>
               <td style="text-align:center;">{s.base}</td>
