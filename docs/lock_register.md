@@ -320,3 +320,38 @@ Acknowledged by: Manus (iter/v2.7.x-foundation-fixes)
 
 ### G10 build stamp — OPEN ACTION ITEM
 Cloudflare Pages build command must be changed from `npm run build` to `npm run cf-build` in the Cloudflare Pages dashboard. This is a manual dashboard step; cannot be automated from repo. Until changed, staging will show `build dev · local`.
+
+## v2.7.13 — 2026-04-29
+
+### G1: Build hash fix
+- `astro.config.mjs`: inject `CF_PAGES_COMMIT_SHA` + `CF_PAGES_BUILD_DATE` via vite define at build time; fallback to `git rev-parse HEAD` for local builds. Eliminates `build dev · local` on all Cloudflare Pages deploys.
+
+### G2: Decor PDP fidelity restore
+- `BaseLayout.astro`: added Cormorant Garamond + JetBrains Mono Google Fonts preconnect + stylesheet link
+- `global.css`: added `.swatch`, `.toc-link`, `.matrix-row`, `.lifestyle-photo` CSS rules
+- All 11 decor PDPs (a19, b10, ca10, g25, s14, edison, victorian, tubular, globe, radio, candelabra): added TOC sidebar (5 `.toc-link` items), 3 `.swatch` chips, 22+ `.matrix-row` dimmer rows, `.lifestyle-photo` hero div
+- `CollectionLegacy.astro`: `{legacy.body}` → `set:html` to allow HTML in data strings
+- `CollectionGetStarted.astro`: `{card.body}` → `set:html` to allow HTML in data strings
+
+### G3: Husk PDP
+- New: `src/pages/collections/planoarch/husk/index.astro` — full PDP with spec table, 12 SKUs, dimmer matrix, S&C cross-promo
+
+### G4: Three category landings
+- New: `src/pages/collections/multi-family/index.astro` → `/collections/multi-family/`
+- New: `src/pages/collections/lamparch/index.astro` → `/collections/lamparch/`
+- New: `src/pages/collections/tubularch/index.astro` + `src/data/collections/tubularch.ts` → `/collections/tubularch/`
+
+### G5: S&C sub-page anchor resolution
+- `public/_redirects`: added `/solutions/safety-controls/constant/` → `#constant` and `/solutions/safety-controls/controls/` → `#controls` 301 redirects
+
+### G6: Nav + footer rewire
+- `Header.astro`: Safety & Controls `href="#"` → `/solutions/safety-controls/`; mobile nav same; multifamily → `/collections/multi-family/`; lampararch → `/collections/lamparch/`; tubulararch → `/collections/tubularch/`
+- `MegaMenu.astro`: all 9 `/collections/controls-em` links → `/solutions/safety-controls/`
+- `Footer.astro`: controls-em → `/solutions/safety-controls/`; added multi-family, lamparch, tubularch links
+- `public/_redirects`: added `/collections/controls-em` → `/solutions/safety-controls/` and `/collections/tubulararch/` → `/collections/tubularch/`
+
+### G7: Cross-promo cards
+- `CollectionPageLayout.astro`: added Safety & Controls cross-promo section after §9 Get Started (appears on all 5 PRO category landings)
+
+### G8: Megamenu recolor
+- `Header.astro`: `.mm-col-main` bg `#0c0d12` → `#F4F4F6`; `.mm-main-item` color → `rgb(17,17,17)`; `.mm-main-sub` → `rgba(17,17,17,0.7)`; `.mm-main-group-label` → `rgba(17,17,17,0.5)`; `.mm-main-divider` → `rgba(17,17,17,0.08)`; active/hover state unchanged (brand red)

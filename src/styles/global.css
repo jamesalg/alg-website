@@ -65,3 +65,69 @@ h3, .h3 {
   background: var(--color-ink);
   color: white;
 }
+
+/* ==========================================================================
+   G2 — DÉCOR PDP FIDELITY RULES (v2.7.13)
+   Applied globally so all 12 Vintage + Nostalgic + tubulⒶRCH pages inherit.
+   ========================================================================== */
+
+/* Serif headline font — Cormorant Garamond primary, Playfair Display fallback */
+.serif, .h1, .h2, h1, h2 {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+/* Glass-color swatch chip */
+.swatch {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(26, 19, 10, 0.2);
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* Sticky table-of-contents link */
+.toc-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-left: 2px solid transparent;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.toc-link.active,
+.toc-link:hover {
+  border-left-color: var(--brick, #A6362B);
+  background: rgba(166, 54, 43, 0.06);
+  font-weight: 600;
+}
+
+/* Dimmer compatibility matrix row */
+.matrix-row {
+  border-bottom: 1px solid rgba(26, 19, 10, 0.08);
+}
+.matrix-row:hover {
+  background: rgba(166, 54, 43, 0.04);
+}
+
+/* Lifestyle photography placeholder */
+.lifestyle-photo {
+  background: linear-gradient(135deg, #3F2A18 0%, #2F1F12 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+}
+.lifestyle-photo::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px dashed rgba(239, 230, 210, 0.22);
+  pointer-events: none;
+}
