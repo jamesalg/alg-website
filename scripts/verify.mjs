@@ -421,7 +421,8 @@ async function main() {
         // JSDOM 29.x may crash on complex inline styles — fall back to regex check
         // Strip HTML comments (developer annotations) before scanning
         const commentStripped = html.replace(/<!--[\s\S]*?-->/g, '__COMMENT__');
-        const scriptStripped = commentStripped.replace(/<script[\s\S]*?<\/script>/gi, '__SCRIPT__');
+        const headStripped = commentStripped.replace(/<head[\s\S]*?<\/head>/gi, '__HEAD__');
+        const scriptStripped = headStripped.replace(/<script[\s\S]*?<\/script>/gi, '__SCRIPT__');
         const styleStripped = scriptStripped.replace(/<style[\s\S]*?<\/style>/gi, '__STYLE__');
         const attrStripped = styleStripped.replace(/\s[\w-]+=(?:"[^"]*"|'[^']*')/g, (m) => m.includes('\u24b6') || m.includes('\u24d0') ? ' __ATTR__' : m);
         const matches = attrStripped.match(/[\u24b6\u24d0]/g);

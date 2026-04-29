@@ -1,0 +1,385 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import ResourceCard from '../../../../components/ResourceCard.astro';
+
+const title = "MSP-HTI/08P1/NLC — contrⒶLS Silvair PIR Sensor";
+const description = "Icarus-III PIR sensor on the Silvair NLC platform. 13 FT max mounting. 12–24 Vdc. DLC NLC qualified. BLE Mesh. 1-pin audio jack connector. Title 24 NLC pathway.";
+
+const MSP_ZOHO_URL = 'https://workdrive.archipelagolighting.com/external/74fa6da5ccd5ec82e492f18d06ecf5737789a7cba355d76fee982daff2b2ff8b';
+
+const resources = [
+  { label: 'Datasheet', description: 'MSP-HTI/08P1/NLC datasheet', url: MSP_ZOHO_URL, resource: 'Datasheet', family: 'MSP-HTI%2F08P1%2FNLC' },
+  { label: 'Installation Sheet', description: 'Sensor wire-in + commissioning', url: null, resource: 'Installation+Sheet', family: 'MSP-HTI%2F08P1%2FNLC' },
+  { label: 'Silvair App Guide', description: 'Commissioning workflow + zone setup', url: null, resource: 'Silvair+App+Guide', family: 'MSP-HTI%2F08P1%2FNLC' },
+  { label: "contr<span class='aa'>Ⓐ</span>LS Product Guide", description: "Three-platform catalog · Q2 2026", url: null, resource: "Product+Guide", family: "contr%E2%92%B6LS" },
+];
+---
+<BaseLayout {title} {description}>
+<style>
+  :root {
+    --accent: #F32740;
+    --paper: #FAF8F4;
+    --paper-2: #F1ECE3;
+    --char: #111111;
+    --teal: #0D6E6E;
+    --ink: #111111;
+  }
+  .section-bg-paper { background: var(--paper); color: var(--ink); }
+  .section-bg-paper-2 { background: var(--paper-2); color: var(--ink); }
+  .section-bg-dark { background: var(--char); color: white; }
+  .section-bg-teal { background: var(--teal); color: white; }
+  .accent-text { color: var(--accent); }
+  .mono { font-family: ui-monospace, monospace; }
+  .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow-rule::before { content: ''; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #C41E32; }
+  .btn-outline-dark { border: 1px solid rgba(0,0,0,0.3); color: var(--ink); }
+  .btn-outline-dark:hover { background: rgba(0,0,0,0.05); }
+  .btn-ghost-dark { color: var(--ink); text-decoration: underline; }
+  .btn-outline-light { border: 1px solid rgba(255,255,255,0.5); color: white; }
+  .btn-outline-light:hover { background: rgba(255,255,255,0.1); }
+  .stat-num-small { font-weight: 800; font-size: 1.75rem; letter-spacing: -0.025em; line-height: 1; }
+  .stat-label { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.25rem; }
+  .icon-stat { width: 32px; height: 32px; flex-shrink: 0; }
+  .trust-badge { display: inline-block; padding: 0.25rem 0.6rem; background: rgba(13,110,110,0.08); border: 1px solid rgba(13,110,110,0.2); font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .spec-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .spec-row dt { font-weight: 600; font-size: 0.875rem; }
+  .spec-row dd { font-size: 0.875rem; opacity: 0.85; }
+  .spec-block-num { font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent); font-weight: 700; }
+  .toc-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--ink); opacity: 0.6; transition: opacity 0.15s; }
+  .toc-link:hover, .toc-link.active { opacity: 1; color: var(--accent); }
+  .toc-num { font-size: 0.6rem; opacity: 0.5; }
+  .cert-cell { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; background: white; border: 1px solid rgba(0,0,0,0.08); }
+  .cert-mark { font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; }
+  .cert-detail { font-size: 0.75rem; opacity: 0.7; }
+  .matrix-row { border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .matrix-row td { padding: 0.75rem 1rem; font-family: ui-monospace, monospace; font-size: 0.75rem; }
+  .feature-tile { background: white; padding: 1.25rem; border: 1px solid rgba(0,0,0,0.08); }
+  .product-thumb { height: 80px; display: flex; align-items: center; justify-content: center; background: var(--paper-2); padding: 0.5rem; }
+  /* QR card */
+  .qr-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: white; border: 1px solid rgba(0,0,0,0.08); }
+  .qr-img { width: 120px; height: 120px; flex-shrink: 0; background: white; padding: 6px; border: 1px solid rgba(0,0,0,0.08); }
+  .qr-eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; font-family: ui-monospace, monospace; }
+  .qr-title { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; margin-bottom: 0.5rem; }
+  .qr-sub { font-size: 0.85rem; opacity: 0.75; line-height: 1.4; }
+  /* Anchor rail */
+  .anchor-rail { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 30; }
+  .anchor-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.25); transition: background 0.2s, transform 0.2s; cursor: pointer; position: relative; display: block; }
+  .anchor-dot:hover { background: rgba(0,0,0,0.6); transform: scale(1.3); }
+  .anchor-dot.active { background: var(--accent); transform: scale(1.4); }
+  .anchor-dot::before { content: attr(data-label); position: absolute; right: 18px; top: 50%; transform: translateY(-50%); background: var(--ink); color: white; padding: 5px 9px; font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
+  .anchor-dot:hover::before { opacity: 1; }
+  .skip-link { position: absolute; left: -9999px; top: 0; padding: 1rem; background: var(--ink); color: white; }
+  .skip-link:focus { left: 0; }
+</style>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Breadcrumb -->
+<div class="border-b border-black/10 bg-white">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 mono text-xs tracking-widest opacity-70">
+    <a href="/" class="hover:text-[#F32740]">HOME</a> › <a href="/solutions/safety-controls" class="hover:text-[#F32740]">SAFETY &amp; CONTROLS</a> › <a href="/safety-controls/controls" class="hover:text-[#F32740]">CONTR<span class="aa">Ⓐ</span>LS</a> › <a href="/safety-controls/controls" class="hover:text-[#F32740]">SILVAIR</a> › MSP-HTI/08P1/NLC
+  </div>
+</div>
+
+<!-- Anchor rail -->
+<aside class="anchor-rail" aria-label="On-page sections">
+  <a href="#hero" class="anchor-dot active" data-label="Top" aria-label="Top"></a>
+  <a href="#features" class="anchor-dot" data-label="Features" aria-label="Features"></a>
+  <a href="#specs" class="anchor-dot" data-label="Specs" aria-label="Specs"></a>
+  <a href="#certs" class="anchor-dot" data-label="Certs" aria-label="Certs"></a>
+  <a href="#ordering" class="anchor-dot" data-label="Ordering" aria-label="Ordering"></a>
+  <a href="#resources" class="anchor-dot" data-label="Resources" aria-label="Resources"></a>
+  <a href="#sisters" class="anchor-dot" data-label="Sister SKUs" aria-label="Sister SKUs"></a>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero" class="section-bg-paper" aria-labelledby="hero-h1">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12 items-start">
+    <div class="md:col-span-7">
+      <p class="eyebrow eyebrow-rule mb-6 opacity-60"><span class="accent-text">CONTR<span class="aa">Ⓐ</span>LS ·</span> SILVAIR NLC · PIR INDOOR</p>
+      <h1 id="hero-h1" class="h1 text-5xl md:text-6xl mb-6">MSP-HTI/08P1/NLC</h1>
+      <p class="text-xl mb-3 opacity-85 font-semibold">Icarus-III PIR sensor on the Silvair NLC platform — Title 24 NLC pathway.</p>
+      <p class="text-base leading-relaxed mb-8 opacity-90">Fixture-integrated PIR occupancy sensor. 13 FT max mounting height. 12–24 Vdc input via 1-pin audio jack. Bluetooth Mesh (Silvair) with unlimited node scalability. DLC NLC qualified for Title 24 NLC rebate pathway. Commissioning via Silvair App. BMS integration via open APIs.</p>
+      <dl class="grid grid-cols-2 gap-x-8 gap-y-5 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="icon-stat accent-text"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="14" r="3" fill="currentColor"/><circle cx="14" cy="32" r="3" fill="currentColor"/><circle cx="50" cy="32" r="3" fill="currentColor"/><circle cx="22" cy="50" r="3" fill="currentColor"/><circle cx="42" cy="50" r="3" fill="currentColor"/><line x1="32" y1="14" x2="14" y2="32"/><line x1="32" y1="14" x2="50" y2="32"/><line x1="14" y1="32" x2="22" y2="50"/><line x1="50" y1="32" x2="42" y2="50"/><line x1="22" y1="50" x2="42" y2="50"/><line x1="14" y1="32" x2="50" y2="32"/></svg></div>
+          <div><dd class="stat-num-small">PIR</dd><dt class="stat-label">Detection technology</dt></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-stat accent-text"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 56 L6 24 L32 8 L58 24 L58 56 Z"/><rect x="20" y="36" width="8" height="20" fill="currentColor" stroke="none"/><rect x="36" y="36" width="8" height="20" fill="currentColor" stroke="none"/><line x1="20" y1="28" x2="44" y2="28"/></svg></div>
+          <div><dd class="stat-num-small">13 FT</dd><dt class="stat-label">Max mounting (4 m)</dt></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-stat accent-text"><svg viewBox="0 0 64 64" class="w-full h-full" fill="currentColor"><path d="M36 4 L14 36 L28 36 L24 60 L50 26 L34 26 Z"/></svg></div>
+          <div><dd class="stat-num-small">12–24 Vdc</dd><dt class="stat-label">Input voltage</dt></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-stat accent-text"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 6 L52 14 L52 32 Q52 50 32 58 Q12 50 12 32 L12 14 Z"/><path d="M22 32 L29 39 L43 25" stroke-width="2.5"/></svg></div>
+          <div><dd class="stat-num-small">IP20</dd><dt class="stat-label">Ingress protection</dt></div>
+        </div>
+      </dl>
+      <div class="flex flex-wrap gap-2 mb-6">
+        <span class="trust-badge">DLC NLC QUALIFIED</span>
+        <span class="trust-badge">UL LISTED</span>
+        <span class="trust-badge">SILVAIR CERTIFIED</span>
+        <span class="trust-badge">TITLE 24 NLC PATH</span>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href="/support/sample-request?subject=MSP-HTI%2F08P1%2FNLC+Quote" class="btn btn-primary">REQUEST QUOTE</a>
+        <a href="https://algportal.archipelagolighting.com" class="btn btn-outline-dark" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
+        <a href="#resources" class="btn btn-ghost-dark">DOCUMENTATION ↓</a>
+      </div>
+    </div>
+    <div class="md:col-span-5 flex flex-col items-center justify-center">
+      <div class="w-full aspect-square bg-[var(--paper-2)] flex items-center justify-center border border-black/10">
+        <svg viewBox="0 0 200 200" class="w-3/4 h-3/4" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
+          <circle cx="100" cy="100" r="60"/>
+          <circle cx="100" cy="100" r="40" opacity="0.5"/>
+          <circle cx="100" cy="100" r="15" fill="currentColor" stroke="none" opacity="0.5"/>
+          <path d="M40 100 L60 100 M140 100 L160 100 M100 40 L100 60 M100 140 L100 160" opacity="0.4"/>
+          <path d="M58 58 L72 72 M128 128 L142 142 M142 58 L128 72 M58 128 L72 142" opacity="0.3"/>
+        </svg>
+      </div>
+      <p class="mono text-[10px] tracking-widest opacity-50 mt-3 text-center">▸ PRODUCT PHOTO — REPLACE WITH ROOSTER CREATIVE PHOTOGRAPHY</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section-bg-paper-2" aria-labelledby="features-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">PLATFORM CAPABILITIES</p>
+    <h2 id="features-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-3xl">Ten capabilities, one Icarus-III sensor.</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">01</p><p class="font-semibold text-sm">PIR occupancy detection</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">02</p><p class="font-semibold text-sm">Bluetooth Mesh (Silvair)</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">03</p><p class="font-semibold text-sm">DLC NLC qualified</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">04</p><p class="font-semibold text-sm">Title 24 NLC rebate path</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">05</p><p class="font-semibold text-sm">BMS integration via APIs</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">06</p><p class="font-semibold text-sm">Silvair app commissioning</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">07</p><p class="font-semibold text-sm">Granular zone control</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">08</p><p class="font-semibold text-sm">Daylight harvesting</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">09</p><p class="font-semibold text-sm">1-pin audio jack connector</p></div>
+      <div class="feature-tile"><p class="mono text-xs tracking-widest opacity-60 mb-2">10</p><p class="font-semibold text-sm">Icarus-III form factor</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS WITH STICKY TOC -->
+<section id="specs" class="section-bg-paper" aria-labelledby="specs-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">FULL SPECIFICATIONS · DATASHEET-ANCHORED</p>
+    <h2 id="specs-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-3xl">Detection, electrical, networking, integration.</h2>
+    <div class="grid md:grid-cols-12 gap-10">
+      <aside class="md:col-span-3" aria-label="Spec TOC">
+        <div class="sticky top-6">
+          <p class="mono text-xs tracking-widest opacity-60 mb-3 px-3">SPEC SECTIONS</p>
+          <nav class="flex flex-col gap-1">
+            <a href="#spec-det" class="toc-link active"><span class="toc-num">01</span> Detection &amp; coverage</a>
+            <a href="#spec-elec" class="toc-link"><span class="toc-num">02</span> Electrical</a>
+            <a href="#spec-net" class="toc-link"><span class="toc-num">03</span> Networking</a>
+            <a href="#spec-comm" class="toc-link"><span class="toc-num">04</span> Commissioning &amp; integration</a>
+            <a href="#spec-env" class="toc-link"><span class="toc-num">05</span> Environmental &amp; compliance</a>
+          </nav>
+        </div>
+      </aside>
+      <div class="md:col-span-9 space-y-12">
+        <article id="spec-det">
+          <p class="spec-block-num mb-2">01</p>
+          <h3 class="font-bold text-2xl mb-4">Detection &amp; coverage</h3>
+          <dl>
+            <div class="spec-row"><dt>Detection technology</dt><dd>Passive Infrared (PIR) (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Max mounting height</dt><dd>13 FT (4 m) (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Application</dt><dd>Fixture-integrated (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Form factor</dt><dd>Icarus-III</dd></div>
+          </dl>
+        </article>
+        <article id="spec-elec">
+          <p class="spec-block-num mb-2">02</p>
+          <h3 class="font-bold text-2xl mb-4">Electrical</h3>
+          <dl>
+            <div class="spec-row"><dt>Input voltage</dt><dd>12–24 Vdc (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Connector</dt><dd>1-Pin audio jack (per datasheet)</dd></div>
+          </dl>
+        </article>
+        <article id="spec-net">
+          <p class="spec-block-num mb-2">03</p>
+          <h3 class="font-bold text-2xl mb-4">Networking</h3>
+          <dl>
+            <div class="spec-row"><dt>Network</dt><dd>Bluetooth Mesh (Silvair) (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Scalability</dt><dd>Unlimited nodes (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Platform</dt><dd>Silvair Enterprise NLC</dd></div>
+            <div class="spec-row"><dt>Mesh accepts</dt><dd>const<span class="aa">Ⓐ</span>NTLink /CL emergency drivers (cross-pillar integration)</dd></div>
+          </dl>
+        </article>
+        <article id="spec-comm">
+          <p class="spec-block-num mb-2">04</p>
+          <h3 class="font-bold text-2xl mb-4">Commissioning &amp; integration</h3>
+          <dl>
+            <div class="spec-row"><dt>Commissioning</dt><dd>Silvair App (per datasheet)</dd></div>
+            <div class="spec-row"><dt>BMS integration</dt><dd>Open APIs (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Control behaviors</dt><dd>Granular zone control · daylight harvesting · scheduling (per datasheet feature list)</dd></div>
+          </dl>
+        </article>
+        <article id="spec-env">
+          <p class="spec-block-num mb-2">05</p>
+          <h3 class="font-bold text-2xl mb-4">Environmental &amp; compliance</h3>
+          <dl>
+            <div class="spec-row"><dt>IP rating</dt><dd>IP20 (per datasheet · indoor only)</dd></div>
+            <div class="spec-row"><dt>Operating temperature</dt><dd>−20°C to +50°C (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Finish</dt><dd>White (per datasheet)</dd></div>
+            <div class="spec-row"><dt>Safety listing</dt><dd>UL Listed (per datasheet)</dd></div>
+            <div class="spec-row"><dt>DLC NLC</dt><dd>Qualified (per datasheet)</dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" class="section-bg-paper-2" aria-labelledby="certs-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-16">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">CERTIFICATIONS &amp; LISTINGS</p>
+    <h2 id="certs-h2" class="h2 text-3xl md:text-4xl mb-8">Documented, not declared.</h2>
+    <div class="grid md:grid-cols-4 gap-3">
+      <div class="cert-cell"><span class="cert-mark">UL Listed</span><span class="cert-detail">Per datasheet</span></div>
+      <div class="cert-cell"><span class="cert-mark">DLC NLC Qualified</span><span class="cert-detail">Per datasheet · Title 24 NLC path</span></div>
+      <div class="cert-cell"><span class="cert-mark">Silvair Certified</span><span class="cert-detail">BLE Mesh platform</span></div>
+      <div class="cert-cell"><span class="cert-mark">IP20</span><span class="cert-detail">Indoor application (per datasheet)</span></div>
+      <div class="cert-cell"><span class="cert-mark">12–24 Vdc</span><span class="cert-detail">Input voltage (per datasheet)</span></div>
+      <div class="cert-cell"><span class="cert-mark">−20°C to +50°C</span><span class="cert-detail">Operating temperature</span></div>
+      <div class="cert-cell"><span class="cert-mark">BMS Open APIs</span><span class="cert-detail">Integration path (per datasheet)</span></div>
+      <div class="cert-cell"><span class="cert-mark">Unlimited Nodes</span><span class="cert-detail">Enterprise mesh scalability</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDERING -->
+<section id="ordering" class="section-bg-paper" aria-labelledby="ord-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">ORDERING INFORMATION</p>
+    <h2 id="ord-h2" class="h2 text-4xl md:text-5xl mb-4">Single-SKU on the Silvair NLC platform.</h2>
+    <p class="opacity-80 max-w-3xl mb-8">Sister sensors on the same platform follow the same naming convention with different form factors and detection technologies. UPC, case quantity, and dimensions per datasheet.</p>
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border border-black/10 mono text-xs min-w-[640px] spec-table">
+        <thead>
+          <tr class="border-b border-black/10 font-bold tracking-wider opacity-70">
+            <th scope="col" class="px-4 py-3 text-left">SKU</th>
+            <th scope="col" class="px-4 py-3 text-left">PLATFORM</th>
+            <th scope="col" class="px-4 py-3 text-left">DETECTION</th>
+            <th scope="col" class="px-4 py-3">VOLTAGE</th>
+            <th scope="col" class="px-4 py-3">MAX HEIGHT</th>
+            <th scope="col" class="px-4 py-3 text-left">CONNECTOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="matrix-row"><td class="px-4 py-3">MSP-HTI/08P1/NLC</td><td class="px-4 py-3">by SILVAIR</td><td class="px-4 py-3">PIR</td><td class="px-4 py-3 text-center">12–24 Vdc</td><td class="px-4 py-3 text-center">13 FT</td><td class="px-4 py-3">1-Pin Audio Jack</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mono text-xs tracking-widest opacity-65 mt-4">▸ UPC · CASE QUANTITY · CASE DIMENSIONS · CASE WEIGHT — TBD ON DATASHEET; CONFIRM AT QUOTE</p>
+  </div>
+</section>
+
+<!-- RESOURCES + QR -->
+<section id="resources" class="section-bg-paper-2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-16">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">RESOURCES</p>
+    <h2 class="h2 text-3xl md:text-4xl mb-8">Per-SKU Zoho WorkDrive links.</h2>
+    <div class="grid md:grid-cols-4 gap-4">
+      {resources.map(r => <ResourceCard {...r} />)}
+    </div>
+  </div>
+  <div class="max-w-screen-xl mx-auto px-6 pb-12">
+    <div class="qr-card">
+      <img src="/qr_acs_appstore.png" alt="Scan to download by ⒶCS app on Apple App Store" class="qr-img" width="120" height="120" />
+      <div class="qr-meta">
+        <p class="qr-eyebrow">DOWNLOAD THE APP</p>
+        <p class="qr-title">by <span class="aa">Ⓐ</span>CS</p>
+        <p class="qr-sub">Scan to install from the Apple App Store. iOS 14+ · iPhone &amp; iPad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SISTER SKUs -->
+<section id="sisters" class="section-bg-paper">
+  <div class="max-w-screen-2xl mx-auto px-6 py-16">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">SISTER SENSORS · BY SILVAIR PLATFORM</p>
+    <h2 class="h2 text-3xl md:text-4xl mb-8">Other NLC-qualified sensors on the same Silvair mesh.</h2>
+    <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-3">
+      {[
+        { label: 'MW · INDOOR', sku: 'MSM-HTI/08P1/NLC', desc: 'ICARUS-III · 13FT' },
+        { label: 'MW · INDOOR', sku: 'MSM-HTI/126P1/NLC', desc: 'VANGUARD · 13FT' },
+        { label: 'MW · INDOOR', sku: 'MSM-HTI/401/NLC', desc: 'WIRE-IN · 120–277V' },
+        { label: 'PIR · OUTDOOR', sku: 'MSP-HTO/09P3/NLC', desc: '49FT · IP65' },
+        { label: 'MW · OUTDOOR', sku: 'MSM-HTO/09P3/NLC', desc: '49FT · IP65' },
+      ].map(s => (
+        <a href="/safety-controls/controls" class="block border border-black/10 bg-white hover:border-[#F32740] transition-colors overflow-hidden">
+          <div class="product-thumb">
+            <svg viewBox="0 0 120 80" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="60" cy="40" r="22"/>
+              <circle cx="60" cy="40" r="14" opacity="0.4"/>
+              <circle cx="60" cy="40" r="6" fill="currentColor" stroke="none"/>
+              <path d="M30 40 L40 40 M80 40 L90 40 M60 10 L60 20 M60 60 L60 70" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="px-4 pb-4">
+            <p class="mono text-xs tracking-wider opacity-60 mb-1">{s.label}</p>
+            <h3 class="font-semibold">{s.sku}</h3>
+            <p class="text-xs opacity-70 mono tracking-wider mt-1">{s.desc}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="mono text-[10px] tracking-widest opacity-50 mt-4 text-center">▸ PRODUCT THUMBNAIL ART — REPLACE WITH ROOSTER CREATIVE PRODUCT PHOTOGRAPHY AT BUILD TIME</p>
+  </div>
+</section>
+
+</main>
+
+<!-- TEAL CTA -->
+<section class="section-bg-teal">
+  <div class="max-w-screen-xl mx-auto px-6 py-20 text-center text-white">
+    <h2 class="h2 text-4xl md:text-5xl mb-6">Spec the Silvair platform. Commission with the rep.</h2>
+    <p class="opacity-80 max-w-2xl mx-auto mb-8">App-led commissioning workshops available. Sample sensors shipped 3-day from US warehouses. Spec-team support for AHJ submittals on Title 24 NLC pathway.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/support/sample-request?subject=MSP-HTI%2F08P1%2FNLC+Quote" class="btn btn-primary">REQUEST QUOTE</a>
+      <a href="/support/sample-request?subject=MSP-HTI%2F08P1%2FNLC+Sample" class="btn btn-outline-light">REQUEST SAMPLE</a>
+      <a href="#resources" class="btn btn-outline-light">DOWNLOAD DATASHEET</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const dots = document.querySelectorAll('.anchor-rail .anchor-dot');
+  const sections = Array.from(dots).map(d => document.querySelector(d.getAttribute('href')));
+  function spy() {
+    let i = 0;
+    for (let k = 0; k < sections.length; k++) {
+      if (sections[k] && sections[k].getBoundingClientRect().top < window.innerHeight * 0.4) i = k;
+    }
+    dots.forEach((d, k) => d.classList.toggle('active', k === i));
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const specArticles = Array.from(tocLinks).map(l => document.querySelector(l.getAttribute('href')));
+  function spySpec() {
+    let i = 0;
+    for (let k = 0; k < specArticles.length; k++) {
+      if (specArticles[k] && specArticles[k].getBoundingClientRect().top < window.innerHeight * 0.5) i = k;
+    }
+    tocLinks.forEach((l, k) => l.classList.toggle('active', k === i));
+  }
+  window.addEventListener('scroll', spySpec, { passive: true });
+</script>
+</BaseLayout>
