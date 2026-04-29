@@ -355,3 +355,22 @@ Cloudflare Pages build command must be changed from `npm run build` to `npm run 
 
 ### G8: Megamenu recolor
 - `Header.astro`: `.mm-col-main` bg `#0c0d12` → `#F4F4F6`; `.mm-main-item` color → `rgb(17,17,17)`; `.mm-main-sub` → `rgba(17,17,17,0.7)`; `.mm-main-group-label` → `rgba(17,17,17,0.5)`; `.mm-main-divider` → `rgba(17,17,17,0.08)`; active/hover state unchanged (brand red)
+
+---
+
+## v2.7.13 ADDENDUM -- Global Hover-Reveal Timing Tokens
+
+### G-A1/G-A2: Tokens in global.css :root
+- --hover-open-delay: 0ms
+- --hover-open-duration: 236ms
+- --hover-close-delay: 268ms
+- --hover-close-duration: 236ms
+- --hover-ease: cubic-bezier(0.18, 0.06, 0.06, 0.86)
+
+### G-A3: Canonical pattern applied
+- global.css: closed-state + open-state blocks for .megamenu, .signin-dropdown, .site-nav__dropdown, [data-hover-reveal]
+- Header.astro: .signin-dropdown transition:all 0.15s replaced with var(--hover-close-*); open-state override added
+- Header.astro: .megamenu transition:0.18s replaced with var(--hover-close-*); open-state override added
+
+### G-A4: No hardcoded timing on hover-reveal elements
+- All 0.15s/0.18s/0.3s hits are non-hover-reveal (buttons, inputs, nav link color, anchor tooltips)

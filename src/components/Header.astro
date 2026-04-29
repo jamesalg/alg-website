@@ -601,17 +601,32 @@
     box-shadow:0 8px 24px rgba(0,0,0,0.15);
     min-width:320px;
     opacity:0;visibility:hidden;transform:translateY(-4px);
-    transition:all 0.15s;
+    transition:
+      opacity    var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+      visibility var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+      transform  var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay);
     border-radius:4px;
     overflow:hidden;
     z-index:200;
   }
   /* A1 (v2.5.3): Desktop hover behavior preserved */
   @media (hover: hover) and (pointer: fine) {
-    .utility-bar .signin:hover .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+    .utility-bar .signin:hover .signin-dropdown{
+      opacity:1;visibility:visible;transform:translateY(0);
+      transition:
+        opacity    var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+        visibility var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+        transform  var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay);
+    }
   }
   /* A1 (v2.5.3): Mobile click-toggle — JS adds .signin--open class */
-  .utility-bar .signin.signin--open .signin-dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .utility-bar .signin.signin--open .signin-dropdown{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:
+      opacity    var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+      visibility var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+      transform  var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay);
+  }
   .signin-dropdown a{
     display:block;padding:14px 16px;text-align:left;text-transform:none;
     letter-spacing:0;margin:0;font-size:13px;color:var(--ink);font-weight:400;
@@ -653,7 +668,14 @@
     content:'▾';font-size:8px;opacity:0.5;
   }
   .site-nav ul.main-nav > li > a:hover{color:var(--brand);}
-  .site-nav ul.main-nav > li.has-dropdown:hover .megamenu{opacity:1;visibility:visible;transform:translateY(0);}
+  .site-nav ul.main-nav > li.has-dropdown:hover .megamenu,
+  .site-nav ul.main-nav > li.has-dropdown:focus-within .megamenu{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:
+      opacity    var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+      visibility var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+      transform  var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay);
+  }
 
   /* ================================================================
      MEGA MENU — base (narrow: Tools / Support)
@@ -668,7 +690,10 @@
     min-width:520px;
     display:grid;grid-template-columns:1fr 1fr;gap:28px;
     opacity:0;visibility:hidden;transform:translateY(6px);
-    transition:opacity 0.18s ease, visibility 0.18s ease, transform 0.18s ease;
+    transition:
+      opacity    var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+      visibility var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+      transform  var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay);
     z-index:60;
     border-radius:4px;
   }

@@ -131,3 +131,45 @@ h3, .h3 {
   border: 1px dashed rgba(239, 230, 210, 0.22);
   pointer-events: none;
 }
+
+
+/* ================================================================
+   HOVER-REVEAL TIMING — GLOBAL CANONICAL TOKENS · v2.7.13 addendum
+   Single source of truth for every hover-reveal surface on the site.
+   Do NOT hardcode 0.15s / 0.18s / 0.3s on any hover-reveal element.
+   ================================================================ */
+:root {
+  --hover-open-delay:    0ms;
+  --hover-open-duration: 236ms;
+  --hover-close-delay:   268ms;
+  --hover-close-duration: 236ms;
+  --hover-ease:          cubic-bezier(0.18, 0.06, 0.06, 0.86);
+}
+
+/* ================================================================
+   HOVER-REVEAL CANONICAL PATTERN · v2.7.13 addendum
+   Closed state: applies close-buffer delay.
+   Open state: zeros delay (instant open, then fades in over open-duration).
+   ================================================================ */
+
+/* Closed state */
+.megamenu,
+.signin-dropdown,
+.site-nav__dropdown,
+[data-hover-reveal] {
+  transition:
+    opacity    var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+    visibility var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay),
+    transform  var(--hover-close-duration) var(--hover-ease) var(--hover-close-delay);
+}
+
+/* Open state — zeroes the delay so opening is instant */
+.has-dropdown:hover .megamenu,
+.has-dropdown:focus-within .megamenu,
+.signin.signin--open .signin-dropdown,
+[data-hover-reveal][data-open] {
+  transition:
+    opacity    var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+    visibility var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay),
+    transform  var(--hover-open-duration) var(--hover-ease) var(--hover-open-delay);
+}
