@@ -51,14 +51,11 @@
   --section-bg-alt:     #f4f4f6;
 }
 
-/* The .aa class — wraps Ⓐ in brand red, slightly larger optical size.
-   This is THE single rule that makes the brand mark stand out. */
+/* The .aa class — wraps Ⓐ in brand red.
+   v2.7.11 G4: removed display:inline-block + transform (caused sub-pixel gaps around glyph). */
 .aa {
   color: var(--color-alg-red);
   font-weight: 700;
-  display: inline-block;
-  /* Optical size — Ⓐ glyph reads slightly small at body weight */
-  transform: translateY(-0.02em);
 }
 
 /* Reset & base */

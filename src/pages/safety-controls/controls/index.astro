@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+const title = "contr<span class='aa'>Ⓐ</span>LS — Occupancy Sensing & Controls";
+const description = "Three platforms for every project size: Bi-Level standalone, by <span class='aa'>Ⓐ</span>CS BLE mesh, and by SILVAIR enterprise NLC. CA Title 24 NLC compliance. DLC listed.";
+---
+<BaseLayout {title} {description}>
+<style>
+  :root {
+    --accent: #F32740;
+    --paper: #FAF8F4;
+    --paper-2: #F1ECE3;
+    --char: #111111;
+    --ink: #111111;
+  }
+  .section-bg-paper { background: var(--paper); color: var(--ink); }
+  .section-bg-paper-2 { background: var(--paper-2); color: var(--ink); }
+  .section-bg-dark { background: var(--char); color: white; }
+  .accent-text { color: var(--accent); }
+  .mono { font-family: ui-monospace, monospace; }
+  .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow-rule::before { content: \'\'; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #C41E32; color: white; }
+  .btn-outline-dark { border: 1px solid rgba(0,0,0,0.3); color: var(--ink); }
+  .btn-outline-dark:hover { background: rgba(0,0,0,0.05); }
+  .btn-outline-light { border: 1px solid rgba(255,255,255,0.5); color: white; }
+  .btn-outline-light:hover { background: rgba(255,255,255,0.1); }
+  .stat-num { font-weight: 800; font-size: 2.25rem; letter-spacing: -0.03em; line-height: 1; }
+  .stat-label { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.5rem; }
+  .icon-block { width: 56px; height: 56px; color: var(--accent); display: inline-flex; }
+  .platform-art { height: 140px; display: flex; align-items: center; justify-content: center; }
+  .platform-art.bi-level { background: linear-gradient(135deg, #1A2A3A 0%, #0A1520 100%); color: rgba(255,255,255,0.6); }
+  .platform-art.acs { background: linear-gradient(135deg, #2A1A3A 0%, #150A20 100%); color: rgba(255,255,255,0.6); }
+  .platform-art.silvair { background: linear-gradient(135deg, #1A3A2A 0%, #0A2015 100%); color: rgba(255,255,255,0.6); }
+  .protocol-pill { display: inline-block; padding: 0.2rem 0.6rem; background: rgba(243,39,64,0.08); border: 1px solid rgba(243,39,64,0.2); font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .sku-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(0,0,0,0.06); text-decoration: none; color: var(--ink); transition: background 0.15s; }
+  .sku-row:hover { background: rgba(243,39,64,0.04); }
+  .sku-row.dark { color: white; border-bottom-color: rgba(255,255,255,0.08); }
+  .sku-row.dark:hover { background: rgba(255,255,255,0.06); }
+  .sku-name { font-family: ui-monospace, monospace; font-size: 0.75rem; letter-spacing: 0.06em; }
+  .sku-arrow { margin-left: 0.5rem; color: var(--accent); font-size: 0.75rem; }
+  /* Anchor rail */
+  .anchor-rail { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 30; }
+  .anchor-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.25); transition: background 0.2s, transform 0.2s; cursor: pointer; position: relative; display: block; }
+  .anchor-dot:hover { background: rgba(0,0,0,0.6); transform: scale(1.3); }
+  .anchor-dot.active { background: var(--accent); transform: scale(1.4); }
+  .anchor-dot::before { content: attr(data-label); position: absolute; right: 18px; top: 50%; transform: translateY(-50%); background: var(--ink); color: white; padding: 5px 9px; font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
+  .anchor-dot:hover::before { opacity: 1; }
+  .skip-link { position: absolute; left: -9999px; top: 0; padding: 1rem; background: var(--ink); color: white; }
+  .skip-link:focus { left: 0; }
+</style>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Breadcrumb -->
+<div class="border-b border-black/10 bg-white">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 mono text-xs tracking-widest opacity-70">
+    <a href="/" class="hover:text-[#F32740]">HOME</a> › <a href="/solutions/safety-controls" class="hover:text-[#F32740]">SAFETY &amp; CONTROLS</a> › CONTR<span class="aa">Ⓐ</span>LS
+  </div>
+</div>
+
+<!-- Anchor rail -->
+<aside class="anchor-rail" aria-label="On-page sections">
+  <a href="#hero" class="anchor-dot active" data-label="Top" aria-label="Top"></a>
+  <a href="#platforms" class="anchor-dot" data-label="Platforms" aria-label="Platforms"></a>
+  <a href="#bi-level" class="anchor-dot" data-label="Bi-Level" aria-label="Bi-Level"></a>
+  <a href="#acs" class="anchor-dot" data-label="By ACS" aria-label="By ACS"></a>
+  <a href="#silvair" class="anchor-dot" data-label="By Silvair" aria-label="By Silvair"></a>
+  <a href="#choose" class="anchor-dot" data-label="Help me choose" aria-label="Help me choose"></a>
+  <a href="#cta" class="anchor-dot" data-label="Talk to a rep" aria-label="Talk to a rep"></a>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero" class="section-bg-paper" aria-labelledby="hero-h1">
+  <div class="max-w-screen-xl mx-auto px-6 py-24 text-center">
+    <p class="eyebrow eyebrow-rule mb-8 opacity-70 justify-center">OCCUPANCY SENSING &amp; CONTROLS · CONTR<span class="aa">Ⓐ</span>LS · CA TITLE 24 NLC</p>
+    <h1 id="hero-h1" class="h1 text-5xl md:text-6xl lg:text-7xl mb-8">Three platforms.<br>One ecosystem. <span class="accent-text">Intelligent control.</span></h1>
+    <p class="text-xl max-w-2xl mx-auto mb-12 opacity-85 leading-snug">Occupancy sensing and networked lighting controls for every project size. Standalone to enterprise. 30–60% energy savings.</p>
+    <div class="flex justify-center flex-wrap gap-x-12 gap-y-8 mb-12">
+      <div class="text-center">
+        <div class="stat-num">30–60%</div><div class="stat-label">Energy savings</div>
+      </div>
+      <div class="text-center">
+        <div class="stat-num">3</div><div class="stat-label">Platforms</div>
+      </div>
+      <div class="text-center">
+        <div class="stat-num">DLC / NLC</div><div class="stat-label">Listed</div>
+      </div>
+      <div class="text-center">
+        <div class="stat-num">Title 24</div><div class="stat-label">Compliant</div>
+      </div>
+    </div>
+    <div class="flex justify-center flex-wrap gap-3">
+      <a href="#platforms" class="btn btn-primary">BROWSE PLATFORMS →</a>
+      <a href="#choose" class="btn btn-outline-dark">HELP ME CHOOSE</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3 PLATFORMS -->
+<section id="platforms" class="section-bg-paper-2" aria-labelledby="platforms-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">THREE PLATFORMS</p>
+    <h2 id="platforms-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-3xl">Pick the platform that fits the project.</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <a href="#bi-level" class="block bg-white border border-black/10 hover:border-[#F32740] transition-colors overflow-hidden">
+        <div class="platform-art bi-level"><div class="icon-block" style="width:88px;height:88px"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="32" r="20"/><line x1="32" y1="12" x2="32" y2="6"/><line x1="32" y1="58" x2="32" y2="52"/><line x1="12" y1="32" x2="6" y2="32"/><line x1="58" y1="32" x2="52" y2="32"/><circle cx="32" cy="32" r="6" fill="currentColor" stroke="none"/></svg></div></div>
+        <div class="p-7">
+          <p class="mono text-xs tracking-[0.2em] accent-text mb-3">PLATFORM 01 · BI-LEVEL</p>
+          <h3 class="h2 text-2xl md:text-3xl mb-3">Standalone Wired</h3>
+          <p class="text-sm opacity-85 mb-5 leading-snug">PIR &amp; microwave. No network. No app. 30–40% savings.</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="protocol-pill text-[#F32740]">30–40%</span><span class="protocol-pill text-[#F32740]">STANDALONE</span><span class="protocol-pill text-[#F32740]">PIR / MW</span></div>
+          <p class="mono text-xs tracking-widest accent-text font-semibold">VIEW BI-LEVEL →</p>
+        </div>
+      </a>
+      <a href="#acs" class="block bg-white border border-black/10 hover:border-[#F32740] transition-colors overflow-hidden">
+        <div class="platform-art acs"><div class="icon-block" style="width:88px;height:88px"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="14" r="3" fill="currentColor"/><circle cx="14" cy="32" r="3" fill="currentColor"/><circle cx="50" cy="32" r="3" fill="currentColor"/><circle cx="22" cy="50" r="3" fill="currentColor"/><circle cx="42" cy="50" r="3" fill="currentColor"/><line x1="32" y1="14" x2="14" y2="32"/><line x1="32" y1="14" x2="50" y2="32"/><line x1="14" y1="32" x2="22" y2="50"/><line x1="50" y1="32" x2="42" y2="50"/><line x1="22" y1="50" x2="42" y2="50"/><line x1="14" y1="32" x2="50" y2="32"/></svg></div></div>
+        <div class="p-7">
+          <p class="mono text-xs tracking-[0.2em] accent-text mb-3">PLATFORM 02 · BY <span class="aa">Ⓐ</span>CS</p>
+          <h3 class="h2 text-2xl md:text-3xl mb-3">SigMesh BLE</h3>
+          <p class="text-sm opacity-85 mb-5 leading-snug">Networked BLE mesh. <span class="aa">Ⓐ</span>CS by ALG App. 5K–250K sqft.</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="protocol-pill text-[#F32740]">40–50%</span><span class="protocol-pill text-[#F32740]">DLC / NLC</span><span class="protocol-pill text-[#F32740]">BLE MESH</span></div>
+          <p class="mono text-xs tracking-widest accent-text font-semibold">VIEW BY <span class="aa">Ⓐ</span>CS →</p>
+        </div>
+      </a>
+      <a href="#silvair" class="block bg-white border border-black/10 hover:border-[#F32740] transition-colors overflow-hidden">
+        <div class="platform-art silvair"><div class="icon-block" style="width:88px;height:88px"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 32 L26 28 L34 36 L38 32 M30 24 L34 20 Q44 10 50 16 L52 18 Q58 24 48 34 L42 40 M14 26 L20 32 Q26 38 16 48 L14 50 Q8 56 2 50 L0 48 Q-6 42 4 32 L10 26"/></svg></div></div>
+        <div class="p-7">
+          <p class="mono text-xs tracking-[0.2em] accent-text mb-3">PLATFORM 03 · BY SILVAIR</p>
+          <h3 class="h2 text-2xl md:text-3xl mb-3">Enterprise NLC</h3>
+          <p class="text-sm opacity-85 mb-5 leading-snug">Silvair BLE Mesh. Unlimited nodes. BMS APIs. Cross-pillar /CL.</p>
+          <div class="flex flex-wrap gap-2 mb-5"><span class="protocol-pill text-[#F32740]">50–60%</span><span class="protocol-pill text-[#F32740]">DLC / NLC</span><span class="protocol-pill text-[#F32740]">BMS APIS</span></div>
+          <p class="mono text-xs tracking-widest accent-text font-semibold">VIEW BY SILVAIR →</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BI-LEVEL DEEP DIVE -->
+<section id="bi-level" class="section-bg-paper" aria-labelledby="bi-level-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-5">
+      <p class="eyebrow eyebrow-rule mb-4 accent-text">PLATFORM 01 · BI-LEVEL</p>
+      <h2 id="bi-level-h2" class="h2 text-4xl md:text-5xl mb-6">Essential occupancy sensing. No network required.</h2>
+      <p class="text-base opacity-90 mb-6 leading-snug">Standalone wired PIR &amp; microwave. 30–40% savings. No app, no gateway, no cloud.</p>
+      <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="btn btn-primary">VIEW BI-LEVEL CATALOG →</a>
+    </div>
+    <div class="md:col-span-7">
+      <div class="bg-white p-6 border border-black/10">
+        <p class="mono text-xs tracking-widest opacity-65 mb-4">11 OCCUPANCY SENSORS · 3 IR REMOTES (PER PRODUCT GUIDE) · CLICK ANY ROW FOR FULL SPEC</p>
+        <div class="grid grid-cols-1 gap-0 text-xs mono">
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">LDLL-E2/MSP/W</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">PIR · Eclipse-II · 10–15Vdc · 10FT · IP65</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">MSM-HTI/08P1/BLS</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">MW · Icarus-III · IR Remote · 13FT · IP20</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">MSM-HTI/126P1/BLS</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">MW · Vanguard · IR Remote · 13FT · IP20</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">MSM-HTI/407/BLS</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">MW · Wire-In · DIP · 120–277V · 20FT · IP20</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">MSM-HTO/07P3/BLS</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">MW · Outdoor · IR Remote · 49FT · IP65</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row"><span><span class="sku-name font-semibold">MSM-MTO/7D/BLS</span><span class="sku-arrow">→</span></span><span class="opacity-65 text-right">MW · Euro DIP · 8FT · IP20</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BY ACS DEEP DIVE -->
+<section id="acs" class="section-bg-paper-2" aria-labelledby="acs-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-5">
+      <p class="eyebrow eyebrow-rule mb-4 accent-text">PLATFORM 02 · BY <span class="aa">Ⓐ</span>CS</p>
+      <h2 id="acs-h2" class="h2 text-4xl md:text-5xl mb-6">BLE mesh. App-led commissioning. NLC compliant.</h2>
+      <p class="text-base opacity-90 mb-6 leading-snug">Networked BLE mesh sensors. <span class="aa">Ⓐ</span>CS by ALG App for commissioning. 5K–250K sqft. DLC / NLC listed.</p>
+      <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="btn btn-primary">VIEW BY <span class="aa">Ⓐ</span>CS CATALOG →</a>
+    </div>
+    <div class="md:col-span-7">
+      <div class="bg-[#111] p-6 border border-white/10">
+        <p class="mono text-xs tracking-widest text-white/50 mb-4">NLC SENSORS · CLICK ANY ROW FOR FULL SPEC</p>
+        <div class="grid grid-cols-1 gap-0 text-xs mono">
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-HTI/08P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSM-HTI/08P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">MW · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-HTI/126P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Indoor · Vanguard · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSM-HTI/126P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">MW · Indoor · Vanguard · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-HTO/07P3/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Outdoor · Skylight Range · 3-pin</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BY SILVAIR DEEP DIVE -->
+<section id="silvair" class="section-bg-paper" aria-labelledby="silvair-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-5">
+      <p class="eyebrow eyebrow-rule mb-4 accent-text">PLATFORM 03 · BY SILVAIR</p>
+      <h2 id="silvair-h2" class="h2 text-4xl md:text-5xl mb-6">Enterprise NLC. Unlimited nodes. BMS APIs.</h2>
+      <p class="text-base opacity-90 mb-6 leading-snug">Silvair BLE Mesh. Cross-pillar /CL adder links const<span class="aa">Ⓐ</span>NT emergency drivers into the same mesh. 50–60% savings.</p>
+      <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="btn btn-primary">VIEW BY SILVAIR CATALOG →</a>
+    </div>
+    <div class="md:col-span-7">
+      <div class="bg-[#111] p-6 border border-white/10">
+        <p class="mono text-xs tracking-widest text-white/50 mb-4">SILVAIR NLC SENSORS · CLICK ANY ROW FOR FULL SPEC</p>
+        <div class="grid grid-cols-1 gap-0 text-xs mono">
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-HTI/08P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSM-HTI/08P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">MW · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-SRI-903P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSM-SRI-903P1/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">MW · Indoor · Skylight Range · 1-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSP-SRO-903P3/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">PIR · Outdoor · Skylight Range · 3-pin</span></a>
+          <a href="/safety-controls/controls/silvair/msp-hti-08p1-nlc" class="sku-row dark"><span><span class="sku-name font-semibold text-white">MSM-SRO-903P3/NLC</span><span class="sku-arrow">→</span></span><span class="opacity-70 text-right text-white">MW · Outdoor · Skylight Range · 3-pin</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HELP ME CHOOSE -->
+<section id="choose" class="section-bg-paper-2" aria-labelledby="choose-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">HELP ME CHOOSE</p>
+    <h2 id="choose-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-3xl">Three questions that point at one platform.</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border border-black/10 text-sm min-w-[760px]">
+        <thead>
+          <tr class="border-b border-black/10 mono text-xs tracking-wider opacity-70">
+            <th scope="col" class="px-4 py-3 text-left">QUESTION</th>
+            <th scope="col" class="px-4 py-3 text-left">BI-LEVEL</th>
+            <th scope="col" class="px-4 py-3 text-left">BY <span class="aa">Ⓐ</span>CS</th>
+            <th scope="col" class="px-4 py-3 text-left">BY SILVAIR</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm">
+          <tr class="border-b border-black/5"><td class="px-4 py-3 font-semibold">Project size?</td><td class="px-4 py-3 opacity-85">&lt; 5K sqft</td><td class="px-4 py-3 opacity-85">5K – 250K sqft</td><td class="px-4 py-3 opacity-85">Enterprise / multi-building</td></tr>
+          <tr class="border-b border-black/5"><td class="px-4 py-3 font-semibold">Code path?</td><td class="px-4 py-3 opacity-85">Title 24 manual</td><td class="px-4 py-3 opacity-85">Title 24 NLC</td><td class="px-4 py-3 opacity-85">Title 24 NLC + BMS API</td></tr>
+          <tr class="border-b border-black/5"><td class="px-4 py-3 font-semibold">Commissioning?</td><td class="px-4 py-3 opacity-85">IR remote / DIP switch</td><td class="px-4 py-3 opacity-85"><span class="aa">Ⓐ</span>CS by ALG App</td><td class="px-4 py-3 opacity-85">Silvair App</td></tr>
+          <tr class="border-b border-black/5"><td class="px-4 py-3 font-semibold">DLC/NLC?</td><td class="px-4 py-3 opacity-85">No</td><td class="px-4 py-3 opacity-85"><span class="text-green-700 font-semibold">Yes</span></td><td class="px-4 py-3 opacity-85"><span class="text-green-700 font-semibold">Yes</span></td></tr>
+          <tr class="border-b border-black/5"><td class="px-4 py-3 font-semibold">Energy savings range</td><td class="px-4 py-3 opacity-85">30–40%</td><td class="px-4 py-3 opacity-85">40–50%</td><td class="px-4 py-3 opacity-85">50–60%</td></tr>
+          <tr><td class="px-4 py-3 font-semibold">Best fit for…</td><td class="px-4 py-3 opacity-85">Single-floor offices, retail back rooms, small warehouses</td><td class="px-4 py-3 opacity-85">Mid-market commercial, schools, mid-rise office</td><td class="px-4 py-3 opacity-85">Whole-building / campus / hospital / data center</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mono text-xs tracking-widest opacity-65 mt-4">▸ STILL UNSURE — REQUEST A REP-LED PLATFORM CONSULT (BELOW)</p>
+  </div>
+</section>
+
+</main>
+
+<!-- DARK CTA -->
+<section id="cta" class="section-bg-dark">
+  <div class="max-w-screen-xl mx-auto px-6 py-20 text-center text-white">
+    <h2 class="h2 text-4xl md:text-5xl mb-6">Spec the platform. We’ll commission with you.</h2>
+    <p class="opacity-80 max-w-2xl mx-auto mb-8">Spec response within one business day. AHJ submittal-package support. App-led commissioning workshops for the by <span class="aa">Ⓐ</span>CS and by SILVAIR platforms. Sample sensors shipped 3-day from US warehouses.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/support/sample-request" class="btn btn-primary">FIND A REP</a>
+      <a href="/support/sample-request?subject=contr%E2%92%B6LS+Platform+Consult" class="btn btn-outline-light">REQUEST PLATFORM CONSULT</a>
+      <a href="/datasheets/controls/contr%E2%92%B6LS_Product_Guide.pdf" class="btn btn-outline-light">DOWNLOAD CATALOG</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const dots = document.querySelectorAll('.anchor-rail .anchor-dot');
+  const sections = Array.from(dots).map(d => document.querySelector(d.getAttribute('href')));
+  function spy() {
+    let i = 0;
+    for (let k = 0; k < sections.length; k++) {
+      if (sections[k] && sections[k].getBoundingClientRect().top < window.innerHeight * 0.4) i = k;
+    }
+    dots.forEach((d, k) => d.classList.toggle('active', k === i));
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  document.querySelectorAll('.cy').forEach(e => e.textContent = new Date().getFullYear());
+</script>
+</BaseLayout>

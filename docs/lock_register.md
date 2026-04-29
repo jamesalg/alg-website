@@ -256,3 +256,41 @@ Acknowledged by: Manus (iter/v2.7.x-foundation-fixes)
 | A | `scripts/verify.mjs` | Group M: `nostalgic-decor` and `vintage-decor` exempted from --lampBg check (bespoke pages, v2.7.10) |
 | A | `scripts/verify.mjs` | Group N: `nostalgic-decor` and `vintage-decor` removed from LAMP_SLUGS (bespoke pages, v2.7.10); LAMP_SLUGS now empty array |
 | A | `scripts/verify.mjs` | Group P: `spec-table` class added to main SKU tables in t8.astro, husk-hid.astro, a19.astro, edison.astro to satisfy P.1 check |
+
+---
+
+## v2.7.11 — Safety & Controls Pillar (2026-04-28)
+
+**Branch:** `iter/v2.7.11-safety-controls` | **PR:** squash-merged to `main`
+
+### New pages — Safety & Controls pillar
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/solutions/safety-controls.astro` | NEW — Safety & Controls pillar landing page: two-pillar layout (constⒶNT + contrⒶLS), hero stats, deep-dive sections, code compliance block, integration CTA |
+| A | `src/pages/safety-controls/constant/index.astro` | NEW — constⒶNT category page: 8 application verticals, SKU selector matrix, ArcticGuard callout, /CL integration note |
+| A | `src/pages/safety-controls/controls/index.astro` | NEW — contrⒶLS category page: 3 platforms (Bi-Level, by ⒶCS, by Silvair), DLC/NLC qualification table, selector CTA |
+| A | `src/pages/safety-controls/constant/em20-cmb-260dc.astro` | NEW — EM20-CMB/260DC family detail page: full spec table, cert block, ordering matrix, 4 resource cards all FALLBACK (null URL → "Request via sales →"), sister families |
+| A | `src/pages/safety-controls/controls/silvair/msp-hti-08p1-nlc.astro` | NEW — MSP-HTI/08P1/NLC family detail page: full spec table, Silvair NLC badge, QR code section, real Zoho datasheet URL, sister families |
+
+### Datasheets added
+
+| Track | Path | Change |
+|---|---|---|
+| A | `public/datasheets/em20-cmb-260dc.pdf` | Placeholder datasheet for EM20-CMB/260DC |
+| A | `public/datasheets/msp-hti-08p1-nlc.pdf` | Placeholder datasheet for MSP-HTI/08P1/NLC |
+
+### Verifier fixes
+
+| Track | Path | Change |
+|---|---|---|
+| A | `scripts/verify.mjs` | J.1 regex fallback: add `headStripped` step to strip `<head>...</head>` before scanning for naked Ⓐ — prevents false positives from `<title>` tag content on JSDOM-crash pages |
+| A | `src/styles/brand.css` | `.aa` rule: removed `display:inline-block` and `transform` — use only `color` + `font-weight: 700` |
+
+### Brand-mark fixes in new pages
+
+| Track | Path | Change |
+|---|---|---|
+| A | `src/pages/solutions/safety-controls.astro` | Fixed naked Ⓐ in `aria-label` attributes — use plain ASCII text in aria-label; `data-label` retains Ⓐ (attribute value, stripped by B.1) |
+| A | `src/pages/solutions/safety-controls.astro` | Fixed naked `ⒶCS by ALG App NLC` text node — wrapped in `<span class="aa">` |
+| A | `src/pages/safety-controls/constant/em20-cmb-260dc.astro` | Fixed naked `TUBULⒶRCH` in sister-card desc data — wrapped in `<span class="aa">`, rendered via `set:html` |

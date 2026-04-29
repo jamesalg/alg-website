@@ -1,0 +1,356 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const title = "Safety & Controls · const\u24b6NT + contr\u24b6LS";
+const description = "Two platforms. One job: make the building behave. const\u24b6NT emergency drivers and contr\u24b6LS networked controls from Archipelago Lighting Group.";
+---
+<BaseLayout {title} {description}>
+<style>
+  :root {
+    --accent: #F32740;
+    --warm: #F5C24A;
+    --teal: #0E3535;
+    --teal-2: #143E3E;
+    --paper: #FAF8F4;
+    --paper-2: #F1ECE3;
+    --char: #111111;
+    --ink: #111111;
+  }
+  .section-bg-paper { background: var(--paper); color: var(--ink); }
+  .section-bg-paper-2 { background: var(--paper-2); color: var(--ink); }
+  .section-bg-dark { background: var(--char); color: white; }
+  .section-bg-teal { background: var(--teal); color: white; }
+  .accent-text { color: var(--accent); }
+  .mono { font-family: ui-monospace, monospace; }
+  .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+  .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow-rule::before { content: ''; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #C41E32; color: white; }
+  .btn-outline-light { border: 1px solid rgba(255,255,255,0.5); color: white; }
+  .btn-outline-light:hover { background: rgba(255,255,255,0.1); color: white; }
+  .stat-num { font-weight: 800; font-size: 2.25rem; letter-spacing: -0.03em; line-height: 1; }
+  .stat-label { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.5rem; }
+  .icon-block { width: 56px; height: 56px; color: var(--accent); display: inline-flex; }
+  .icon-block-lg { width: 96px; height: 96px; }
+  .icon-stat { width: 40px; height: 40px; opacity: 0.85; }
+  .pillar-card-art { aspect-ratio: 16/9; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; }
+  .pillar-card-art.constant { background: linear-gradient(135deg, #FAF8F4 0%, #F1ECE3 100%); color: var(--accent); }
+  .pillar-card-art.controls { background: linear-gradient(135deg, #0E2E2E 0%, #143E3E 100%); color: var(--warm); }
+  /* Right-side dot anchor nav */
+  .anchor-rail { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 30; padding-right: 4px; }
+  .anchor-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.25); transition: background 0.2s, transform 0.2s; cursor: pointer; position: relative; display: block; }
+  .anchor-dot:hover { background: rgba(0,0,0,0.6); transform: scale(1.3); }
+  .anchor-dot.active { background: var(--accent); transform: scale(1.4); }
+  .anchor-dot::before {
+    content: attr(data-label);
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--ink);
+    color: white;
+    padding: 5px 9px;
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s;
+  }
+  .anchor-dot:hover::before { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  .skip-link { position: absolute; left: -9999px; top: 0; padding: 1rem; background: var(--ink); color: white; }
+  .skip-link:focus { left: 0; }
+</style>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Breadcrumb -->
+<div class="border-b border-black/10 bg-white">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 mono text-xs tracking-widest opacity-70">
+    <a href="/" class="hover:text-[#F32740]">HOME</a> › <a href="/solutions/" class="hover:text-[#F32740]">SOLUTIONS</a> › SAFETY &amp; CONTROLS
+  </div>
+</div>
+
+<!-- Right-side anchor menu -->
+<aside class="anchor-rail" aria-label="On-page sections">
+  <a href="#hero" class="anchor-dot active" data-label="Top" aria-label="Top"></a>
+  <a href="#two-pillars" class="anchor-dot" data-label="Two pillars" aria-label="Two pillars"></a>
+  <a href="#constant" class="anchor-dot" data-label="constⒶNT" aria-label="constANT"></a>
+  <a href="#controls" class="anchor-dot" data-label="contrⒶLS" aria-label="contrALS"></a>
+  <a href="#code" class="anchor-dot" data-label="Code compliance" aria-label="Code compliance"></a>
+  <a href="#integration" class="anchor-dot" data-label="Integration" aria-label="Integration"></a>
+  <a href="#cta" class="anchor-dot" data-label="Talk to a rep" aria-label="Talk to a rep"></a>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero" class="section-bg-dark" aria-labelledby="hero-h1">
+  <div class="max-w-screen-xl mx-auto px-6 py-24 text-center">
+    <p class="eyebrow eyebrow-rule mb-8 text-white/80 justify-center">SOLUTIONS · SAFETY &amp; CONTROLS</p>
+    <h1 id="hero-h1" class="h1 text-white text-5xl md:text-6xl lg:text-7xl mb-8">Two platforms.<br>One job: <span class="accent-text">make the building behave.</span></h1>
+    <p class="text-white/75 text-xl max-w-2xl mx-auto mb-12">One platform keeps it on. One keeps it efficient.</p>
+    <div class="flex justify-center flex-wrap gap-x-12 gap-y-8 mb-12">
+      <div class="text-center">
+        <div class="icon-stat mx-auto mb-3" style="width:40px;height:40px;color:white;opacity:0.85;display:inline-flex;">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 6 L52 14 L52 32 Q52 50 32 58 Q12 50 12 32 L12 14 Z"/><path d="M22 32 L29 39 L43 25" stroke-width="2.5"/></svg>
+        </div>
+        <div class="stat-num text-white">UL 924</div><div class="stat-label text-white/70">Listed</div>
+      </div>
+      <div class="text-center">
+        <div class="icon-stat mx-auto mb-3" style="width:40px;height:40px;color:white;opacity:0.85;display:inline-flex;">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 4 L52 14 L52 28 Q52 48 32 58 Q12 48 12 28 L12 14 Z"/><line x1="32" y1="20" x2="32" y2="44"/><line x1="22" y1="32" x2="42" y2="32"/></svg>
+        </div>
+        <div class="stat-num text-white">Title 20 · 24</div><div class="stat-label text-white/70">CA energy code</div>
+      </div>
+      <div class="text-center">
+        <div class="icon-stat mx-auto mb-3" style="width:40px;height:40px;color:white;opacity:0.85;display:inline-flex;">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="currentColor"><path d="M36 4 L14 36 L28 36 L24 60 L50 26 L34 26 Z"/></svg>
+        </div>
+        <div class="stat-num text-white">30–60%</div><div class="stat-label text-white/70">Energy savings</div>
+      </div>
+      <div class="text-center">
+        <div class="icon-stat mx-auto mb-3" style="width:40px;height:40px;color:white;opacity:0.85;display:inline-flex;">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="32" r="24"/><line x1="32" y1="14" x2="32" y2="32" stroke-width="3"/><line x1="32" y1="32" x2="44" y2="40" stroke-width="3"/></svg>
+        </div>
+        <div class="stat-num text-white">5-Year</div><div class="stat-label text-white/70">Warranty</div>
+      </div>
+    </div>
+    <div class="flex justify-center flex-wrap gap-3">
+      <a href="#two-pillars" class="btn btn-primary">EXPLORE BOTH PLATFORMS →</a>
+      <a href="#cta" class="btn btn-outline-light">TALK TO AN ENGINEER</a>
+    </div>
+  </div>
+</section>
+
+<!-- ITALIC TRANSITION -->
+<div class="section-bg-paper">
+  <div class="max-w-screen-xl mx-auto px-6 py-6 italic text-center text-sm opacity-80">
+    Emergency lighting that passes the AHJ. Controls that pass Title 24. Both from one rep, one PO, one warranty.
+  </div>
+</div>
+
+<!-- TWO PILLARS -->
+<section id="two-pillars" class="section-bg-paper" aria-labelledby="pillars-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">PLATFORM OVERVIEW</p>
+    <h2 id="pillars-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-4xl">A safety story and an efficiency story.</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <a href="/safety-controls/constant" class="block bg-white border border-black/10 hover:border-[#F32740] transition-colors overflow-hidden">
+        <div class="pillar-card-art constant">
+          <div class="icon-block icon-block-lg">
+            <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 6 L52 14 L52 32 Q52 50 32 58 Q12 50 12 32 L12 14 Z"/><path d="M22 32 L29 39 L43 25" stroke-width="2.5"/></svg>
+          </div>
+        </div>
+        <div class="p-8">
+          <p class="mono text-xs tracking-[0.2em] text-[#F32740] mb-3">SAFETY · UL 924 LISTED</p>
+          <h3 class="h2 text-3xl md:text-4xl mb-3">const<span class="aa">Ⓐ</span>NT</h3>
+          <p class="opacity-80 mb-5 text-base leading-snug">Emergency drivers that keep the egress path lit when the grid goes down. Factory, field, quick, and emergency install tiers.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">FACTORY</span>
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">FIELD</span>
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">QUICK-INSTALL</span>
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">EMERGENCY</span>
+          </div>
+          <span class="mono text-sm tracking-widest accent-text font-semibold">VIEW const<span class="aa">Ⓐ</span>NT →</span>
+        </div>
+      </a>
+      <a href="/safety-controls/controls" class="block bg-white border border-black/10 hover:border-[#F32740] transition-colors overflow-hidden">
+        <div class="pillar-card-art controls">
+          <div class="icon-block icon-block-lg" style="color: rgba(245,194,74,0.9)">
+            <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="14" r="3" fill="currentColor"/><circle cx="14" cy="32" r="3" fill="currentColor"/><circle cx="50" cy="32" r="3" fill="currentColor"/><circle cx="22" cy="50" r="3" fill="currentColor"/><circle cx="42" cy="50" r="3" fill="currentColor"/><line x1="32" y1="14" x2="14" y2="32"/><line x1="32" y1="14" x2="50" y2="32"/><line x1="14" y1="32" x2="22" y2="50"/><line x1="50" y1="32" x2="42" y2="50"/><line x1="22" y1="50" x2="42" y2="50"/><line x1="14" y1="32" x2="50" y2="32"/></svg>
+          </div>
+        </div>
+        <div class="p-8">
+          <p class="mono text-xs tracking-[0.2em] text-[#F32740] mb-3">EFFICIENCY · CEC TITLE 24</p>
+          <h3 class="h2 text-3xl md:text-4xl mb-3">contr<span class="aa">Ⓐ</span>LS</h3>
+          <p class="opacity-80 mb-5 text-base leading-snug">Sensors and networked controls that reduce what the building uses when no one's there.</p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">BI-LEVEL</span>
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">BY <span class="aa">Ⓐ</span>CS</span>
+            <span class="mono text-[10px] tracking-widest border border-black/15 px-2 py-1">BY SILVAIR</span>
+          </div>
+          <span class="mono text-sm tracking-widest accent-text font-semibold">VIEW contr<span class="aa">Ⓐ</span>LS →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- const<span class="aa">Ⓐ</span>NT PILLAR DEEP DIVE -->
+<section id="constant" class="section-bg-paper-2" aria-labelledby="constant-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12 items-start">
+    <div class="md:col-span-5">
+      <p class="eyebrow eyebrow-rule mb-4 accent-text">PILLAR 01 · const<span class="aa">Ⓐ</span>NT</p>
+      <h2 id="constant-h2" class="h2 text-4xl md:text-5xl mb-6">Emergency drivers built for the realities of commercial &amp; industrial spaces.</h2>
+      <p class="text-base opacity-90 mb-6 leading-snug">Four install tiers. Three power classes. One driver covers every commercial building voltage.</p>
+      <a href="/safety-controls/constant" class="btn btn-primary">EXPLORE const<span class="aa">Ⓐ</span>NT</a>
+    </div>
+    <div class="md:col-span-7">
+      <div class="bg-white p-8 border border-black/10">
+        <p class="mono text-xs tracking-widest opacity-60 mb-4">VERIFIED COMPLIANCE BASELINE</p>
+        <ul class="space-y-2 text-sm">
+          <li class="flex"><span class="accent-text font-bold w-6">·</span><span>UL 924 emergency-driver listing</span></li>
+          <li class="flex"><span class="accent-text font-bold w-6">·</span><span>CSA C22.2 No.141 emergency lighting</span></li>
+          <li class="flex"><span class="accent-text font-bold w-6">·</span><span>CEC Title 20 appliance efficiency</span></li>
+          <li class="flex"><span class="accent-text font-bold w-6">·</span><span>IP65 (select models)</span></li>
+          <li class="flex"><span class="accent-text font-bold w-6">·</span><span>5-Year limited warranty</span></li>
+        </ul>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-4">
+        <div class="bg-white p-4 border border-black/10">
+          <div class="mono text-[10px] tracking-widest opacity-60">/AG</div>
+          <div class="font-semibold text-sm mt-1"><span class="aa">Ⓐ</span>rcticGuard</div>
+          <div class="text-xs opacity-70 mt-1">−4°F to 140°F cold-pack</div>
+        </div>
+        <div class="bg-white p-4 border border-black/10">
+          <div class="mono text-[10px] tracking-widest opacity-60">/XD</div>
+          <div class="font-semibold text-sm mt-1">Extended Discharge</div>
+          <div class="text-xs opacity-70 mt-1">120-min egress (vs. 90)</div>
+        </div>
+        <div class="bg-white p-4 border border-black/10">
+          <div class="mono text-[10px] tracking-widest opacity-60">/CL</div>
+          <div class="font-semibold text-sm mt-1">const<span class="aa">Ⓐ</span>NTLink</div>
+          <div class="text-xs opacity-70 mt-1">SILVAIR · Title 24 NLC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- contr<span class="aa">Ⓐ</span>LS PILLAR DEEP DIVE -->
+<section id="controls" class="section-bg-teal" aria-labelledby="controls-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12 items-start">
+    <div class="md:col-span-5">
+      <p class="eyebrow eyebrow-rule mb-4" style="color: var(--warm)">PILLAR 02 · contr<span class="aa">Ⓐ</span>LS</p>
+      <h2 id="controls-h2" class="h2 text-4xl md:text-5xl mb-6 text-white">Three platforms. Same brand. The control system fits the project, not the other way around.</h2>
+      <p class="text-white/80 mb-6 leading-snug">Bi-Level wired. SigMesh BLE. Enterprise NLC. Pick the platform the project earns.</p>
+      <a href="/safety-controls/controls" class="btn btn-primary">EXPLORE contr<span class="aa">Ⓐ</span>LS</a>
+    </div>
+    <div class="md:col-span-7 space-y-3">
+      <div class="border border-white/15 p-6 bg-white/5">
+        <div class="flex items-baseline justify-between mb-3">
+          <div><div class="mono text-xs tracking-widest" style="color: var(--warm)">PLATFORM 01 · BI-LEVEL</div><div class="font-bold text-lg mt-1 text-white">Standalone wired</div></div>
+          <div class="mono text-xs opacity-70 text-right text-white/70">No network required<br>Wired 0–10V</div>
+        </div>
+        <p class="text-sm text-white/85">Occupancy sensing with no commissioning, no app, no network. 2-wire 0–10V. Drop-in for any project. 30–40% energy savings.</p>
+      </div>
+      <div class="border border-white/15 p-6 bg-white/5">
+        <div class="flex items-baseline justify-between mb-3">
+          <div><div class="mono text-xs tracking-widest" style="color: var(--warm)">PLATFORM 02 · BY <span class="aa">Ⓐ</span>CS</div><div class="font-bold text-lg mt-1 text-white">SigMesh BLE</div></div>
+          <div class="mono text-xs opacity-70 text-right text-white/70">DLC / NLC qualified<br>iOS app · <span class="aa">Ⓐ</span>CS by ALG App NLC</div>
+        </div>
+        <p class="text-sm text-white/85">App-commissioned SigMesh BLE. DLC/NLC qualified. 5K–250K sqft project sweet spot. 40–50% energy savings.</p>
+      </div>
+      <div class="border border-white/15 p-6 bg-white/5">
+        <div class="flex items-baseline justify-between mb-3">
+          <div><div class="mono text-xs tracking-widest" style="color: var(--warm)">PLATFORM 03 · BY SILVAIR</div><div class="font-bold text-lg mt-1 text-white">Enterprise NLC platform</div></div>
+          <div class="mono text-xs opacity-70 text-right text-white/70">DLC / NLC qualified<br>Silvair App · BMS APIs</div>
+        </div>
+        <p class="text-sm text-white/85">Silvair-certified BLE Mesh with unlimited node scalability and BMS integration via open APIs. Enterprise-grade. 50–60% energy savings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CODE COMPLIANCE -->
+<section id="code" class="section-bg-paper" aria-labelledby="code-h2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-20">
+    <p class="eyebrow eyebrow-rule mb-6 accent-text">CODE COMPLIANCE · BOTH PILLARS</p>
+    <h2 id="code-h2" class="h2 text-4xl md:text-5xl mb-12 max-w-3xl">Two pillars, one shared discipline: pass the AHJ on the first walk-through.</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-8 border border-black/10">
+        <div class="icon-block accent-text mb-4">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 6 L52 14 L52 32 Q52 50 32 58 Q12 50 12 32 L12 14 Z"/><path d="M22 32 L29 39 L43 25" stroke-width="2.5"/></svg>
+        </div>
+        <p class="mono text-xs tracking-widest accent-text mb-3">SAFETY · const<span class="aa">Ⓐ</span>NT</p>
+        <h3 class="font-bold text-lg mb-3">Emergency listing &amp; egress runtime</h3>
+        <ul class="text-sm space-y-2 opacity-90">
+          <li>· UL 924 end-product listed</li>
+          <li>· 90-min standard · 120-min /XD</li>
+          <li>· LiFePO4 · 500 cycles</li>
+          <li>· Test switch on every SKU</li>
+        </ul>
+      </div>
+      <div class="bg-white p-8 border border-black/10">
+        <div class="icon-block accent-text mb-4">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><circle cx="32" cy="14" r="3" fill="currentColor"/><circle cx="14" cy="32" r="3" fill="currentColor"/><circle cx="50" cy="32" r="3" fill="currentColor"/><circle cx="22" cy="50" r="3" fill="currentColor"/><circle cx="42" cy="50" r="3" fill="currentColor"/><line x1="32" y1="14" x2="14" y2="32"/><line x1="32" y1="14" x2="50" y2="32"/><line x1="14" y1="32" x2="22" y2="50"/><line x1="50" y1="32" x2="42" y2="50"/><line x1="22" y1="50" x2="42" y2="50"/><line x1="14" y1="32" x2="50" y2="32"/></svg>
+        </div>
+        <p class="mono text-xs tracking-widest accent-text mb-3">EFFICIENCY · contr<span class="aa">Ⓐ</span>LS</p>
+        <h3 class="font-bold text-lg mb-3">Title 24 networked-controls path</h3>
+        <ul class="text-sm space-y-2 opacity-90">
+          <li>· DLC/NLC qualified (2 of 3 platforms)</li>
+          <li>· /CL bridges emergency drivers into same NLC</li>
+          <li>· Bi-Level standalone for non-NLC projects</li>
+          <li>· BMS APIs on SILVAIR platform</li>
+        </ul>
+      </div>
+      <div class="bg-white p-8 border border-black/10">
+        <div class="icon-block accent-text mb-4">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 32 L26 28 L34 36 L38 32 M30 24 L34 20 Q44 10 50 16 L52 18 Q58 24 48 34 L42 40 M14 26 L20 32 Q26 38 16 48 L14 50 Q8 56 2 50 L0 48 Q-6 42 4 32 L10 26"/></svg>
+        </div>
+        <p class="mono text-xs tracking-widest accent-text mb-3">SHARED · BOTH</p>
+        <h3 class="font-bold text-lg mb-3">Warranty &amp; service</h3>
+        <ul class="text-sm space-y-2 opacity-90">
+          <li>· 5-year limited warranty (both pillars)</li>
+          <li>· cULus listings on every SKU</li>
+          <li>· IES · BIM/Revit · submittal-ready PDFs</li>
+          <li>· Rep-led AHJ submittal support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATION CALLOUT -->
+<section id="integration" class="section-bg-paper-2">
+  <div class="max-w-screen-2xl mx-auto px-6 py-16">
+    <div class="bg-white border-l-4 border-[#F32740] p-10 max-w-4xl">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="icon-block accent-text" style="width:48px;height:48px">
+          <svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 32 L26 28 L34 36 L38 32 M30 24 L34 20 Q44 10 50 16 L52 18 Q58 24 48 34 L42 40 M14 26 L20 32 Q26 38 16 48 L14 50 Q8 56 2 50 L0 48 Q-6 42 4 32 L10 26"/></svg>
+        </div>
+        <p class="mono text-xs tracking-widest accent-text">INTEGRATION · const<span class="aa">Ⓐ</span>NTLink + contr<span class="aa">Ⓐ</span>LS by SILVAIR</p>
+      </div>
+      <h3 class="h2 text-2xl md:text-3xl mb-3">When the safety pillar talks to the controls pillar.</h3>
+      <p class="text-base opacity-90 leading-snug mb-3">/CL puts the emergency driver on the same Silvair mesh as the contr<span class="aa">Ⓐ</span>LS sensors. One network. One commissioning. One Title 24 posture for both.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- DARK CTA -->
+<section id="cta" class="section-bg-dark">
+  <div class="max-w-screen-xl mx-auto px-6 py-20 text-center text-white">
+    <h2 class="h2 text-4xl md:text-5xl mb-6">Need both? Need one? Talk to a rep.</h2>
+    <p class="opacity-80 max-w-2xl mx-auto mb-8">Spec response within one business day. AHJ submittal-package support. Sample units shipped from US warehouses 3-day.</p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/support/sample-request" class="btn btn-primary">FIND A REP</a>
+      <a href="/support/sample-request?subject=Layout+Request" class="btn btn-outline-light">REQUEST LAYOUT</a>
+      <a href="/datasheets/controls/pg/contr%E2%92%B6LS_Product_Guide.pdf" class="btn btn-outline-light">DOWNLOAD CATALOG</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Right-side dot anchor scrollspy
+  const dots = document.querySelectorAll('.anchor-rail .anchor-dot');
+  const sections = Array.from(dots).map(d => document.querySelector(d.getAttribute('href')));
+  function spy() {
+    let i = 0;
+    for (let k = 0; k < sections.length; k++) {
+      if (sections[k] && sections[k].getBoundingClientRect().top < window.innerHeight * 0.4) i = k;
+    }
+    dots.forEach((d, k) => d.classList.toggle('active', k === i));
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  document.querySelectorAll('.cy').forEach(e => e.textContent = new Date().getFullYear());
+</script>
+</BaseLayout>
