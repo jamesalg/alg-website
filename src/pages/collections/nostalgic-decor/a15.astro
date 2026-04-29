@@ -1,5 +1,405 @@
 ---
-import LampFamilyDetailPageLayout from '../../../layouts/LampFamilyDetailPageLayout.astro';
-import data, { siblingFamilies, relatedCollections, getStarted } from '../../../data/lamps/nostalgic-decor/a15';
+/**
+ * The Saarinen A15 — Nostalgic Décor Family Detail Page
+ * v2.7.12 — migrated to A19 pattern
+ * Route: /collections/nostalgic-decor/a15
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ResourceCard from '../../../components/ResourceCard.astro';
+
+const resources = [
+  {
+    icon: 'PDF',
+    title: 'Datasheet',
+    desc: 'The Saarinen A15 product datasheet',
+    url: null,
+    family: 'The Saarinen A15',
+    resource: 'Datasheet',
+  },
+  {
+    icon: 'PDF',
+    title: 'Installation Sheet',
+    desc: 'Per-SKU install instructions',
+    url: null,
+    family: 'The Saarinen A15',
+    resource: 'Installation Sheet',
+  },
+  {
+    icon: 'IES',
+    title: 'IES Files',
+    desc: 'Photometric data · per CCT and glass finish',
+    url: null,
+    family: 'The Saarinen A15',
+    resource: 'IES Files',
+  },
+  {
+    icon: 'PDF',
+    title: 'ALG Décor Lamps · Product Guide · Q2 2026',
+    desc: 'Full Décor lamp catalog · Nostalgic + Vintage series',
+    url: null,
+    family: 'The Saarinen A15',
+    resource: 'Product Guide',
+  },
+];
+
+const skus = [
+  { sku: 'LTA15F35024MB', finish: 'Frosted', base: 'E26', watts: '3.5W', eq: '40W', lumens: '280', cct: '2400K', cri: '80+', cert: '—' },
+  { sku: 'LTA15F45027MB', finish: 'Frosted', base: 'E26', watts: '4.5W', eq: '40W', lumens: '350', cct: '2700K', cri: '80+', cert: '—' },
+  { sku: 'LTA15F45027MB/JA8', finish: 'Frosted', base: 'E26', watts: '4.5W', eq: '40W', lumens: '350', cct: '2700K', cri: '80+', cert: 'JA8 · T20' },
+  { sku: 'LTA15C35024MB', finish: 'Clear', base: 'E26', watts: '3.5W', eq: '40W', lumens: '280', cct: '2400K', cri: '80+', cert: '—' },
+  { sku: 'LTA15C45027MB', finish: 'Clear', base: 'E26', watts: '4.5W', eq: '40W', lumens: '350', cct: '2700K', cri: '80+', cert: '—' },
+  { sku: 'LTA15C45027MB/JA8', finish: 'Clear', base: 'E26', watts: '4.5W', eq: '40W', lumens: '350', cct: '2700K', cri: '80+', cert: 'JA8 · T20' },
+];
+
+const dimmers = [
+  { model: 'D-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva' },
+  { model: 'GL-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Glyder' },
+  { model: 'S-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Skylark' },
+  { model: 'DV-600P', brand: 'Lutron', type: 'Incandescent / TRIAC', series: 'Diva (legacy)' },
+  { model: 'SELV-300P', brand: 'Lutron', type: 'ELV', series: 'Skylark ELV' },
+  { model: 'DVELV-300P', brand: 'Lutron', type: 'ELV', series: 'Diva ELV' },
+  { model: 'NTELV-500', brand: 'Lutron', type: 'ELV', series: 'Nova T★ ELV' },
+  { model: 'RRD-6NA', brand: 'Lutron', type: 'RadioRA 2', series: 'Whole-home wireless' },
+  { model: 'MRF-2-6ELV-120', brand: 'Lutron', type: 'RadioRA 2 ELV', series: 'Whole-home wireless ELV' },
+  { model: 'HQRD-6NA', brand: 'Lutron', type: 'HomeWorks QS', series: 'HomeWorks QS · estate-grade' },
+  { model: 'DSL06-1LZ', brand: 'Leviton', type: 'CL', series: 'Decora Sureslide CL' },
+  { model: 'HCL45-3PW', brand: 'Legrand', type: 'CL', series: 'radiant® CL' },
+  { model: 'FLR603P', brand: 'Forbes & Lomax', type: 'TRIAC', series: 'Designer rotary' },
+  { model: 'FLRLV603P', brand: 'Forbes & Lomax', type: 'ELV', series: 'Designer rotary ELV' },
+  { model: 'DAL06P', brand: 'Cooper', type: 'CL', series: '—' },
+];
 ---
-<LampFamilyDetailPageLayout family={data} siblingFamilies={siblingFamilies} relatedCollections={relatedCollections} getStarted={getStarted} />
+<BaseLayout
+  title="The Saarinen A15 — Nostalgic Décor | Archipelago Lighting Group"
+  description="The Saarinen A15: CRI 80+, 2400K–2700K, frosted/clear glass, dimmable to 5%. Small-format A15 for vanity strips, accent fixtures, and appliance sockets."
+  bodyClass="page-a15-family"
+>
+<style>
+  :root {
+    --a19-amber: #C17B2A;
+    --a19-warm: #F5EFE3;
+    --a19-warm2: #EDE5D3;
+    --a19-ink: #1A140C;
+    --a19-umber: #2C1A0A;
+    --a19-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --a19-serif: 'Georgia', 'Times New Roman', serif;
+    --a19-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .a19-warm  { background: var(--a19-warm); color: var(--a19-ink); }
+  .a19-warm2 { background: var(--a19-warm2); color: var(--a19-ink); }
+  .a19-umber { background: var(--a19-umber); color: #EFE6D2; }
+  .a19-eyebrow { font-family: var(--a19-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .a19-eyebrow-rule::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--a19-amber); vertical-align: middle; margin-right: 12px; }
+  .a19-amber-text { color: var(--a19-amber); }
+  .a19-h1 { font-family: var(--a19-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+  .a19-h2 { font-family: var(--a19-serif); font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .a19-serif-text { font-family: var(--a19-serif); }
+  .a19-stat-num { font-family: var(--a19-sans); font-weight: 900; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; color: var(--a19-amber); }
+  .a19-stat-label { font-family: var(--a19-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.65; margin-top: 4px; }
+  .a19-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; cursor: pointer; border: none; transition: background 0.15s; font-family: var(--a19-mono); }
+  .a19-btn-primary { background: var(--a19-amber); color: white; }
+  .a19-btn-primary:hover { background: #a06520; }
+  .a19-btn-outline { background: transparent; color: var(--a19-ink); border: 1.5px solid rgba(26,20,12,0.3); }
+  .a19-btn-outline:hover { border-color: var(--a19-ink); }
+  .a19-btn-ghost { background: transparent; color: var(--a19-ink); }
+  .a19-btn-ghost:hover { text-decoration: underline; }
+  .a19-trust-badge { font-family: var(--a19-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid rgba(26,20,12,0.2); display: inline-block; }
+  .a19-photo-ph { background: #2C1A0A; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+  .a19-photo-ph-text { font-family: var(--a19-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; padding: 2rem; border: 1px dashed rgba(245,239,227,0.15); margin: 2rem; color: rgba(245,239,227,0.4); }
+  .a19-spec-row { display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(26,20,12,0.08); font-size: 0.875rem; }
+  .a19-spec-row dt { font-family: var(--a19-mono); font-size: 0.7rem; letter-spacing: 0.08em; opacity: 0.7; }
+  .a19-spec-row dd { margin: 0; font-family: var(--a19-serif); }
+  .a19-spec-block-num { font-family: var(--a19-mono); font-size: 0.6rem; letter-spacing: 0.18em; color: var(--a19-amber); }
+  .a19-sku-table { width: 100%; background: white; border: 1px solid rgba(26,20,12,0.1); font-family: var(--a19-mono); font-size: 0.68rem; }
+  .a19-sku-table th { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(26,20,12,0.1); font-weight: 700; letter-spacing: 0.1em; opacity: 0.7; }
+  .a19-sku-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(26,20,12,0.06); }
+  .a19-sku-table tr:hover td { background: rgba(193,123,42,0.04); }
+  .a19-sister-card { display: block; padding: 1.25rem; border: 1px solid rgba(26,20,12,0.1); background: var(--a19-warm); text-decoration: none; color: inherit; transition: border-color 0.15s; }
+  .a19-sister-card:hover { border-color: var(--a19-amber); }
+  .a19-breadcrumb { border-bottom: 1px solid rgba(26,20,12,0.1); background: white; }
+  .a19-breadcrumb__inner { max-width: 1536px; margin: 0 auto; padding: 12px 24px; font-family: var(--a19-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
+  .a19-breadcrumb a { color: inherit; text-decoration: none; }
+  .a19-breadcrumb a:hover { color: var(--a19-amber); opacity: 1; }
+  .a19-callout-ey { font-family: var(--a19-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8a5a10; }
+</style>
+
+<div class="a19-breadcrumb">
+  <div class="a19-breadcrumb__inner">
+    <a href="/">HOME</a> ›
+    <a href="/products/">PRODUCTS</a> ›
+    <a href="/products/lamps/">LAMPS</a> ›
+    <a href="/collections/nostalgic-decor/">NOSTALGIC DÉCOR</a> ›
+    THE THE SAARINEN A15
+  </div>
+</div>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="a19-warm" aria-labelledby="a15-hero-h1">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="a15-hero-grid">
+    <div class="a19-photo-ph">
+      <div class="a19-photo-ph-text">LIFESTYLE PHOTOGRAPHY<br><span style="opacity:0.6;">— ROOSTER CREATIVE DELIVERABLE —</span><br><br><span style="opacity:0.5;">SAARINEN A15 IN VANITY STRIP SETTING
+SOFT MORNING REGISTER · BATHROOM CONTEXT</span></div>
+    </div>
+    <div>
+      <p class="a19-eyebrow a19-eyebrow-rule" style="opacity:0.6;margin-bottom:1.5rem;"><span class="a19-amber-text">SERIES ·</span> NOSTALGIC DÉCOR · MID-CENTURY ACCENT</p>
+      <h1 id="a15-hero-h1" class="a19-h1" style="font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1rem;">The Saarinen A15</h1>
+      <p class="a19-serif-text" style="font-size:1.25rem;font-style:italic;margin-bottom:1.5rem;opacity:0.9;">The accent lamp that Saarinen would have specified.</p>
+      <p class="a19-serif-text" style="font-size:1rem;line-height:1.75;margin-bottom:2rem;opacity:0.85;max-width:36rem;">The small-format A15 shape — the lamp of vanity strips, accent fixtures, and appliance sockets — given a frosted amber finish and 2700K warmth that reads as warm-white without the yellow cast of older incandescent replacements. For bathroom vanity strips, accent lighting, and any fixture where the lamp is visible but not the centerpiece.</p>
+      <dl style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2rem;margin-bottom:2rem;">
+        <div><dd class="a19-stat-num">3.5–4.5W</dd><dt class="a19-stat-label">Input wattage range</dt></div>
+        <div><dd class="a19-stat-num">280–350 lm</dd><dt class="a19-stat-label">Lumen output</dt></div>
+        <div><dd class="a19-stat-num">CRI 80+</dd><dt class="a19-stat-label">Color rendering</dt></div>
+        <div><dd class="a19-stat-num">25,000h</dd><dt class="a19-stat-label">L70 rated life</dt></div>
+      </dl>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem;">
+        <span class="a19-trust-badge">CRI 80+</span>
+        <span class="a19-trust-badge">UL LISTED</span>
+        <span class="a19-trust-badge">CEC TITLE 24 JA8</span>
+        <span class="a19-trust-badge">DIMMABLE TO 5%</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;">
+        <a href="/support/sample-request?subject=Saarinen+Spec" class="a19-btn a19-btn-primary">SPECIFY THIS LAMP</a>
+        <a href="/support/sample-request?subject=Saarinen+Sample" class="a19-btn a19-btn-outline">REQUEST SAMPLE</a>
+        <a href="#resources" class="a19-btn a19-btn-ghost">DOCUMENTATION ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 768px) { .a15-hero-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+<!-- WHERE IT BELONGS -->
+<section class="a19-warm2" aria-labelledby="a15-belongs-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">WHERE THE SAARINEN BELONGS</p>
+    <h2 id="a15-belongs-h2" class="a19-h2" style="font-size:clamp(1.75rem,3.5vw,3rem);margin-bottom:3rem;">Three install registers. One lamp.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;" class="a15-belongs-grid">
+      <div style="background:var(--a19-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="a19-callout-ey" style="margin-bottom:0.75rem;">RESIDENTIAL · BATHROOM VANITY</p>
+        <h3 class="a19-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">The lamp that frames the mirror.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--a19-serif);">Bathroom vanity strips, Hollywood-style mirror bars, and powder-room sconces. The A15 silhouette disappears into a vanity strip and lets the warm amber glow do the work.</p>
+      </div>
+      <div style="background:var(--a19-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="a19-callout-ey" style="margin-bottom:0.75rem;">HOSPITALITY · GUEST BATH</p>
+        <h3 class="a19-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">Consistent across 200 vanity strips.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--a19-serif);">Hotel bathroom vanity strips where 6–8 lamps per fixture must match in CCT and output. 3-step MacAdam binning across the entire order so no two adjacent lamps read differently.</p>
+      </div>
+      <div style="background:var(--a19-warm);padding:1.5rem;border:1px solid rgba(26,20,12,0.1);">
+        <p class="a19-callout-ey" style="margin-bottom:0.75rem;">RESTAURANT · ACCENT</p>
+        <h3 class="a19-serif-text" style="font-size:1.25rem;margin-bottom:0.75rem;">Small lamp, big atmosphere.</h3>
+        <p style="font-size:0.85rem;line-height:1.7;opacity:0.85;font-family:var(--a19-serif);">Accent fixtures, display lighting, and small decorative pendants where a compact lamp profile is required but warm-amber atmosphere is non-negotiable.</p>
+      </div>
+    </div>
+    <style>
+      @media (max-width: 768px) { .a15-belongs-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- STRUCTURED SPECS -->
+<section class="a19-warm" aria-labelledby="a15-specs-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">FULL SPECIFICATIONS</p>
+    <h2 id="a15-specs-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:3rem;">Spec sheet for the lamp · designer-grade detail.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;" class="a15-spec-grid">
+      <article id="spec-color">
+        <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">01</p>
+        <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Color &amp; Optical</h3>
+        <dl>
+          <div class="a19-spec-row"><dt>CCT options</dt><dd>2400K · 2700K</dd></div>
+          <div class="a19-spec-row"><dt>CRI</dt><dd>≥80</dd></div>
+          <div class="a19-spec-row"><dt>MacAdam binning</dt><dd>3-step (standard) · matched binning kits available</dd></div>
+          <div class="a19-spec-row"><dt>Glass options</dt><dd>Frosted · Clear</dd></div>
+          <div class="a19-spec-row"><dt>Beam distribution</dt><dd>Omnidirectional · 360°</dd></div>
+        </dl>
+      </article>
+      <article id="spec-electrical">
+        <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">02</p>
+        <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Electrical</h3>
+        <dl>
+          <div class="a19-spec-row"><dt>Input voltage</dt><dd>120V AC · 60Hz</dd></div>
+          <div class="a19-spec-row"><dt>Wattage range</dt><dd>3.5W – 4.5W (per SKU)</dd></div>
+          <div class="a19-spec-row"><dt>Lumen output</dt><dd>280 – 350 lm (per SKU)</dd></div>
+          <div class="a19-spec-row"><dt>Efficacy</dt><dd>~75–80 lm/W (typ.)</dd></div>
+          <div class="a19-spec-row"><dt>L70 life</dt><dd>25,000 hours</dd></div>
+        </dl>
+      </article>
+      <article id="spec-dimming">
+        <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">03</p>
+        <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Dimming &amp; Controls</h3>
+        <dl>
+          <div class="a19-spec-row"><dt>Dimming types</dt><dd>TRIAC · ELV · CL (leading/trailing edge)</dd></div>
+          <div class="a19-spec-row"><dt>Dim-to</dt><dd>5% (smooth, flicker-free)</dd></div>
+          <div class="a19-spec-row"><dt>Compatible systems</dt><dd>Lutron · Leviton · Legrand · Forbes &amp; Lomax · Cooper</dd></div>
+          <div class="a19-spec-row"><dt>Dim-to-warm</dt><dd>Not applicable (fixed CCT per SKU)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-materials">
+        <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">04</p>
+        <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Materials &amp; Finish</h3>
+        <dl>
+          <div class="a19-spec-row"><dt>Base</dt><dd>E26 medium screw base</dd></div>
+          <div class="a19-spec-row"><dt>Envelope</dt><dd>A15 (47mm diameter)</dd></div>
+          <div class="a19-spec-row"><dt>Glass</dt><dd>Frosted · Clear (per SKU)</dd></div>
+          <div class="a19-spec-row"><dt>Filament style</dt><dd>Spiral (per SKU)</dd></div>
+          <div class="a19-spec-row"><dt>MOL</dt><dd>3.8" (97mm)</dd></div>
+        </dl>
+      </article>
+      <article id="spec-compliance" style="grid-column:1/-1;">
+        <p class="a19-spec-block-num" style="margin-bottom:0.5rem;">05</p>
+        <h3 class="a19-serif-text" style="font-size:1.5rem;margin-bottom:1rem;">Compliance &amp; Warranty</h3>
+        <dl style="display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;">
+          <div class="a19-spec-row"><dt>Safety</dt><dd>UL Listed</dd></div>
+          <div class="a19-spec-row"><dt>Energy code</dt><dd>CEC Title 24 JA8-2022-E · T20 (on JA8 variants)</dd></div>
+          <div class="a19-spec-row"><dt>Warranty</dt><dd>3 years / 25,000 hours</dd></div>
+          <div class="a19-spec-row"><dt>RoHS</dt><dd>Compliant</dd></div>
+        </dl>
+      </article>
+    </div>
+    <style>
+      @media (max-width: 900px) { .a15-spec-grid { grid-template-columns: 1fr !important; } }
+      @media (max-width: 900px) { .a15-spec-grid article[style*="grid-column"] { grid-column: 1 !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- DIMMER COMPATIBILITY TABLE -->
+<section class="a19-warm2" aria-labelledby="a15-dim-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">DIMMER COMPATIBILITY</p>
+    <h2 id="a15-dim-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:1rem;">The Nostalgic &amp; Vintage GEN-2 dimmer list.</h2>
+    <p style="opacity:0.7;max-width:40rem;margin-bottom:2rem;font-size:0.9rem;font-family:var(--a19-serif);">Tested and confirmed on the following control systems. All pass at 5% minimum dim level with no flicker, buzz, or pop-on.</p>
+    <div style="overflow-x:auto;">
+      <table class="a19-sku-table" style="min-width:520px;">
+        <thead>
+          <tr>
+            <th>MODEL</th><th>BRAND</th><th style="text-align:center;">TYPE</th><th style="text-align:center;">PASS</th><th>SERIES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dimmers.map(d => (
+            <tr>
+              <td style="font-weight:600;">{d.model}</td>
+              <td>{d.brand}</td>
+              <td style="text-align:center;">{d.type}</td>
+              <td style="text-align:center;color:#16a34a;font-weight:700;">✓</td>
+              <td>{d.series}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-top:1rem;">▸ MATRIX UPDATED 2026.Q2 · NEW DIMMERS ADDED QUARTERLY · SUBMIT YOUR CONTROL FOR TESTING</p>
+  </div>
+</section>
+
+<!-- SKU TABLE -->
+<section class="a19-warm" aria-labelledby="a15-sku-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:5rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">ORDERABLE VARIANTS</p>
+    <h2 id="a15-sku-h2" class="a19-h2" style="font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:0.75rem;">Active LTA15 variants.</h2>
+    <p class="a19-serif-text" style="opacity:0.8;max-width:40rem;margin-bottom:2rem;font-size:0.9rem;">Standard-warranty 3-year / 25,000-hour rated life per datasheet. JA8-2022-E and T20-compliant variants available where required.</p>
+    <div style="overflow-x:auto;">
+      <table class="a19-sku-table spec-table" style="min-width:700px;">
+        <thead>
+          <tr>
+            <th>SKU</th><th>FINISH</th><th style="text-align:center;">BASE</th><th style="text-align:center;">WATTS</th><th style="text-align:center;">EQ.</th><th style="text-align:center;">LUMENS</th><th style="text-align:center;">CCT</th><th style="text-align:center;">CRI</th><th>CERT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {skus.map(s => (
+            <tr>
+              <td style="font-weight:600;">{s.sku}</td>
+              <td>{s.finish}</td>
+              <td style="text-align:center;">{s.base}</td>
+              <td style="text-align:center;">{s.watts}</td>
+              <td style="text-align:center;">{s.eq}</td>
+              <td style="text-align:center;">{s.lumens}</td>
+              <td style="text-align:center;">{s.cct}</td>
+              <td style="text-align:center;">{s.cri}</td>
+              <td>{s.cert}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-top:1rem;">▸ ALTERNATIVE CCTS AVAILABLE AS SPECIAL ORDER · CONTACT SALES@ARCHIPELAGOLIGHTING.COM</p>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="a19-warm2" id="resources" aria-labelledby="a15-resources-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">RESOURCES</p>
+    <h2 id="a15-resources-h2" class="a19-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">For designers and spec writers.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;" class="a15-resources-grid">
+      {resources.map(r => <ResourceCard {...r} />)}
+    </div>
+    <style>
+      @media (max-width: 768px) { .a15-resources-grid { grid-template-columns: 1fr 1fr !important; } }
+      @media (max-width: 480px) { .a15-resources-grid { grid-template-columns: 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- SISTER LAMPS -->
+<section class="a19-warm" aria-labelledby="a15-sister-h2">
+  <div style="max-width:1536px;margin:0 auto;padding:4rem 1.5rem;">
+    <p class="a19-eyebrow a19-eyebrow-rule a19-amber-text" style="margin-bottom:1.5rem;">SISTER LAMPS IN NOSTALGIC DÉCOR</p>
+    <h2 id="a15-sister-h2" class="a19-h2" style="font-size:clamp(1.25rem,2.5vw,2rem);margin-bottom:2rem;">More named lamps. Same series register.</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;" class="a15-sister-grid">
+      <a href="/collections/nostalgic-decor/a19/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">A19</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Eames</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Standard A19 · residential and hospitality</p>
+      </a>
+      <a href="/collections/nostalgic-decor/b10/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">B10</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Knoll</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Blunt-tip candelabra · decorative chandeliers</p>
+      </a>
+      <a href="/collections/nostalgic-decor/ca10/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">CA10</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Bauer</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Flame-tip candelabra · entryway and formal sconces</p>
+      </a>
+      <a href="/collections/nostalgic-decor/g16/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">G16</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Heath</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Small globe · vanity strips</p>
+      </a>
+      <a href="/collections/nostalgic-decor/g25/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">G25</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Eichler</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Medium globe · pendant fixtures</p>
+      </a>
+      <a href="/collections/nostalgic-decor/s14/" class="a19-sister-card">
+        <p style="font-family:var(--a19-mono);font-size:0.65rem;letter-spacing:0.12em;opacity:0.6;margin-bottom:0.5rem;">S14</p>
+        <h3 class="a19-serif-text" style="font-size:1.1rem;margin-bottom:0.25rem;">The Marshall</h3>
+        <p style="font-size:0.8rem;opacity:0.7;font-family:var(--a19-serif);">Commercial-grade string light · outdoor</p>
+      </a>
+    </div>
+    <style>
+      @media (max-width: 768px) { .a15-sister-grid { grid-template-columns: 1fr 1fr !important; } }
+    </style>
+  </div>
+</section>
+
+<!-- DARK CTA -->
+<section style="background:#1A140C;">
+  <div style="max-width:1280px;margin:0 auto;padding:5rem 1.5rem;text-align:center;color:#F5EFE3;">
+    <h2 class="a19-h1" style="font-size:clamp(1.75rem,3.5vw,2.75rem);margin-bottom:1.5rem;">Specify the Saarinen. Deliver the room.</h2>
+    <p class="a19-serif-text" style="opacity:0.7;max-width:40rem;margin:0 auto 2rem;line-height:1.7;">Interior designers answered same business day. Hospitality binning kits shipped 5-day. Custom CCT requests quoted within 48 hours.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="/support/sample-request?subject=Saarinen+Spec" class="a19-btn a19-btn-primary">SPECIFY THIS LAMP</a>
+      <a href="/support/sample-request?subject=Saarinen+Sample" class="a19-btn" style="background:transparent;color:#F5EFE3;border:1.5px solid rgba(245,239,227,0.3);">REQUEST SAMPLE</a>
+      <a href="https://algportal.archipelagolighting.com" class="a19-btn" style="background:transparent;color:#F5EFE3;border:1.5px solid rgba(245,239,227,0.3);" target="_blank" rel="noopener">SHOP STOCK &amp; BUY</a>
+    </div>
+  </div>
+</section>
+
+</main>
+</BaseLayout>

@@ -294,3 +294,29 @@ Acknowledged by: Manus (iter/v2.7.x-foundation-fixes)
 | A | `src/pages/solutions/safety-controls.astro` | Fixed naked Ⓐ in `aria-label` attributes — use plain ASCII text in aria-label; `data-label` retains Ⓐ (attribute value, stripped by B.1) |
 | A | `src/pages/solutions/safety-controls.astro` | Fixed naked `ⒶCS by ALG App NLC` text node — wrapped in `<span class="aa">` |
 | A | `src/pages/safety-controls/constant/em20-cmb-260dc.astro` | Fixed naked `TUBULⒶRCH` in sister-card desc data — wrapped in `<span class="aa">`, rendered via `set:html` |
+
+## v2.7.12 — Decor + tubulⒶRCH Family-Page Sweep (2026-04-28)
+
+### Fixes applied
+| File | Fix |
+|------|-----|
+| `collections/nostalgic-decor/a15.astro` | Migrated from OLD stub to A19 pattern |
+| `collections/nostalgic-decor/b10.astro` | Migrated from OLD stub to A19 pattern |
+| `collections/nostalgic-decor/ca10.astro` | Migrated from OLD stub to A19 pattern |
+| `collections/nostalgic-decor/g16.astro` | Built as content-pending stub (new) |
+| `collections/nostalgic-decor/g25.astro` | Migrated from OLD/leak to A19 pattern |
+| `collections/nostalgic-decor/s14.astro` | Migrated from OLD/leak to A19 pattern |
+| `collections/vintage-decor/victorian.astro` | Migrated from OLD stub to Edison pattern |
+| `collections/vintage-decor/tubular.astro` | Migrated from OLD stub to Edison pattern |
+| `collections/vintage-decor/globe.astro` | Migrated from OLD stub to Edison pattern |
+| `collections/vintage-decor/radio.astro` | Migrated from OLD stub to Edison pattern |
+| `collections/vintage-decor/candelabra.astro` | Migrated from OLD stub to Edison pattern |
+| `collections/tubulararch/t5.astro` | Migrated from OLD stub to T8 pattern |
+| `collections/tubulararch/pl.astro` | Migrated from OLD stub to T8 pattern |
+| `collections/tubulararch/pll.astro` | Migrated from OLD stub to T8 pattern |
+| `collections/tubulararch/u6.astro` | Migrated from OLD stub to T8 pattern |
+| `public/_redirects` | Added 6 vintage shape-coded 301 redirects |
+| `scripts/gen_*.py` | Page generators (build tooling, not locked) |
+
+### G10 build stamp — OPEN ACTION ITEM
+Cloudflare Pages build command must be changed from `npm run build` to `npm run cf-build` in the Cloudflare Pages dashboard. This is a manual dashboard step; cannot be automated from repo. Until changed, staging will show `build dev · local`.

@@ -1,0 +1,10 @@
+# Cloudflare Pages _redirects
+# v2.7.12 — 6 broken vintage shape-coded URL redirects
+# Format: <source> <destination> <status>
+
+/collections/vintage-decor/st19/   /collections/vintage-decor/edison/      301
+/collections/vintage-decor/a19/    /collections/nostalgic-decor/a19/        301
+/collections/vintage-decor/g25/    /collections/vintage-decor/globe/        301
+/collections/vintage-decor/t10/    /collections/vintage-decor/radio/        301
+/collections/vintage-decor/t9/     /collections/vintage-decor/tubular/      301
+/collections/vintage-decor/ca10/   /collections/vintage-decor/candelabra/   301
