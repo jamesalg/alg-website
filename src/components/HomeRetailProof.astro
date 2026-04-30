@@ -35,11 +35,13 @@
       home and garden retailers.
     </p>
 
-    <!-- Lifestyle photography placeholder -->
-    <div class="rp-photo-band" aria-label="Lifestyle photography — Rooster Creative deliverable">
-      <div class="rp-photo-inner">
-        <span class="rp-photo-label">Lifestyle photography<br>Rooster Creative deliverable</span>
-      </div>
+    <!-- Lifestyle photography -->
+    <div class="rp-photo-band">
+      <img src="/assets/lifestyle/trusted-retail-america.webp"
+           alt="Suburban front-yard at twilight — stone walkway lined with warm path lights leading to an American porch with U.S. flag, black-eyed Susans and coneflowers framing the path"
+           loading="lazy"
+           width="1920" height="1072"
+           style="width: 100%; height: 100%; object-fit: cover; display: block;" />
     </div>
 
     <!-- Retailer logo strip -->
@@ -111,37 +113,13 @@
     margin-bottom: 48px;
   }
 
-  /* Lifestyle photo placeholder */
+  /* Lifestyle photo */
   .rp-photo-band {
     width: 100%;
     height: 400px;
-    background: linear-gradient(135deg, #2a2218 0%, #1a1510 100%);
     border-radius: 4px;
-    position: relative;
     margin-bottom: 48px;
     overflow: hidden;
-  }
-  .rp-photo-band::before {
-    content: '';
-    position: absolute;
-    inset: 16px;
-    border: 1px dashed rgba(245, 239, 227, 0.22);
-    pointer-events: none;
-  }
-  .rp-photo-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  .rp-photo-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245, 239, 227, 0.4);
-    text-align: center;
-    line-height: 1.8;
   }
 
   /* Logo strip */
