@@ -6332,15 +6332,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 // Section 3 — Motion video carousel
 (function() {
-  // Maps to production Shopify CDN clips. If a URL is blocked by CORS / network,
-  // the player will skip to the next clip via the 'error' handler.
+  // Self-hosted motion clips — served from /products/illuminator/assets/motion/
   var clips = [
-    { url: 'https://cdn.shopify.com/videos/c/o/v/d0f16d0f39a949a0822b86691c6397f4.mp4', tag: 'WATTSELECT',          title: 'Field-selectable wattage — tune the output to the install.' },
-    { url: 'https://cdn.shopify.com/videos/c/o/v/e1a878d2d424425e82457cf4edb1c01f.mp4', tag: 'POWERⒶIM™', title: '90° pivot hinge for full-range beam aiming and laser-sight install.' },
-    { url: 'https://cdn.shopify.com/videos/c/o/v/c5fe1bd76a70465cb137b2e5d94d697c.mp4', tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket — versatile, field-ready installation.' },
-    { url: 'https://cdn.shopify.com/videos/c/o/v/9e12a3772f534811bfc9113271fe1bd7.mp4', tag: 'SLIP-FITTER',         title: 'Slip-fitter mount — pole-top mounting flexibility.' },
-    { url: 'https://cdn.shopify.com/videos/c/o/v/fd80635e18bc4bab85116e63cffe2f7b.mp4', tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
-    { url: 'https://cdn.shopify.com/videos/c/o/v/5051b441ef7145f68cd6e6b2695c74b5.mp4', tag: 'CONTRⒶLS-READY',  title: 'Synapse SimplySNAP integration — wireless networked control.' }
+    { url: '/products/illuminator/assets/motion/illum-motion-1-wattselect.mp4',  tag: 'WATTSELECT',          title: 'Field-selectable wattage — tune the output to the install.' },
+    { url: '/products/illuminator/assets/motion/illum-motion-2-poweraim.mp4',     tag: 'POWERⒶIM™', title: '90° pivot hinge for full-range beam aiming and laser-sight install.' },
+    { url: '/products/illuminator/assets/motion/illum-motion-3-trunnion.mp4',     tag: 'TRUNNION MOUNT',      title: 'Trunnion bracket — versatile, field-ready installation.' },
+    { url: '/products/illuminator/assets/motion/illum-motion-4-slipfitter.mp4',   tag: 'SLIP-FITTER',         title: 'Slip-fitter mount — pole-top mounting flexibility.' },
+    { url: '/products/illuminator/assets/motion/illum-motion-5-stackable.mp4',    tag: 'STACKABLE DESIGN',    title: 'Stackable arrays for limitless field illumination.' },
+    { url: '/products/illuminator/assets/motion/illum-motion-6-controls.mp4',     tag: 'CONTRⒶLS-READY',  title: 'Synapse SimplySNAP integration — wireless networked control.' }
   ];
   function init() {
     var video    = document.getElementById('motionVideo');
