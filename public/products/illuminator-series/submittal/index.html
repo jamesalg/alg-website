@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LSPL Illuminator — Submittal Sheet</title>
+
+<!--
+  ALG SUBMITTAL TEMPLATE v1
+  ==========================
+  Reads URL query params and auto-fills the catalog number + quick specs.
+  Example: submittal_template.html?sku=LSPL600-50-UB/TR&wattage=600&optic=35&voltage=277&finish=Black&mount=Trunnion&taa=0
+
+  Print: File → Print → Save as PDF (letter portrait) gives the spec-grade PDF.
+  Manus replaces this stub with a real backend at /submittal-generator/?sku=… on production.
+
+  Research synthesis: see submittal_research_findings.md alongside this file.
+-->
+
+<style>
+  /* ============= PRINT-OPTIMIZED CSS ============= */
+  @page {
+    size: letter portrait;
+    margin: 0.5in 0.6in;
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .page { box-shadow: none !important; margin: 0 !important; page-break-after: always; }
+    .page:last-of-type { page-break-after: auto; }
+  }
+
+  /* ============= TYPE + COLOR TOKENS ============= */
+  :root {
+    --brand-red: #F32740;
+    --ink: #0E0E10;
+    --ink-2: #2A2A2D;
+    --muted: #6B6B70;
+    --rule: #D8D6D2;
+    --rule-strong: #A6A4A0;
+    --tint: #F6F4F0;
+    --hi: #FFF6E5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, system-ui, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: #E8E6E2;
+  }
+  body { padding: 24px 12px; }
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 24px;
+    padding: 0.55in 0.65in;
+    background: white;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  h1, h2, h3, h4 { font-family: 'Lato', sans-serif; font-weight: 700; margin: 0; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', 'Menlo', monospace; }
+
+  /* ============= PAGE HEADER (every page) ============= */
+  .submittal-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .submittal-head .brand { display: flex; align-items: center; gap: 10px; }
+  .submittal-head .brand-mark {
+    width: 28px; height: 28px; background: var(--brand-red);
+    display: inline-block;
+  }
+  .submittal-head .brand-name {
+    font-size: 13pt; font-weight: 700; letter-spacing: 0.4pt; line-height: 1;
+  }
+  .submittal-head .brand-sub {
+    font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .submittal-head .catalog-block {
+    text-align: right;
+  }
+  .submittal-head .catalog-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 2px;
+  }
+  .submittal-head .catalog-number {
+    font-size: 12pt; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+    border: 1.5px solid var(--ink);
+    padding: 4px 10px; display: inline-block;
+    letter-spacing: 0.5pt;
+  }
+
+  /* ============= PROJECT INFO FORM ============= */
+  .project-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule-strong);
+    margin-bottom: 14px;
+  }
+  .pi-cell {
+    padding: 6px 9px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    min-height: 38px;
+  }
+  .pi-cell:nth-child(3n) { border-right: none; }
+  .pi-cell:nth-child(n+4) { border-bottom: none; }
+  .pi-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .pi-value {
+    border-bottom: 1px dotted var(--rule-strong); min-height: 14px; padding-top: 2px;
+  }
+
+  /* ============= PRODUCT TITLE BAND ============= */
+  .product-title {
+    margin: 14px 0 14px;
+  }
+  .product-title h1 {
+    font-size: 22pt; line-height: 1; margin: 0;
+  }
+  .product-title .tagline {
+    font-size: 10pt; color: var(--ink-2); margin-top: 4px; line-height: 1.3;
+  }
+
+  /* ============= HERO + QUICK SPECS GRID ============= */
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hero-img {
+    background: var(--tint);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img img { width: 100%; height: 100%; object-fit: contain; }
+
+  .qs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .qs-cell {
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .qs-label {
+    font-size: 7pt; letter-spacing: 1.2pt; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .qs-value {
+    font-size: 14pt; font-weight: 700; line-height: 1.05;
+  }
+  .qs-unit {
+    font-size: 8pt; font-weight: 400; color: var(--muted); margin-left: 2px;
+  }
+
+  /* ============= FEATURE BAND (RAB X34 trick) ============= */
+  .feature-band {
+    background: var(--ink); color: white;
+    padding: 8px 14px;
+    display: flex; gap: 18px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .feature-band .fb-pill {
+    background: var(--brand-red); color: white;
+    font-size: 7pt; font-weight: 700; letter-spacing: 1.2pt;
+    padding: 3px 7px; text-transform: uppercase;
+  }
+  .feature-band .fb-features {
+    font-size: 9pt; line-height: 1.3;
+  }
+  .feature-band .fb-features strong { font-weight: 700; }
+
+  /* ============= APPROVAL SIGNATURE BLOCK (Cooper trick) ============= */
+  .approval-block {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .approval-cell {
+    display: grid; grid-template-columns: max-content 1fr;
+    gap: 8px; align-items: end;
+    font-size: 8pt;
+  }
+  .approval-line {
+    border-bottom: 1px solid var(--ink); height: 16px;
+  }
+
+  /* ============= SECTION HEAD (page 2+) ============= */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 4px; margin-bottom: 10px; margin-top: 4px;
+  }
+  .section-head h2 {
+    font-size: 14pt; line-height: 1;
+  }
+  .section-head .section-eyebrow {
+    font-size: 7pt; letter-spacing: 1.5pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= SPEC TABLE ============= */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  .spec-table th, .spec-table td {
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .spec-table .spec-section-head td {
+    background: var(--tint);
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.3pt;
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 6px 8px;
+  }
+  .spec-table .spec-attr {
+    width: 30%;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .spec-table .spec-val {
+    width: 70%;
+  }
+
+  /* ============= ORDERING CODE MATRIX ============= */
+  .order-code {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .order-segment {
+    background: var(--tint);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 6px;
+    text-align: center;
+  }
+  .order-segment.active {
+    background: var(--brand-red); color: white;
+    border-color: var(--brand-red);
+  }
+  .order-seg-label {
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase; margin-bottom: 4px;
+    opacity: 0.8;
+  }
+  .order-seg-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11pt; font-weight: 700;
+  }
+  .order-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5pt;
+  }
+  .order-matrix th, .order-matrix td {
+    border: 1px solid var(--rule);
+    padding: 4px 6px; text-align: left;
+    vertical-align: top;
+  }
+  .order-matrix th {
+    background: var(--ink); color: white;
+    font-size: 7pt; letter-spacing: 1pt;
+    text-transform: uppercase;
+  }
+  .order-matrix .code {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    width: 60px;
+  }
+
+  /* ============= DIMENSIONS LAYOUT ============= */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 14px;
+  }
+  .dim-views {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+  }
+  .dim-view {
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .dim-view img { width: 100%; height: 100%; object-fit: contain; }
+  .dim-view-label {
+    position: absolute; top: 4px; left: 6px;
+    font-size: 7pt; letter-spacing: 1pt; color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============= PHOTOMETRIC DATA ============= */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .photo-polar {
+    border: 1px solid var(--rule-strong);
+    padding: 10px;
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    background: white;
+    overflow: hidden;
+  }
+  .photo-polar img, .photo-polar svg { width: 100%; height: 100%; }
+  .photo-summary {
+    border: 1px solid var(--rule);
+  }
+  .photo-summary table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  .photo-summary table td {
+    padding: 4px 8px; border-bottom: 1px solid var(--rule);
+  }
+  .photo-summary table tr:last-child td { border-bottom: none; }
+  .photo-summary td:first-child { color: var(--muted); }
+  .photo-summary td:last-child {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; text-align: right;
+  }
+
+  /* ============= CERTIFICATIONS ============= */
+  .certs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    margin-top: 10px;
+  }
+  .cert-badge {
+    font-size: 7.5pt; font-weight: 700;
+    border: 1.5px solid var(--ink); padding: 3px 8px;
+    letter-spacing: 0.6pt;
+    text-transform: uppercase;
+  }
+  .cert-badge.brand { border-color: var(--brand-red); color: var(--brand-red); }
+
+  /* ============= PAGE FOOTER ============= */
+  .page-foot {
+    position: absolute;
+    bottom: 0.4in; left: 0.65in; right: 0.65in;
+    display: flex; justify-content: space-between;
+    font-size: 7pt; color: var(--muted);
+    padding-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ============= NO-PRINT CONTROLS ============= */
+  .controls {
+    max-width: 8.5in; margin: 0 auto 18px;
+    background: white; padding: 14px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls .ctrl-label {
+    font-size: 9pt; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.5pt; text-transform: uppercase;
+  }
+  .controls .ctrl-value {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 11pt;
+  }
+  .controls button {
+    background: var(--brand-red); color: white;
+    border: none; padding: 8px 16px;
+    font-family: inherit; font-weight: 700; font-size: 9pt;
+    letter-spacing: 0.5pt; text-transform: uppercase;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  .controls button:hover { background: #d61f37; }
+</style>
+</head>
+<body>
+
+<!-- ============= NO-PRINT CONTROLS BAR ============= -->
+<div class="controls no-print">
+  <div>
+    <div class="ctrl-label">Configured SKU</div>
+    <div class="ctrl-value" id="liveSku">LSPL600-50-UB/TR</div>
+  </div>
+  <div>
+    <div class="ctrl-label">Generated</div>
+    <div class="ctrl-value" id="liveDate" style="font-size:9pt; font-weight:400;">—</div>
+  </div>
+  <button onclick="window.print()">Save as PDF →</button>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 1 — AT A GLANCE                                          -->
+<!-- ============================================================ -->
+<div class="page" id="page-1">
+
+  <!-- HEADER -->
+  <div class="submittal-head">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <div>
+        <div class="brand-name">ARCHIPELAGO</div>
+        <div class="brand-sub">Lighting Group</div>
+      </div>
+    </div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum">LSPL600-50-UB/TR</div>
+    </div>
+  </div>
+
+  <!-- PROJECT INFO FORM -->
+  <div class="project-info">
+    <div class="pi-cell"><div class="pi-label">Project</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Type</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Catalog #</div><div class="pi-value" id="piCatNum"></div></div>
+    <div class="pi-cell"><div class="pi-label">Prepared By</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Notes</div><div class="pi-value"></div></div>
+    <div class="pi-cell"><div class="pi-label">Date</div><div class="pi-value"></div></div>
+  </div>
+
+  <!-- PRODUCT TITLE -->
+  <div class="product-title">
+    <h1>LSPL Illuminator</h1>
+    <div class="tagline">Stadium-grade LED floodlight · NEMA 3-distribution · 116,000 lm @ 145 lm/W · field-adjustable WATTSELECT + power<span class="aa">Ⓐ</span>IM™ aim hinge</div>
+  </div>
+
+  <!-- HERO + QUICK SPECS -->
+  <div class="at-a-glance">
+    <div class="hero-img">
+      <img src="assets/hero/illuminator-hero-1.webp"
+           alt="LSPL Illuminator stadium floodlight" />
+    </div>
+    <div class="qs-grid">
+      <div class="qs-cell">
+        <div class="qs-label">Lumens</div>
+        <div class="qs-value" id="qsLumens">87,618<span class="qs-unit">lm</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Wattage</div>
+        <div class="qs-value" id="qsWatts">600<span class="qs-unit">W</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">Voltage</div>
+        <div class="qs-value" id="qsVoltage">120-277<span class="qs-unit">V</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CCT</div>
+        <div class="qs-value" id="qsCct">5000<span class="qs-unit">K</span></div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">CRI</div>
+        <div class="qs-value">≥ 75</div>
+      </div>
+      <div class="qs-cell">
+        <div class="qs-label">BUG</div>
+        <div class="qs-value">B4-U0-G5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE BAND -->
+  <div class="feature-band">
+    <div class="fb-pill">Field-Adjustable</div>
+    <div class="fb-features">
+      <strong>WATTSELECT™</strong> 3-position DIP switch · 600/700/800W ·
+      <strong>power<span class="aa">Ⓐ</span>IM™</strong> precision aim hinge ±0.5° lock ·
+      <strong>contr<span class="aa">Ⓐ</span>LS-Ready</strong> wireless mesh + DMX/0-10V dimming
+    </div>
+  </div>
+
+  <!-- APPROVAL BLOCK -->
+  <div class="approval-block">
+    <div class="approval-cell">
+      <span><strong>Approved by</strong></span>
+      <div class="approval-line"></div>
+    </div>
+    <div class="approval-cell">
+      <span><strong>Date</strong></span>
+      <div class="approval-line"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSPL Illuminator submittal · Specifications subject to change</div>
+    <div>Rev. <span id="revDate">2026-04</span> · Page 1 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 2 — SPECIFICATIONS                                       -->
+<!-- ============================================================ -->
+<div class="page" id="page-2">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum2">LSPL600-50-UB/TR</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Specifications</h2>
+    <div class="section-eyebrow">LSPL Illuminator · 600W / 800W</div>
+  </div>
+
+  <table class="spec-table">
+    <tbody>
+      <tr class="spec-section-head"><td colspan="2">Construction</td></tr>
+      <tr><td class="spec-attr">Housing</td><td class="spec-val">Die-cast aluminum, marine-grade powder coat finish · 3G vibration-rated</td></tr>
+      <tr><td class="spec-attr">Lens</td><td class="spec-val">UV-stabilized tempered borosilicate glass · IK08 impact-rated</td></tr>
+      <tr><td class="spec-attr">Finish</td><td class="spec-val">Black (standard) · Bronze · Silver · White · Custom RAL Classic (specify code)</td></tr>
+      <tr><td class="spec-attr">Ingress / Impact</td><td class="spec-val">IP65 wet-location rated · IK08</td></tr>
+      <tr><td class="spec-attr">Operating Temp</td><td class="spec-val">−40°F to +113°F (−40°C to +45°C) ambient · 95% RH non-condensing</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">LED &amp; Optics</td></tr>
+      <tr><td class="spec-attr">LED Source</td><td class="spec-val">High-flux mid-power packaged LEDs · 50,000-hr L70 lumen maintenance</td></tr>
+      <tr><td class="spec-attr">CCT Options</td><td class="spec-val">4000K · 5000K (specify -40 or -50)</td></tr>
+      <tr><td class="spec-attr">CRI</td><td class="spec-val">≥ 75 typical · 70 minimum</td></tr>
+      <tr><td class="spec-attr">SDCM</td><td class="spec-val">&lt; 7 step MacAdam color stability</td></tr>
+      <tr><td class="spec-attr">Optic Distribution</td><td class="spec-val">PRO<span class="aa">Ⓐ</span>PTICS™ 35° standard · 20° / 55° / 90° available · NEMA 3-distribution · BUG B4-U0-G5</td></tr>
+      <tr><td class="spec-attr">Lumen Output</td><td class="spec-val">600W: 87,000 lm typical · 800W: 116,000 lm typical · efficacy up to 145 lm/W</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Driver &amp; Electrical</td></tr>
+      <tr><td class="spec-attr">Voltage</td><td class="spec-val">UB: 120-277V universal · HB: 347-480V high voltage</td></tr>
+      <tr><td class="spec-attr">WATTSELECT™</td><td class="spec-val">3-position DIP switch · 600W / 700W / 800W field-selectable per model</td></tr>
+      <tr><td class="spec-attr">Power Factor</td><td class="spec-val">≥ 0.95 at full load</td></tr>
+      <tr><td class="spec-attr">THD</td><td class="spec-val">≤ 20% at full load</td></tr>
+      <tr><td class="spec-attr">Surge Protection</td><td class="spec-val">10 kA standard · 20 kA optional (specify -SP10 / -SP20)</td></tr>
+      <tr><td class="spec-attr">Dimming</td><td class="spec-val">0-10V standard · DMX optional (contr<span class="aa">Ⓐ</span>LS-DMX accessory) · DALI on request</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Controls &amp; Connectivity</td></tr>
+      <tr><td class="spec-attr">Wireless Mesh</td><td class="spec-val">Synapse SimplySNAP-compatible · 2.4GHz mesh · cloud-managed via SimplyHub™</td></tr>
+      <tr><td class="spec-attr">Cue Control</td><td class="spec-val">DMX 512 broadcast-grade for stadium / event lighting (accessory required)</td></tr>
+      <tr><td class="spec-attr">Sensors</td><td class="spec-val">Optional photocell, occupancy, daylight harvesting via separate accessory</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Mounting</td></tr>
+      <tr><td class="spec-attr">Standard</td><td class="spec-val">Trunnion U-yoke (TR) · power<span class="aa">Ⓐ</span>IM™ precision aim hinge ±0.5° lock</td></tr>
+      <tr><td class="spec-attr">Optional</td><td class="spec-val">Slip-fitter (SF) for 2"/2-3/8" tenon · stackable to 4 luminaires per pole-arm</td></tr>
+      <tr><td class="spec-attr">Weight</td><td class="spec-val">600W: 28 lbs · 800W: 31 lbs (luminaire only, excludes mount)</td></tr>
+      <tr><td class="spec-attr">EPA</td><td class="spec-val">2.1 ft²</td></tr>
+
+      <tr class="spec-section-head"><td colspan="2">Compliance &amp; Certifications</td></tr>
+      <tr><td class="spec-attr">Standards</td><td class="spec-val">UL 1598 · cUL · DLC Premium QPL Listed · ENERGY STAR · FCC Title 47 Part 15B · RoHS</td></tr>
+      <tr><td class="spec-attr">Buy-American</td><td class="spec-val">BAA-compliant configurations available · TAA-compliant SKUs available (specify /TAA suffix)</td></tr>
+      <tr><td class="spec-attr">Warranty</td><td class="spec-val">10-year limited (luminaire) · 5-year limited (controls)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSPL Illuminator submittal · Specifications subject to change</div>
+    <div>Rev. 2026-04 · Page 2 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 3 — DIMENSIONS & MOUNTING                                -->
+<!-- ============================================================ -->
+<div class="page" id="page-3">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum3">LSPL600-50-UB/TR</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Dimensions &amp; Mounting</h2>
+    <div class="section-eyebrow">Front · Side · Top · Mount diagrams</div>
+  </div>
+
+  <div class="dim-grid">
+    <div class="dim-view" style="aspect-ratio: 4/3; padding: 14px;">
+      <div class="dim-view-label">Top + Side views (in)</div>
+      <img src="assets/Illuminator-Dimensions_outlines.svg"
+           alt="Illuminator dimensions — top and side technical views"
+           style="width:100%; height:100%; object-fit: contain;" />
+    </div>
+
+    <div>
+      <table class="spec-table">
+        <tbody>
+          <tr class="spec-section-head"><td colspan="2">Dimensions (in)</td></tr>
+          <tr><td class="spec-attr">Length</td><td class="spec-val">22.5"</td></tr>
+          <tr><td class="spec-attr">Width</td><td class="spec-val">16.0"</td></tr>
+          <tr><td class="spec-attr">Depth (housing)</td><td class="spec-val">5.5"</td></tr>
+          <tr><td class="spec-attr">Mount + Trunnion</td><td class="spec-val">+ 4.5" depth</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Weight + EPA</td></tr>
+          <tr><td class="spec-attr">600W (luminaire)</td><td class="spec-val">28 lbs</td></tr>
+          <tr><td class="spec-attr">800W (luminaire)</td><td class="spec-val">31 lbs</td></tr>
+          <tr><td class="spec-attr">EPA</td><td class="spec-val">2.1 ft²</td></tr>
+          <tr class="spec-section-head"><td colspan="2">Mount Compatibility</td></tr>
+          <tr><td class="spec-attr">Trunnion (TR)</td><td class="spec-val">Standard · ½″–⅝″ direct-surface bolt-down</td></tr>
+          <tr><td class="spec-attr">Slip-fitter (SF)</td><td class="spec-val">Optional · 2″ or 2-⅜″ tenon · stackable up to 4 / pole-arm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSPL Illuminator submittal · Specifications subject to change</div>
+    <div>Rev. 2026-04 · Page 3 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGE 4 — ORDERING CODE & PHOTOMETRICS                         -->
+<!-- ============================================================ -->
+<div class="page" id="page-4">
+  <div class="submittal-head">
+    <div class="brand"><span class="brand-mark"></span><div><div class="brand-name">ARCHIPELAGO</div><div class="brand-sub">Lighting Group</div></div></div>
+    <div class="catalog-block">
+      <div class="catalog-eyebrow">Catalog Number</div>
+      <div class="catalog-number" id="catNum4">LSPL600-50-UB/TR</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Ordering Information</h2>
+    <div class="section-eyebrow">Configure your catalog number</div>
+  </div>
+
+  <!-- ORDERING CODE VISUAL BREAKDOWN -->
+  <div class="order-code">
+    <div class="order-segment active"><div class="order-seg-label">Family</div><div class="order-seg-value">LSPL</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Wattage</div><div class="order-seg-value" id="ocWatts">600</div></div>
+    <div class="order-segment active"><div class="order-seg-label">CCT</div><div class="order-seg-value" id="ocCct">50</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Voltage</div><div class="order-seg-value" id="ocVolt">U</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Finish</div><div class="order-seg-value" id="ocFinish">B</div></div>
+    <div class="order-segment active"><div class="order-seg-label">Mount</div><div class="order-seg-value" id="ocMount">TR</div></div>
+    <div class="order-segment active"><div class="order-seg-label">TAA</div><div class="order-seg-value" id="ocTaa">—</div></div>
+  </div>
+
+  <!-- ORDERING MATRIX -->
+  <table class="order-matrix">
+    <thead>
+      <tr>
+        <th style="width:14%">Segment</th>
+        <th>Available Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="code">LSPL</td><td>Illuminator family</td></tr>
+      <tr><td class="code">600 / 800</td><td>Wattage class — 600W (520–600W effective via WATTSELECT) · 800W (640–800W)</td></tr>
+      <tr><td class="code">40 / 50</td><td>CCT — 4000K · 5000K (selectAtSmaal differs by model)</td></tr>
+      <tr><td class="code">U / H</td><td>Voltage — UB (120-277V) · HB (347-480V)</td></tr>
+      <tr><td class="code">B / Z / S / W / Rxxxx</td><td>Finish — Black · Bronze · Silver · White · Custom RAL Classic (specify 4-digit code, e.g. R7016)</td></tr>
+      <tr><td class="code">TR / SF</td><td>Mount — Trunnion (standard) · Slip-Fitter (specify tenon size)</td></tr>
+      <tr><td class="code">/TAA</td><td>TAA-compliant — append for Buy-American Act / TAA-eligible projects (made in Mexico)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PHOTOMETRIC DATA -->
+  <div class="section-head" style="margin-top: 16px;">
+    <h2>Photometric Data</h2>
+    <div class="section-eyebrow" id="photoEyebrow">35° optic · 600W · 5000K</div>
+  </div>
+
+  <div class="photo-grid">
+    <div class="photo-polar">
+      <img src="assets/photometrics/lspl600_35.svg"
+           alt="Photometric polar plot" id="photoPolarImg" />
+    </div>
+
+    <div class="photo-summary">
+      <table>
+        <tbody>
+          <tr><td>Peak Intensity</td><td id="photoPeak">176,443 cd</td></tr>
+          <tr><td>Total Lumen Output</td><td id="photoLumens">87,618 lm</td></tr>
+          <tr><td>Beam Angle</td><td id="photoBeam">35°</td></tr>
+          <tr><td>Field Angle</td><td>50°</td></tr>
+          <tr><td>BUG Rating</td><td>B4-U0-G5</td></tr>
+          <tr><td>Spacing Criterion</td><td>0.33 (C0/C180)</td></tr>
+          <tr><td>Test Standard</td><td>IESNA LM-79</td></tr>
+          <tr><td>IES File</td><td id="photoIesFile">LSPL600-277V-35D.IES</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="certs">
+    <span class="cert-badge">UL 1598</span>
+    <span class="cert-badge">cUL</span>
+    <span class="cert-badge brand">DLC Premium</span>
+    <span class="cert-badge">ENERGY STAR</span>
+    <span class="cert-badge">IP65</span>
+    <span class="cert-badge">IK08</span>
+    <span class="cert-badge">FCC 47 / 15B</span>
+    <span class="cert-badge">RoHS</span>
+    <span class="cert-badge">BAA</span>
+    <span class="cert-badge" id="taaBadge" style="display:none">TAA</span>
+  </div>
+
+  <div class="page-foot">
+    <div>archipelagolighting.com · LSPL Illuminator submittal · Specifications subject to change</div>
+    <div>Rev. 2026-04 · Page 4 of 4</div>
+  </div>
+</div>
+
+
+<!-- ============= URL PARAM POPULATION ============= -->
+<script>
+(function() {
+  // --- PARSE URL PARAMS ---
+  var params = new URLSearchParams(window.location.search);
+  var sku     = params.get('sku')     || 'LSPL600-50-UB/TR';
+  var watts   = params.get('wattage') || '600';
+  var optic   = params.get('optic')   || '35';
+  var voltage = params.get('voltage') || '277';
+  var cct     = params.get('cct')     || '50';
+  var finish  = params.get('finish')  || 'Black';
+  var mount   = params.get('mount')   || 'Trunnion';
+  var taa     = params.get('taa')     === '1';
+
+  // --- AUTOFILL CATALOG NUMBER (all 4 page headers) ---
+  var skuLive = sku + (taa ? '/TAA' : '');
+  document.querySelectorAll('#catNum, #catNum2, #catNum3, #catNum4, #liveSku').forEach(function(el) {
+    el.textContent = skuLive;
+  });
+  document.getElementById('piCatNum').textContent = skuLive;
+
+  // --- AUTOFILL QUICK SPECS ---
+  // lumens lookup table from Section 6 photometric data
+  var photoData = {
+    '600_20': { lumens: '94,439',  peak: '388,500', file: 'LSPL600-50-UBTR-600W-20D.IES' },
+    '600_35': { lumens: '87,618',  peak: '176,443', file: 'LSPL600-277V-35D.IES' },
+    '600_55': { lumens: '90,655',  peak: '102,154', file: 'LSPL600-50-UBTR-600W-55D.IES' },
+    '600_90': { lumens: '91,871',  peak: '47,102',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
+    '800_20': { lumens: '121,000', peak: '440,924', file: 'LSPL800-277V-20D.IES' },
+    '800_35': { lumens: '122,133', peak: '245,983', file: 'LSPL800-277V-35D.IES' },
+    '800_55': { lumens: '119,689', peak: '112,457', file: 'LSPL800-277V-55D.IES' }
+  };
+  var key = watts + '_' + optic;
+  var pd = photoData[key] || photoData['600_35'];
+
+  document.getElementById('qsLumens').innerHTML = pd.lumens + '<span class="qs-unit">lm</span>';
+  document.getElementById('qsWatts').innerHTML  = watts    + '<span class="qs-unit">W</span>';
+  document.getElementById('qsCct').innerHTML    = (cct === '40' ? '4000' : '5000') + '<span class="qs-unit">K</span>';
+  document.getElementById('qsVoltage').innerHTML = (voltage === '347' || voltage === '480' ? '347-480' : '120-277') + '<span class="qs-unit">V</span>';
+
+  // --- AUTOFILL ORDERING CODE BREAKDOWN ---
+  document.getElementById('ocWatts').textContent  = watts;
+  document.getElementById('ocCct').textContent    = (cct === '40' ? '40' : '50');
+  document.getElementById('ocVolt').textContent   = (voltage === '347' || voltage === '480' ? 'H' : 'U');
+  var finishCode = { 'Black': 'B', 'Bronze': 'Z', 'Silver': 'S', 'White': 'W' };
+  document.getElementById('ocFinish').textContent = finishCode[finish] || finish.charAt(0).toUpperCase();
+  document.getElementById('ocMount').textContent  = (mount === 'Slip-Fitter' || mount === 'SF') ? 'SF' : 'TR';
+  document.getElementById('ocTaa').textContent    = taa ? 'TAA' : '—';
+  if (taa) {
+    document.getElementById('taaBadge').style.display = 'inline-block';
+  }
+
+  // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
+  document.getElementById('photoEyebrow').textContent = optic + '° optic · ' + watts + 'W · ' + (cct === '40' ? '4000K' : '5000K');
+  document.getElementById('photoPolarImg').src = 'assets/photometrics/lspl' + watts + '_' + optic + '.svg';
+  document.getElementById('photoPolarImg').onerror = function() {
+    this.style.display = 'none';
+    this.parentElement.innerHTML += '<div style="color:#999;font-size:8pt;text-align:center;">Polar plot unavailable<br/>for ' + watts + 'W / ' + optic + '°</div>';
+  };
+  document.getElementById('photoPeak').textContent    = pd.peak + ' cd';
+  document.getElementById('photoLumens').textContent  = pd.lumens + ' lm';
+  document.getElementById('photoBeam').textContent    = optic + '°';
+  document.getElementById('photoIesFile').textContent = pd.file;
+
+  // --- LIVE DATE ---
+  var d = new Date();
+  document.getElementById('liveDate').textContent =
+    d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+  document.getElementById('revDate').textContent =
+    d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit' }).replace('/', '-');
+})();
+</script>
+
+</body>
+</html>

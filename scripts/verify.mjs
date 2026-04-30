@@ -58,7 +58,10 @@ async function main() {
     process.exit(2);
   }
 
-  const htmlFiles = await walk(DIST_DIR);
+  const allHtmlFiles = await walk(DIST_DIR);
+  // Exclude static HTML files that are not Astro-built pages (e.g., submittal templates)
+  const STATIC_HTML_EXCLUDE = ['products/illuminator-series/submittal'];
+  const htmlFiles = allHtmlFiles.filter(f => !STATIC_HTML_EXCLUDE.some(ex => f.replace(/\\/g, '/').includes(ex)));
   if (htmlFiles.length === 0) {
     fail('A.exists', 'No HTML files found in dist/');
   } else {

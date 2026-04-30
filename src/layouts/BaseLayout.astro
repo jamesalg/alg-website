@@ -47,6 +47,7 @@ const {
     <!-- G1 v2.7.13.1: Webfonts self-hosted under /fonts/ — @font-face rules in global.css -->
     <!-- Cormorant Garamond 400/600/700 + italic 400, Playfair Display 600/700, JetBrains Mono 400/500 -->
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body class={bodyClass}>
     <header id="site-header">
