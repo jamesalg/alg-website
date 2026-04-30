@@ -19,4 +19,30 @@
 
 # v2.7.13 — G6: tubulararch -> tubularch canonical redirect
 /collections/tubulararch/              /collections/tubularch/                301
+
+# v2.7.13 — Illuminator series canonical redirect
 /products/illuminator-series/   /products/illuminator/   301
+
+# v2.7.15 — Bug 4: luxoarch sub-collection URLs → /products/{handle}/ (SEO 301s)
+/collections/luxoarch/heritage          /products/heritage/          301
+/collections/luxoarch/liberty           /products/liberty/           301
+/collections/luxoarch/navigator         /products/navigator/         301
+/collections/luxoarch/pathfinder        /products/pathfinder/        301
+/collections/luxoarch/aura              /products/aura/              301
+/collections/luxoarch/canadarm          /products/canadarm/          301
+/collections/luxoarch/everest           /products/everest/           301
+/collections/luxoarch/illuminator       /products/illuminator/       301
+/collections/luxoarch/radiator-i        /products/radiator-i/        301
+/collections/luxoarch/radiator-ii       /products/radiator-ii/       301
+/collections/luxoarch/radiator-iii      /products/radiator-iii/      301
+/collections/luxoarch/beacon-i          /products/beacon-i/          301
+/collections/luxoarch/lsl-series        /products/lsl-series/        301
+/collections/luxoarch/anaheim           /products/anaheim/           301
+/collections/luxoarch/guardian          /products/guardian/          301
+/collections/luxoarch/ramparts          /products/ramparts/          301
+/collections/luxoarch/shield            /products/shield/            301
+/collections/luxoarch/watchtower        /products/watchtower/        301
+/collections/luxoarch/wedge-i           /products/wedge-i/           301
+/collections/luxoarch/atlanta           /products/atlanta/           301
+/collections/luxoarch/nightwatch        /products/nightwatch/        301
+/collections/luxoarch/sentinel          /products/sentinel/          301

@@ -229,7 +229,7 @@ const skusJson = JSON.stringify(skus);
                     <span class="fc-skucount">· {fam.sku_count} SKUs</span>
                     {fam.dlc && <span class="fc-dlc">DLC</span>}
                   </div>
-                  <a href={`/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
+                  <a href={(fam as any).pdpUrl ?? `/collections/${collectionSlug}/${fam.family.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')}`} class="fc-view">VIEW →</a>
                 </div>
               </div>
             );

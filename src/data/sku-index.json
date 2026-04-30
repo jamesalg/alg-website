@@ -3042,7 +3042,8 @@
           "mount_types": [
             "Trunnion"
           ],
-          "taa": true
+          "taa": true,
+          "pdpUrl": "/products/illuminator/"
         },
         {
           "family": "Radiator-I",
