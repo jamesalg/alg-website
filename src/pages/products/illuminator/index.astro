@@ -1,13 +1,13 @@
 ---
 /**
  * Illuminator Series PDP — v2 Production Build
- * Route: /products/illuminator-series/
+ * Route: /products/illuminator/
  * v2.7.14 — LSPL Illuminator Series product detail page
  *
  * Swap-outs from mockup:
  *   - Placeholder site-header → ALG global Header via BaseLayout
- *   - assets/ → /products/illuminator-series/assets/
- *   - submittal_template.html → /products/illuminator-series/submittal/index.html
+ *   - assets/ → /products/illuminator/assets/
+ *   - submittal_template.html → /products/illuminator/submittal/index.html
  *   - /products/controls/ → /safety-controls/controls/
  *   - /files/lspl-illuminator/LSPL-TAA-Certificate.pdf → hidden (no live file yet)
  *   - Google Fonts → self-hosted Lato in global.css
@@ -33,7 +33,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       "description": "High-output commercial LED luminaire. 60,000–116,000 lm, 400–800W, DLC Premium, TAA compliant. Models: LSPL600, LSPL800.",
       "model": "LSPL600 / LSPL800",
       "category": "Commercial LED Luminaire",
-      "url": "https://www.archipelagolighting.com/products/illuminator-series/",
+      "url": "https://www.archipelagolighting.com/products/illuminator/",
       "offers": {
         "@type": "Offer",
         "availability": "https://schema.org/InStock",
@@ -53,7 +53,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     }
     </script>
   </Fragment>
-<style>
+<style is:global>
   :root {
     --brand-red: #F32740;
     --brand-red-deep: #c81835;
@@ -808,6 +808,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     letter-spacing: -0.005em;
     margin-bottom: 12px;
     line-height: 1.05;
+    color: var(--text-primary);
   }
   .motion-sub {
     font-size: 15px;
@@ -992,8 +993,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     border-radius: 4px;
     padding: 16px;
     overflow: hidden;
-    max-width: 640px;
-    margin: 0 auto;
+    width: 100%;
   }
   .photo-plot img { width: 100%; height: auto; display: block; }
   .photo-plot-cap {
@@ -3312,37 +3312,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                to content + resizes + transcodes to WebP for web delivery. -->
           <div class="carousel-slide">
             <img class="slide-img"
-                 src="/products/illuminator-series/assets/hero/illuminator-hero-1.webp"
+                 src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
                  alt="Illuminator — 3/4 angle hero, LED face illuminated, orange pivot pin visible"
                  loading="eager" />
           </div>
           <div class="carousel-slide">
             <img class="slide-img"
-                 src="/products/illuminator-series/assets/hero/illuminator-hero-2.webp"
+                 src="/products/illuminator/assets/hero/illuminator-hero-2.webp"
                  alt="Illuminator — side profile detail showing trunnion yoke and pivot pin assembly"
                  loading="lazy" />
           </div>
           <div class="carousel-slide">
             <img class="slide-img"
-                 src="/products/illuminator-series/assets/hero/illuminator-hero-3.webp"
+                 src="/products/illuminator/assets/hero/illuminator-hero-3.webp"
                  alt="Illuminator — back-quarter view showing heat-sink fin geometry and rear housing"
                  loading="lazy" />
           </div>
           <div class="carousel-slide">
             <img class="slide-img"
-                 src="/products/illuminator-series/assets/hero/illuminator-hero-4.webp"
+                 src="/products/illuminator/assets/hero/illuminator-hero-4.webp"
                  alt="Illuminator — three-luminaire array on a stadium pole crossarm"
                  loading="lazy" />
-          </div>
-          <!-- Slide 5 — environmental / lifestyle placeholder. Awaiting AI-render
-               or photography of the Illuminator in-context: 4 luminaires on a
-               stadium pole at night, basketball/football field below. -->
-          <div class="carousel-slide">
-            <div class="slide-placeholder">
-              <div class="slide-tag">Slide 05 / 05</div>
-              <div class="slide-source">[ AI-generated · awaiting asset ]</div>
-              <div class="slide-note">Sports field at night · 4 luminaires on a pole · environmental context shot</div>
-            </div>
           </div>
         </div>
         <div class="carousel-dots" id="carouselDots">
@@ -3350,7 +3340,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span data-i="1"></span>
           <span data-i="2"></span>
           <span data-i="3"></span>
-          <span data-i="4"></span>
         </div>
       </div>
 
@@ -3629,7 +3618,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </button>
         <div class="spec-dim-image" id="dimImageHost">
           <!-- Production-grade dimensions drawing (provided by James) -->
-          <img id="dimImg" src="/products/illuminator-series/assets/Illuminator-Dimensions_outlines.svg" alt="Illuminator dimensions — top + side views, 23.6 in × 15.7 in × 5.5 in" />
+          <img id="dimImg" src="/products/illuminator/assets/Illuminator-Dimensions_outlines.svg" alt="Illuminator dimensions — top + side views, 23.6 in × 15.7 in × 5.5 in" />
           <!-- Fallback: custom inline SVG, hidden unless the image fails -->
           <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" id="dimSvg" style="display:none">
             <!-- TOP VIEW (left side) -->
@@ -3740,7 +3729,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       muted
       playsinline
       preload="metadata"
-      poster=""
+      poster="/products/illuminator/assets/hero/illuminator-hero-1.webp"
     ></video>
     <div class="motion-caption" id="motionCaption" aria-live="polite"></div>
   </div>
@@ -3766,7 +3755,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- Hero tile, full-bleed -->
       <div class="hf-tile hf-tile-hero hf-tile-grad-1">
         <div class="hf-tile-image">
-          <img src="/products/illuminator-series/assets/highlights/hf-tile-1-hero.webp"
+          <img src="/products/illuminator/assets/highlights/hf-tile-1-hero.webp"
                alt="4 Archipelago Illuminator floodlights mounted on a stadium pole at night, broadcast-grade beam pools landing on the field below" />
         </div>
         <div class="hf-tile-overlay">
@@ -3780,7 +3769,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="hf-row-2">
         <div class="hf-tile hf-tile-grad-2">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-2-durable.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-2-durable.webp"
                  alt="Macro shot of water beading on the heat-sink fins of an Archipelago Illuminator luminaire in the rain — IP65 weatherproof construction" />
           </div>
           <div class="hf-tile-overlay">
@@ -3791,7 +3780,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
         <div class="hf-tile hf-tile-grad-3">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-3-nema-distribution.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-3-nema-distribution.webp"
                  alt="Aerial view of NEMA 3 distribution beam pools on a sports field — uniform 3x3 grid pattern with an Illuminator luminaire visible in the corner" />
           </div>
           <div class="hf-tile-overlay">
@@ -3806,7 +3795,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="hf-row-2">
         <div class="hf-tile hf-tile-grad-4">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-4-wattselect.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-4-wattselect.webp"
                  alt="Archipelago Illuminator floodlight with WATTselect detail inset — 3-position DIP switch labeled 500W / 650W / 800W on the driver compartment" />
           </div>
           <div class="hf-tile-overlay">
@@ -3817,7 +3806,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
         <div class="hf-tile hf-tile-grad-5">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-5-poweraim.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-5-poweraim.webp"
                  alt="Macro of the powerⒶIM hinge — brand-red anodized pivot knob with AIM wordmark, laser-engraved degree tick marks, gloved hand operating the lock release" />
           </div>
           <div class="hf-tile-overlay">
@@ -3832,7 +3821,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div class="hf-row-2">
         <div class="hf-tile hf-tile-grad-6">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-6-mounting.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-6-mounting.webp"
                  alt="Four-frame storyboard — angle-scale precision macro, fixture aimed on slip-fitter, fixture mounted on pole tube, full 24-fixture stadium array — telling the trunnion-or-slip-fitter mount story end to end" />
           </div>
           <div class="hf-tile-overlay">
@@ -3843,7 +3832,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
         <div class="hf-tile hf-tile-grad-2 hf-tile-controls">
           <div class="hf-tile-image">
-            <img src="/products/illuminator-series/assets/highlights/hf-tile-7-controls-ready.webp"
+            <img src="/products/illuminator/assets/highlights/hf-tile-7-controls-ready.webp"
                  alt="Archipelago Illuminator and Synapse SimplySNAP base station connected by glowing brand-red wireless mesh lines extending out to background fixtures in bokeh — contrⒶLS-Ready wireless mesh network" />
           </div>
           <div class="hf-tile-overlay">
@@ -3873,7 +3862,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
          photo (CBSSW-450 enclosure shown open). Same class as the SVG variants
          so all existing tac-sensor-svg animation/positioning rules apply. -->
     <img class="tac-sensor-svg is-active" data-platform="synapse"
-         src="/products/illuminator-series/assets/accessories/ctrl-sycb-450cl.webp"
+         src="/products/illuminator/assets/accessories/ctrl-sycb-450cl.webp"
          alt="Synapse SimplySNAP CBSSW-450 Central Base Station — IP-rated outdoor controller enclosure" />
 
     <!--
@@ -3976,7 +3965,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
     <div class="photo-display">
       <div class="photo-plot">
-        <img id="photoImg" src="/products/illuminator-series/assets/photometrics/lspl600_35.svg" alt="Photometric distribution — IESNA semi-circle polar plot" />
+        <img id="photoImg" src="/products/illuminator/assets/photometrics/lspl600_35.svg" alt="Photometric distribution — IESNA semi-circle polar plot" />
       </div>
       <div class="photo-stats">
         <div class="photo-stat-row">
@@ -4083,7 +4072,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                sizing rule as every other accessory image: object-fit: contain,
                drop-shadow for depth on the dark spec bg. -->
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/ctrl-sycb-450cl.webp"
+               src="/products/illuminator/assets/accessories/ctrl-sycb-450cl.webp"
                alt="Synapse CBSSW-450 Central Base Station — IP-rated outdoor enclosure with 5-button programming interface"
                loading="lazy" />
         </div>
@@ -4102,7 +4091,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                retrofit unit with flying-leads from the Family-Hero embedded
                controls render). -->
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/ctrl-syrc-220f.webp"
+               src="/products/illuminator/assets/accessories/ctrl-syrc-220f.webp"
                alt="Synapse DIM10 retrofit external controller — metal enclosure with 0-10V dimming flying-leads"
                loading="lazy" />
         </div>
@@ -4119,7 +4108,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">SHIELD</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/glare-shield.webp"
+               src="/products/illuminator/assets/accessories/glare-shield.webp"
                alt="LSPL-I1/GS glare shield — face-mounted shallow hood reducing backlight"
                loading="lazy" />
         </div>
@@ -4135,7 +4124,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">VISOR</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/glare-visor.webp"
+               src="/products/illuminator/assets/accessories/glare-visor.webp"
                alt="LSPL-I1/GV glare visor — deep curved hood for aggressive backlight + uplight reduction"
                loading="lazy" />
         </div>
@@ -4153,7 +4142,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="acc-card-img-tag">MOUNT</span>
           <!-- Real LSPL-I1/SF slip-fitter bracket photo (luxo<span class="aa">Ⓐ</span>RCH photo library) -->
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/mount-sf.webp"
+               src="/products/illuminator/assets/accessories/mount-sf.webp"
                alt="LSPL-I1/SF slip-fitter bracket — die-cast aluminum mounting flange with 2.5-inch tenon receptacle"
                loading="lazy" />
         </div>
@@ -4169,7 +4158,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">MOUNT</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/mount-tn.webp"
+               src="/products/illuminator/assets/accessories/mount-tn.webp"
                alt="LSPL-I1/TN trunnion yoke mount — fixture-attached U-bracket with pivot pin"
                loading="lazy" />
         </div>
@@ -4186,7 +4175,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">SPOT · 20°</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/optics.webp"
+               src="/products/illuminator/assets/accessories/optics.webp"
                alt="LSPL-I1/O20 optic pack — replacement LED face plate with 20-degree spot lens array"
                loading="lazy" />
         </div>
@@ -4202,7 +4191,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">STANDARD · 35°</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/optics.webp"
+               src="/products/illuminator/assets/accessories/optics.webp"
                alt="LSPL-I1/O35 optic pack — replacement LED face plate with 35-degree standard lens array"
                loading="lazy" />
         </div>
@@ -4218,7 +4207,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">WIDE · 55°</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/optics.webp"
+               src="/products/illuminator/assets/accessories/optics.webp"
                alt="LSPL-I1/O55 optic pack — replacement LED face plate with 55-degree wide lens array"
                loading="lazy" />
         </div>
@@ -4234,7 +4223,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">FLOOD · 90°</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/optics.webp"
+               src="/products/illuminator/assets/accessories/optics.webp"
                alt="LSPL-I1/O90 optic pack — replacement LED face plate with 90-degree flood lens array"
                loading="lazy" />
         </div>
@@ -4252,7 +4241,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="acc-card-img-tag">10kA / 277V</span>
           <!-- Surge: lightning bolt inside shield -->
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/surge-protector.webp"
+               src="/products/illuminator/assets/accessories/surge-protector.webp"
                alt="In-line LSPL surge protection module — flying-leads SPD with mounting tab"
                loading="lazy" />
         </div>
@@ -4268,7 +4257,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">10kA / 480V</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/surge-protector.webp"
+               src="/products/illuminator/assets/accessories/surge-protector.webp"
                alt="In-line LSPL surge protection module — flying-leads SPD with mounting tab"
                loading="lazy" />
         </div>
@@ -4284,7 +4273,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">20kA / 277V</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/surge-protector.webp"
+               src="/products/illuminator/assets/accessories/surge-protector.webp"
                alt="In-line LSPL surge protection module — flying-leads SPD with mounting tab"
                loading="lazy" />
         </div>
@@ -4300,7 +4289,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="acc-card-img">
           <span class="acc-card-img-tag">20kA / 480V</span>
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/surge-protector.webp"
+               src="/products/illuminator/assets/accessories/surge-protector.webp"
                alt="In-line LSPL surge protection module — flying-leads SPD with mounting tab"
                loading="lazy" />
         </div>
@@ -4318,7 +4307,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="acc-card-img-tag">FIELD-AIM</span>
           <!-- Real LSPL-I1/LSG laser pointer photo (luxo<span class="aa">Ⓐ</span>RCH photo library) -->
           <img class="acc-card-photo"
-               src="/products/illuminator-series/assets/accessories/periph-lsg.webp"
+               src="/products/illuminator/assets/accessories/periph-lsg.webp"
                alt="LSPL-I1/LSG laser sight guide — handheld field-aiming laser pointer with lanyard"
                loading="lazy" />
         </div>
@@ -4681,7 +4670,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                build_finishes.py pipeline. JS swaps img.src as the user
                clicks finish chips in the Required column. Default = black. -->
           <img id="cfgPreviewImg"
-               src="/products/illuminator-series/assets/finishes/illuminator-finish-black.webp"
+               src="/products/illuminator/assets/finishes/illuminator-finish-black.webp"
                alt="Illuminator preview — black finish, back-3/4 angle showing heat-sink and WATTSELECT dial"
                style="width:100%; max-width:380px; height:auto; object-fit:contain;
                       filter: drop-shadow(0 18px 30px rgba(0,0,0,0.45));
@@ -4743,7 +4732,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               Pricing &amp; Availability
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="/products/illuminator-series/submittal/index.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
+            <a href="/products/illuminator/submittal/index.html" target="_blank" rel="noopener" class="cfg-cta outline disabled" id="cfgCtaPdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
               Generate Submittal PDF
             </a>
@@ -4861,7 +4850,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </a>
 
-      <a href="/products/illuminator-series/submittal/index.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
+      <a href="/products/illuminator/submittal/index.html?sku=LSPL600-50-UB/TR" target="_blank" rel="noopener" class="docs-card">
         <div class="docs-card-head">
           <div class="docs-card-icon">
             <!-- Document with stamp icon -->
@@ -4947,7 +4936,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LSPL · REC-FIELD</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/lspl-radiator.webp"
+               src="/products/illuminator/assets/hero/lspl-radiator.webp"
                alt="LSPL Radiator — round-face wide-beam sports luminaire with curved shield and laser sight mount"
                loading="lazy" />
         </div>
@@ -4971,7 +4960,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="family-card-tag">LSPL · STADIUM</span>
           <span class="family-card-here-badge">You Are Here</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/illuminator-hero-1.webp"
+               src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
                alt="LSPL Illuminator — broadcast-grade rectangular sports floodlight, 3/4 angle hero shot"
                loading="lazy" />
         </div>
@@ -4993,7 +4982,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LSPL · MEGA-VENUE</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/lspl-beacon.webp"
+               src="/products/illuminator/assets/hero/lspl-beacon.webp"
                alt="LSPL Beacon — twin-stack rectangular high-output sports flood for mega-venue installations"
                loading="lazy" />
         </div>
@@ -5046,7 +5035,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">CITY<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/fam-symmetry.webp"
+               src="/products/illuminator/assets/hero/fam-symmetry.webp"
                alt="cityⒶRCH Symmetry — round disc-top post luminaire on tapered Y-pole"
                loading="lazy" />
         </div>
@@ -5065,7 +5054,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">LAMPAR<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/fam-titan-ii.webp"
+               src="/products/illuminator/assets/hero/fam-titan-ii.webp"
                alt="lamparⒶRCH Titan-II — linear high-bay luminaire with twin LED face panels"
                loading="lazy" />
         </div>
@@ -5084,7 +5073,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">PLAN<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>RCH</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/fam-proarch-iii.webp"
+               src="/products/illuminator/assets/hero/fam-proarch-iii.webp"
                alt="planoⒶRCH proⒶRCH-III — 2x4 back-lit LED panel, isometric view"
                loading="lazy" />
         </div>
@@ -5103,7 +5092,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="family-card-img">
           <span class="family-card-tag">MULTI-F<span class="aa" aria-hidden="true" style="background-color:#ffffff;"><span class="aa">Ⓐ</span></span>MILY</span>
           <img class="family-card-photo"
-               src="/products/illuminator-series/assets/hero/fam-nebula-ii.webp"
+               src="/products/illuminator/assets/hero/fam-nebula-ii.webp"
                alt="multi-fⒶMILY Nebula-II — round retrofit downlight with E26 adapter and spring clips"
                loading="lazy" />
         </div>
@@ -5202,20 +5191,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- 10C — Final red CTA strip ================================================ -->
-  <div class="closing-cta-strip">
-    <div class="closing-cta-strip-inner">
-      <div class="closing-cta-msg">
-        Need a quote, layout, sample, or rebate match?
-        <strong>We respond same business day.</strong>
-      </div>
-      <div class="closing-cta-buttons">
-        <a href="/contact/" class="closing-cta-btn solid">Contact Sales</a>
-        <a href="/contact/?type=layout" class="closing-cta-btn">Request Layout</a>
-      </div>
     </div>
   </div>
 
@@ -5491,13 +5466,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   // Polar plots: dark-theme semi-circle, IESNA conventions. Curves derived directly from the IES files
   // (same data the InventFine GPM-1800B test report rendered in each PDF page 3, just restyled to fit our palette).
   var data = {
-    '600_20': { svg: '/products/illuminator-series/assets/photometrics/lspl600_20.svg', peak: '388,500', lumens: '94,439',  file: 'LSPL600-50-UBTR-600W-20D.IES' },
-    '600_35': { svg: '/products/illuminator-series/assets/photometrics/lspl600_35.svg', peak: '176,443', lumens: '87,618',  file: 'LSPL600-277V-35D.IES' },
-    '600_55': { svg: '/products/illuminator-series/assets/photometrics/lspl600_55.svg', peak: '102,154', lumens: '90,655',  file: 'LSPL600-50-UBTR-600W-55D.IES' },
-    '600_90': { svg: '/products/illuminator-series/assets/photometrics/lspl600_90.svg', peak: '47,102',  lumens: '91,871',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
-    '800_20': { svg: '/products/illuminator-series/assets/photometrics/lspl800_20.svg', peak: '440,924', lumens: '121,000', file: 'LSPL800-277V-20D.IES' },
-    '800_35': { svg: '/products/illuminator-series/assets/photometrics/lspl800_35.svg', peak: '245,983', lumens: '122,133', file: 'LSPL800-277V-35D.IES' },
-    '800_55': { svg: '/products/illuminator-series/assets/photometrics/lspl800_55.svg', peak: '112,457', lumens: '119,689', file: 'LSPL800-277V-55D.IES' }
+    '600_20': { svg: '/products/illuminator/assets/photometrics/lspl600_20.svg', peak: '388,500', lumens: '94,439',  file: 'LSPL600-50-UBTR-600W-20D.IES' },
+    '600_35': { svg: '/products/illuminator/assets/photometrics/lspl600_35.svg', peak: '176,443', lumens: '87,618',  file: 'LSPL600-277V-35D.IES' },
+    '600_55': { svg: '/products/illuminator/assets/photometrics/lspl600_55.svg', peak: '102,154', lumens: '90,655',  file: 'LSPL600-50-UBTR-600W-55D.IES' },
+    '600_90': { svg: '/products/illuminator/assets/photometrics/lspl600_90.svg', peak: '47,102',  lumens: '91,871',  file: 'LSPL600-50-UBTR-600W-90D.IES' },
+    '800_20': { svg: '/products/illuminator/assets/photometrics/lspl800_20.svg', peak: '440,924', lumens: '121,000', file: 'LSPL800-277V-20D.IES' },
+    '800_35': { svg: '/products/illuminator/assets/photometrics/lspl800_35.svg', peak: '245,983', lumens: '122,133', file: 'LSPL800-277V-35D.IES' },
+    '800_55': { svg: '/products/illuminator/assets/photometrics/lspl800_55.svg', peak: '112,457', lumens: '119,689', file: 'LSPL800-277V-55D.IES' }
   };
   // Per datasheet all 4 optics are available across both models. IES file presence differs.
   var optics = { '600': ['20','35','55','90'], '800': ['20','35','55'] };
@@ -6011,11 +5986,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     // until the user enters a valid RAL number (in which case the SKU updates
     // but the preview stays on the gradient — no per-RAL render exists).
     finishImg: {
-      'B':   '/products/illuminator-series/assets/finishes/illuminator-finish-black.webp',
-      'D':   '/products/illuminator-series/assets/finishes/illuminator-finish-bronze.webp',
-      'S':   '/products/illuminator-series/assets/finishes/illuminator-finish-silver.webp',
-      'W':   '/products/illuminator-series/assets/finishes/illuminator-finish-white.webp',
-      'RAL': '/products/illuminator-series/assets/finishes/illuminator-finish-ral.webp'
+      'B':   '/products/illuminator/assets/finishes/illuminator-finish-black.webp',
+      'D':   '/products/illuminator/assets/finishes/illuminator-finish-bronze.webp',
+      'S':   '/products/illuminator/assets/finishes/illuminator-finish-silver.webp',
+      'W':   '/products/illuminator/assets/finishes/illuminator-finish-white.webp',
+      'RAL': '/products/illuminator/assets/finishes/illuminator-finish-ral.webp'
     }
   };
 
@@ -6323,7 +6298,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     });
 
-    // ---- Submittal PDF — opens /products/illuminator-series/submittal/index.html in new tab with full config in query string ----
+    // ---- Submittal PDF — opens /products/illuminator/submittal/index.html in new tab with full config in query string ----
     // The template auto-fills page-1 catalog number, quick specs, ordering-code matrix, and photometric data.
     // Manus replaces this with a real backend at /submittal-generator/?sku=… on production.
     function buildSubmittalUrl() {
@@ -6338,7 +6313,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         mount:   state.mount   || 'TR',
         taa:     (Array.isArray(state.compliance) && state.compliance.indexOf('TAA') >= 0) ? '1' : '0'
       });
-      return '/products/illuminator-series/submittal/index.html?' + params.toString();
+      return '/products/illuminator/submittal/index.html?' + params.toString();
     }
     ctaPdf.addEventListener('click', function(e) {
       if (ctaPdf.classList.contains('disabled')) { e.preventDefault(); return; }

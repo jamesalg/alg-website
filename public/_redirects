@@ -19,3 +19,4 @@
 
 # v2.7.13 — G6: tubulararch -> tubularch canonical redirect
 /collections/tubulararch/              /collections/tubularch/                301
+/products/illuminator-series/   /products/illuminator/   301
