@@ -16,6 +16,7 @@ export interface Props {
     skuCount: number;
     dlc: boolean;
     lineDrawing: string | null;
+    pdpUrl?: string; // Optional override — when set, VIEW → links to the PDP instead of the sub-collection
   }[];
 }
 const { collectionName, collectionSlug, featured } = Astro.props;
@@ -51,7 +52,7 @@ const { collectionName, collectionSlug, featured } = Astro.props;
               <span class="feat-skus">{f.skuCount} SKUs</span>
               {f.dlc && <span class="feat-dlc-badge">DLC</span>}
             </div>
-            <a href={`/collections/${collectionSlug}/${f.family.toLowerCase().replace(/\s+/g,'-')}`} class="feat-view">VIEW →</a>
+            <a href={f.pdpUrl ?? `/collections/${collectionSlug}/${f.family.toLowerCase().replace(/\s+/g,'-')}`} class="feat-view">VIEW →</a>
           </div>
         </div>
       ))}

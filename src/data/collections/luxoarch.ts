@@ -95,6 +95,7 @@ const luxoarchData = {
       skuCount: 11,
       dlc: true,
       lineDrawing: null,
+      pdpUrl: '/products/illuminator/',
     },
     {
       family: 'Liberty',

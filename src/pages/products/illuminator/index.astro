@@ -182,6 +182,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .hero-left { display: flex; flex-direction: column; min-width: 0; gap: 24px; }
   .hero-info { display: flex; flex-direction: column; flex: 1; }
   .hero h1 {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 30px;
     font-weight: 700;
     display: inline-flex;
@@ -215,6 +216,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     color: var(--tier-proplus-color);
   }
   .hero h2 {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 44px;
     font-weight: 700;
     line-height: 1.05;
@@ -435,6 +437,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     border-bottom: 1px solid var(--line);
   }
   .spec-header h2 {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 34px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -803,6 +806,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     background: var(--brand-red);
   }
   .motion-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -932,6 +936,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .photo-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -1301,6 +1306,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     background: var(--brand-red);
   }
   .hf-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     text-align: center;
     font-size: 38px;
     font-weight: 700;
@@ -1528,6 +1534,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .acc-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -1932,6 +1939,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .cfg-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -2518,6 +2526,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .docs-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -2807,6 +2816,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     content: ""; display: block; width: 28px; height: 1px; background: var(--brand-red);
   }
   .closing-title {
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
     font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.005em;
@@ -3346,19 +3356,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <!-- Compliance row — official logos pulled from production CDN -->
       <div class="hero-compliance" aria-label="Certifications">
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/dlc.svg" alt="DLC Listed" />
+          <img src="/products/illuminator/assets/certs/dlc.svg" alt="DLC Listed" />
           <div class="cb-label">DLC Listed</div>
         </div>
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/etl.svg" alt="ETL Listed" />
+          <img src="/products/illuminator/assets/certs/etl.svg" alt="ETL Listed" />
           <div class="cb-label">ETL Listed</div>
         </div>
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/rohs.svg" alt="RoHS Compliant" />
+          <img src="/products/illuminator/assets/certs/rohs.svg" alt="RoHS Compliant" />
           <div class="cb-label">RoHS</div>
         </div>
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/wet-location.svg" alt="Suitable for Wet Location" />
+          <img src="/products/illuminator/assets/certs/wet-location.svg" alt="Suitable for Wet Location" />
           <div class="cb-label">Wet Location</div>
         </div>
       </div>
@@ -4343,10 +4353,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <a href="/pricing-availability/" class="acc-modal-cta primary">
             Pricing &amp; Availability
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="#" class="acc-modal-cta outline" id="accModalDatasheet">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Data Sheet
           </a>
           <a href="/contact/?type=quote" class="acc-modal-cta outline">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -5810,7 +5816,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     var skuEl    = document.getElementById('accModalSku');
     var descEl   = document.getElementById('accModalDesc');
     var specsEl  = document.getElementById('accModalSpecs');
-    var dsLink   = document.getElementById('accModalDatasheet');
     var pills    = document.querySelectorAll('.acc-pill');
     if (!grid || !modal) return;
     var cards = grid.querySelectorAll('.acc-card');
@@ -5839,14 +5844,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       titleEl.textContent = d.title;
       skuEl.textContent   = d.sku;
       descEl.textContent  = d.desc;
-      // Datasheet CTA — hide entirely when accessory has no datasheet
-      // (e.g. Synapse OEM units that don't carry an ALG-published spec PDF).
-      if (d.datasheet) {
-        dsLink.style.display = '';
-        dsLink.setAttribute('href', d.datasheet);
-      } else {
-        dsLink.style.display = 'none';
-      }
+      // (Per-accessory Data Sheet CTA removed — accessories ship without individual spec sheets.
+      //  Family-level Data Sheet lives in Section 9.)
       // Re-inject Ⓐ glyph in category badge if the category contains it
       if (d.cat.indexOf('Ⓐ') >= 0) {
         catEl.innerHTML = d.cat.replace(/Ⓐ/g, '<span class="aa" aria-hidden="true">Ⓐ</span>');

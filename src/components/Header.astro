@@ -307,6 +307,11 @@
             <a href="/collections/luxoarch/index.html?application=canopy" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Pathfinder-I" data-tier-pro="Navigator-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Canopy Luminaire" data-preview-label="Outdoor · Canopy" data-preview-desc="Recessed and surface-mount canopy fixtures for service station, drive-thru, and covered-entry applications.">Canopy Luminaire</a>
             <a href="/collections/luxoarch/index.html?application=flood-light" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Everest-I" data-tier-pro="" data-tier-proplus="Zion-II" data-preview-name="luxoⒶRCH · Flood" data-preview-label="Outdoor · Flood" data-preview-desc="Flood luminaires for façade, signage, and sports practice fields.">Flood</a>
             <a href="/collections/luxoarch/index.html?application=sports-lighting" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Radiator-III" data-tier-pro="Illuminator-I" data-tier-proplus="" data-preview-name="luxoⒶRCH · Sports Lighters" data-preview-label="Outdoor · Sports" data-preview-desc="Sports lighters for outdoor athletic venues. Broadcast-grade visual comfort with precision optics.">Sports Lighters</a>
+            <div class="mm-app-sub-links">
+              <a href="/products/illuminator/" class="mm-app-sub-link">Illuminator <span class="mm-sub-tier">PRO</span></a>
+              <a href="/products/beacon/" class="mm-app-sub-link">Beacon <span class="mm-sub-tier">PRO+</span></a>
+              <a href="/products/radiator/" class="mm-app-sub-link">Radiator <span class="mm-sub-tier">ECO</span></a>
+            </div>
             <a href="/collections/luxoarch/index.html?application=wall-pack" class="mm-app-item" data-preview-tiers="1" data-tier-eco="Watchtower-I" data-tier-pro="Nightwatch-I" data-tier-proplus="Palisade-I" data-preview-name="luxoⒶRCH · Wall Pack" data-preview-label="Outdoor · Wall" data-preview-desc="Full-cutoff and semi-cutoff wall packs for building exteriors. IP65 rated with 10kV surge protection.">Wall Pack</a>
           </div>
           <!-- cityⒶRCH applications -->
@@ -827,6 +832,27 @@
     color:var(--ink3);margin-top:2px;letter-spacing:0.01em;
   }
   .mm-app-item:hover .mm-app-sub{color:var(--ink2);}
+  /* Sub-product links under an application leaf (e.g. Sports Lighters → Illuminator/Beacon/Radiator) */
+  .mm-app-sub-links{
+    padding:2px 0 4px 10px;
+    border-left:2px solid rgba(0,0,0,0.08);
+    margin:0 0 2px 10px;
+    display:flex;flex-direction:column;gap:1px;
+  }
+  .mm-app-sub-link{
+    display:block;padding:4px 8px;
+    font-size:12px;color:var(--ink3);
+    font-weight:400;border-radius:2px;
+    text-decoration:none;
+    transition:background 0.1s,color 0.1s;
+  }
+  .mm-app-sub-link:hover{background:var(--bg2);color:var(--brand);}
+  .mm-app-sub-link .mm-sub-tier{
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--ink3);margin-left:4px;
+  }
+  .mm-app-sub-link:hover .mm-sub-tier{color:var(--ink2);}
   .mm-app-group-head{
     font-family:'JetBrains Mono',monospace;font-size:9px;
     color:var(--brand);letter-spacing:0.16em;

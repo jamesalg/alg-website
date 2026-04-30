@@ -452,7 +452,7 @@
   <!-- HERO + QUICK SPECS -->
   <div class="at-a-glance">
     <div class="hero-img">
-      <img src="assets/hero/illuminator-hero-1.webp"
+      <img src="/products/illuminator/assets/hero/illuminator-hero-1.webp"
            alt="LSPL Illuminator stadium floodlight" />
     </div>
     <div class="qs-grid">
@@ -600,7 +600,7 @@
   <div class="dim-grid">
     <div class="dim-view" style="aspect-ratio: 4/3; padding: 14px;">
       <div class="dim-view-label">Top + Side views (in)</div>
-      <img src="assets/Illuminator-Dimensions_outlines.svg"
+      <img src="/products/illuminator/assets/Illuminator-Dimensions_outlines.svg"
            alt="Illuminator dimensions — top and side technical views"
            style="width:100%; height:100%; object-fit: contain;" />
     </div>
@@ -687,7 +687,7 @@
 
   <div class="photo-grid">
     <div class="photo-polar">
-      <img src="assets/photometrics/lspl600_35.svg"
+      <img src="/products/illuminator/assets/photometrics/lspl600_35.svg"
            alt="Photometric polar plot" id="photoPolarImg" />
     </div>
 
@@ -782,7 +782,7 @@
 
   // --- AUTOFILL PHOTOMETRIC PAGE 4 ---
   document.getElementById('photoEyebrow').textContent = optic + '° optic · ' + watts + 'W · ' + (cct === '40' ? '4000K' : '5000K');
-  document.getElementById('photoPolarImg').src = 'assets/photometrics/lspl' + watts + '_' + optic + '.svg';
+  document.getElementById('photoPolarImg').src = '/products/illuminator/assets/photometrics/lspl' + watts + '_' + optic + '.svg';
   document.getElementById('photoPolarImg').onerror = function() {
     this.style.display = 'none';
     this.parentElement.innerHTML += '<div style="color:#999;font-size:8pt;text-align:center;">Polar plot unavailable<br/>for ' + watts + 'W / ' + optic + '°</div>';
