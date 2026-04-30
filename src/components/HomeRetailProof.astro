@@ -1,0 +1,278 @@
+---
+/**
+ * src/components/HomeRetailProof.astro
+ * v2.7.14 — "Trusted by Retail America" homepage section
+ *
+ * Position: between the "Installed at" gallery (Section 8) and the
+ * two-card resources row (Section 9) in src/pages/index.astro.
+ *
+ * Logo assets: byte-identical references to /retailers/* as used on
+ * /collections/consumer/ (inline, not componentized — flagged in
+ * reply contract per prompt assumption-flag guidance).
+ *
+ * Background: #F5EFE3 (warm cream, matches v2.7.13.1 megamenu mm-col-main
+ * — no --bg-alt token exists in global.css; using literal value per
+ * assumption-flag guidance).
+ */
+---
+
+<section class="retail-proof" aria-labelledby="rp-heading">
+  <div class="rp-inner">
+
+    <!-- Eyebrow -->
+    <div class="sec-eyebrow">Trusted by Retail America</div>
+
+    <!-- H2 -->
+    <h2 class="rp-h2" id="rp-heading">
+      Assembled in America<span class="accent">.</span><br>
+      Stocked across America<span class="accent">.</span>
+    </h2>
+
+    <!-- Body copy -->
+    <p class="rp-body">
+      Three decades of lighting designed in California, assembled in
+      the United States, and stocked on the shelves of America's largest
+      home and garden retailers.
+    </p>
+
+    <!-- Lifestyle photography placeholder -->
+    <div class="rp-photo-band" aria-label="Lifestyle photography — Rooster Creative deliverable">
+      <div class="rp-photo-inner">
+        <span class="rp-photo-label">Lifestyle photography<br>Rooster Creative deliverable</span>
+      </div>
+    </div>
+
+    <!-- Retailer logo strip -->
+    <div class="rp-logo-strip" aria-label="Retail partners">
+      <div class="rp-logo-tile"><img src="/retailers/the-home-depot.png"    alt="The Home Depot"      class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/lowes.png"             alt="Lowe's"              class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/costco.png"            alt="Costco Wholesale"    class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/walmart.svg"           alt="Walmart"             class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/kroger.png"            alt="Kroger"              class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/tractor-supply-co.png" alt="Tractor Supply Co."  class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/fred-meyer.png"        alt="Fred Meyer"          class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/batteries-plus.png"    alt="Batteries Plus"      class="rp-logo" /></div>
+      <div class="rp-logo-tile"><img src="/retailers/canadian-tire.png"     alt="Canadian Tire"       class="rp-logo" /></div>
+    </div>
+
+    <!-- Stats line -->
+    <p class="rp-stats">
+      <span class="rp-stat-num">9</span> National Accounts
+      <span class="rp-dot">·</span>
+      <span class="rp-stat-num">30+</span> Years on the Shelves
+      <span class="rp-dot">·</span>
+      <span class="rp-stat-num">85M+</span> Units Shipped
+      <span class="rp-dot">·</span>
+      <span class="rp-stat-num">5</span> US Warehouses
+    </p>
+
+    <!-- CTA -->
+    <a href="/collections/consumer/" class="cta-primary rp-cta">Find ALG at retail &#8594;</a>
+
+  </div>
+</section>
+
+<style>
+  /* ============================================================
+     RETAIL PROOF SECTION
+     ============================================================ */
+  .retail-proof {
+    background: #F5EFE3;
+    padding: 100px 28px;
+    width: 100%;
+  }
+  .rp-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* H2 */
+  .rp-h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .rp-h2 .accent { color: #F32740; }
+
+  /* Body */
+  .rp-body {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink2);
+    max-width: 640px;
+    margin-bottom: 48px;
+  }
+
+  /* Lifestyle photo placeholder */
+  .rp-photo-band {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #2a2218 0%, #1a1510 100%);
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+  .rp-photo-band::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px dashed rgba(245, 239, 227, 0.22);
+    pointer-events: none;
+  }
+  .rp-photo-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  .rp-photo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245, 239, 227, 0.4);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  /* Logo strip */
+  .rp-logo-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    width: 100%;
+  }
+  .rp-logo-tile {
+    width: 140px;
+    height: 80px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    flex-shrink: 0;
+  }
+  .rp-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Stats line */
+  .rp-stats {
+    font-size: 13px;
+    color: var(--ink3);
+    margin-bottom: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 0;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6;
+  }
+  .rp-stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--ink2);
+    margin-right: 4px;
+  }
+  .rp-dot {
+    margin: 0 10px;
+    color: var(--ink4);
+  }
+
+  /* CTA */
+  .rp-cta {
+    margin-top: 4px;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+
+  /* Large tablet / small desktop — logos may compress */
+  @media (max-width: 1280px) {
+    .rp-logo-strip {
+      gap: 8px;
+    }
+    .rp-logo-tile {
+      width: 120px;
+      height: 72px;
+      padding: 10px 12px;
+    }
+  }
+
+  /* Tablet — 2 rows of logos, reduced photo height */
+  @media (max-width: 768px) {
+    .retail-proof {
+      padding: 48px 20px;
+    }
+    .rp-photo-band {
+      height: 240px;
+    }
+    .rp-logo-strip {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .rp-logo-tile {
+      width: calc(33.333% - 10px);
+      min-width: 100px;
+      height: 72px;
+    }
+    .rp-stats {
+      font-size: 12px;
+    }
+    .rp-dot {
+      margin: 0 6px;
+    }
+  }
+
+  /* Mobile — single column logos, stats wrap */
+  @media (max-width: 480px) {
+    .rp-h2 {
+      font-size: clamp(24px, 7vw, 32px);
+    }
+    .rp-body {
+      font-size: 15px;
+    }
+    .rp-photo-band {
+      height: 200px;
+    }
+    .rp-logo-tile {
+      width: calc(33.333% - 8px);
+      min-width: 90px;
+      height: 64px;
+      padding: 8px 10px;
+    }
+    .rp-stats {
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+    .rp-dot {
+      display: none;
+    }
+    .cta-primary.rp-cta {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

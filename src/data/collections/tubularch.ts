@@ -11,7 +11,7 @@ const tubularchData = {
   name: 'tubul<span class="aa">Ⓐ</span>RCH',
   titleAscii: 'TUBULARCH',
   headlineLine: 'tubul<span class="aa">Ⓐ</span>RCH',
-  description: 'Tubular and radio-tube filament LEDs in T9, T10, T14 and other long-form envelopes — the silhouette that defines mid-century salon bars, period restorations, and bespoke sconce installs where the lamp shape IS the design feature. tubulⒶRCH ships heritage-binned, dimmer-verified, and CRI 90+ across the catalog.',
+  description: 'Tubular and radio-tube filament LEDs in T9, T10, T14 and other long-form envelopes — the silhouette that defines mid-century salon bars, period restorations, and bespoke sconce installs where the lamp shape IS the design feature. tubul<span class="aa">Ⓐ</span>RCH ships heritage-binned, dimmer-verified, and CRI 90+ across the catalog.',
   pillRow: ['CRI 90+', 'DIMMABLE TO 5%', 'TRIAC + ELV VERIFIED', '25,000-HR L80', 'HERITAGE BINNED'],
   statStrip: [
     { value: '2200K', label: '– 2700K' },

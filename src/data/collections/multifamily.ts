@@ -12,7 +12,7 @@ const multifamilyData = {
   name: 'multi-fⒶMILY',
   titleAscii: 'MULTIFAMILY',
   headlineLine: 'multi-f<span class="aa">Ⓐ</span>MILY',
-  description: 'Multifamily, garden-style, and mid-rise developments need lighting that works on a per-door budget — and still passes the code inspector on the first walk-through. multi-fⒶMILY is the ALG line that ships value-engineered ECO and code-compliant PRO downlights, hallway fixtures, and unit basics with the per-door affordability developers run on.',
+  description: 'Multifamily, garden-style, and mid-rise developments need lighting that works on a per-door budget — and still passes the code inspector on the first walk-through. multi-f<span class="aa">Ⓐ</span>MILY is the ALG line that ships value-engineered ECO and code-compliant PRO downlights, hallway fixtures, and unit basics with the per-door affordability developers run on.',
   pillRow: ['VALUE-ENGINEERED', 'CODE-COMPLIANT', 'JA8 / TITLE 24', '48-HR LAYOUTS', '5-YR WARRANTY'],
   statStrip: [
     { value: '~$12',label: '/ door' },

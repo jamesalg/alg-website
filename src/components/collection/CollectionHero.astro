@@ -39,7 +39,7 @@ const verticalSlug  = parentVertical.toLowerCase();
     <!-- B1: {VERTICAL} · {SUBVERTICAL} COLLECTION -->
     <div class="hero-eyebrow">{verticalUpper} · {parentSubVertical.toUpperCase()} COLLECTION</div>
     <h1 class="hero-wordmark" set:html={headlineLine}></h1>
-    <p class="hero-desc">{description}</p>
+    <p class="hero-desc" set:html={description}></p>
     <!-- C1: Red-bordered pills (luxo canonical) -->
     <div class="hero-pills">
       {pillRow.map(pill => <span class="hero-pill">{pill}</span>)}
