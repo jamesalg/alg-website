@@ -23,6 +23,7 @@
 ---
 <!-- UTILITY BAR -->
 <div class="utility-bar">
+  <p class="site-tagline">Lighting | Reinvented, since 1997.</p>
   <a href="/find-a-distributor">Find a Distributor</a>
   <a href="/find-a-rep">Find a Rep</a>
   <a href="/support/sample-request">Sample Request</a>
@@ -581,10 +582,19 @@
      ================================================================ */
   .utility-bar{
     background:var(--dark);color:#fff;
-    height:34px;display:flex;align-items:center;justify-content:flex-end;
+    height:34px;display:flex;align-items:center;justify-content:space-between;
     padding:0 28px;font-size:11px;letter-spacing:0.5px;
-    position:sticky;top:0;z-index:101;
+    position:fixed;top:0;left:0;right:0;z-index:101;
     border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  /* Change B: brand slogan — left side of utility bar */
+  .site-tagline{
+    font-family:inherit;font-size:inherit;font-weight:inherit;
+    color:inherit;line-height:inherit;letter-spacing:inherit;
+    margin:0;padding:0;white-space:nowrap;
+  }
+  @media (max-width:768px){
+    .site-tagline{display:none;}
   }
   .utility-bar a{color:#fff;text-decoration:none;opacity:0.8;margin-left:20px;transition:opacity 0.15s;}
   .utility-bar a:hover{opacity:1;}
@@ -649,8 +659,11 @@
   /* ================================================================
      SITE NAV
      ================================================================ */
+  /* Change A: white nav bar — fixed below utility bar, hide-on-scroll */
   .site-nav{
-    position:sticky;top:34px;z-index:100;
+    position:fixed;top:34px;left:0;right:0;z-index:100;
+    transition:transform 240ms cubic-bezier(0.4,0,0.2,1);
+    will-change:transform;
     background:rgba(255,255,255,0.97);
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
@@ -674,6 +687,38 @@
     content:'▾';font-size:8px;opacity:0.5;
   }
   .site-nav ul.main-nav > li > a:hover{color:var(--brand);}
+  /* Change A: lock bar in place when mega panel is hovered */
+  .site-nav:has(.has-dropdown:hover),
+  .site-nav:has(.has-dropdown:focus-within){
+    transform:translateY(0) !important;
+  }
+  /* Change A: hidden state */
+  .site-nav.is-hidden{
+    transform:translateY(-100%);
+  }
+  /* Change A: reduced motion — instant snap */
+  @media (prefers-reduced-motion:reduce){
+    .site-nav{
+      transition-duration:0ms;
+    }
+    #site-header{
+      transition-duration:0ms;
+    }
+  }
+  /* Change A: mobile — both bars hide together via #site-header */
+  @media (max-width:768px){
+    .site-nav{
+      transition:none;
+      transform:none !important;
+    }
+    #site-header{
+      transition:transform 240ms cubic-bezier(0.4,0,0.2,1);
+      will-change:transform;
+    }
+    #site-header.is-hidden{
+      transform:translateY(-100%);
+    }
+  }
   .site-nav ul.main-nav > li.has-dropdown:hover .megamenu,
   .site-nav ul.main-nav > li.has-dropdown:focus-within .megamenu{
     opacity:1;visibility:visible;transform:translateY(0);
@@ -1104,11 +1149,14 @@
     .utility-bar{padding:0 16px;font-size:12px;}
     .utility-bar a:not(.signin){display:none;}
   }
-  /* Fix A (v2.2.1): Sticky header — whole unit (utility strip + nav) pins to top of viewport */
+  /* Fix A (v2.2.1): header wrapper — fixed, both bars stack inside */
   :global(#site-header) {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    /* height = utility bar (34px) + site-nav (56px) = 90px */
   }
 </style>
 
@@ -1341,5 +1389,85 @@
       });
     });
   }
+})();
+
+/* === Change A: Header hide-on-scroll (v2.7.18) === */
+(function initHeaderRevealOnScroll(){
+  const siteNav    = document.querySelector('.site-nav');
+  const siteHeader = document.querySelector('#site-header');
+  if (!siteNav || !siteHeader) return;
+
+  const isMobile = () => window.matchMedia('(max-width:768px)').matches;
+  const targetEl = () => isMobile() ? siteHeader : siteNav;
+
+  const HIDE_THRESHOLD_DESKTOP  = 80;
+  const HIDE_THRESHOLD_MOBILE   = 60;
+  const REVEAL_DEADBAND_DESKTOP = 10;
+  const REVEAL_DEADBAND_MOBILE  = 8;
+
+  let lastScrollY    = window.scrollY;
+  let accumulatedUp  = 0;
+  let ticking        = false;
+
+  function isMegaPanelOpen(){
+    // Mega menu is CSS-hover-only; detect via :hover on any has-dropdown li
+    return !!siteNav.querySelector('.has-dropdown:hover, .has-dropdown:focus-within');
+  }
+
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      const currentY      = window.scrollY;
+      const delta         = currentY - lastScrollY;
+      const target        = targetEl();
+      const hideThreshold = isMobile() ? HIDE_THRESHOLD_MOBILE  : HIDE_THRESHOLD_DESKTOP;
+      const revealDead    = isMobile() ? REVEAL_DEADBAND_MOBILE : REVEAL_DEADBAND_DESKTOP;
+
+      // Freeze when mega panel is open
+      if (isMegaPanelOpen()){
+        accumulatedUp = 0;
+        lastScrollY   = currentY;
+        ticking       = false;
+        return;
+      }
+
+      // At top: always show
+      if (currentY <= 0){
+        target.classList.remove('is-hidden');
+        accumulatedUp = 0;
+        lastScrollY   = currentY;
+        ticking       = false;
+        return;
+      }
+
+      if (delta > 0){
+        // scrolling down
+        accumulatedUp = 0;
+        if (currentY > hideThreshold) target.classList.add('is-hidden');
+      } else if (delta < 0){
+        // scrolling up
+        accumulatedUp += -delta;
+        if (accumulatedUp >= revealDead) target.classList.remove('is-hidden');
+      }
+
+      lastScrollY = currentY;
+      ticking     = false;
+    });
+  }
+
+  // Resize: clean up when crossing 768px breakpoint
+  var lastIsMobile = isMobile();
+  window.addEventListener('resize', function(){
+    var nowMobile = isMobile();
+    if (nowMobile !== lastIsMobile){
+      siteNav.classList.remove('is-hidden');
+      siteHeader.classList.remove('is-hidden');
+      accumulatedUp = 0;
+      lastIsMobile  = nowMobile;
+    }
+  }, { passive: true });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
 })();
 </script>

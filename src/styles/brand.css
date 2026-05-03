@@ -75,6 +75,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  /* Change A (v2.7.18): header is position:fixed — offset body by header height.
+     utility-bar (34px) + site-nav (56px) = 90px */
+  padding-top: 90px;
 }
 
 img, video {
