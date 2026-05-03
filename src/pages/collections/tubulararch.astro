@@ -78,7 +78,7 @@ const anchorSections = [
   .ta-nav-tab.active .ta-nav-tab-dot { background: var(--ta-accent); }
   .ta-nav-tab.active .ta-nav-tab-num { color: var(--ta-accent); opacity: 1; }
   /* Family sections */
-  .ta-family-sec { scroll-margin-top: 56px; }
+  .ta-family-sec { scroll-margin-top: var(--header-bottom); /* Audit fix (v2.7.19): was 56px */ }
   .ta-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
   @media (max-width: 768px) { .ta-family-inner { grid-template-columns: 1fr; } }
   .ta-copy { padding: 4rem; }

@@ -94,9 +94,10 @@ a:hover {
   color: var(--color-alg-red);
 }
 
-/* Fix 2 (v2.4.3 / §0 v2.5.0): Global anchor-scroll offset — compensates for sticky header (~120px).
-   Applies to all section[id] elements across all pages so browser-native hash navigation also works.
-   Updated v2.5.0: 140px → 120px for tighter breathing room. */
+/* Fix 2 (v2.4.3 / §0 v2.5.0 / v2.7.19): Global anchor-scroll offset.
+   v2.7.19: replaced hard-coded 120px with var(--header-bottom) so offset
+   tracks the dynamic header state (white nav visible or hidden).
+   html { scroll-padding-top } is set in Header.astro for native hash nav. */
 section[id] {
-  scroll-margin-top: 120px;
+  scroll-margin-top: var(--header-bottom);
 }

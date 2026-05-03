@@ -57,7 +57,7 @@ const anchorSections = [
   .sg-nav-tab-dot   { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); margin: 0.4rem auto 0; }
   .sg-nav-tab.active .sg-nav-tab-dot { background: var(--sg-accent); }
   .sg-nav-tab.active .sg-nav-tab-num { color: var(--sg-accent); opacity: 1; }
-  .sg-family-sec { scroll-margin-top: 56px; }
+  .sg-family-sec { scroll-margin-top: var(--header-bottom); /* Audit fix (v2.7.19): was 56px */ }
   .sg-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
   @media (max-width: 768px) { .sg-family-inner { grid-template-columns: 1fr; } }
   .sg-copy { padding: 4rem; }

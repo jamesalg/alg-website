@@ -503,7 +503,8 @@ const skusJson = JSON.stringify(skus);
     border-radius: 8px;
     padding: 20px;
     position: sticky;
-    top: 100px;
+    top: var(--header-bottom); /* Audit fix (v2.7.19): was 100px */
+    transition: top 240ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .filter-header {
     display: flex;

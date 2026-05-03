@@ -57,7 +57,7 @@ const anchorSections = [
   .nd-nav-tab-dot   { width: 5px; height: 5px; border-radius: 50%; background: rgba(26,20,12,0.2); margin: 0.3rem auto 0; }
   .nd-nav-tab.active .nd-nav-tab-dot { background: var(--nd-amber); }
   .nd-nav-tab.active .nd-nav-tab-num { color: var(--nd-amber); opacity: 1; }
-  .nd-family-sec { scroll-margin-top: 56px; }
+  .nd-family-sec { scroll-margin-top: var(--header-bottom); /* Audit fix (v2.7.19): was 56px */ }
   .nd-family-inner { max-width: 1536px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
   @media (max-width: 768px) { .nd-family-inner { grid-template-columns: 1fr; } .nd-section-nav__inner { grid-template-columns: repeat(4,1fr); } }
   .nd-copy { padding: 4rem; }

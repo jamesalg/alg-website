@@ -24,23 +24,25 @@
 <!-- UTILITY BAR -->
 <div class="utility-bar">
   <p class="site-tagline">Lighting | Reinvented, since 1997.</p>
-  <a href="/find-a-distributor">Find a Distributor</a>
-  <a href="/find-a-rep">Find a Rep</a>
-  <a href="/support/sample-request">Sample Request</a>
-  <a href="/contact">Contact</a>
-  <button class="signin" id="signinTrigger" type="button" aria-expanded="false" aria-haspopup="true">
-    Sign In
-    <div class="signin-dropdown" id="signinDropdown">
-      <a href="https://aura.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
-        <span class="label">Sales Reps</span>
-        <span>AURA Portal →</span>
-      </a>
-      <a href="https://algportal.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
-        <span class="label">Distributors · ESCOs · Specifiers</span>
-        <span>ALG Shop →</span>
-      </a>
-    </div>
-  </button>
+  <div class="utility-bar-right">
+    <a href="/find-a-distributor">Find a Distributor</a>
+    <a href="/find-a-rep">Find a Rep</a>
+    <a href="/support/sample-request">Sample Request</a>
+    <a href="/contact">Contact</a>
+    <button class="signin" id="signinTrigger" type="button" aria-expanded="false" aria-haspopup="true">
+      Sign In
+      <div class="signin-dropdown" id="signinDropdown">
+        <a href="https://aura.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
+          <span class="label">Sales Reps</span>
+          <span>AURA Portal →</span>
+        </a>
+        <a href="https://algportal.archipelagolighting.com" target="_blank" rel="noopener noreferrer">
+          <span class="label">Distributors · ESCOs · Specifiers</span>
+          <span>ALG Shop →</span>
+        </a>
+      </div>
+    </button>
+  </div>
 </div>
 
 <!-- PERSISTENT SITE NAV -->
@@ -575,6 +577,32 @@
     --dark:#0c0d12;--dark2:#14161e;
     --brand:#F32740;--brand-dk:#C41F32;
     --kraft:#c9a876;--amber:#f0a932;--grn:#0FAE7C;
+    /* §3.1 (v2.7.19): Dynamic header-bottom variable.
+       Default = utility bar (34px) + site-nav (56px) = 90px.
+       Overridden by JS when white nav hides. */
+    --utility-bar-height: 34px;
+    --main-nav-height: 56px;
+    --header-bottom: calc(var(--utility-bar-height) + var(--main-nav-height));
+  }
+  /* When main nav is hidden, header-bottom collapses to just utility bar */
+  :global(#site-header.is-main-nav-hidden) {
+    --header-bottom: var(--utility-bar-height);
+  }
+  /* On mobile, when entire header is hidden, header-bottom is 0 */
+  @media (max-width:768px) {
+    :global(#site-header.is-hidden) {
+      --header-bottom: 0px;
+    }
+  }
+  /* Apply to scroll-padding for native anchor behavior */
+  :global(html) {
+    scroll-padding-top: var(--header-bottom);
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
   }
 
   /* ================================================================
@@ -596,8 +624,12 @@
   @media (max-width:768px){
     .site-tagline{display:none;}
   }
-  .utility-bar a{color:#fff;text-decoration:none;opacity:0.8;margin-left:20px;transition:opacity 0.15s;}
-  .utility-bar a:hover{opacity:1;}
+  /* Issue A fix (v2.7.19): right-side group wrapper */
+  .utility-bar-right{
+    display:flex;align-items:center;gap:24px;
+  }
+  .utility-bar-right a{color:#fff;text-decoration:none;opacity:0.8;transition:opacity 0.15s;}
+  .utility-bar-right a:hover{opacity:1;}
   .utility-bar .signin{
     position:relative;
     background:var(--brand);padding:5px 14px;border-radius:3px;
@@ -1391,7 +1423,7 @@
   }
 })();
 
-/* === Change A: Header hide-on-scroll (v2.7.18) === */
+/* === Change A: Header hide-on-scroll (v2.7.19) === */
 (function initHeaderRevealOnScroll(){
   const siteNav    = document.querySelector('.site-nav');
   const siteHeader = document.querySelector('#site-header');
@@ -1405,24 +1437,48 @@
   const REVEAL_DEADBAND_DESKTOP = 10;
   const REVEAL_DEADBAND_MOBILE  = 8;
 
-  let lastScrollY    = window.scrollY;
-  let accumulatedUp  = 0;
-  let ticking        = false;
+  let lastScrollY           = window.scrollY;
+  let accumulatedUp         = 0;
+  let ticking               = false;
+  let isProgrammaticScroll  = false; // §3.3: anchor-jump suppression
 
   function isMegaPanelOpen(){
-    // Mega menu is CSS-hover-only; detect via :hover on any has-dropdown li
     return !!siteNav.querySelector('.has-dropdown:hover, .has-dropdown:focus-within');
   }
+
+  /* §3.2: sync --header-bottom variable via class on #site-header */
+  function syncHeaderState(){
+    var isMainHidden = !isMobile() && siteNav.classList.contains('is-hidden');
+    siteHeader.classList.toggle('is-main-nav-hidden', isMainHidden);
+  }
+
+  /* §3.3: suppress hide/reveal during programmatic anchor scrolls */
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a[href*="#"]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (href.startsWith('#') || href.startsWith(window.location.pathname + '#')){
+      isProgrammaticScroll = true;
+      setTimeout(function(){ isProgrammaticScroll = false; }, 700);
+    }
+  });
 
   function onScroll(){
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function(){
-      const currentY      = window.scrollY;
-      const delta         = currentY - lastScrollY;
-      const target        = targetEl();
-      const hideThreshold = isMobile() ? HIDE_THRESHOLD_MOBILE  : HIDE_THRESHOLD_DESKTOP;
-      const revealDead    = isMobile() ? REVEAL_DEADBAND_MOBILE : REVEAL_DEADBAND_DESKTOP;
+      var currentY      = window.scrollY;
+      var delta         = currentY - lastScrollY;
+      var target        = targetEl();
+      var hideThreshold = isMobile() ? HIDE_THRESHOLD_MOBILE  : HIDE_THRESHOLD_DESKTOP;
+      var revealDead    = isMobile() ? REVEAL_DEADBAND_MOBILE : REVEAL_DEADBAND_DESKTOP;
+
+      // §3.3: skip hide/reveal during anchor jumps; just record position
+      if (isProgrammaticScroll){
+        lastScrollY = currentY;
+        ticking     = false;
+        return;
+      }
 
       // Freeze when mega panel is open
       if (isMegaPanelOpen()){
@@ -1437,6 +1493,7 @@
         target.classList.remove('is-hidden');
         accumulatedUp = 0;
         lastScrollY   = currentY;
+        syncHeaderState();
         ticking       = false;
         return;
       }
@@ -1451,6 +1508,7 @@
         if (accumulatedUp >= revealDead) target.classList.remove('is-hidden');
       }
 
+      syncHeaderState(); // §3.2: keep --header-bottom in sync
       lastScrollY = currentY;
       ticking     = false;
     });
@@ -1466,7 +1524,11 @@
       accumulatedUp = 0;
       lastIsMobile  = nowMobile;
     }
+    syncHeaderState();
   }, { passive: true });
+
+  // Init: set correct state on first paint
+  syncHeaderState();
 
   window.addEventListener('scroll', onScroll, { passive: true });
 })();

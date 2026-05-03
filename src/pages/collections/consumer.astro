@@ -710,11 +710,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
    ============================================================ */
 .c-subnav-wrap {
   position: sticky;
-  top: 90px;
+  top: var(--header-bottom); /* Issue B fix (v2.7.19): was 90px */
   z-index: 50;
   background: #fff;
   border-bottom: 1px solid var(--ink4);
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  transition: top 240ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .c-subnav {
   max-width: 1280px;
