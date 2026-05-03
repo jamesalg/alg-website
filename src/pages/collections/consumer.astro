@@ -708,6 +708,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 /* ============================================================
    STICKY AISLE NAV
    ============================================================ */
+/* Issue G (v2.7.21): stacked sticky offset — sub-nav contributes to scroll-padding-top.
+   Must be on html (not body) because scroll-padding-top on html reads --page-sticky-extra
+   from html's own computed style, not from body or :root descendants.
+   html selector has same specificity as :root but appears later in the cascade
+   (page stylesheet loads before Header.astro's global stylesheet). */
+html {
+  --c-subnav-height: 74px; /* measured offsetHeight of .c-subnav-wrap */
+  --page-sticky-extra: var(--c-subnav-height);
+}
 .c-subnav-wrap {
   position: sticky;
   top: var(--header-bottom); /* Issue B fix (v2.7.19): was 90px */

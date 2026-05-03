@@ -584,21 +584,24 @@
     --main-nav-height: 56px;
     --header-bottom: calc(var(--utility-bar-height) + var(--main-nav-height));
   }
-  /* When main nav is hidden, header-bottom collapses to just utility bar */
-  :global(#site-header.is-main-nav-hidden) {
+  /* Issue E fix (v2.7.21): override on :root so cascade reaches all page elements */
+  :global(:root.is-main-nav-hidden) {
     --header-bottom: var(--utility-bar-height);
   }
   /* On mobile, when entire header is hidden, header-bottom is 0 */
   @media (max-width:768px) {
-    :global(#site-header.is-hidden) {
+    :global(:root.is-hidden) {
       --header-bottom: 0px;
     }
   }
-  /* Apply to scroll-padding for native anchor behavior */
+  /* Issue G (v2.7.21): per-page sticky stack contribution.
+     --page-sticky-extra defaults to 0px via CSS fallback in calc().
+     Pages with their own sticky elements set it on html in their own stylesheet. */
   :global(html) {
-    scroll-padding-top: var(--header-bottom);
+    scroll-padding-top: calc(var(--header-bottom) + var(--page-sticky-extra, 0px));
     scroll-behavior: smooth;
   }
+  /* Issue F fix (v2.7.21): reduced-motion disables animation, NOT header heights */
   @media (prefers-reduced-motion: reduce) {
     :global(html) {
       scroll-behavior: auto;
@@ -735,13 +738,13 @@
   .site-nav.is-hidden{
     transform:translateY(-100%);
   }
-  /* Change A: reduced motion — instant snap */
+  /* Issue F fix (v2.7.21): reduced-motion — disable transitions on header + all sticky page elements */
   @media (prefers-reduced-motion:reduce){
-    .site-nav{
-      transition-duration:0ms;
-    }
-    #site-header{
-      transition-duration:0ms;
+    .site-nav,
+    #site-header,
+    .c-subnav-wrap,
+    .consumer-section-nav {
+      transition-duration:0ms !important;
     }
   }
   /* Change A: mobile — both bars hide together via #site-header */
@@ -1453,10 +1456,10 @@
     return !!siteNav.querySelector('.has-dropdown:hover, .has-dropdown:focus-within');
   }
 
-  /* §3.2: sync --header-bottom variable via class on #site-header */
+  /* Issue E fix (v2.7.21): toggle on document.documentElement so :root cascade reaches all page elements */
   function syncHeaderState(){
     var isMainHidden = !isMobile() && siteNav.classList.contains('is-hidden');
-    siteHeader.classList.toggle('is-main-nav-hidden', isMainHidden);
+    document.documentElement.classList.toggle('is-main-nav-hidden', isMainHidden);
   }
 
   /* §3.3: suppress hide/reveal during programmatic anchor scrolls */
