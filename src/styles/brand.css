@@ -64,6 +64,9 @@
 }
 
 html {
+  font-size: 16px; /* §5.1 (v2.7.22): Explicit. Do not rely on browser default. */
+  overflow-y: scroll; /* §5.2 (v2.7.22): Always reserve scrollbar space */
+  scrollbar-gutter: stable; /* §5.2 (v2.7.22): Modern engines */
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

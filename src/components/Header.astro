@@ -572,7 +572,7 @@
      CSS VARIABLES
      ================================================================ */
   :root {
-    --ink:#111418;--ink2:#3a3f47;--ink3:#8a8f99;--ink4:#c8ccd3;
+    --ink:#111418;--ink2:#3a3f4a;--ink3:#8a8f99;--ink4:#c8ccd3;
     --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae4;
     --dark:#0c0d12;--dark2:#14161e;
     --brand:#F32740;--brand-dk:#C41F32;
@@ -1192,12 +1192,16 @@
     .utility-bar a:not(.signin){display:none;}
   }
   /* Fix A (v2.2.1): header wrapper — fixed, both bars stack inside */
+  /* §5.4 (v2.7.22): Explicit typography lock — immune to page-level overrides (e.g. Lato/line-height/color on Illuminator PDP) */
   :global(#site-header) {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    line-height: 1.5; /* Lock: prevent page body line-height from cascading in */
+    color: var(--ink); /* Lock: prevent page body color from cascading in */
     /* height = utility bar (34px) + site-nav (56px) = 90px */
   }
 </style>
