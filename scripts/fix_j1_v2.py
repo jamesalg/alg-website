@@ -19,7 +19,7 @@ import os
 
 SLUGS = [
     "anaheim", "atlanta", "aura", "everest", "guardian",
-    "heritage", "navigator", "nightwatch", "pathfinder",
+    "heritage", "liberty", "navigator", "nightwatch", "pathfinder",
     "radiator", "ramparts", "sentinel", "watchtower", "wedge"
 ]
 
