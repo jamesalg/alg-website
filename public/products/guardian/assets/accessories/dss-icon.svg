@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Dark Sky Shield — clean 3/4 perspective render of LWPF-G1/DSS.
+  Built to match the user-supplied reference: dark charcoal angled metal shield
+  with sharp apex, two angled facets meeting at the top ridge, mounting tabs
+  along the rear bottom edge.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" role="img"
+     aria-label="LWPF-G1/DSS Dark Sky Shield">
+  <defs>
+    <linearGradient id="dssFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a5e63"/>
+      <stop offset="0.55" stop-color="#3e4146"/>
+      <stop offset="1" stop-color="#34373b"/>
+    </linearGradient>
+    <linearGradient id="dssBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3d41"/>
+      <stop offset="1" stop-color="#27292c"/>
+    </linearGradient>
+    <linearGradient id="dssRidge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="rgba(255,255,255,0.06)"/>
+      <stop offset="0.5" stop-color="rgba(255,255,255,0.20)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0.04)"/>
+    </linearGradient>
+    <radialGradient id="dssShadow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="rgba(0,0,0,0.28)"/>
+      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Ground shadow ellipse -->
+  <ellipse cx="320" cy="370" rx="200" ry="22" fill="url(#dssShadow)"/>
+
+  <!-- Front facet (bigger, lit) -->
+  <path d="M 100 240 L 320 110 L 540 175 L 540 270 L 350 320 L 100 280 Z"
+        fill="url(#dssFront)" stroke="#1a1c1e" stroke-width="1.4" stroke-linejoin="round"/>
+
+  <!-- Back/under facet (darker) -->
+  <path d="M 100 280 L 350 320 L 540 270 L 540 295 L 350 348 L 100 300 Z"
+        fill="url(#dssBack)" stroke="#1a1c1e" stroke-width="1.2" stroke-linejoin="round"/>
+
+  <!-- Bright apex ridge -->
+  <path d="M 100 240 L 320 110 L 540 175"
+        fill="none" stroke="url(#dssRidge)" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="320" cy="110" r="3" fill="rgba(255,255,255,0.55)"/>
+
+  <!-- Mounting tabs along rear bottom edge -->
+  <path d="M 462 318 L 502 308 L 502 332 L 462 342 Z"
+        fill="#2a2c2e" stroke="#1a1c1e" stroke-width="1"/>
+  <circle cx="482" cy="324" r="2" fill="#0e0f10"/>
+
+  <path d="M 358 332 L 398 326 L 398 348 L 358 354 Z"
+        fill="#2a2c2e" stroke="#1a1c1e" stroke-width="1"/>
+  <circle cx="378" cy="340" r="2" fill="#0e0f10"/>
+
+  <path d="M 168 290 L 208 295 L 208 318 L 168 313 Z"
+        fill="#2a2c2e" stroke="#1a1c1e" stroke-width="1"/>
+  <circle cx="188" cy="304" r="2" fill="#0e0f10"/>
+
+  <!-- Subtle edge highlights -->
+  <line x1="100" y1="240" x2="100" y2="280" stroke="rgba(255,255,255,0.14)" stroke-width="1.4"/>
+  <line x1="540" y1="175" x2="540" y2="270" stroke="rgba(255,255,255,0.12)" stroke-width="1.4"/>
+</svg>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Navigator dimensions — derived from LCNP | Navigator | Datasheet.pdf
+    page 4 "Sizing & Measurements". Both housings (LCNP3W40 + LCNP3W100)
+    share the same envelope:
+        Width  = 10.06 in
+        Length = 10.06 in
+        Depth  = 2.73 in    ← slim profile (Pathfinder is 3.19 in)
+        Weight = LCNP3W40: 3.62 lb · LCNP3W100: 4.17 lb (heavier driver)
+    Source-of-truth pending engineering technical drawing — this is a
+    placeholder rendering authored from the datasheet stated dimensions.
+    Visualizes the slim depth profile that's part of Navigator's "low-mount
+    canopy" positioning vs Pathfinder's deeper 3.19-in housing.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="Lato, sans-serif">
+  <defs>
+    <style>
+      .stroke      { stroke: #d6d6d6; stroke-width: 1.2; fill: none; }
+      .fill-body   { fill: rgba(214, 214, 214, 0.05); }
+      .dim-line    { stroke: #f32740; stroke-width: 1.0; }
+      .dim-line-l  { stroke: #f32740; stroke-width: 0.6; stroke-dasharray: 3 2; }
+      .dim-text    { fill: #f32740; font-size: 12px; font-weight: 700; }
+      .label       { fill: #b0b0b0; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .axis-tick   { stroke: #f32740; stroke-width: 1.0; }
+      .lens        { fill: rgba(255,255,255,0.06); stroke: #d6d6d6; stroke-width: 0.8; }
+      .reflector   { stroke: rgba(255,255,255,0.55); stroke-width: 0.5; fill: none; }
+    </style>
+  </defs>
+
+  <!-- ============== TOP-DOWN VIEW (left panel) ============== -->
+  <g transform="translate(40, 40)">
+    <text class="label" x="0" y="-8">TOP — 10.06 × 10.06 IN</text>
+
+    <!-- Outer housing (square: 10.06in mapped to 200px) -->
+    <rect class="stroke fill-body" x="0" y="0" width="200" height="200" rx="4"/>
+
+    <!-- Inset polycarbonate lens panel (~7.5in across) -->
+    <rect class="lens" x="20" y="20" width="160" height="160" rx="3"/>
+
+    <!-- Reflector + refractor optic — concentric ring system per datasheet -->
+    <g class="reflector">
+      <circle cx="100" cy="100" r="64" fill="none"/>
+      <circle cx="100" cy="100" r="48" fill="none"/>
+      <circle cx="100" cy="100" r="32" fill="none"/>
+      <circle cx="100" cy="100" r="16" fill="none"/>
+      <line x1="100" y1="36" x2="100" y2="164" stroke-dasharray="2 2"/>
+      <line x1="36" y1="100" x2="164" y2="100" stroke-dasharray="2 2"/>
+      <line x1="55" y1="55" x2="145" y2="145" stroke-dasharray="2 2"/>
+      <line x1="55" y1="145" x2="145" y2="55" stroke-dasharray="2 2"/>
+    </g>
+
+    <!-- LED chip dot at center -->
+    <circle cx="100" cy="100" r="6" fill="#f32740" stroke="none"/>
+
+    <!-- Conduit knockouts on 3 sides (½" NPS) — top, left, right -->
+    <circle class="stroke" cx="100" cy="0" r="4" fill="rgba(0,0,0,0.4)"/>
+    <circle class="stroke" cx="0" cy="100" r="4" fill="rgba(0,0,0,0.4)"/>
+    <circle class="stroke" cx="200" cy="100" r="4" fill="rgba(0,0,0,0.4)"/>
+
+    <!-- Width dimension (bottom, 10.06in) -->
+    <line class="dim-line" x1="0" y1="225" x2="200" y2="225"/>
+    <line class="axis-tick" x1="0" y1="220" x2="0" y2="230"/>
+    <line class="axis-tick" x1="200" y1="220" x2="200" y2="230"/>
+    <text class="dim-text" x="100" y="244" text-anchor="middle">10.06 in</text>
+
+    <!-- Length dimension (right, 10.06in) -->
+    <line class="dim-line" x1="225" y1="0" x2="225" y2="200"/>
+    <line class="axis-tick" x1="220" y1="0" x2="230" y2="0"/>
+    <line class="axis-tick" x1="220" y1="200" x2="230" y2="200"/>
+    <text class="dim-text" x="240" y="104" text-anchor="start">10.06 in</text>
+  </g>
+
+  <!-- ============== SIDE PROFILE (right panel) — emphasize slim 2.73 in ============== -->
+  <g transform="translate(380, 40)">
+    <text class="label" x="0" y="-8">SIDE — 10.06 × 2.73 IN</text>
+
+    <!-- Driver chamber + housing body (rectangular cross-section · note: shorter
+         than Pathfinder's profile to visualize the slim 2.73 vs 3.19 in difference) -->
+    <!-- Heat-sink top band (thinner — Navigator's slim profile) -->
+    <rect class="stroke fill-body" x="0" y="0" width="280" height="36" rx="3"/>
+
+    <!-- Lens dome below — flatter dome (slim profile) -->
+    <path class="lens" d="M 14 36 Q 140 92 266 36 L 266 36 L 14 36 Z"/>
+    <line class="stroke" x1="0" y1="36" x2="280" y2="36"/>
+
+    <!-- Channel-groove fin texture on top (datasheet description: "fin-style design
+         with channel grooves between them produces good heat dissipation") -->
+    <g class="reflector">
+      <line x1="20"  y1="0" x2="20"  y2="36"/>
+      <line x1="40"  y1="0" x2="40"  y2="36"/>
+      <line x1="60"  y1="0" x2="60"  y2="36"/>
+      <line x1="80"  y1="0" x2="80"  y2="36"/>
+      <line x1="100" y1="0" x2="100" y2="36"/>
+      <line x1="120" y1="0" x2="120" y2="36"/>
+      <line x1="160" y1="0" x2="160" y2="36"/>
+      <line x1="180" y1="0" x2="180" y2="36"/>
+      <line x1="200" y1="0" x2="200" y2="36"/>
+      <line x1="220" y1="0" x2="220" y2="36"/>
+      <line x1="240" y1="0" x2="240" y2="36"/>
+      <line x1="260" y1="0" x2="260" y2="36"/>
+    </g>
+
+    <!-- Mounting plate stub (J-box quick-mount) -->
+    <rect class="stroke fill-body" x="115" y="-22" width="50" height="22" rx="1"/>
+    <text class="label" x="140" y="-28" text-anchor="middle" style="font-size: 9px;">J-BOX MOUNT</text>
+
+    <!-- Conduit knockout on top -->
+    <circle class="stroke" cx="56" cy="0" r="3" fill="rgba(0,0,0,0.4)"/>
+
+    <!-- Width dimension (bottom, 10.06in) -->
+    <line class="dim-line" x1="0" y1="115" x2="280" y2="115"/>
+    <line class="axis-tick" x1="0" y1="110" x2="0" y2="120"/>
+    <line class="axis-tick" x1="280" y1="110" x2="280" y2="120"/>
+    <text class="dim-text" x="140" y="134" text-anchor="middle">10.06 in</text>
+
+    <!-- Depth dimension (right, 2.73in) — visually shorter than Pathfinder's 3.19 -->
+    <line class="dim-line" x1="305" y1="0" x2="305" y2="80"/>
+    <line class="axis-tick" x1="300" y1="0" x2="310" y2="0"/>
+    <line class="axis-tick" x1="300" y1="80" x2="310" y2="80"/>
+    <text class="dim-text" x="320" y="44" text-anchor="start">2.73 in</text>
+    <text x="320" y="60" font-family="Lato, sans-serif" font-size="9" fill="rgba(255,255,255,0.55)">slim profile</text>
+  </g>
+
+  <!-- ============== Weight + mounting callouts (footer band) ============== -->
+  <g transform="translate(40, 270)">
+    <text class="label" x="0" y="0">WEIGHT</text>
+    <text class="dim-text" x="0" y="20">LCNP3W40: 3.62 lb · LCNP3W100: 4.17 lb</text>
+  </g>
+  <g transform="translate(380, 270)">
+    <text class="label" x="0" y="0">MOUNTING</text>
+    <text class="dim-text" x="0" y="20">SURFACE J-BOX · 3/4" PENDANT (CONDUIT) · 1/2" NPS × 3 SIDES</text>
+  </g>
+</svg>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Nightwatch (LWPC | Nightwatch-I + Nightwatch-II) — Sizing & Measurements
+  ========================================================================
+  Four distinct housing envelopes across the 7 model classes (datasheet p.4):
+    Envelope A · LWPC38 / LWPC65         · 13.1"W × 9.6"H × 3.8"D
+    Envelope B · LWPC100-I / LWPC135     · 13.2"W × 9.6"H × 5.0"D
+    Envelope C · LWPC30 / LWPC60          · 10.3"W × 10.9"H × 3.7"D
+    Envelope D · LWPC100-II               · 13.1"W × 10.9"H × 3.7"D
+  All four share the same full-cutoff angled-top profile; envelope size scales
+  with output class. Shown as front-view silhouettes drawn to relative scale.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380"
+     role="img" aria-label="Nightwatch dimensions — four housing envelopes from 10.3 to 13.2 inch wide, 9.6 to 10.9 inch tall">
+
+  <defs>
+    <style>
+      .body  { fill: #2c2f33; stroke: #cfd2d6; stroke-width: 1.4; stroke-linejoin: round; }
+      .face  { fill: #34373b; stroke: #cfd2d6; stroke-width: 1.2; stroke-linejoin: round; }
+      .lens  { fill: #4d525a; stroke: #cfd2d6; stroke-width: 0.8; }
+      .led   { fill: #6c7178; }
+      .dim       { stroke: #cfd2d6; stroke-width: 0.7; fill: none; }
+      .dim-arrow { fill: #cfd2d6; }
+      .dim-label { font-family: 'Lato', system-ui, sans-serif; font-size: 9.5px; fill: #cfd2d6; }
+      .model-id  { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.10em;
+                   fill: #cfd2d6; text-transform: uppercase; }
+      .model-w   { font-family: 'JetBrains Mono', monospace; font-size: 8px; fill: rgba(207,210,214,0.62); }
+      .title     { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em;
+                   fill: #cfd2d6; text-transform: uppercase; }
+      .legend    { font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+                   fill: rgba(207,210,214,0.55); }
+    </style>
+
+    <!-- Re-usable fixture silhouette (front view) -->
+    <symbol id="fixture-front" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+      <rect class="body" x="2" y="2" width="96" height="96" rx="3"/>
+      <rect class="face" x="6" y="6" width="88" height="88" rx="2"/>
+      <rect class="lens" x="14" y="62" width="72" height="22" rx="1"/>
+      <g class="led">
+        <circle cx="22" cy="73" r="1.5"/>
+        <circle cx="35" cy="73" r="1.5"/>
+        <circle cx="50" cy="73" r="1.5"/>
+        <circle cx="65" cy="73" r="1.5"/>
+        <circle cx="78" cy="73" r="1.5"/>
+      </g>
+      <circle class="lens" cx="10" cy="10" r="1.5"/>
+      <circle class="lens" cx="90" cy="10" r="1.5"/>
+      <circle class="lens" cx="10" cy="90" r="1.5"/>
+      <circle class="lens" cx="90" cy="90" r="1.5"/>
+    </symbol>
+  </defs>
+
+  <!-- Title strip -->
+  <text class="title" x="350" y="28" text-anchor="middle"
+        style="font-size: 11px; letter-spacing: 0.22em;">
+    Nightwatch · Sizing &amp; Measurements (in)
+  </text>
+  <text class="legend" x="350" y="46" text-anchor="middle">
+    Four housing envelopes across the 7 model classes · all share the full-cutoff angled-top profile
+  </text>
+
+  <!-- ============== ENVELOPE A · LWPC38 / LWPC65 ============== -->
+  <!-- 13.1 W × 9.6 H · medium-rectangular form -->
+  <g transform="translate(70, 80)">
+    <use xref="fixture-front" href="#fixture-front" width="131" height="96"/>
+    <!-- Width label (top) -->
+    <line class="dim" x1="0" y1="-12" x2="131" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-12 5,-15 5,-9"/>
+    <polygon class="dim-arrow" points="131,-12 126,-15 126,-9"/>
+    <text class="dim-label" x="65.5" y="-15" text-anchor="middle">13.1"</text>
+    <!-- Height label (right) -->
+    <line class="dim" x1="143" y1="0" x2="143" y2="96"/>
+    <polygon class="dim-arrow" points="143,0 140,5 146,5"/>
+    <polygon class="dim-arrow" points="143,96 140,91 146,91"/>
+    <text class="dim-label" x="148" y="51">9.6"</text>
+    <!-- Model labels -->
+    <text class="model-id" x="65.5" y="115" text-anchor="middle">LWPC38 · LWPC65</text>
+    <text class="model-w"  x="65.5" y="128" text-anchor="middle">17–38W · 24–65W · depth 3.8"</text>
+  </g>
+
+  <!-- ============== ENVELOPE B · LWPC100-I / LWPC135 ============== -->
+  <!-- 13.2 W × 9.6 H · same width as A but deeper (5.0" vs 3.8") -->
+  <g transform="translate(310, 80)">
+    <use xref="fixture-front" href="#fixture-front" width="132" height="96"/>
+    <line class="dim" x1="0" y1="-12" x2="132" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-12 5,-15 5,-9"/>
+    <polygon class="dim-arrow" points="132,-12 127,-15 127,-9"/>
+    <text class="dim-label" x="66" y="-15" text-anchor="middle">13.2"</text>
+    <line class="dim" x1="144" y1="0" x2="144" y2="96"/>
+    <polygon class="dim-arrow" points="144,0 141,5 147,5"/>
+    <polygon class="dim-arrow" points="144,96 141,91 147,91"/>
+    <text class="dim-label" x="149" y="51">9.6"</text>
+    <text class="model-id" x="66" y="115" text-anchor="middle">LWPC100 · LWPC135</text>
+    <text class="model-w"  x="66" y="128" text-anchor="middle">Nightwatch-I · 43–135W · depth 5.0"</text>
+  </g>
+
+  <!-- ============== ENVELOPE C · LWPC30 / LWPC60 ============== -->
+  <!-- 10.3 W × 10.9 H · narrowest, tallest -->
+  <g transform="translate(70, 240)">
+    <use xref="fixture-front" href="#fixture-front" width="103" height="109"/>
+    <line class="dim" x1="0" y1="-12" x2="103" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-12 5,-15 5,-9"/>
+    <polygon class="dim-arrow" points="103,-12 98,-15 98,-9"/>
+    <text class="dim-label" x="51.5" y="-15" text-anchor="middle">10.3"</text>
+    <line class="dim" x1="115" y1="0" x2="115" y2="109"/>
+    <polygon class="dim-arrow" points="115,0 112,5 118,5"/>
+    <polygon class="dim-arrow" points="115,109 112,104 118,104"/>
+    <text class="dim-label" x="120" y="58">10.9"</text>
+    <text class="model-id" x="51.5" y="128" text-anchor="middle">LWPC30 · LWPC60</text>
+    <text class="model-w"  x="51.5" y="141" text-anchor="middle">Nightwatch-II · 12–60W · depth 3.7"</text>
+  </g>
+
+  <!-- ============== ENVELOPE D · LWPC100-II ============== -->
+  <!-- 13.1 W × 10.9 H · medium-tall (Nightwatch-II's flagship) -->
+  <g transform="translate(310, 240)">
+    <use xref="fixture-front" href="#fixture-front" width="131" height="109"/>
+    <line class="dim" x1="0" y1="-12" x2="131" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-12 5,-15 5,-9"/>
+    <polygon class="dim-arrow" points="131,-12 126,-15 126,-9"/>
+    <text class="dim-label" x="65.5" y="-15" text-anchor="middle">13.1"</text>
+    <line class="dim" x1="143" y1="0" x2="143" y2="109"/>
+    <polygon class="dim-arrow" points="143,0 140,5 146,5"/>
+    <polygon class="dim-arrow" points="143,109 140,104 146,104"/>
+    <text class="dim-label" x="148" y="58">10.9"</text>
+    <text class="model-id" x="65.5" y="128" text-anchor="middle">LWPC100</text>
+    <text class="model-w"  x="65.5" y="141" text-anchor="middle">Nightwatch-II · 40–100W · depth 3.7"</text>
+  </g>
+
+  <!-- Legend bar (right side) -->
+  <g transform="translate(490, 80)">
+    <text class="title" x="0" y="0" style="font-size: 9px; letter-spacing: 0.16em;">DEPTH (D)</text>
+    <text class="legend" x="0" y="18">3.7" — LWPC30 / 60 / 100-II</text>
+    <text class="legend" x="0" y="32">3.8" — LWPC38 / 65</text>
+    <text class="legend" x="0" y="46">5.0" — LWPC100-I / 135</text>
+
+    <text class="title" x="0" y="76" style="font-size: 9px; letter-spacing: 0.16em;">SHARED ACROSS ALL</text>
+    <text class="legend" x="0" y="94">Two-piece die-cast aluminum</text>
+    <text class="legend" x="0" y="108">Full-cutoff angled-top profile</text>
+    <text class="legend" x="0" y="122">WetGuard™ sealing</text>
+    <text class="legend" x="0" y="136">3G ANSI C136.31 vibration</text>
+    <text class="legend" x="0" y="150">IP65 wet-location rated</text>
+
+    <text class="title" x="0" y="180" style="font-size: 9px; letter-spacing: 0.16em;">FRONT-VIEW SILHOUETTES</text>
+    <text class="legend" x="0" y="198">Drawn to relative scale</text>
+    <text class="legend" x="0" y="212">Datasheet p.4 reference</text>
+  </g>
+</svg>

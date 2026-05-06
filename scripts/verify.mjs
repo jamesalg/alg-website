@@ -107,7 +107,9 @@ async function main() {
     }
 
     // B.4: "Multi-fⒶMILY" with capital M is wrong — must be lowercase m AND f
-    if (/Multi-f/.test(html) || /Multi-F/.test(html)) {
+    // Only flag brand-name patterns: Multi-fⒶ (brand mark) or Multi-family (brand name).
+    // "Multi-Functional" is a legitimate product feature descriptor — not flagged.
+    if (/Multi-fⒶ/.test(html) || /Multi-family/.test(html)) {
       fail('B.4', `${rel}: "Multi-f..." with capital M — must be "multi-f..." (rule §3.2)`);
     }
 

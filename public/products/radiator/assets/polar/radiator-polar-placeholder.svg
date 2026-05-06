@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Radiator polar plot placeholder · LM-79 IES bundle pending production extraction">
+  <style>
+    .bg { fill: #22262B; }
+    .ring { fill: none; stroke: rgba(255,255,255,0.18); stroke-width: 0.8; }
+    .axis { stroke: rgba(255,255,255,0.35); stroke-width: 0.8; }
+    .axis-label { font-family: 'JetBrains Mono', monospace; fill: rgba(255,255,255,0.55); font-size: 11px; font-weight: 700; }
+    .lobe { fill: rgba(243,39,64,0.12); stroke: #F32740; stroke-width: 1.4; stroke-linejoin: round; opacity: 0.85; }
+    .label { font-family: 'JetBrains Mono', monospace; fill: rgba(255,255,255,0.85); font-weight: 700; }
+    .pending { font-family: 'JetBrains Mono', monospace; fill: #F32740; font-weight: 700; letter-spacing: 0.18em; }
+    .sub { font-family: 'JetBrains Mono', monospace; fill: rgba(255,255,255,0.45); font-weight: 500; }
+  </style>
+  <rect class="bg" x="0" y="0" width="600" height="600"/>
+
+  <!-- Polar grid · concentric intensity rings (1000 / 2500 / 5000 / 10000 / 20000 cd reference) -->
+  <g transform="translate(300, 320)">
+    <circle class="ring" r="200"/>
+    <circle class="ring" r="160"/>
+    <circle class="ring" r="120"/>
+    <circle class="ring" r="80"/>
+    <circle class="ring" r="40"/>
+
+    <!-- 0° / 90° / 180° / 270° axes -->
+    <line class="axis" x1="-220" y1="0" x2="220" y2="0"/>
+    <line class="axis" x1="0" y1="-220" x2="0" y2="220"/>
+    <!-- 45° diagonals -->
+    <line class="axis" x1="-156" y1="-156" x2="156" y2="156" opacity="0.55"/>
+    <line class="axis" x1="-156" y1="156" x2="156" y2="-156" opacity="0.55"/>
+
+    <!-- Stylized NEMA 3 forward-throw lobe (placeholder shape) -->
+    <path class="lobe" d="M 0 -10
+      Q 60 -30 95 -45
+      Q 130 -45 155 -10
+      Q 175 30 145 80
+      Q 95 130 0 130
+      Q -95 130 -145 80
+      Q -175 30 -155 -10
+      Q -130 -45 -95 -45
+      Q -60 -30 0 -10 Z"/>
+
+    <!-- Cross-hair label dots -->
+    <circle cx="0" cy="0" r="3" fill="#F32740"/>
+  </g>
+
+  <!-- Axis labels -->
+  <text class="axis-label" x="300" y="115" text-anchor="middle">0&deg;</text>
+  <text class="axis-label" x="510" y="324" text-anchor="middle">90&deg;</text>
+  <text class="axis-label" x="300" y="540" text-anchor="middle">180&deg;</text>
+  <text class="axis-label" x="90" y="324" text-anchor="middle">270&deg;</text>
+
+  <!-- Header + pending notice -->
+  <text class="label" x="300" y="50" text-anchor="middle" font-size="14">Polar Plot &middot; placeholder</text>
+  <text class="sub" x="300" y="70" text-anchor="middle" font-size="11">NEMA 3 forward-throw envelope · stylized · not LM-79 measured</text>
+
+  <text class="pending" x="300" y="575" text-anchor="middle" font-size="11">LM-79 IES BUNDLE EXTRACTION PENDING</text>
+  <text class="sub" x="300" y="590" text-anchor="middle" font-size="9">Per-cell SVGs render once RADIATOR IES FILES.zip is unpacked + URL minted</text>
+</svg>

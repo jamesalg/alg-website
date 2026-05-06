@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Pathfinder dimensions — derived from LCNP datasheet page 4 "Sizing & Measurements".
+    Both housings (LCNP060 + LCNP110) share the same envelope:
+        Width  = 9.52 in
+        Length = 9.52 in
+        Depth  = 3.19 in
+        Weight = LCNP060: 3.62 lb · LCNP110: 4.17 lb (heavier driver)
+    Source-of-truth pending engineering technical drawing — this is a
+    placeholder rendering authored from the datasheet stated dimensions.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="Lato, sans-serif">
+  <defs>
+    <style>
+      .stroke      { stroke: #d6d6d6; stroke-width: 1.2; fill: none; }
+      .fill-body   { fill: rgba(214, 214, 214, 0.05); }
+      .dim-line    { stroke: #f32740; stroke-width: 1.0; }
+      .dim-line-l  { stroke: #f32740; stroke-width: 0.6; stroke-dasharray: 3 2; }
+      .dim-text    { fill: #f32740; font-size: 12px; font-weight: 700; }
+      .label       { fill: #b0b0b0; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .axis-tick   { stroke: #f32740; stroke-width: 1.0; }
+      .lens        { fill: rgba(255,255,255,0.06); stroke: #d6d6d6; stroke-width: 0.8; }
+      .prism       { stroke: rgba(255,255,255,0.45); stroke-width: 0.4; fill: none; }
+    </style>
+  </defs>
+
+  <!-- ============== TOP-DOWN VIEW (left panel) ============== -->
+  <g transform="translate(40, 40)">
+    <text class="label" x="0" y="-8">TOP — 9.52 × 9.52 IN</text>
+
+    <!-- Outer housing (square: 9.52in mapped to 200px) -->
+    <rect class="stroke fill-body" x="0" y="0" width="200" height="200" rx="4"/>
+
+    <!-- Inset lens panel (prismatic acrylic, ~7.5in across) -->
+    <rect class="lens" x="20" y="20" width="160" height="160" rx="3"/>
+
+    <!-- Prism rays radiating from center (visual cue for prismatic optic) -->
+    <g class="prism">
+      <line x1="100" y1="100" x2="22" y2="22"/>
+      <line x1="100" y1="100" x2="100" y2="22"/>
+      <line x1="100" y1="100" x2="178" y2="22"/>
+      <line x1="100" y1="100" x2="178" y2="100"/>
+      <line x1="100" y1="100" x2="178" y2="178"/>
+      <line x1="100" y1="100" x2="100" y2="178"/>
+      <line x1="100" y1="100" x2="22" y2="178"/>
+      <line x1="100" y1="100" x2="22" y2="100"/>
+      <circle cx="100" cy="100" r="60" fill="none"/>
+      <circle cx="100" cy="100" r="30" fill="none"/>
+    </g>
+
+    <!-- LED chip dot at center -->
+    <circle cx="100" cy="100" r="6" fill="#f32740" stroke="none"/>
+
+    <!-- Conduit knockouts on 3 sides (½" NPS) — top, left, right -->
+    <circle class="stroke" cx="100" cy="0" r="4" fill="rgba(0,0,0,0.4)"/>
+    <circle class="stroke" cx="0" cy="100" r="4" fill="rgba(0,0,0,0.4)"/>
+    <circle class="stroke" cx="200" cy="100" r="4" fill="rgba(0,0,0,0.4)"/>
+
+    <!-- Width dimension (bottom, 9.52in) -->
+    <line class="dim-line" x1="0" y1="225" x2="200" y2="225"/>
+    <line class="axis-tick" x1="0" y1="220" x2="0" y2="230"/>
+    <line class="axis-tick" x1="200" y1="220" x2="200" y2="230"/>
+    <text class="dim-text" x="100" y="244" text-anchor="middle">9.52 in</text>
+
+    <!-- Length dimension (right, 9.52in) -->
+    <line class="dim-line" x1="225" y1="0" x2="225" y2="200"/>
+    <line class="axis-tick" x1="220" y1="0" x2="230" y2="0"/>
+    <line class="axis-tick" x1="220" y1="200" x2="230" y2="200"/>
+    <text class="dim-text" x="240" y="104" text-anchor="start">9.52 in</text>
+
+    <!-- Center crosshair lines (light) -->
+    <line class="dim-line-l" x1="-10" y1="100" x2="210" y2="100"/>
+    <line class="dim-line-l" x1="100" y1="-10" x2="100" y2="210"/>
+  </g>
+
+  <!-- ============== SIDE PROFILE (right panel) ============== -->
+  <g transform="translate(380, 40)">
+    <text class="label" x="0" y="-8">SIDE — 9.52 × 3.19 IN</text>
+
+    <!-- Driver chamber + housing body (rectangular cross-section) -->
+    <!-- Top: driver chamber (heat-sink fin band) -->
+    <rect class="stroke fill-body" x="0" y="0" width="280" height="42" rx="3"/>
+    <!-- Lens dome below driver chamber -->
+    <path class="lens" d="M 14 42 Q 140 110 266 42 L 266 42 L 14 42 Z"/>
+    <!-- Trim ring -->
+    <line class="stroke" x1="0" y1="42" x2="280" y2="42"/>
+
+    <!-- Heat fin texture on top -->
+    <g class="prism">
+      <line x1="20"  y1="0" x2="20"  y2="42"/>
+      <line x1="40"  y1="0" x2="40"  y2="42"/>
+      <line x1="60"  y1="0" x2="60"  y2="42"/>
+      <line x1="80"  y1="0" x2="80"  y2="42"/>
+      <line x1="100" y1="0" x2="100" y2="42"/>
+      <line x1="120" y1="0" x2="120" y2="42"/>
+      <line x1="160" y1="0" x2="160" y2="42"/>
+      <line x1="180" y1="0" x2="180" y2="42"/>
+      <line x1="200" y1="0" x2="200" y2="42"/>
+      <line x1="220" y1="0" x2="220" y2="42"/>
+      <line x1="240" y1="0" x2="240" y2="42"/>
+      <line x1="260" y1="0" x2="260" y2="42"/>
+    </g>
+
+    <!-- Mounting plate stub (J-box quick-mount) -->
+    <rect class="stroke fill-body" x="115" y="-22" width="50" height="22" rx="1"/>
+    <text class="label" x="140" y="-28" text-anchor="middle" style="font-size: 9px;">J-BOX MOUNT</text>
+
+    <!-- Conduit knockout indicator on top (one side shown) -->
+    <circle class="stroke" cx="56" cy="0" r="3" fill="rgba(0,0,0,0.4)"/>
+
+    <!-- Width dimension (bottom, 9.52in) -->
+    <line class="dim-line" x1="0" y1="135" x2="280" y2="135"/>
+    <line class="axis-tick" x1="0" y1="130" x2="0" y2="140"/>
+    <line class="axis-tick" x1="280" y1="130" x2="280" y2="140"/>
+    <text class="dim-text" x="140" y="154" text-anchor="middle">9.52 in</text>
+
+    <!-- Depth dimension (right, 3.19in) -->
+    <line class="dim-line" x1="305" y1="0" x2="305" y2="100"/>
+    <line class="axis-tick" x1="300" y1="0" x2="310" y2="0"/>
+    <line class="axis-tick" x1="300" y1="100" x2="310" y2="100"/>
+    <text class="dim-text" x="320" y="54" text-anchor="start">3.19 in</text>
+  </g>
+
+  <!-- ============== Weight callouts (footer band) ============== -->
+  <g transform="translate(40, 270)">
+    <text class="label" x="0" y="0">WEIGHT</text>
+    <text class="dim-text" x="0" y="20">LCNP060: 3.62 lb · LCNP110: 4.17 lb</text>
+  </g>
+  <g transform="translate(380, 270)">
+    <text class="label" x="0" y="0">MOUNTING</text>
+    <text class="dim-text" x="0" y="20">J-BOX QUICK-MOUNT · 3/4" PENDANT · 1/2" NPS × 3 SIDES</text>
+  </g>
+</svg>

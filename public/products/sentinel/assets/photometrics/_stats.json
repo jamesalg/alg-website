@@ -1,0 +1,56 @@
+[
+  {
+    "file": "sentinel_40w_35k.svg",
+    "lumens": 5392,
+    "watts": 40,
+    "peak_cd": 935
+  },
+  {
+    "file": "sentinel_40w_40k.svg",
+    "lumens": 5790,
+    "watts": 39,
+    "peak_cd": 1060
+  },
+  {
+    "file": "sentinel_40w_50k.svg",
+    "lumens": 5694,
+    "watts": 40,
+    "peak_cd": 1193
+  },
+  {
+    "file": "sentinel_80w_35k.svg",
+    "lumens": 10763,
+    "watts": 78,
+    "peak_cd": 2003
+  },
+  {
+    "file": "sentinel_80w_40k.svg",
+    "lumens": 11814,
+    "watts": 76,
+    "peak_cd": 2259
+  },
+  {
+    "file": "sentinel_80w_50k.svg",
+    "lumens": 11728,
+    "watts": 79,
+    "peak_cd": 2286
+  },
+  {
+    "file": "sentinel_120w_35k.svg",
+    "lumens": 15823,
+    "watts": 117,
+    "peak_cd": 3061
+  },
+  {
+    "file": "sentinel_120w_40k.svg",
+    "lumens": 17248,
+    "watts": 113,
+    "peak_cd": 3284
+  },
+  {
+    "file": "sentinel_120w_50k.svg",
+    "lumens": 17259,
+    "watts": 118,
+    "peak_cd": 3218
+  }
+]

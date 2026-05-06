@@ -1,0 +1,102 @@
+{
+  "anaheim": {
+    "datasheet": "",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "atlanta": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/a7dbb73699eb86514ce4c346d28ae112ac744fa4d1b15e12e5f73c41b5890ac9",
+    "install": "https://workdrive.archipelagolighting.com/external/bc496fc9a65a57ec06d47cdac8aa7561b89125983e8673cdb61878531377e992",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "aura": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/9c079b32da663fc4b24587131b6ac3dd3ace4affcf68eb2734916ac344783f7d",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "everest": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/eb1c9d97da3f2fbb99c40fe7b710f2c4b5893a97b057b17fd3c52a0115b78ede",
+    "install": "https://workdrive.archipelagolighting.com/external/e7d9e527c5fd2ee237b5089991fb1a787fedd242baea32ad4d47634db2df62b9",
+    "quick": "https://workdrive.archipelagolighting.com/external/fc58f92b332047232aa27959097a5048a34a573e97b12d850f0540772350f9e6",
+    "sell": "https://workdrive.archipelagolighting.com/external/7c6427652985a75423a22c63870b61b29827955c6032018f642ba8ad4e734815",
+    "ies": ""
+  },
+  "guardian": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/615502b9107be2eff243fa154ab6f440f83101b6ead61593a9a846d272f5a71c",
+    "install": "https://workdrive.archipelagolighting.com/external/b6b11ef124d6c145a3ff27807392703484d9568c4466323d7ec2a93928abc043",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "heritage": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/3312e3b9f37b130c1bc6021298f73f12284ce7ac471ee7a8319fca90261ee4d8",
+    "install": "https://workdrive.archipelagolighting.com/external/3df731c6ad536ccc2b5760b3e2260bcf36c583ce4878ccb9d6e73d4be6c3f85a",
+    "quick": "https://workdrive.archipelagolighting.com/external/9dc58a1018e530cc498d5fc865cfd0b8ce47472172e356d84f250f1db968a703",
+    "sell": "https://workdrive.archipelagolighting.com/external/fc29f8b4687ec75f2cf32774e7ea4e9d7c7026da96684be7f186bf04db1d310e",
+    "ies": ""
+  },
+  "navigator": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/eeca5c9aee50907715ebaa72d1c5eaa465fbb48536ce514ea0061d599730ac18",
+    "install": "https://workdrive.archipelagolighting.com/external/3dbe6e24a1d15ee343231ca544323fac8824ac0a3811ffbb49716c9630f62da1",
+    "quick": "https://workdrive.archipelagolighting.com/external/4c6fd82ee68dc7f65da71faddc255b83392d250827717337f42c94cc32a0ae21",
+    "sell": "https://workdrive.archipelagolighting.com/external/92a3bfdf52d5a65781d54d78cb0a6cd238cf942e83920d01368f5fa0c63098a8",
+    "ies": ""
+  },
+  "nightwatch": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/9b9317bf23680fd676f4a6da68be596bb793131974accdfdb1eb792a222466fb",
+    "install": "https://workdrive.archipelagolighting.com/external/083c1ef3d5c2f33a1c91f5bace35a45769a2572181d2ada5f1546b955db63a35",
+    "quick": "https://workdrive.archipelagolighting.com/external/0e69396c296230d8dc2e7a17ea682723730ffead18e297a89c73f6b22534f58e",
+    "sell": "",
+    "ies": ""
+  },
+  "pathfinder": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/0844933c1ddd3ce5b02216aa35639e5482b2790619dee463082a2ac43fb70ebe",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "radiator": {
+    "datasheet_i": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d",
+    "datasheet_ii": "https://workdrive.archipelagolighting.com/external/de3db03277e8f8f0702dc65086ed1fe6815d127fc0e8cab51efc2ccbe416238d",
+    "datasheet_iii": "",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "ramparts": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/8e2833f0d1af2eddd5a7a51cd8bd6caf69d532b564423ea1a141cbdc22d751c2",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  },
+  "sentinel": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/1ff5f7c57abf29b0213d53f3733d8cd7c240d5846677f20b78113b0980033d2e",
+    "install": "https://workdrive.archipelagolighting.com/external/ea0df4767237bee6a03cd4d22364eb477e7613ba5f9565c74548de76200c70fd",
+    "quick": "https://workdrive.archipelagolighting.com/external/6a62495022cafe0eb898c4f7e0e47ff4dfb5322aa983ef91bec13584e6ff157c",
+    "sell": "https://workdrive.archipelagolighting.com/external/df25290a8e24fc0832e37932be6c5478d882b2f8e197ffe9e81980e883cd5f9f",
+    "ies": ""
+  },
+  "watchtower": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/f53ca5a09f233a9afeb4c1e81cd6411830ef2cf5ccf15df7d5224e423987aaf0",
+    "install": "https://workdrive.archipelagolighting.com/external/a4d319cc845387cd393bf54f98d9b4f0e8375ad88d19a18e18bf8ae663e3b14a",
+    "quick": "https://workdrive.archipelagolighting.com/external/330d1d04e6f33445a35c976899769fccf4a561e578ac13df6fc22ea8472309c9",
+    "sell": "https://workdrive.archipelagolighting.com/external/c768cf67413a41605a392397e51a8f6e114d0ab3f45a3161d1f18309b42ba947",
+    "ies": ""
+  },
+  "wedge": {
+    "datasheet": "https://workdrive.archipelagolighting.com/external/55f977853b10710b90353762527529a34e89b2b3e3b84bb68bea053d34e76074",
+    "install": "",
+    "quick": "",
+    "sell": "",
+    "ies": ""
+  }
+}

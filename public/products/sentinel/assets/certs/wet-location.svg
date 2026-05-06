@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" role="img" aria-label="Suitable for Wet Location">
+  <rect width="120" height="60" fill="#fff"/>
+  <path d="M32 14 L42 32 Q42 46 32 46 Q22 46 22 32 Z" fill="#0F5BA3"/>
+  <text x="32" y="38" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="11" fill="#fff">IP65</text>
+  <text x="78" y="26" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="10" fill="#0F5BA3" letter-spacing="0.5">WET</text>
+  <text x="78" y="40" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="10" fill="#0F5BA3" letter-spacing="0.5">LOCATION</text>
+</svg>

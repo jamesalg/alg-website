@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Ramparts (LWPE | LWPE20) — Sizing & Measurements
+  ================================================
+  Single envelope across all 3 wattage settings (10W/15W/20W via 3-WATTselect):
+    Width  : 5.35"  · 135.9 mm
+    Height : 8.70"  · 220.9 mm
+    Depth  : 2.81"  ·  71.4 mm
+  Compact entryway form factor — taller than wide, low profile to wall.
+  Front face: top half = solid die-cast housing (with integrated photocell port);
+              bottom half = prismatic polycarbonate lens covering the LED array.
+  Datasheet reference: page 2 Sizing & Measurements.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360"
+     role="img" aria-label="Ramparts dimensions — front view 5.35 in wide × 8.70 in tall · side view 2.81 in deep">
+
+  <defs>
+    <style>
+      .body  { fill: #2c2f33; stroke: #cfd2d6; stroke-width: 1.6; stroke-linejoin: round; }
+      .face  { fill: #34373b; stroke: #cfd2d6; stroke-width: 1.4; stroke-linejoin: round; }
+      .lens  { fill: #4d525a; stroke: #cfd2d6; stroke-width: 1; }
+      .led   { fill: #6c7178; }
+      .pcell { fill: #1a1c1e; stroke: rgba(255,255,255,0.5); stroke-width: 0.6; }
+      .dim   { stroke: #cfd2d6; stroke-width: 0.8; fill: none; }
+      .dim-arrow { fill: #cfd2d6; }
+      .dim-label { font-family: 'Lato', system-ui, sans-serif; font-size: 11px; fill: #cfd2d6; }
+      .dim-mm    { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: rgba(207,210,214,0.65); }
+      .view-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; fill: #cfd2d6; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <!-- Title strip -->
+  <text class="view-label" x="350" y="34" text-anchor="middle"
+        style="font-size: 11px; letter-spacing: 0.22em;">
+    LWPE20 · Sizing &amp; Measurements (in)
+  </text>
+
+  <!-- ==============  FRONT VIEW  ============== -->
+  <!--
+    Front face is roughly 5.35 W × 8.70 H (proportion ≈ 1 : 1.63, taller than wide).
+    Top half (y 0–110) = solid die-cast housing with the photocell port at center.
+    Bottom half (y 110–220) = prismatic polycarbonate lens.
+  -->
+  <g transform="translate(110, 70)">
+    <!-- Outer body silhouette (proportional to 5.35 × 8.70 → 132 × 215 px) -->
+    <rect class="body" x="0" y="0" width="132" height="215" rx="3"/>
+    <!-- Die-cast top half (housing only, no lens) -->
+    <rect class="face" x="6" y="6" width="120" height="100" rx="2"/>
+    <!-- Photocell port (small dark circle, center of top half) -->
+    <circle class="pcell" cx="66" cy="56" r="4"/>
+    <!-- Lens band (lower half, prismatic look) -->
+    <rect class="lens" x="6" y="110" width="120" height="99" rx="2"/>
+    <!-- Diagonal hatch lines to suggest the prismatic texture -->
+    <g stroke="rgba(255,255,255,0.18)" stroke-width="0.5">
+      <line x1="14" y1="118" x2="118" y2="118"/>
+      <line x1="14" y1="128" x2="118" y2="128"/>
+      <line x1="14" y1="138" x2="118" y2="138"/>
+      <line x1="14" y1="148" x2="118" y2="148"/>
+      <line x1="14" y1="158" x2="118" y2="158"/>
+      <line x1="14" y1="168" x2="118" y2="168"/>
+      <line x1="14" y1="178" x2="118" y2="178"/>
+      <line x1="14" y1="188" x2="118" y2="188"/>
+      <line x1="14" y1="198" x2="118" y2="198"/>
+    </g>
+    <!-- LED array hint (5 small dots inside the lens region, centered horizontally) -->
+    <g class="led">
+      <circle cx="34" cy="155" r="1.5"/>
+      <circle cx="55" cy="155" r="1.5"/>
+      <circle cx="76" cy="155" r="1.5"/>
+      <circle cx="97" cy="155" r="1.5"/>
+      <circle cx="118" cy="155" r="1.5"/>
+    </g>
+    <!-- Mounting screw indicators (4 corners) -->
+    <circle class="lens" cx="14" cy="14" r="1.8"/>
+    <circle class="lens" cx="118" cy="14" r="1.8"/>
+    <circle class="lens" cx="14" cy="201" r="1.8"/>
+    <circle class="lens" cx="118" cy="201" r="1.8"/>
+
+    <!-- Width dimension (top) -->
+    <line class="dim" x1="0" y1="-18" x2="132" y2="-18"/>
+    <line class="dim" x1="0" y1="-22" x2="0" y2="-12"/>
+    <line class="dim" x1="132" y1="-22" x2="132" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-18 6,-21 6,-15"/>
+    <polygon class="dim-arrow" points="132,-18 126,-21 126,-15"/>
+    <text class="dim-label" x="66" y="-22" text-anchor="middle">5.35"</text>
+    <text class="dim-mm"    x="66" y="-7"  text-anchor="middle">[135.9 mm]</text>
+
+    <!-- Height dimension (left) -->
+    <line class="dim" x1="-18" y1="0" x2="-18" y2="215"/>
+    <line class="dim" x1="-22" y1="0" x2="-12" y2="0"/>
+    <line class="dim" x1="-22" y1="215" x2="-12" y2="215"/>
+    <polygon class="dim-arrow" points="-18,0 -21,6 -15,6"/>
+    <polygon class="dim-arrow" points="-18,215 -21,209 -15,209"/>
+    <text class="dim-label" x="-26" y="110" text-anchor="end">8.70"</text>
+    <text class="dim-mm"    x="-26" y="122" text-anchor="end">[220.9]</text>
+
+    <!-- View label -->
+    <text class="view-label" x="66" y="240" text-anchor="middle">Front View</text>
+  </g>
+
+  <!-- ==============  SIDE VIEW  ============== -->
+  <!--
+    Side profile: simple rectangular box, 2.81" deep × 8.70" tall.
+    Mounting plate flange just behind the housing on the wall side (left).
+  -->
+  <g transform="translate(380, 70)">
+    <!-- Mounting flange (rear) -->
+    <rect class="body" x="-12" y="0" width="12" height="215"/>
+    <!-- Main body — rectangular box, 2.81 deep × 8.70 tall (proportional 70 × 215 px) -->
+    <rect class="body" x="0" y="0" width="70" height="215" rx="2"/>
+    <!-- Subtle face highlight -->
+    <rect class="face" x="2" y="2" width="66" height="211" rx="1"/>
+    <!-- Lens visible at the front edge (right side of side-view) -->
+    <rect class="lens" x="64" y="110" width="6" height="99" rx="0.5"/>
+    <!-- Mounting screws (rear flange) -->
+    <circle class="lens" cx="-6" cy="40"  r="2"/>
+    <circle class="lens" cx="-6" cy="175" r="2"/>
+
+    <!-- Total depth dimension (top) -->
+    <line class="dim" x1="-12" y1="-18" x2="70" y2="-18"/>
+    <line class="dim" x1="-12" y1="-22" x2="-12" y2="-12"/>
+    <line class="dim" x1="70" y1="-22" x2="70" y2="-12"/>
+    <polygon class="dim-arrow" points="-12,-18 -6,-21 -6,-15"/>
+    <polygon class="dim-arrow" points="70,-18 64,-21 64,-15"/>
+    <text class="dim-label" x="29" y="-22" text-anchor="middle">2.81"</text>
+    <text class="dim-mm"    x="29" y="-7"  text-anchor="middle">[71.4 mm]</text>
+
+    <!-- Total height dimension (right side) -->
+    <line class="dim" x1="88" y1="0" x2="88" y2="215"/>
+    <line class="dim" x1="84" y1="0" x2="92" y2="0"/>
+    <line class="dim" x1="84" y1="215" x2="92" y2="215"/>
+    <polygon class="dim-arrow" points="88,0 85,6 91,6"/>
+    <polygon class="dim-arrow" points="88,215 85,209 91,209"/>
+    <text class="dim-label" x="96" y="110">8.70"</text>
+    <text class="dim-mm"    x="96" y="122">[220.9]</text>
+
+    <!-- View label -->
+    <text class="view-label" x="35" y="240" text-anchor="middle">Side View</text>
+  </g>
+
+  <!-- ==============  LEGEND  ============== -->
+  <g transform="translate(540, 80)">
+    <text class="view-label" x="0" y="0" style="font-size: 9px; letter-spacing: 0.16em;">SHARED ACROSS ALL DIPs</text>
+    <text class="dim-mm" x="0" y="18" style="font-size: 9.5px;">10W / 15W / 20W</text>
+    <text class="dim-mm" x="0" y="32" style="font-size: 9.5px;">3000K / 4000K / 5000K</text>
+    <text class="dim-mm" x="0" y="46" style="font-size: 9.5px;">Dark Bronze · Black</text>
+
+    <text class="view-label" x="0" y="76" style="font-size: 9px; letter-spacing: 0.16em;">SHARED CONSTRUCTION</text>
+    <text class="dim-mm" x="0" y="94">Die-cast aluminum</text>
+    <text class="dim-mm" x="0" y="108">WetGuard™ sealing</text>
+    <text class="dim-mm" x="0" y="122">surgeⒶRMOR™ 2.5kV</text>
+    <text class="dim-mm" x="0" y="136">thermalⒶRMOR™ −40°F to 122°F</text>
+    <text class="dim-mm" x="0" y="150">IP65 wet-location rated</text>
+    <text class="dim-mm" x="0" y="164">Integrated photocell std.</text>
+  </g>
+
+  <text class="dim-mm" x="350" y="338" text-anchor="middle"
+        style="font-size: 8.5px; letter-spacing: 0.05em;">
+    Single envelope across all 3 wattage settings · Datasheet p.2 · Sizing &amp; Measurements
+  </text>
+</svg>

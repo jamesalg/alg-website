@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Wedge (LWPE | LWPE10 / LWPE20) — Sizing & Measurements
+  ================================================
+  Single envelope shared across both wattage models:
+    Width  : 6.5"   · 165 mm
+    Height : 9.7"   · 246 mm
+    Depth  : 2.5"   ·  64 mm  (at the deepest point — thicker at the bottom)
+  Distinctive form factor: angled top in the SIDE view — the housing slopes
+  down away from the wall, hence "Wedge."  In the front view, the housing
+  is rectangular with subtly tapered top corners.
+  Front face: top half = solid die-cast housing with photocell port
+              bottom half = clear (or frosted) polycarbonate lens covering the LED array
+  Datasheet reference: page 2 Sizing & Measurements.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 360"
+     role="img" aria-label="Wedge dimensions — front view 6.5 in wide × 9.7 in tall · side view 2.5 in deep with angled-top wedge profile">
+
+  <defs>
+    <style>
+      .body  { fill: #2c2f33; stroke: #cfd2d6; stroke-width: 1.6; stroke-linejoin: round; }
+      .face  { fill: #34373b; stroke: #cfd2d6; stroke-width: 1.4; stroke-linejoin: round; }
+      .lens  { fill: #4d525a; stroke: #cfd2d6; stroke-width: 1; }
+      .led   { fill: #6c7178; }
+      .pcell { fill: #1a1c1e; stroke: rgba(255,255,255,0.5); stroke-width: 0.6; }
+      .dim   { stroke: #cfd2d6; stroke-width: 0.8; fill: none; }
+      .dim-arrow { fill: #cfd2d6; }
+      .dim-label { font-family: 'Lato', system-ui, sans-serif; font-size: 11px; fill: #cfd2d6; }
+      .dim-mm    { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: rgba(207,210,214,0.65); }
+      .view-label { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; fill: #cfd2d6; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <!-- Title strip -->
+  <text class="view-label" x="350" y="34" text-anchor="middle"
+        style="font-size: 11px; letter-spacing: 0.22em;">
+    LWPE10 / LWPE20 · Sizing &amp; Measurements (in)
+  </text>
+
+  <!-- ==============  FRONT VIEW  ============== -->
+  <!--
+    Front face: 6.5W × 9.7H (proportion ≈ 1 : 1.49, taller than wide).
+    Top corners subtly tapered (1px inset on each side at the very top) per
+    the actual Wedge photo silhouette.
+    Top half (y 0–110) = solid die-cast housing with the photocell port at center.
+    Bottom half (y 110–230) = clear/frosted polycarbonate lens.
+  -->
+  <g transform="translate(110, 60)">
+    <!-- Outer body silhouette (proportional to 6.5 × 9.7 → 142 × 220 px) — slightly tapered top -->
+    <path class="body" d="M 4 0 L 138 0 L 142 6 L 142 220 L 0 220 L 0 6 Z"/>
+    <!-- Die-cast top half (housing only, no lens) — also tapered top -->
+    <path class="face" d="M 10 6 L 132 6 L 134 12 L 134 100 L 8 100 L 8 12 Z"/>
+    <!-- Photocell port (small dark circle, center of top half) -->
+    <circle class="pcell" cx="71" cy="50" r="4.2"/>
+    <circle class="pcell" cx="71" cy="50" r="2" fill="rgba(120,160,200,0.4)" stroke="none"/>
+    <!-- Lens band (lower half, clear polycarbonate look — fewer hatch lines than Ramparts since Wedge is clear/frosted not prismatic) -->
+    <rect class="lens" x="8" y="105" width="126" height="110" rx="2"/>
+    <!-- Subtle horizontal lines suggesting clear-lens texture -->
+    <g stroke="rgba(255,255,255,0.10)" stroke-width="0.5">
+      <line x1="14" y1="120" x2="128" y2="120"/>
+      <line x1="14" y1="135" x2="128" y2="135"/>
+      <line x1="14" y1="150" x2="128" y2="150"/>
+      <line x1="14" y1="165" x2="128" y2="165"/>
+      <line x1="14" y1="180" x2="128" y2="180"/>
+      <line x1="14" y1="195" x2="128" y2="195"/>
+    </g>
+    <!-- LED array hint (5 small dots, centered horizontally inside the lens) -->
+    <g class="led">
+      <circle cx="40" cy="160" r="1.5"/>
+      <circle cx="56" cy="160" r="1.5"/>
+      <circle cx="71" cy="160" r="1.5"/>
+      <circle cx="86" cy="160" r="1.5"/>
+      <circle cx="102" cy="160" r="1.5"/>
+    </g>
+    <!-- Mounting screw indicators (4 corners of the lens band) -->
+    <circle class="lens" cx="14" cy="111" r="1.8"/>
+    <circle class="lens" cx="128" cy="111" r="1.8"/>
+    <circle class="lens" cx="14" cy="208" r="1.8"/>
+    <circle class="lens" cx="128" cy="208" r="1.8"/>
+
+    <!-- Width dimension (top) -->
+    <line class="dim" x1="0" y1="-18" x2="142" y2="-18"/>
+    <line class="dim" x1="0" y1="-22" x2="0" y2="-12"/>
+    <line class="dim" x1="142" y1="-22" x2="142" y2="-12"/>
+    <polygon class="dim-arrow" points="0,-18 6,-21 6,-15"/>
+    <polygon class="dim-arrow" points="142,-18 136,-21 136,-15"/>
+    <text class="dim-label" x="71" y="-22" text-anchor="middle">6.5"</text>
+    <text class="dim-mm"    x="71" y="-7"  text-anchor="middle">[165 mm]</text>
+
+    <!-- Height dimension (left) -->
+    <line class="dim" x1="-18" y1="0" x2="-18" y2="220"/>
+    <line class="dim" x1="-22" y1="0" x2="-12" y2="0"/>
+    <line class="dim" x1="-22" y1="220" x2="-12" y2="220"/>
+    <polygon class="dim-arrow" points="-18,0 -21,6 -15,6"/>
+    <polygon class="dim-arrow" points="-18,220 -21,214 -15,214"/>
+    <text class="dim-label" x="-26" y="113" text-anchor="end">9.7"</text>
+    <text class="dim-mm"    x="-26" y="125" text-anchor="end">[246]</text>
+
+    <!-- View label -->
+    <text class="view-label" x="71" y="245" text-anchor="middle">Front View</text>
+  </g>
+
+  <!-- ==============  SIDE VIEW (the wedge silhouette)  ============== -->
+  <!--
+    Side profile: distinctive WEDGE shape — housing tapers from thin at the top
+    to thicker at the bottom. The angled forward face is what gives the product
+    its name.  Mounting flange sits flush against the wall (left edge).
+    Approximate proportions: 2.5" depth at bottom, ~1.4" depth at top.
+  -->
+  <g transform="translate(380, 60)">
+    <!-- Mounting flange (rear, against wall) -->
+    <rect class="body" x="-12" y="0" width="12" height="220"/>
+
+    <!-- Wedge body silhouette — top is narrow (~1.4" deep), bottom is wide (~2.5" deep) -->
+    <!--   y=0 (top):  width = 32 px corresponds to ~1.4" depth
+            y=220 (bottom): width = 56 px corresponds to ~2.5" depth -->
+    <path class="body" d="M 0 0 L 32 0 L 56 220 L 0 220 Z"/>
+    <!-- Subtle inner highlight along the angled face -->
+    <path class="face" d="M 2 2 L 30 2 L 53 218 L 2 218 Z"/>
+    <!-- Lens visible at the front-bottom edge -->
+    <rect class="lens" x="50" y="105" width="6" height="110" rx="0.5"
+          transform="skewY(8)"/>
+
+    <!-- Mounting screws (rear flange) -->
+    <circle class="lens" cx="-6" cy="35" r="2"/>
+    <circle class="lens" cx="-6" cy="180" r="2"/>
+
+    <!-- Top depth dimension (top edge — narrow part of wedge) -->
+    <line class="dim" x1="-12" y1="-18" x2="32" y2="-18"/>
+    <line class="dim" x1="-12" y1="-22" x2="-12" y2="-12"/>
+    <line class="dim" x1="32" y1="-22" x2="32" y2="-12"/>
+    <polygon class="dim-arrow" points="-12,-18 -6,-21 -6,-15"/>
+    <polygon class="dim-arrow" points="32,-18 26,-21 26,-15"/>
+    <text class="dim-label" x="10" y="-22" text-anchor="middle">1.4"</text>
+    <text class="dim-mm"    x="10" y="-7"  text-anchor="middle">[36] top</text>
+
+    <!-- Bottom depth dimension (bottom edge — widest part of wedge) -->
+    <line class="dim" x1="-12" y1="240" x2="56" y2="240"/>
+    <line class="dim" x1="-12" y1="234" x2="-12" y2="244"/>
+    <line class="dim" x1="56" y1="234" x2="56" y2="244"/>
+    <polygon class="dim-arrow" points="-12,240 -6,237 -6,243"/>
+    <polygon class="dim-arrow" points="56,240 50,237 50,243"/>
+    <text class="dim-label" x="22" y="252" text-anchor="middle">2.5" max</text>
+    <text class="dim-mm"    x="22" y="264" text-anchor="middle">[64] bottom</text>
+
+    <!-- Total height dimension (right side) -->
+    <line class="dim" x1="74" y1="0" x2="74" y2="220"/>
+    <line class="dim" x1="70" y1="0" x2="78" y2="0"/>
+    <line class="dim" x1="70" y1="220" x2="78" y2="220"/>
+    <polygon class="dim-arrow" points="74,0 71,6 77,6"/>
+    <polygon class="dim-arrow" points="74,220 71,214 77,214"/>
+    <text class="dim-label" x="82" y="113">9.7"</text>
+    <text class="dim-mm"    x="82" y="125">[246]</text>
+
+    <!-- View label -->
+    <text class="view-label" x="22" y="285" text-anchor="middle">Side View</text>
+    <text class="dim-mm" x="22" y="298" text-anchor="middle" style="font-size:8px; fill:rgba(207,210,214,0.55);">— the wedge silhouette —</text>
+  </g>
+
+  <!-- ==============  LEGEND  ============== -->
+  <g transform="translate(540, 70)">
+    <text class="view-label" x="0" y="0" style="font-size: 9px; letter-spacing: 0.16em;">SHARED ACROSS BOTH MODELS</text>
+    <text class="dim-mm" x="0" y="18" style="font-size: 9.5px;">LWPE10 (10W) · LWPE20 (20W)</text>
+    <text class="dim-mm" x="0" y="32" style="font-size: 9.5px;">3000K / 4000K / 5000K (DIP)</text>
+    <text class="dim-mm" x="0" y="46" style="font-size: 9.5px;">Black QS · Dark Bronze MTO</text>
+
+    <text class="view-label" x="0" y="76" style="font-size: 9px; letter-spacing: 0.16em;">SHARED CONSTRUCTION</text>
+    <text class="dim-mm" x="0" y="94">Die-cast aluminum</text>
+    <text class="dim-mm" x="0" y="108">Clear or Frosted lens</text>
+    <text class="dim-mm" x="0" y="122">WetGuard™ IP65 sealing</text>
+    <text class="dim-mm" x="0" y="136">−4°F to +104°F operating</text>
+    <text class="dim-mm" x="0" y="150">Switchable photocell</text>
+    <text class="dim-mm" x="0" y="164">Built-in 4W EM (90+ min)</text>
+    <text class="dim-mm" x="0" y="178">TestSure™ EM diagnostic</text>
+
+    <text class="view-label" x="0" y="208" style="font-size: 9px; letter-spacing: 0.16em;">WEIGHT</text>
+    <text class="dim-mm" x="0" y="226">LWPE10 — 1.8 lb (0.8 kg)</text>
+    <text class="dim-mm" x="0" y="240">LWPE20 — 2.1 lb (1.0 kg)</text>
+  </g>
+
+  <text class="dim-mm" x="350" y="338" text-anchor="middle"
+        style="font-size: 8.5px; letter-spacing: 0.05em;">
+    Single envelope shared across both wattage models · Datasheet p.2 · Sizing &amp; Measurements
+  </text>
+</svg>

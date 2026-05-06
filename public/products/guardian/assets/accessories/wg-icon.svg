@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Wire Guard — clean isometric render of LWPF-G1/WG.
+  Built to match the user-supplied reference: white wire grid mesh in 3/4
+  perspective with L-flange mounting brackets on the sides. White rails on
+  transparent background — must remain visible against any bg color, so
+  rails are stroked with a subtle dark line for contrast on dark themes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 460" role="img"
+     aria-label="LWPF-G1/WG Wire Guard">
+  <defs>
+    <radialGradient id="wgShadow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="rgba(0,0,0,0.28)"/>
+      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <!-- Wire rod gradient — bright white core, dark edges for definition against bg -->
+    <linearGradient id="wgRod" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfd2d6"/>
+      <stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#a8acb1"/>
+    </linearGradient>
+    <linearGradient id="wgFlange" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e3e6ea"/>
+      <stop offset="1" stop-color="#b4b8bd"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="300" cy="385" rx="220" ry="20" fill="url(#wgShadow)"/>
+
+  <!--
+    Wire mesh grid drawn in skewed 3/4 perspective.
+    Top-left corner of the cage face = (90, 130)
+    Top-right corner             = (520, 90)
+    Bottom-right corner          = (550, 320)
+    Bottom-left corner           = (130, 360)
+    7 vertical bars, 6 horizontal bars on the face.
+  -->
+
+  <!-- Cage face polygon (very faint fill so the grid sits on a hint of substance) -->
+  <path d="M 90 130 L 520 90 L 550 320 L 130 360 Z"
+        fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="0.6"/>
+
+  <!-- Side L-flange (left) — extends below/down-left of cage edge -->
+  <path d="M 90 130 L 130 360 L 130 405 L 90 175 Z"
+        fill="url(#wgFlange)" stroke="#7a7d80" stroke-width="0.8"/>
+  <circle cx="110" cy="380" r="3.2" fill="#5a5d60" stroke="#3e4144" stroke-width="0.6"/>
+  <circle cx="100" cy="200" r="3.2" fill="#5a5d60" stroke="#3e4144" stroke-width="0.6"/>
+
+  <!-- Side L-flange (right) -->
+  <path d="M 520 90 L 550 320 L 550 365 L 520 135 Z"
+        fill="url(#wgFlange)" stroke="#7a7d80" stroke-width="0.8"/>
+  <circle cx="535" cy="345" r="3.2" fill="#5a5d60" stroke="#3e4144" stroke-width="0.6"/>
+  <circle cx="528" cy="160" r="3.2" fill="#5a5d60" stroke="#3e4144" stroke-width="0.6"/>
+
+  <!--
+    Vertical wire bars (7 across).
+    Linear interpolation between (top edge: x=90→520, y=130→90)
+    and (bottom edge: x=130→550, y=360→320).
+  -->
+  <g stroke="url(#wgRod)" stroke-width="3.5" stroke-linecap="round" fill="none">
+    <line x1="90"  y1="130" x2="130" y2="360"/>
+    <line x1="161" y1="124" x2="200" y2="354"/>
+    <line x1="233" y1="118" x2="270" y2="348"/>
+    <line x1="305" y1="111" x2="340" y2="342"/>
+    <line x1="376" y1="105" x2="410" y2="336"/>
+    <line x1="448" y1="98"  x2="480" y2="330"/>
+    <line x1="520" y1="92"  x2="550" y2="324"/>
+  </g>
+  <!-- Subtle dark outline on each rod for visibility on dark bg -->
+  <g stroke="rgba(0,0,0,0.30)" stroke-width="0.8" fill="none">
+    <line x1="90"  y1="130" x2="130" y2="360"/>
+    <line x1="161" y1="124" x2="200" y2="354"/>
+    <line x1="233" y1="118" x2="270" y2="348"/>
+    <line x1="305" y1="111" x2="340" y2="342"/>
+    <line x1="376" y1="105" x2="410" y2="336"/>
+    <line x1="448" y1="98"  x2="480" y2="330"/>
+    <line x1="520" y1="92"  x2="550" y2="324"/>
+  </g>
+
+  <!--
+    Horizontal wire bars (6 levels).
+    Top: (90,130)→(520,90)
+    Bottom: (130,360)→(550,320)
+  -->
+  <g stroke="url(#wgRod)" stroke-width="3.5" stroke-linecap="round" fill="none">
+    <line x1="90"  y1="130" x2="520" y2="90"/>
+    <line x1="98"  y1="176" x2="526" y2="138"/>
+    <line x1="106" y1="222" x2="532" y2="186"/>
+    <line x1="114" y1="268" x2="538" y2="234"/>
+    <line x1="122" y1="314" x2="544" y2="282"/>
+    <line x1="130" y1="360" x2="550" y2="320"/>
+  </g>
+  <g stroke="rgba(0,0,0,0.30)" stroke-width="0.8" fill="none">
+    <line x1="90"  y1="130" x2="520" y2="90"/>
+    <line x1="98"  y1="176" x2="526" y2="138"/>
+    <line x1="106" y1="222" x2="532" y2="186"/>
+    <line x1="114" y1="268" x2="538" y2="234"/>
+    <line x1="122" y1="314" x2="544" y2="282"/>
+    <line x1="130" y1="360" x2="550" y2="320"/>
+  </g>
+
+  <!-- Edge-of-cage thicker frame line (top + bottom emphasis) -->
+  <g stroke="#dadcdf" stroke-width="4" stroke-linecap="round" fill="none">
+    <line x1="90"  y1="130" x2="520" y2="90"/>
+    <line x1="130" y1="360" x2="550" y2="320"/>
+  </g>
+  <g stroke="rgba(0,0,0,0.40)" stroke-width="1" fill="none">
+    <line x1="90"  y1="130" x2="520" y2="90"/>
+    <line x1="130" y1="360" x2="550" y2="320"/>
+  </g>
+</svg>

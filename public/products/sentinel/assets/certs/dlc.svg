@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" role="img" aria-label="DLC Listed">
+  <rect width="120" height="60" fill="#fff"/>
+  <rect x="2" y="2" width="116" height="56" fill="none" stroke="#0E1F3A" stroke-width="2"/>
+  <text x="60" y="32" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="20" fill="#0E1F3A" letter-spacing="2">DLC</text>
+  <text x="60" y="48" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="600" font-size="9" fill="#0E1F3A" letter-spacing="1.5">QPL LISTED</text>
+</svg>

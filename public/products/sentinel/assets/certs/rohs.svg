@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" role="img" aria-label="RoHS Compliant">
+  <rect width="120" height="60" fill="#fff"/>
+  <circle cx="32" cy="30" r="20" fill="#1B7E3E"/>
+  <text x="32" y="36" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="800" font-size="13" fill="#fff" letter-spacing="0.5">RoHS</text>
+  <text x="78" y="28" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="700" font-size="11" fill="#1B7E3E" letter-spacing="1">RoHS</text>
+  <text x="78" y="42" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="600" font-size="8" fill="#1B7E3E" letter-spacing="1">COMPLIANT</text>
+</svg>
