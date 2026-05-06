@@ -2905,7 +2905,8 @@
             "Trunnion",
             "Universal"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/heritage/"
         },
         {
           "family": "Liberty",
@@ -2929,7 +2930,8 @@
             "Trunnion",
             "Universal"
           ],
-          "taa": true
+          "taa": true,
+          "pdpUrl": "/products/liberty/"
         },
         {
           "family": "Navigator",
@@ -2947,7 +2949,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/navigator/"
         },
         {
           "family": "Pathfinder",
@@ -2965,7 +2968,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/pathfinder/"
         },
         {
           "family": "Aura",
@@ -2983,7 +2987,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/aura/"
         },
         {
           "family": "Canadarm",
@@ -3022,7 +3027,8 @@
             "Trunnion",
             "Yoke"
           ],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/everest/"
         },
         {
           "family": "Illuminator",
@@ -3153,7 +3159,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/anaheim/"
         },
         {
           "family": "Guardian",
@@ -3171,7 +3178,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/guardian/"
         },
         {
           "family": "Ramparts",
@@ -3189,7 +3197,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/ramparts/"
         },
         {
           "family": "Shield",
@@ -3225,7 +3234,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/watchtower/"
         },
         {
           "family": "Wedge-I",
@@ -3261,7 +3271,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/atlanta/"
         },
         {
           "family": "Nightwatch",
@@ -3279,7 +3290,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/nightwatch/"
         },
         {
           "family": "Sentinel",
@@ -3297,7 +3309,8 @@
             "120 - 277V"
           ],
           "mount_types": [],
-          "taa": false
+          "taa": false,
+          "pdpUrl": "/products/sentinel/"
         }
       ]
     },

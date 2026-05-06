@@ -423,6 +423,16 @@ const skusJson = JSON.stringify(skus);
       });
     });
 
+    // Make entire fam-card clickable (§CARD-CLICK v2.7.26)
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Don't double-navigate if the click was on the fc-view link itself
+        if (e.target.closest('a')) return;
+        const link = card.querySelector('a.fc-view');
+        if (link && link.href) window.location.href = link.href;
+      });
+    });
+
     // Application tile integration (from CollectionApplications)
     document.querySelectorAll('[data-app]').forEach(tile => {
       tile.addEventListener('click', () => {
