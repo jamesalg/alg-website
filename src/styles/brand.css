@@ -33,8 +33,8 @@
   /* NEVER use a "CLEARANCE" badge — banned per §3.7 */
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
+  --font-display: 'Lato', system-ui, -apple-system, sans-serif;
 
   /* Sizing scale */
   --container-max: 1280px;

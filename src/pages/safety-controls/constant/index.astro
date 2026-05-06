@@ -17,13 +17,13 @@ const description = "UL 924 listed emergency battery-backup drivers for commerci
   .section-bg-paper-2 { background: var(--paper-2); color: var(--ink); }
   .section-bg-dark { background: var(--char); color: white; }
   .accent-text { color: var(--accent); }
-  .mono { font-family: ui-monospace, monospace; }
+  .mono { font-family: 'Lato', system-ui, sans-serif; }
   .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
   .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
-  .eyebrow { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow { font-family: 'Lato', system-ui, sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
   .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
   .eyebrow-rule::before { content: \'\'; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
-  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: 'Lato', system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
   .btn-primary { background: var(--accent); color: white; }
   .btn-primary:hover { background: #C41E32; color: white; }
   .btn-outline-dark { border: 1px solid rgba(0,0,0,0.3); color: var(--ink); }
@@ -31,7 +31,7 @@ const description = "UL 924 listed emergency battery-backup drivers for commerci
   .btn-outline-light { border: 1px solid rgba(255,255,255,0.5); color: white; }
   .btn-outline-light:hover { background: rgba(255,255,255,0.1); color: white; }
   .stat-num { font-weight: 800; font-size: 2.25rem; letter-spacing: -0.03em; line-height: 1; }
-  .stat-label { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.5rem; }
+  .stat-label { font-family: 'Lato', system-ui, sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.5rem; }
   .icon-block { width: 56px; height: 56px; color: var(--accent); display: inline-flex; }
   .icon-stat { width: 40px; height: 40px; display: inline-flex; }
   /* Vertical tiles */
@@ -48,8 +48,8 @@ const description = "UL 924 listed emergency battery-backup drivers for commerci
   .vertical-tile-art--warehouse { background: linear-gradient(135deg, #2A2620 0%, #14110D 100%); }
   .vertical-tile-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.25rem 1.4rem; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%); }
   .vertical-tile-body h3 { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; color: white; margin-bottom: 0.25rem; }
-  .vertical-tile-body p { font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
-  .vertical-tile-tag { position: absolute; top: 0.85rem; left: 0.95rem; font-family: ui-monospace, monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+  .vertical-tile-body p { font-family: 'Lato', system-ui, sans-serif; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+  .vertical-tile-tag { position: absolute; top: 0.85rem; left: 0.95rem; font-family: 'Lato', system-ui, sans-serif; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
   /* SKU matrix */
   .matrix-row:hover { background: rgba(243,39,64,0.04); }
   .matrix-row td { padding: 0.75rem 1rem; border-bottom: 1px solid #E5E5E5; font-size: 0.875rem; }
@@ -67,7 +67,7 @@ const description = "UL 924 listed emergency battery-backup drivers for commerci
     background: var(--ink);
     color: white;
     padding: 5px 9px;
-    font-family: ui-monospace, monospace;
+    font-family: 'Lato', system-ui, sans-serif;
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -170,7 +170,7 @@ const description = "UL 924 listed emergency battery-backup drivers for commerci
         <ul class="text-xs opacity-70 space-y-1 mono"><li>\u00b7 Mid-power only (15\u201325W)</li><li>\u00b7 Lithium Ion battery</li><li>\u00b7 No networked option</li><li>\u00b7 41\u00b0F \u2013 122\u00b0F</li></ul>
       </a>
       <a href="/safety-controls/constant/em20-cmb-260dc" class="bg-white p-6 border border-black/10 hover:border-[#F32740] transition-colors block">
-        <div class="icon-block accent-text mb-4"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="20" width="44" height="24" rx="2"/><text x="28" y="38" fill="currentColor" stroke="none" text-anchor="middle" font-family="ui-monospace,monospace" font-weight="bold" font-size="12">EXIT</text><path d="M52 32 L62 32 M58 28 L62 32 L58 36"/></svg></div>
+        <div class="icon-block accent-text mb-4"><svg viewBox="0 0 64 64" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="20" width="44" height="24" rx="2"/><text x="28" y="38" fill="currentColor" stroke="none" text-anchor="middle" font-family="Lato, sans-serif" font-weight="bold" font-size="12">EXIT</text><path d="M52 32 L62 32 M58 28 L62 32 L58 36"/></svg></div>
         <p class="mono text-xs tracking-widest accent-text mb-2">TIER 04</p>
         <h3 class="font-bold text-xl mb-3">Safety &amp; Emergency</h3>
         <p class="text-sm opacity-80 mb-4">Direct mount to J-Box, ceiling or wall. Standard or high-output heads.</p>

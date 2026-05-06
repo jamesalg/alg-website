@@ -29,13 +29,13 @@ const resources = [
   .section-bg-dark { background: var(--char); color: white; }
   .section-bg-teal { background: var(--teal); color: white; }
   .accent-text { color: var(--accent); }
-  .mono { font-family: ui-monospace, monospace; }
+  .mono { font-family: 'Lato', system-ui, sans-serif; }
   .h1 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
   .h2 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
-  .eyebrow { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .eyebrow { font-family: 'Lato', system-ui, sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
   .eyebrow-rule { display: flex; align-items: center; gap: 0.75rem; }
   .eyebrow-rule::before { content: ''; display: block; width: 2rem; height: 2px; background: currentColor; flex-shrink: 0; }
-  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .btn { display: inline-flex; align-items: center; padding: 0.75rem 1.5rem; font-family: 'Lato', system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.15s, color 0.15s; }
   .btn-primary { background: var(--accent); color: white; }
   .btn-primary:hover { background: #C41E32; }
   .btn-outline-dark { border: 1px solid rgba(0,0,0,0.3); color: var(--ink); }
@@ -44,27 +44,27 @@ const resources = [
   .btn-outline-light { border: 1px solid rgba(255,255,255,0.5); color: white; }
   .btn-outline-light:hover { background: rgba(255,255,255,0.1); }
   .stat-num-small { font-weight: 800; font-size: 1.75rem; letter-spacing: -0.025em; line-height: 1; }
-  .stat-label { font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.25rem; }
+  .stat-label { font-family: 'Lato', system-ui, sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7; margin-top: 0.25rem; }
   .icon-stat { width: 32px; height: 32px; flex-shrink: 0; }
-  .trust-badge { display: inline-block; padding: 0.25rem 0.6rem; background: rgba(13,110,110,0.08); border: 1px solid rgba(13,110,110,0.2); font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; }
+  .trust-badge { display: inline-block; padding: 0.25rem 0.6rem; background: rgba(13,110,110,0.08); border: 1px solid rgba(13,110,110,0.2); font-family: 'Lato', system-ui, sans-serif; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; }
   .spec-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
   .spec-row dt { font-weight: 600; font-size: 0.875rem; }
   .spec-row dd { font-size: 0.875rem; opacity: 0.85; }
-  .spec-block-num { font-family: ui-monospace, monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent); font-weight: 700; }
-  .toc-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-family: ui-monospace, monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--ink); opacity: 0.6; transition: opacity 0.15s; }
+  .spec-block-num { font-family: 'Lato', system-ui, sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--accent); font-weight: 700; }
+  .toc-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-family: 'Lato', system-ui, sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--ink); opacity: 0.6; transition: opacity 0.15s; }
   .toc-link:hover, .toc-link.active { opacity: 1; color: var(--accent); }
   .toc-num { font-size: 0.6rem; opacity: 0.5; }
   .cert-cell { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; background: white; border: 1px solid rgba(0,0,0,0.08); }
-  .cert-mark { font-family: ui-monospace, monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; }
+  .cert-mark { font-family: 'Lato', system-ui, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; }
   .cert-detail { font-size: 0.75rem; opacity: 0.7; }
   .matrix-row { border-bottom: 1px solid rgba(0,0,0,0.06); }
-  .matrix-row td { padding: 0.75rem 1rem; font-family: ui-monospace, monospace; font-size: 0.75rem; }
+  .matrix-row td { padding: 0.75rem 1rem; font-family: 'Lato', system-ui, sans-serif; font-size: 0.75rem; }
   .feature-tile { background: white; padding: 1.25rem; border: 1px solid rgba(0,0,0,0.08); }
   .product-thumb { height: 80px; display: flex; align-items: center; justify-content: center; background: var(--paper-2); padding: 0.5rem; }
   /* QR card */
   .qr-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: white; border: 1px solid rgba(0,0,0,0.08); }
   .qr-img { width: 120px; height: 120px; flex-shrink: 0; background: white; padding: 6px; border: 1px solid rgba(0,0,0,0.08); }
-  .qr-eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; font-family: ui-monospace, monospace; }
+  .qr-eyebrow { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; font-family: 'Lato', system-ui, sans-serif; }
   .qr-title { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; margin-bottom: 0.5rem; }
   .qr-sub { font-size: 0.85rem; opacity: 0.75; line-height: 1.4; }
   /* Anchor rail */
@@ -72,7 +72,7 @@ const resources = [
   .anchor-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.25); transition: background 0.2s, transform 0.2s; cursor: pointer; position: relative; display: block; }
   .anchor-dot:hover { background: rgba(0,0,0,0.6); transform: scale(1.3); }
   .anchor-dot.active { background: var(--accent); transform: scale(1.4); }
-  .anchor-dot::before { content: attr(data-label); position: absolute; right: 18px; top: 50%; transform: translateY(-50%); background: var(--ink); color: white; padding: 5px 9px; font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
+  .anchor-dot::before { content: attr(data-label); position: absolute; right: 18px; top: 50%; transform: translateY(-50%); background: var(--ink); color: white; padding: 5px 9px; font-family: 'Lato', system-ui, sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.18s; }
   .anchor-dot:hover::before { opacity: 1; }
   .skip-link { position: absolute; left: -9999px; top: 0; padding: 1rem; background: var(--ink); color: white; }
   .skip-link:focus { left: 0; }
