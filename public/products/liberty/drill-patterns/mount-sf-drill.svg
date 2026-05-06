@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="13">
+  <!-- =============================================================================
+       Liberty /SF · Slip-Fitter Drill Pattern + Envelope
+       Recreated from Liberty AM Slip Fitter Dimension & Drilling Pattern.pdf
+       (SNC OEM · part 1.020117.0180028 · FL11 · ADC-12 alloy · 0.36kg)
+       Layout matches the source CAD: SIDE PROFILE (top-left · saddle clamp +
+       collar throat), TOP / PLAN view (top-middle · cylindrical body),
+       END / TENON view (top-right · octagonal collar with Ø62/Ø66.7 ID),
+       ISO REFERENCE (lower-right).
+       Source dimensions preserved verbatim:
+         158.5  mm  body length (top view)
+          72.7  mm  body width (top view)
+          72.2  mm  end-view width (octagonal collar)
+          26.0  mm  saddle clamp throat depth
+          16.1  mm  saddle clamp gap width
+          Ø62.0 mm  tenon ID (clamp inner diameter)
+          Ø64.8 mm  collar inner-bore (mid)
+          Ø66.7 mm  tenon OD compatibility
+         4-M8 thru fixture-attachment hole pattern
+         M8×20 set-screw for tenon clamp
+         45°    saddle taper angle
+       ============================================================================= -->
+
+  <defs>
+    <marker id="arrSF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#E2231A"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" fill="#FFFFFF"/>
+
+  <text x="600" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#1A1A1A">AM Slip Fitter</text>
+  <text x="600" y="66" text-anchor="middle" font-size="12" fill="#666">Liberty  /  /SF  ·  LSBX-L1/SF  ·  ⌀2-3/8" tenon (60.3 mm OD nominal)  ·  ADC-12 die-cast aluminum  ·  0.36 kg</text>
+
+  <!-- ============================================================================
+       SIDE PROFILE (upper-left) · saddle clamp throat
+       Shows the clamp opening throat depth (26mm) + gap width (16.1mm)
+       ============================================================================ -->
+  <g transform="translate(80, 130)">
+    <text x="160" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">SIDE PROFILE · CLAMP THROAT</text>
+
+    <!-- Saddle clamp profile (C-shape with throat opening) -->
+    <path d="M 30 60 L 30 200 L 290 200 L 290 60 L 220 60 L 220 130 Q 220 145 205 145 L 115 145 Q 100 145 100 130 L 100 60 Z" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Tenon clamp set screw indicator -->
+    <circle cx="160" cy="180" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.0"/>
+    <line x1="160" y1="176" x2="160" y2="160" stroke="#1A1A1A" stroke-width="0.6"/>
+
+    <!-- Centerline -->
+    <line x1="160" y1="40" x2="160" y2="220" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 26 mm throat depth -->
+    <line x1="-10" y1="60" x2="-10" y2="145" stroke="#E2231A" stroke-width="1" marker-start="url(#arrSF)" marker-end="url(#arrSF)"/>
+    <text x="-22" y="103" text-anchor="middle" fill="#E2231A" font-size="13" transform="rotate(-90 -22 103)">26 mm  [1.02"]</text>
+    <line x1="-13" y1="60" x2="100" y2="60" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="-13" y1="145" x2="100" y2="145" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+    <!-- Dimension: 16.1 mm gap width -->
+    <line x1="115" y1="240" x2="205" y2="240" stroke="#E2231A" stroke-width="1" marker-start="url(#arrSF)" marker-end="url(#arrSF)"/>
+    <text x="160" y="258" text-anchor="middle" fill="#E2231A" font-size="13">16.1 mm  [0.63"]</text>
+    <line x1="115" y1="145" x2="115" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="205" y1="145" x2="205" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+  </g>
+
+  <!-- ============================================================================
+       TOP / PLAN VIEW (upper-middle) · 158.5 × 72.7 mm body footprint
+       Shows the cylindrical body with arrow indicating mount direction
+       ============================================================================ -->
+  <g transform="translate(420, 130)">
+    <text x="160" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">TOP VIEW</text>
+
+    <!-- Body outline -->
+    <rect x="20" y="40" width="320" height="160" rx="6" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Tenon collar inset -->
+    <circle cx="180" cy="120" r="48" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+    <circle cx="180" cy="120" r="36" fill="none" stroke="#1A1A1A" stroke-width="1.0"/>
+    <circle cx="180" cy="120" r="3" fill="#1A1A1A"/>
+
+    <!-- Indexing teeth around collar -->
+    <g stroke="#1A1A1A" stroke-width="0.6">
+      <line x1="180" y1="74" x2="180" y2="80"/>
+      <line x1="221" y1="91" x2="216" y2="95"/>
+      <line x1="226" y1="120" x2="220" y2="120"/>
+      <line x1="221" y1="149" x2="216" y2="145"/>
+      <line x1="180" y1="166" x2="180" y2="160"/>
+      <line x1="139" y1="149" x2="144" y2="145"/>
+      <line x1="134" y1="120" x2="140" y2="120"/>
+      <line x1="139" y1="91" x2="144" y2="95"/>
+    </g>
+
+    <!-- Direction arrow -->
+    <path d="M 240 120 L 290 120 L 280 110 M 290 120 L 280 130" stroke="#1A1A1A" stroke-width="1.4" fill="none"/>
+
+    <!-- Centerlines -->
+    <line x1="180" y1="20" x2="180" y2="220" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+    <line x1="0" y1="120" x2="360" y2="120" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 158.5 mm body length -->
+    <line x1="20" y1="240" x2="340" y2="240" stroke="#E2231A" stroke-width="1" marker-start="url(#arrSF)" marker-end="url(#arrSF)"/>
+    <text x="180" y="258" text-anchor="middle" fill="#E2231A" font-size="13">158.5 mm  [6.24"]</text>
+    <line x1="20" y1="200" x2="20" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="340" y1="200" x2="340" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+    <!-- Ø64.8 + M8×20 callout -->
+    <line x1="220" y1="120" x2="320" y2="14" stroke="#E2231A" stroke-width="0.8" marker-end="url(#arrSF)"/>
+    <text x="370" y="20" text-anchor="middle" fill="#E2231A" font-size="13">Ø64.8 mm  ·  M8×20</text>
+  </g>
+
+  <!-- ============================================================================
+       END VIEW (upper-right) · octagonal collar with internal tenon bore
+       ============================================================================ -->
+  <g transform="translate(880, 130)">
+    <text x="140" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">END VIEW · TENON</text>
+
+    <!-- Octagonal saddle clamp profile -->
+    <polygon points="100,40 180,40 220,80 220,160 180,200 100,200 60,160 60,80" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Tenon ID (Ø62.0) -->
+    <circle cx="140" cy="120" r="58" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Inner bore (Ø64.8 dashed) -->
+    <circle cx="140" cy="120" r="50" fill="none" stroke="#1A1A1A" stroke-width="1.0" stroke-dasharray="3,2"/>
+
+    <!-- Indexing notches inside collar (slip-fitter teeth) -->
+    <g stroke="#1A1A1A" stroke-width="0.6">
+      <line x1="140" y1="62" x2="140" y2="70"/>
+      <line x1="181" y1="79" x2="175" y2="85"/>
+      <line x1="198" y1="120" x2="190" y2="120"/>
+      <line x1="181" y1="161" x2="175" y2="155"/>
+      <line x1="140" y1="178" x2="140" y2="170"/>
+      <line x1="99" y1="161" x2="105" y2="155"/>
+      <line x1="82" y1="120" x2="90" y2="120"/>
+      <line x1="99" y1="79" x2="105" y2="85"/>
+    </g>
+
+    <!-- 45° angle marker on octagon corner -->
+    <path d="M 65 78 L 75 82 M 65 78 L 70 70" stroke="#1A1A1A" stroke-width="0.7"/>
+    <text x="50" y="64" font-size="10" fill="#E2231A">45°</text>
+
+    <!-- Centerlines -->
+    <line x1="140" y1="20" x2="140" y2="220" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+    <line x1="50" y1="120" x2="230" y2="120" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 72.2 mm overall width -->
+    <line x1="60" y1="240" x2="220" y2="240" stroke="#E2231A" stroke-width="1" marker-start="url(#arrSF)" marker-end="url(#arrSF)"/>
+    <text x="140" y="258" text-anchor="middle" fill="#E2231A" font-size="13">72.2 mm  [2.84"]</text>
+    <line x1="60" y1="200" x2="60" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="220" y1="200" x2="220" y2="243" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+    <!-- Ø62 + Ø66.7 -->
+    <line x1="140" y1="178" x2="280" y2="290" stroke="#E2231A" stroke-width="0.8" marker-end="url(#arrSF)"/>
+    <text x="60" y="298" text-anchor="middle" fill="#E2231A" font-size="13">Ø62.0 mm  [Ø2.44"] · tenon ID</text>
+    <text x="60" y="312" text-anchor="middle" fill="#E2231A" font-size="13">Ø66.7 mm  [Ø2.63"] · OD compatibility</text>
+  </g>
+
+  <!-- ============================================================================
+       ISO REFERENCE (lower-right) · 3D wireframe
+       ============================================================================ -->
+  <g transform="translate(680, 540)">
+    <text x="200" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">ISO REFERENCE</text>
+
+    <g stroke="#1A1A1A" stroke-width="1.4" fill="none" stroke-linejoin="round">
+      <!-- Saddle clamp body (octagonal extruded) -->
+      <ellipse cx="100" cy="120" rx="60" ry="50"/>
+      <ellipse cx="240" cy="100" rx="60" ry="50"/>
+      <line x1="100" y1="70" x2="240" y2="50"/>
+      <line x1="100" y1="170" x2="240" y2="150"/>
+      <!-- Inner tenon (dashed) -->
+      <ellipse cx="100" cy="120" rx="38" ry="32" stroke-dasharray="2,2"/>
+      <ellipse cx="240" cy="100" rx="38" ry="32" stroke-dasharray="2,2"/>
+      <!-- Mounting tabs / fixture attachment plate -->
+      <path d="M 240 100 L 320 80 L 320 130 L 240 150"/>
+      <path d="M 320 80 L 320 130"/>
+      <!-- Indexing teeth visible on collar face -->
+      <g stroke-width="0.6">
+        <line x1="100" y1="78" x2="100" y2="83"/>
+        <line x1="135" y1="92" x2="132" y2="96"/>
+        <line x1="148" y1="120" x2="143" y2="120"/>
+        <line x1="135" y1="148" x2="132" y2="144"/>
+        <line x1="100" y1="162" x2="100" y2="157"/>
+        <line x1="65" y1="148" x2="68" y2="144"/>
+        <line x1="52" y1="120" x2="57" y2="120"/>
+        <line x1="65" y1="92" x2="68" y2="96"/>
+      </g>
+      <!-- Set-screw on top -->
+      <circle cx="170" cy="60" r="4" fill="#1A1A1A"/>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <g transform="translate(60, 838)">
+    <text x="0" y="0" font-size="10" fill="#888">Source: Liberty AM Slip Fitter Dimension &amp; Drilling Pattern.pdf · SNC OEM 1.020117.0180028 · FL11 · ADC-12 alloy · 0.36 kg</text>
+    <text x="0" y="14" font-size="10" fill="#888">All dimensions in mm with [inch] equivalent · centerlines + callouts in ⒶLG red · refer to LSBX Liberty Install Guide for tenon torque sequence + clamp engagement</text>
+  </g>
+</svg>

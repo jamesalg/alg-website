@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 540" role="img" aria-label="Heritage dimensions diagram showing both LSBX3W150 and LSBX3W300 housings with footprints and slim 2.37-inch shared depth">
+  <!--
+    Heritage dimensions placeholder — authored from datasheet page 2 sizing table.
+      LSBX3W150: 9.84 × 16.22 × 2.37 in · 6.72 lb
+      LSBX3W300: 13.31 × 21.14 × 2.37 in · 10.58 lb
+    Both housings share the slim 2.37-in DEPTH (shown as Side-Profile views).
+    Production engineering technical drawing replaces this placeholder when
+    it issues. Top-down + side profiles drawn to relative scale across the
+    two housings (LSBX3W300 ~1.35× wider · ~1.30× taller than LSBX3W150).
+  -->
+  <defs>
+    <style>
+      .lbl-fam { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.10em; fill: #f0f0f3; }
+      .lbl-dim { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; fill: #c8c8d0; }
+      .lbl-key { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; fill: #8b8b94; }
+      .lbl-w   { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #f5b06a; }
+      .housing { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.55); stroke-width: 1.4; }
+      .housing-active { fill: rgba(243,39,64,0.10); stroke: #F32740; stroke-width: 1.4; }
+      .recpt   { fill: rgba(255,255,255,0.20); stroke: rgba(255,255,255,0.65); stroke-width: 0.8; }
+      .dim-line  { stroke: rgba(255,255,255,0.55); stroke-width: 0.7; fill: none; }
+      .dim-arrow { fill: rgba(255,255,255,0.55); }
+      .key-bar { stroke: #F32740; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+
+  <!-- ===== LSBX3W150 (left side) ===== -->
+  <g transform="translate(60,60)">
+    <text x="0" y="-22" class="lbl-fam">LSBX3W150 ★</text>
+    <text x="0" y="-6" class="lbl-key">9.84 W × 16.22 H × 2.37 D in · 6.72 lb</text>
+
+    <!-- Top-down view (rectangle 9.84 × 16.22, drawn at scale 1in = ~10px) -->
+    <rect x="20" y="0" width="98" height="162" class="housing-active" rx="2"/>
+    <!-- Photocell receptacle indicator at top edge -->
+    <circle cx="69" cy="0" r="6" class="recpt"/>
+    <text x="84" y="3" class="lbl-key" fill="#a8a8b0">3-pin</text>
+
+    <!-- Width dim line (top) -->
+    <line x1="20" y1="-12" x2="118" y2="-12" class="dim-line"/>
+    <line x1="20" y1="-15" x2="20" y2="-9" class="dim-line"/>
+    <line x1="118" y1="-15" x2="118" y2="-9" class="dim-line"/>
+    <text x="69" y="-16" class="lbl-dim" text-anchor="middle">9.84"</text>
+
+    <!-- Height dim line (right) -->
+    <line x1="130" y1="0" x2="130" y2="162" class="dim-line"/>
+    <line x1="127" y1="0" x2="133" y2="0" class="dim-line"/>
+    <line x1="127" y1="162" x2="133" y2="162" class="dim-line"/>
+    <text x="135" y="84" class="lbl-dim">16.22"</text>
+
+    <!-- View label -->
+    <text x="69" y="180" class="lbl-key" text-anchor="middle">TOP-DOWN</text>
+
+    <!-- Side profile view (height 162px × depth 24px representing 2.37-in) -->
+    <rect x="20" y="220" width="98" height="24" class="housing-active" rx="1.5"/>
+    <text x="69" y="240" class="lbl-w" text-anchor="middle">2.37"</text>
+    <text x="69" y="262" class="lbl-key" text-anchor="middle">SIDE PROFILE</text>
+
+    <!-- Slim-depth callout -->
+    <line x1="20" y1="220" x2="20" y2="244" class="key-bar"/>
+    <line x1="20" y1="222" x2="14" y2="222" class="key-bar"/>
+    <line x1="20" y1="242" x2="14" y2="242" class="key-bar"/>
+    <text x="11" y="237" class="lbl-w" text-anchor="end">depth</text>
+  </g>
+
+  <!-- ===== LSBX3W300 (right side · drawn larger) ===== -->
+  <g transform="translate(390,60)">
+    <text x="0" y="-22" class="lbl-fam">LSBX3W300</text>
+    <text x="0" y="-6" class="lbl-key">13.31 W × 21.14 H × 2.37 D in · 10.58 lb</text>
+
+    <!-- Top-down view (rectangle 13.31 × 21.14, drawn at same scale) -->
+    <rect x="20" y="0" width="133" height="211" class="housing" rx="2"/>
+    <!-- Photocell receptacle indicator -->
+    <circle cx="86" cy="0" r="6" class="recpt"/>
+    <text x="101" y="3" class="lbl-key" fill="#a8a8b0">3-pin</text>
+
+    <!-- Width dim line (top) -->
+    <line x1="20" y1="-12" x2="153" y2="-12" class="dim-line"/>
+    <line x1="20" y1="-15" x2="20" y2="-9" class="dim-line"/>
+    <line x1="153" y1="-15" x2="153" y2="-9" class="dim-line"/>
+    <text x="86" y="-16" class="lbl-dim" text-anchor="middle">13.31"</text>
+
+    <!-- Height dim line (right) -->
+    <line x1="165" y1="0" x2="165" y2="211" class="dim-line"/>
+    <line x1="162" y1="0" x2="168" y2="0" class="dim-line"/>
+    <line x1="162" y1="211" x2="168" y2="211" class="dim-line"/>
+    <text x="170" y="108" class="lbl-dim">21.14"</text>
+
+    <!-- View label -->
+    <text x="86" y="229" class="lbl-key" text-anchor="middle">TOP-DOWN</text>
+
+    <!-- Side profile view (same 2.37-in depth) -->
+    <rect x="20" y="269" width="133" height="24" class="housing" rx="1.5"/>
+    <text x="86" y="289" class="lbl-w" text-anchor="middle">2.37"</text>
+    <text x="86" y="311" class="lbl-key" text-anchor="middle">SIDE PROFILE</text>
+
+    <!-- Slim-depth callout -->
+    <line x1="20" y1="269" x2="20" y2="293" class="key-bar"/>
+    <line x1="20" y1="271" x2="14" y2="271" class="key-bar"/>
+    <line x1="20" y1="291" x2="14" y2="291" class="key-bar"/>
+    <text x="11" y="286" class="lbl-w" text-anchor="end">depth</text>
+  </g>
+
+  <!-- ===== Footer note: shared depth ===== -->
+  <g transform="translate(60,490)">
+    <line x1="0" y1="0" x2="640" y2="0" stroke="rgba(255,255,255,0.10)" stroke-width="0.6"/>
+    <text x="0" y="20" class="lbl-key">SHARED DEPTH</text>
+    <text x="120" y="20" class="lbl-dim">Both housings share the 2.37-in slim depth · footprints differ (9.84×16.22 vs. 13.31×21.14 in)</text>
+  </g>
+
+  <!-- Small legend for the active-tab indicator (red outline = current tab) -->
+  <g transform="translate(620,40)">
+    <rect x="0" y="0" width="14" height="10" class="housing-active" rx="1.5"/>
+    <text x="20" y="9" class="lbl-key" font-size="8.5" fill="#F32740">Active tab</text>
+    <rect x="0" y="16" width="14" height="10" class="housing" rx="1.5"/>
+    <text x="20" y="25" class="lbl-key" font-size="8.5">Sibling</text>
+  </g>
+
+  <!-- Production-drawing-pending honesty marker -->
+  <text x="60" y="528" class="lbl-key" font-size="8.5" fill="#888892">Placeholder · production engineering technical drawing pending</text>
+</svg>

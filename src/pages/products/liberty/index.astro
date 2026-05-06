@@ -4746,7 +4746,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       -->
       <div class="hero-compliance" aria-label="Certifications">
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/etl.svg" alt="UL/cUL Listed" />
+          <img src="/products/illuminator/assets/certs/etl.svg" alt="UL/cUL Listed" />
           <div class="cb-label">UL Listed</div>
         </div>
         <div class="cb">
@@ -4756,15 +4756,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
                badge for visual parity across the catalog. CFG-RBT-1 reminder:
                docblock above flags DLC SSL application status as "unknown" — the
                new badge is forward-looking; reconcile when QPL ID issues. -->
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/dlc.svg" alt="DLC Listed" />
+          <img src="/products/illuminator/assets/certs/dlc.svg" alt="DLC Listed" />
           <div class="cb-label">DLC Listed</div>
         </div>
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/rohs.svg" alt="RoHS Compliant" />
+          <img src="/products/illuminator/assets/certs/rohs.svg" alt="RoHS Compliant" />
           <div class="cb-label">RoHS</div>
         </div>
         <div class="cb">
-          <img src="https://www.archipelagolighting.com/cdn/shop/t/24/assets/wet-location.svg" alt="Suitable for Wet Location" />
+          <img src="/products/illuminator/assets/certs/wet-location.svg" alt="Suitable for Wet Location" />
           <div class="cb-label">Wet Location</div>
         </div>
       </div>
@@ -5655,7 +5655,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 <div class="zoom-modal" id="dimZoomModal" role="dialog" aria-label="Dimensions zoomed">
   <button type="button" class="zoom-modal-close" id="dimZoomClose" aria-label="Close zoom">CLOSE ✕</button>
   <div class="zoom-modal-content">
-    <img id="dimZoomImg" src="/products/liberty/assets/heritage/heritage-dimensions.svg" alt="Heritage dimensions zoomed" />
+    <img id="dimZoomImg" src="/products/heritage/heritage-dimensions.svg" alt="Heritage dimensions zoomed" />
   </div>
 </div>
 
@@ -6772,7 +6772,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     }
     if (!d) return;
-    imgEl.src = 'assets/liberty/photometrics/' + d.svg;
+    imgEl.src = '/products/liberty/assets/photometrics/' + d.svg;
     imgEl.alt = 'Liberty LSBX' + state.housing + ' Type-' + state.optic.charAt(1) + ' photometric distribution polar plot rendered from LM-79 IES test data · peak ' + d.peak + ' cd · ' + d.lumens + ' lm · ' + d.efficacy + ' lm/W';
     peakEl.textContent = d.peak.toLocaleString() + ' cd';
     lumEl.textContent  = d.lumens.toLocaleString() + ' lm';
@@ -8326,7 +8326,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-rs-drill.svg', letter: 'DM', sourceLabel: 'Liberty DM Drill Pattern · SNC OEM 1000203063 · ADC12 die-cast 0.44 kg · Round/Square Pole bracket with knuckle pivot · field-rotatable' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-rs-drill.svg', letter: 'DM', sourceLabel: 'Liberty DM Drill Pattern · SNC OEM 1000203063 · ADC12 die-cast 0.44 kg · Round/Square Pole bracket with knuckle pivot · field-rotatable' }
     },
     'mount-tn': {
       cat: 'Mount · Trunnion / Wall',
@@ -8340,7 +8340,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-tn-drill.svg', letter: 'FM', sourceLabel: 'Liberty FM Bracket Drill Pattern · SNC OEM 1.020416.0180073 · SB20 chassis · 3 mm cold-rolled steel · 0.83 kg · ±60° trunnion U-bracket' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-tn-drill.svg', letter: 'FM', sourceLabel: 'Liberty FM Bracket Drill Pattern · SNC OEM 1.020416.0180073 · SB20 chassis · 3 mm cold-rolled steel · 0.83 kg · ±60° trunnion U-bracket' }
     },
     'mount-ua': {
       cat: 'Mount · Universal Rotatable',
@@ -8354,7 +8354,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-ua-drill.svg', letter: 'A&D', sourceLabel: 'Liberty A&D Bracket Drill Pattern · SNC OEM 1000200364 · ADC12 die-cast 0.5 kg · Universal Mount with multi-pole compatibility' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-ua-drill.svg', letter: 'A&D', sourceLabel: 'Liberty A&D Bracket Drill Pattern · SNC OEM 1000200364 · ADC12 die-cast 0.5 kg · Universal Mount with multi-pole compatibility' }
     },
     'mount-sf': {
       cat: 'Mount · Slip-Fitter',
@@ -8368,7 +8368,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-sf-drill.svg', letter: 'AM', sourceLabel: 'Liberty AM Slip Fitter Drill Pattern · SNC OEM 1.020117.0180028 · FL11 · ADC-12 alloy 0.36 kg · 2-3/8" tenon clamp' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-sf-drill.svg', letter: 'AM', sourceLabel: 'Liberty AM Slip Fitter Drill Pattern · SNC OEM 1.020117.0180028 · FL11 · ADC-12 alloy 0.36 kg · 2-3/8" tenon clamp' }
     },
 
     // ---------- Surge Protection ----------
@@ -11644,7 +11644,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       }
     }
     if (!d) return;
-    imgEl.src = 'assets/liberty/photometrics/' + d.svg;
+    imgEl.src = '/products/liberty/assets/photometrics/' + d.svg;
     imgEl.alt = 'Liberty LSBX' + state.housing + ' Type-' + state.optic.charAt(1) + ' photometric distribution polar plot rendered from LM-79 IES test data · peak ' + d.peak + ' cd · ' + d.lumens + ' lm · ' + d.efficacy + ' lm/W';
     peakEl.textContent = d.peak.toLocaleString() + ' cd';
     lumEl.textContent  = d.lumens.toLocaleString() + ' lm';
@@ -12191,7 +12191,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-rs-drill.svg', letter: 'DM', sourceLabel: 'Liberty DM Drill Pattern · SNC OEM 1000203063 · ADC12 die-cast 0.44 kg · Round/Square Pole bracket with knuckle pivot · field-rotatable' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-rs-drill.svg', letter: 'DM', sourceLabel: 'Liberty DM Drill Pattern · SNC OEM 1000203063 · ADC12 die-cast 0.44 kg · Round/Square Pole bracket with knuckle pivot · field-rotatable' }
     },
     'mount-tn': {
       cat: 'Mount · Trunnion / Wall',
@@ -12205,7 +12205,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-tn-drill.svg', letter: 'FM', sourceLabel: 'Liberty FM Bracket Drill Pattern · SNC OEM 1.020416.0180073 · SB20 chassis · 3 mm cold-rolled steel · 0.83 kg · ±60° trunnion U-bracket' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-tn-drill.svg', letter: 'FM', sourceLabel: 'Liberty FM Bracket Drill Pattern · SNC OEM 1.020416.0180073 · SB20 chassis · 3 mm cold-rolled steel · 0.83 kg · ±60° trunnion U-bracket' }
     },
     'mount-ua': {
       cat: 'Mount · Universal Rotatable',
@@ -12219,7 +12219,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-ua-drill.svg', letter: 'A&D', sourceLabel: 'Liberty A&D Bracket Drill Pattern · SNC OEM 1000200364 · ADC12 die-cast 0.5 kg · Universal Mount with multi-pole compatibility' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-ua-drill.svg', letter: 'A&D', sourceLabel: 'Liberty A&D Bracket Drill Pattern · SNC OEM 1000200364 · ADC12 die-cast 0.5 kg · Universal Mount with multi-pole compatibility' }
     },
     'mount-sf': {
       cat: 'Mount · Slip-Fitter',
@@ -12233,7 +12233,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         ['Drill template',       'Click the polished drill-pattern image below to view the full engineering drawing'],
         ['Pairs with',           'All Heritage active SKUs · LSBX3W150 + LSBX3W300']
       ],
-      drillSvg: { url: 'assets/liberty/drill-patterns/mount-sf-drill.svg', letter: 'AM', sourceLabel: 'Liberty AM Slip Fitter Drill Pattern · SNC OEM 1.020117.0180028 · FL11 · ADC-12 alloy 0.36 kg · 2-3/8" tenon clamp' }
+      drillSvg: { url: '/products/liberty/assets/drill-patterns/mount-sf-drill.svg', letter: 'AM', sourceLabel: 'Liberty AM Slip Fitter Drill Pattern · SNC OEM 1.020117.0180028 · FL11 · ADC-12 alloy 0.36 kg · 2-3/8" tenon clamp' }
     },
 
     // ---------- Surge Protection ----------

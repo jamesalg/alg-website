@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="13">
+  <!-- =============================================================================
+       Heritage /TN · Trunnion / Wall Yoke Drill Pattern
+       Recreated from Heritage-I_D-Mount Drill Template.pdf (TYPE D · Trunnion)
+       Layout matches the source CAD: WALL-PLATE DETAIL (top-left · two keyhole
+       slots + center bolt + Ø2.4 / Ø3.6 callouts), FRONT view (middle-left ·
+       fixture in yoke cradle), SIDE view (lower-middle · pivot hub + indexing
+       teeth), BOTTOM view (bottom-left · 161.6 mm length), ISO REFERENCE
+       (top-right and middle-right).
+       Source dimensions preserved verbatim:
+         170.9 mm [6.73"] overall height (front view)
+         161.6 mm [6.36"] overall length (bottom view)
+          60   mm [2.36"] arm depth (side view)
+           3.4 mm  keyhole slot offset to plate edge
+          Ø2.4 mm pilot hole
+          Ø3.6 mm keyhole bottom diameter
+       ============================================================================= -->
+
+  <defs>
+    <marker id="arrTN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#E2231A"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" fill="#FFFFFF"/>
+
+  <text x="600" y="44" text-anchor="middle" font-size="22" font-weight="700" fill="#1A1A1A">TYPE D · Trunnion / Wall Yoke</text>
+  <text x="600" y="66" text-anchor="middle" font-size="12" fill="#666">Heritage-I  /  /TN  ·  LSBX-H1/TN  ·  ±60° pivot · indexed adjustment hub</text>
+
+  <!-- ============================================================================
+       WALL-PLATE DETAIL (upper-left) · top of trunnion bracket showing
+       two keyhole slots + center bolt. Shows the 3.4 mm slot edge-offset,
+       Ø2.4 mm pilot, Ø3.6 mm keyhole bottom.
+       ============================================================================ -->
+  <g transform="translate(80, 130)">
+    <text x="200" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">WALL-PLATE DETAIL</text>
+
+    <!-- Plate rectangle -->
+    <rect x="20" y="40" width="360" height="60" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Left keyhole slot (vertical pilot rectangle + circular bottom) -->
+    <path d="M 92 50 L 110 50 L 110 70 Q 110 76 104 78 Q 98 76 98 70 L 98 50 Z" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="101" cy="80" r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+
+    <!-- Right keyhole slot -->
+    <path d="M 292 50 L 310 50 L 310 70 Q 310 76 304 78 Q 298 76 298 70 L 298 50 Z" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="301" cy="80" r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+
+    <!-- Center hex bolt -->
+    <polygon points="195,72 207,79 207,93 195,100 183,93 183,79" fill="#1A1A1A"/>
+
+    <!-- Outer flange bolts (corner-side hardware) -->
+    <circle cx="35" cy="70" r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="35" cy="70" r="1.5" fill="#1A1A1A"/>
+    <circle cx="365" cy="70" r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="365" cy="70" r="1.5" fill="#1A1A1A"/>
+
+    <!-- 3.4 mm dimension callout (left edge to slot start) -->
+    <line x1="92" y1="20" x2="98" y2="20" stroke="#E2231A" stroke-width="1" marker-start="url(#arrTN)" marker-end="url(#arrTN)"/>
+    <text x="60" y="22" text-anchor="middle" fill="#E2231A" font-size="12">3.4 mm</text>
+    <line x1="92" y1="17" x2="92" y2="48" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="98" y1="17" x2="98" y2="48" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+
+    <!-- Ø2.4 mm pilot dimension -->
+    <line x1="195" y1="74" x2="240" y2="20" stroke="#E2231A" stroke-width="0.8" marker-end="url(#arrTN)"/>
+    <text x="276" y="18" text-anchor="middle" fill="#E2231A" font-size="13">Ø2.4 mm</text>
+
+    <!-- Ø3.6 mm keyhole dimension -->
+    <line x1="297" y1="84" x2="350" y2="130" stroke="#E2231A" stroke-width="0.8" marker-end="url(#arrTN)"/>
+    <text x="386" y="138" text-anchor="middle" fill="#E2231A" font-size="13">Ø3.6 mm</text>
+  </g>
+
+  <!-- ============================================================================
+       FRONT VIEW (middle-left) · fixture cradled in yoke arms, viewed from front
+       Yoke arms extend down from the wall plate, holding the fixture in cradle.
+       ============================================================================ -->
+  <g transform="translate(80, 360)">
+    <text x="200" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">FRONT VIEW</text>
+
+    <!-- Top wall-plate (small rectangle on top, narrower than yoke base) -->
+    <rect x="120" y="0" width="160" height="22" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+
+    <!-- Yoke arms (U-shape, left + right vertical members + bottom rail) -->
+    <path d="M 60 22 L 60 200 L 340 200 L 340 22" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Inner cradle (fixture body sitting inside the yoke) -->
+    <rect x="84" y="60" width="232" height="120" rx="6" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+
+    <!-- Side bolts on yoke arms (hex bolts holding the pivot) -->
+    <polygon points="60,108 50,114 50,128 60,134 70,128 70,114" fill="#1A1A1A"/>
+    <polygon points="340,108 330,114 330,128 340,134 350,128 350,114" fill="#1A1A1A"/>
+
+    <!-- Cradle pivot bolts -->
+    <circle cx="84" cy="120"  r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="84" cy="120"  r="1.5" fill="#1A1A1A"/>
+    <circle cx="316" cy="120" r="6" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+    <circle cx="316" cy="120" r="1.5" fill="#1A1A1A"/>
+
+    <!-- Bottom-tab feet -->
+    <rect x="100" y="200" width="20" height="14" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+    <rect x="280" y="200" width="20" height="14" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+
+    <!-- Centerline -->
+    <line x1="200" y1="-10" x2="200" y2="220" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 170.9 mm [6.73"] — overall height -->
+    <line x1="-30" y1="0" x2="-30" y2="200" stroke="#E2231A" stroke-width="1" marker-start="url(#arrTN)" marker-end="url(#arrTN)"/>
+    <text x="-42" y="100" text-anchor="middle" fill="#E2231A" font-size="13" transform="rotate(-90 -42 100)">170.9 mm  [6.73"]</text>
+    <line x1="-33" y1="0" x2="120" y2="0" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="-33" y1="200" x2="60" y2="200" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+  </g>
+
+  <!-- ============================================================================
+       SIDE VIEW (lower-middle) · trunnion side profile showing pivot hub
+       with indexing teeth around its circumference (the ±60° aiming dial).
+       ============================================================================ -->
+  <g transform="translate(540, 470)">
+    <text x="100" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">SIDE VIEW</text>
+
+    <!-- Wall plate top -->
+    <rect x="80" y="0" width="60" height="20" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+
+    <!-- Yoke side profile (single vertical arm + base) -->
+    <path d="M 50 20 L 50 200 L 170 200 L 170 30 Z" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Indexing pivot hub (large circle with teeth) -->
+    <circle cx="110" cy="115" r="50" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>
+    <circle cx="110" cy="115" r="6"  fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+    <circle cx="110" cy="115" r="2"  fill="#1A1A1A"/>
+
+    <!-- Indexing teeth around pivot -->
+    <g stroke="#1A1A1A" stroke-width="0.7">
+      <line x1="110" y1="65" x2="110" y2="73"/>
+      <line x1="135" y1="73" x2="129" y2="79"/>
+      <line x1="155" y1="93" x2="148" y2="98"/>
+      <line x1="161" y1="115" x2="153" y2="115"/>
+      <line x1="155" y1="137" x2="148" y2="132"/>
+      <line x1="135" y1="157" x2="129" y2="151"/>
+      <line x1="110" y1="165" x2="110" y2="157"/>
+      <line x1="85" y1="157" x2="91" y2="151"/>
+      <line x1="65" y1="137" x2="72" y2="132"/>
+      <line x1="59" y1="115" x2="67" y2="115"/>
+      <line x1="65" y1="93" x2="72" y2="98"/>
+      <line x1="85" y1="73" x2="91" y2="79"/>
+    </g>
+
+    <!-- Aiming pointer -->
+    <line x1="110" y1="115" x2="160" y2="115" stroke="#E2231A" stroke-width="1.4" marker-end="url(#arrTN)"/>
+
+    <!-- Centerline -->
+    <line x1="110" y1="60" x2="110" y2="170" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="6,2,1,2"/>
+    <line x1="55" y1="115" x2="165" y2="115" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 60 mm [2.36"] — arm depth -->
+    <line x1="50" y1="230" x2="170" y2="230" stroke="#E2231A" stroke-width="1" marker-start="url(#arrTN)" marker-end="url(#arrTN)"/>
+    <text x="110" y="248" text-anchor="middle" fill="#E2231A" font-size="13">60 mm  [2.36"]</text>
+    <line x1="50" y1="200" x2="50" y2="233" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="170" y1="200" x2="170" y2="233" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+  </g>
+
+  <!-- ============================================================================
+       BOTTOM VIEW (lower-left) · trunnion seen from below
+       Shows the yoke base width (161.6 mm) and the bottom of the cradle.
+       ============================================================================ -->
+  <g transform="translate(80, 660)">
+    <text x="200" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">BOTTOM VIEW</text>
+
+    <!-- Yoke base rectangle -->
+    <rect x="50" y="20" width="300" height="80" fill="none" stroke="#1A1A1A" stroke-width="1.6"/>
+
+    <!-- Two end pivot bolts -->
+    <polygon points="65,40 55,46 55,60 65,66 75,60 75,46" fill="#1A1A1A"/>
+    <polygon points="335,40 325,46 325,60 335,66 345,60 345,46" fill="#1A1A1A"/>
+
+    <!-- Center hex bolt -->
+    <polygon points="200,52 210,58 210,72 200,78 190,72 190,58" fill="#1A1A1A"/>
+
+    <!-- Inner cradle outline (fixture body bottom) -->
+    <rect x="80" y="36" width="240" height="48" rx="6" fill="none" stroke="#1A1A1A" stroke-width="1.0" stroke-dasharray="3,2"/>
+
+    <!-- Centerline -->
+    <line x1="200" y1="10" x2="200" y2="110" stroke="#E2231A" stroke-width="0.7" stroke-dasharray="6,2,1,2"/>
+
+    <!-- Dimension: 161.6 mm [6.36"] — overall length -->
+    <line x1="50" y1="135" x2="350" y2="135" stroke="#E2231A" stroke-width="1" marker-start="url(#arrTN)" marker-end="url(#arrTN)"/>
+    <text x="200" y="152" text-anchor="middle" fill="#E2231A" font-size="13">161.6 mm  [6.36"]</text>
+    <line x1="50" y1="100" x2="50" y2="138" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+    <line x1="350" y1="100" x2="350" y2="138" stroke="#E2231A" stroke-width="0.6" stroke-dasharray="3,2"/>
+  </g>
+
+  <!-- ============================================================================
+       ISO REFERENCE (right) · 3D view of the trunnion bracket holding fixture.
+       ============================================================================ -->
+  <g transform="translate(820, 130)">
+    <text x="180" y="-12" text-anchor="middle" font-size="11" font-weight="600" fill="#666" letter-spacing="1.4">ISO REFERENCE</text>
+
+    <g stroke="#1A1A1A" stroke-width="1.4" fill="none" stroke-linejoin="round">
+      <!-- Wall plate (top) -->
+      <path d="M 80 30 L 220 30 L 250 10 L 110 10 Z"/>
+      <path d="M 220 30 L 220 50 L 250 30 L 250 10"/>
+
+      <!-- Yoke arms -->
+      <path d="M 60 50 L 60 200 L 100 220 L 100 70"/>
+      <path d="M 240 50 L 240 200 L 280 220 L 280 70"/>
+      <!-- Yoke top rails -->
+      <path d="M 60 50 L 100 30 L 250 30"/>
+      <path d="M 240 50 L 280 30"/>
+
+      <!-- Fixture cradle (rectangle body inside yoke) -->
+      <rect x="100" y="80" width="180" height="100" rx="6"/>
+      <path d="M 100 80 L 80 95 L 80 195 L 100 180"/>
+      <path d="M 80 195 L 260 195 L 280 180"/>
+
+      <!-- Pivot hub (with indexing teeth · left side) -->
+      <circle cx="100" cy="130" r="22"/>
+      <circle cx="100" cy="130" r="3" fill="#1A1A1A"/>
+      <g stroke-width="0.6">
+        <line x1="100" y1="108" x2="100" y2="113"/>
+        <line x1="116" y1="121" x2="113" y2="124"/>
+        <line x1="119" y1="139" x2="115" y2="138"/>
+        <line x1="116" y1="146" x2="113" y2="143"/>
+        <line x1="100" y1="152" x2="100" y2="147"/>
+        <line x1="84" y1="146" x2="87" y2="143"/>
+        <line x1="81" y1="139" x2="85" y2="138"/>
+        <line x1="84" y1="121" x2="87" y2="124"/>
+      </g>
+
+      <!-- Hex pivot bolt on right -->
+      <polygon points="270,118 282,124 282,138 270,144 258,138 258,124" fill="#1A1A1A"/>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <g transform="translate(60, 838)">
+    <text x="0" y="0" font-size="10" fill="#888">Source: Heritage-I_D-Mount Drill Template.pdf · TYPE D · Trunnion (wall-yoke pivot)</text>
+    <text x="0" y="14" font-size="10" fill="#888">All dimensions in mm with [inch] equivalent · centerlines + callouts in ⒶLG red · Heritage Install Guide is the authoritative install reference</text>
+  </g>
+</svg>
